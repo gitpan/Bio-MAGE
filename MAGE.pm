@@ -3,6 +3,31 @@
 # Bio::MAGE
 #
 ##############################
+# C O P Y R I G H T   N O T I C E
+#  Copyright (c) 2001-2002 by:
+#    * The MicroArray Gene Expression Database Society (MGED)
+#    * Rosetta Inpharmatics
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation files
+# (the "Software"), to deal in the Software without restriction,
+# including without limitation the rights to use, copy, modify, merge,
+# publish, distribute, sublicense, and/or sell copies of the Software,
+# and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+# BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+# ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 package Bio::MAGE;
 
 use strict;
@@ -20,7 +45,7 @@ use Bio::MAGE::NameValueType;
 use vars qw(@ISA $VERSION @EXPORT_OK %EXPORT_TAGS $__MAGEML_LISTS $__MAGEML_PACKAGES $__CLASS2FULLCLASS);
 
 @ISA = qw(Bio::MAGE::Base Exporter);
-$VERSION = q[$Id: MAGE.pm,v 1.10 2002/10/13 21:56:03 jason_e_stewart Exp $];
+$VERSION = q[20020902.3];
 
 use constant CARD_1 => '1';
 use constant CARD_0_OR_1 => '0..1';
@@ -1063,9 +1088,9 @@ sub register {
   }
 
   # regardless, they must enable their sub objects to register themselves
+  my %assns_hash = $obj->associations();
   foreach my $association ($obj->association_methods()) {
     # do not register objects that are references
-    my %assns_hash = $obj->associations();
     my $association_obj;
     {
       no strict 'refs';
@@ -1079,11 +1104,14 @@ sub register {
     # if the object is Identifiable or not, we don't want to
     # register it, but we still want to register it's sub-objects
     # so we need to alert register()
-    my $register = $assns_hash{$association}->is_ref();
+    #
+    # to decide if the association is aggregate, we look at
+    # the 'self' end of the association
+    my $register = $assns_hash{$association}->self->is_ref();
 
     # register a list of sub objects or a single one
-    if ($assns_hash{$association}->cardinality() eq "0..N" or
-        $assns_hash{$association}->cardinality() eq "1..N") {
+    if ($assns_hash{$association}->other->cardinality() eq "0..N" or
+        $assns_hash{$association}->other->cardinality() eq "1..N") {
       if (ref($association_obj) =~ /ARRAY/) {
 	foreach my $element (@$association_obj) {
 	  $self->register($element,$register)
@@ -1106,7 +1134,7 @@ Please send bug reports to mged-mage@lists.sf.net
 
 =head1 AUTHOR
 
-Jason E. Stewart (jason@openinformatics.com)
+Jason E. Stewart (www.openinformatics.com)
 
 =head1 SEE ALSO
 

@@ -1,9 +1,34 @@
 # Before `make install' is performed this script should be runnable with
 # `make test'. After `make install' it should work as `perl ExperimentDesign.t'
 
+# C O P Y R I G H T   N O T I C E
+#  Copyright (c) 2001-2002 by:
+#    * The MicroArray Gene Expression Database Society (MGED)
+#    * Rosetta Inpharmatics
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation files
+# (the "Software"), to deal in the Software without restriction,
+# including without limitation the rights to use, copy, modify, merge,
+# publish, distribute, sublicense, and/or sell copies of the Software,
+# and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+# BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+# ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 ######################### We start with some black magic to print on failure.
 
-BEGIN { $| = 1; print "1..52\n"; }
+BEGIN { $| = 1; print "1..72\n"; }
 END {print "not ok 1\n" unless $loaded;}
 use Carp;
 use lib 't';
@@ -62,6 +87,8 @@ auditTrail => [Bio::MAGE::AuditAndSecurity::Audit->new()],
 descriptions => [Bio::MAGE::Description::Description->new()],
 propertySets => [Bio::MAGE::NameValueType->new()]);
 }
+
+my $end;
 # testing association replicateDescription
 my $replicatedescription_assn;
 {
@@ -78,20 +105,37 @@ result ($experimentdesign->getReplicateDescription() == $replicatedescription_as
 # test the meta-data for the assoication
 ($assn) = $assns{replicateDescription};
 result(is_object($assn)
-       and $assn->isa('Bio::MAGE::Association')
-       and defined $assn->description(),
-       and defined $assn->cardinality(),
-       and grep {$_ eq $assn->cardinality} ('0..1','1','1..N','0..N'),
-       and defined $assn->is_ref(),
-       and ($assn->is_ref() == 0 or $assn->is_ref() == 1),
-       and defined $assn->rank(),
-       and $assn->rank(),
-       and defined $assn->ordered(),
-       and ($assn->ordered() == 0 or $assn->ordered() == 1),
-       and defined $assn->class_name(),
-       and $assn->class_name(),
-       and defined $assn->name(),
-       and $assn->name(),
+       and $assn->isa('Bio::MAGE::Association'));
+$end = $assn->other();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->rank(),
+       and $end->rank(),
+       and defined $end->ordered(),
+       and ($end->ordered() == 0 or $end->ordered() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
+       and defined $end->name(),
+       and $end->name(),
+      );
+
+$end = $assn->self();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
       );
 # testing association types
 my $types_assn;
@@ -115,20 +159,37 @@ result (UNIVERSAL::isa($experimentdesign->getTypes,'ARRAY')
 # test the meta-data for the assoication
 ($assn) = $assns{types};
 result(is_object($assn)
-       and $assn->isa('Bio::MAGE::Association')
-       and defined $assn->description(),
-       and defined $assn->cardinality(),
-       and grep {$_ eq $assn->cardinality} ('0..1','1','1..N','0..N'),
-       and defined $assn->is_ref(),
-       and ($assn->is_ref() == 0 or $assn->is_ref() == 1),
-       and defined $assn->rank(),
-       and $assn->rank(),
-       and defined $assn->ordered(),
-       and ($assn->ordered() == 0 or $assn->ordered() == 1),
-       and defined $assn->class_name(),
-       and $assn->class_name(),
-       and defined $assn->name(),
-       and $assn->name(),
+       and $assn->isa('Bio::MAGE::Association'));
+$end = $assn->other();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->rank(),
+       and $end->rank(),
+       and defined $end->ordered(),
+       and ($end->ordered() == 0 or $end->ordered() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
+       and defined $end->name(),
+       and $end->name(),
+      );
+
+$end = $assn->self();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
       );
 # testing association experimentalFactors
 my $experimentalfactors_assn;
@@ -152,20 +213,37 @@ result (UNIVERSAL::isa($experimentdesign->getExperimentalFactors,'ARRAY')
 # test the meta-data for the assoication
 ($assn) = $assns{experimentalFactors};
 result(is_object($assn)
-       and $assn->isa('Bio::MAGE::Association')
-       and defined $assn->description(),
-       and defined $assn->cardinality(),
-       and grep {$_ eq $assn->cardinality} ('0..1','1','1..N','0..N'),
-       and defined $assn->is_ref(),
-       and ($assn->is_ref() == 0 or $assn->is_ref() == 1),
-       and defined $assn->rank(),
-       and $assn->rank(),
-       and defined $assn->ordered(),
-       and ($assn->ordered() == 0 or $assn->ordered() == 1),
-       and defined $assn->class_name(),
-       and $assn->class_name(),
-       and defined $assn->name(),
-       and $assn->name(),
+       and $assn->isa('Bio::MAGE::Association'));
+$end = $assn->other();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->rank(),
+       and $end->rank(),
+       and defined $end->ordered(),
+       and ($end->ordered() == 0 or $end->ordered() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
+       and defined $end->name(),
+       and $end->name(),
+      );
+
+$end = $assn->self();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
       );
 # testing association qualityControlDescription
 my $qualitycontroldescription_assn;
@@ -183,20 +261,37 @@ result ($experimentdesign->getQualityControlDescription() == $qualitycontroldesc
 # test the meta-data for the assoication
 ($assn) = $assns{qualityControlDescription};
 result(is_object($assn)
-       and $assn->isa('Bio::MAGE::Association')
-       and defined $assn->description(),
-       and defined $assn->cardinality(),
-       and grep {$_ eq $assn->cardinality} ('0..1','1','1..N','0..N'),
-       and defined $assn->is_ref(),
-       and ($assn->is_ref() == 0 or $assn->is_ref() == 1),
-       and defined $assn->rank(),
-       and $assn->rank(),
-       and defined $assn->ordered(),
-       and ($assn->ordered() == 0 or $assn->ordered() == 1),
-       and defined $assn->class_name(),
-       and $assn->class_name(),
-       and defined $assn->name(),
-       and $assn->name(),
+       and $assn->isa('Bio::MAGE::Association'));
+$end = $assn->other();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->rank(),
+       and $end->rank(),
+       and defined $end->ordered(),
+       and ($end->ordered() == 0 or $end->ordered() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
+       and defined $end->name(),
+       and $end->name(),
+      );
+
+$end = $assn->self();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
       );
 # testing association topLevelBioAssays
 my $toplevelbioassays_assn;
@@ -220,20 +315,37 @@ result (UNIVERSAL::isa($experimentdesign->getTopLevelBioAssays,'ARRAY')
 # test the meta-data for the assoication
 ($assn) = $assns{topLevelBioAssays};
 result(is_object($assn)
-       and $assn->isa('Bio::MAGE::Association')
-       and defined $assn->description(),
-       and defined $assn->cardinality(),
-       and grep {$_ eq $assn->cardinality} ('0..1','1','1..N','0..N'),
-       and defined $assn->is_ref(),
-       and ($assn->is_ref() == 0 or $assn->is_ref() == 1),
-       and defined $assn->rank(),
-       and $assn->rank(),
-       and defined $assn->ordered(),
-       and ($assn->ordered() == 0 or $assn->ordered() == 1),
-       and defined $assn->class_name(),
-       and $assn->class_name(),
-       and defined $assn->name(),
-       and $assn->name(),
+       and $assn->isa('Bio::MAGE::Association'));
+$end = $assn->other();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->rank(),
+       and $end->rank(),
+       and defined $end->ordered(),
+       and ($end->ordered() == 0 or $end->ordered() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
+       and defined $end->name(),
+       and $end->name(),
+      );
+
+$end = $assn->self();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
       );
 # testing association normalizationDescription
 my $normalizationdescription_assn;
@@ -251,20 +363,37 @@ result ($experimentdesign->getNormalizationDescription() == $normalizationdescri
 # test the meta-data for the assoication
 ($assn) = $assns{normalizationDescription};
 result(is_object($assn)
-       and $assn->isa('Bio::MAGE::Association')
-       and defined $assn->description(),
-       and defined $assn->cardinality(),
-       and grep {$_ eq $assn->cardinality} ('0..1','1','1..N','0..N'),
-       and defined $assn->is_ref(),
-       and ($assn->is_ref() == 0 or $assn->is_ref() == 1),
-       and defined $assn->rank(),
-       and $assn->rank(),
-       and defined $assn->ordered(),
-       and ($assn->ordered() == 0 or $assn->ordered() == 1),
-       and defined $assn->class_name(),
-       and $assn->class_name(),
-       and defined $assn->name(),
-       and $assn->name(),
+       and $assn->isa('Bio::MAGE::Association'));
+$end = $assn->other();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->rank(),
+       and $end->rank(),
+       and defined $end->ordered(),
+       and ($end->ordered() == 0 or $end->ordered() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
+       and defined $end->name(),
+       and $end->name(),
+      );
+
+$end = $assn->self();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
       );
 # testing association security
 my $security_assn;
@@ -282,20 +411,37 @@ result ($experimentdesign->getSecurity() == $security_assn);
 # test the meta-data for the assoication
 ($assn) = $assns{security};
 result(is_object($assn)
-       and $assn->isa('Bio::MAGE::Association')
-       and defined $assn->description(),
-       and defined $assn->cardinality(),
-       and grep {$_ eq $assn->cardinality} ('0..1','1','1..N','0..N'),
-       and defined $assn->is_ref(),
-       and ($assn->is_ref() == 0 or $assn->is_ref() == 1),
-       and defined $assn->rank(),
-       and $assn->rank(),
-       and defined $assn->ordered(),
-       and ($assn->ordered() == 0 or $assn->ordered() == 1),
-       and defined $assn->class_name(),
-       and $assn->class_name(),
-       and defined $assn->name(),
-       and $assn->name(),
+       and $assn->isa('Bio::MAGE::Association'));
+$end = $assn->other();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->rank(),
+       and $end->rank(),
+       and defined $end->ordered(),
+       and ($end->ordered() == 0 or $end->ordered() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
+       and defined $end->name(),
+       and $end->name(),
+      );
+
+$end = $assn->self();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
       );
 # testing association auditTrail
 my $audittrail_assn;
@@ -319,20 +465,37 @@ result (UNIVERSAL::isa($experimentdesign->getAuditTrail,'ARRAY')
 # test the meta-data for the assoication
 ($assn) = $assns{auditTrail};
 result(is_object($assn)
-       and $assn->isa('Bio::MAGE::Association')
-       and defined $assn->description(),
-       and defined $assn->cardinality(),
-       and grep {$_ eq $assn->cardinality} ('0..1','1','1..N','0..N'),
-       and defined $assn->is_ref(),
-       and ($assn->is_ref() == 0 or $assn->is_ref() == 1),
-       and defined $assn->rank(),
-       and $assn->rank(),
-       and defined $assn->ordered(),
-       and ($assn->ordered() == 0 or $assn->ordered() == 1),
-       and defined $assn->class_name(),
-       and $assn->class_name(),
-       and defined $assn->name(),
-       and $assn->name(),
+       and $assn->isa('Bio::MAGE::Association'));
+$end = $assn->other();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->rank(),
+       and $end->rank(),
+       and defined $end->ordered(),
+       and ($end->ordered() == 0 or $end->ordered() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
+       and defined $end->name(),
+       and $end->name(),
+      );
+
+$end = $assn->self();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
       );
 # testing association descriptions
 my $descriptions_assn;
@@ -356,20 +519,37 @@ result (UNIVERSAL::isa($experimentdesign->getDescriptions,'ARRAY')
 # test the meta-data for the assoication
 ($assn) = $assns{descriptions};
 result(is_object($assn)
-       and $assn->isa('Bio::MAGE::Association')
-       and defined $assn->description(),
-       and defined $assn->cardinality(),
-       and grep {$_ eq $assn->cardinality} ('0..1','1','1..N','0..N'),
-       and defined $assn->is_ref(),
-       and ($assn->is_ref() == 0 or $assn->is_ref() == 1),
-       and defined $assn->rank(),
-       and $assn->rank(),
-       and defined $assn->ordered(),
-       and ($assn->ordered() == 0 or $assn->ordered() == 1),
-       and defined $assn->class_name(),
-       and $assn->class_name(),
-       and defined $assn->name(),
-       and $assn->name(),
+       and $assn->isa('Bio::MAGE::Association'));
+$end = $assn->other();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->rank(),
+       and $end->rank(),
+       and defined $end->ordered(),
+       and ($end->ordered() == 0 or $end->ordered() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
+       and defined $end->name(),
+       and $end->name(),
+      );
+
+$end = $assn->self();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
       );
 # testing association propertySets
 my $propertysets_assn;
@@ -393,20 +573,37 @@ result (UNIVERSAL::isa($experimentdesign->getPropertySets,'ARRAY')
 # test the meta-data for the assoication
 ($assn) = $assns{propertySets};
 result(is_object($assn)
-       and $assn->isa('Bio::MAGE::Association')
-       and defined $assn->description(),
-       and defined $assn->cardinality(),
-       and grep {$_ eq $assn->cardinality} ('0..1','1','1..N','0..N'),
-       and defined $assn->is_ref(),
-       and ($assn->is_ref() == 0 or $assn->is_ref() == 1),
-       and defined $assn->rank(),
-       and $assn->rank(),
-       and defined $assn->ordered(),
-       and ($assn->ordered() == 0 or $assn->ordered() == 1),
-       and defined $assn->class_name(),
-       and $assn->class_name(),
-       and defined $assn->name(),
-       and $assn->name(),
+       and $assn->isa('Bio::MAGE::Association'));
+$end = $assn->other();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->rank(),
+       and $end->rank(),
+       and defined $end->ordered(),
+       and ($end->ordered() == 0 or $end->ordered() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
+       and defined $end->name(),
+       and $end->name(),
+      );
+
+$end = $assn->self();
+result(defined $end
+       and is_object($end)
+       and $end->isa('Bio::MAGE::Association::End')
+       and defined $end->documentation(),
+       and defined $end->cardinality(),
+       and grep {$_ eq $end->cardinality} ('0..1','1','1..N','0..N'),
+       and defined $end->is_ref(),
+       and ($end->is_ref() == 0 or $end->is_ref() == 1),
+       and defined $end->class_name(),
+       and $end->class_name(),
       );
 # testing superclass Bio::MAGE::Describable
 result ($experimentdesign->isa(q[Bio::MAGE::Describable]));
