@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: Describable.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -63,11 +63,11 @@ $VERSION = q[$Id: Describable.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp $
   my $descriptions_val = $describable->descriptions();
   $describable->descriptions($value);
 
-  my $auditTrail_val = $describable->auditTrail();
-  $describable->auditTrail($value);
-
   my $security_val = $describable->security();
   $describable->security($value);
+
+  my $auditTrail_val = $describable->auditTrail();
+  $describable->auditTrail($value);
 
 
 =head2 DESCRIPTION
@@ -164,22 +164,34 @@ named-value style arguments:
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
 
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
+The value will be of type C<Description>.
 
 
 =item * security
 
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -302,7 +314,17 @@ returns the list of subclasses for this class.
 =cut
 
 sub subclasses {
-  my @list = ('Bio::MAGE::AuditAndSecurity::Audit', 'Bio::MAGE::BioSequence::SeqFeature', 'Bio::MAGE::HigherLevelAnalysis::Node', 'Bio::MAGE::Protocol::ParameterizableApplication', 'Bio::MAGE::Identifiable', 'Bio::MAGE::Experiment::ExperimentDesign', 'Bio::MAGE::Array::ManufactureLIMS', 'Bio::MAGE::BQS::BibliographicReference', 'Bio::MAGE::Array::Fiducial', 'Bio::MAGE::HigherLevelAnalysis::NodeContents', 'Bio::MAGE::Description::Description');
+  my @list = ('Bio::MAGE::AuditAndSecurity::Audit',
+'Bio::MAGE::BioSequence::SeqFeature',
+'Bio::MAGE::HigherLevelAnalysis::Node',
+'Bio::MAGE::Protocol::ParameterizableApplication',
+'Bio::MAGE::Identifiable',
+'Bio::MAGE::Experiment::ExperimentDesign',
+'Bio::MAGE::Array::ManufactureLIMS',
+'Bio::MAGE::BQS::BibliographicReference',
+'Bio::MAGE::Array::Fiducial',
+'Bio::MAGE::HigherLevelAnalysis::NodeContents',
+'Bio::MAGE::Description::Description');
   return @list;
 }
 
@@ -342,7 +364,9 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('descriptions', 'auditTrail', 'security');
+  my @list = ('descriptions',
+'security',
+'auditTrail');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -400,66 +424,66 @@ BEGIN {
   $__ASSOCIATIONS = [
           'descriptions',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Free hand text descriptions.  Makes available the associations of Description to an instance of Describable.',
-                                        '__CLASS_NAME' => 'Describable',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'descriptions',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Free hand text descriptions.  Makes available the associations of Description to an instance of Describable.',
-                                         '__CLASS_NAME' => 'Description',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'descriptions',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Description'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Free hand text descriptions.  Makes available the associations of Description to an instance of Describable.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Describable'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'auditTrail',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'A list of Audit instances that track changes to the instance of Describable.',
-                                        '__CLASS_NAME' => 'Describable',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'auditTrail',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'A list of Audit instances that track changes to the instance of Describable.',
-                                         '__CLASS_NAME' => 'Audit',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'auditTrail',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Audit'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'A list of Audit instances that track changes to the instance of Describable.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Describable'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'security',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'Information on the security for the instance of the class.',
-                                        '__CLASS_NAME' => 'Describable',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'security',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Information on the security for the instance of the class.',
-                                         '__CLASS_NAME' => 'Security',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'security',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Security'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'Information on the security for the instance of the class.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Describable'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -604,6 +628,73 @@ sub addDescriptions {
 =back
 
 
+=item security
+
+
+From the MAGE-OM documentation for the C<security> association:
+
+Information on the security for the instance of the class.
+
+
+
+=over
+
+
+=item $val = $describable->setSecurity($val)
+
+The restricted setter method for the security association.
+
+Input parameters: the value to which the security association will be set : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
+
+Return value: the current value of the security association : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::AuditAndSecurity::Security>
+
+=cut
+
+sub setSecurity {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setSecurity: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setSecurity: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setSecurity: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Security") unless UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Security');
+  return $self->{__SECURITY} = $val;
+}
+
+
+
+=item $val = $describable->getSecurity()
+
+The restricted getter method for the security association.
+
+Input parameters: none
+
+Return value: the current value of the security association : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getSecurity {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getSecurity: arguments passed to getter")
+    if @_;
+  return $self->{__SECURITY};
+}
+
+
+
+
+=back
+
+
 =item auditTrail
 
 
@@ -703,73 +794,6 @@ sub addAuditTrail {
 
   push(@{$self->{__AUDITTRAIL}},@vals);
 }
-
-
-
-=back
-
-
-=item security
-
-
-From the MAGE-OM documentation for the C<security> association:
-
-Information on the security for the instance of the class.
-
-
-
-=over
-
-
-=item $val = $describable->setSecurity($val)
-
-The restricted setter method for the security association.
-
-Input parameters: the value to which the security association will be set : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
-
-Return value: the current value of the security association : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::AuditAndSecurity::Security>
-
-=cut
-
-sub setSecurity {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setSecurity: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setSecurity: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setSecurity: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Security") unless UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Security');
-  return $self->{__SECURITY} = $val;
-}
-
-
-
-=item $val = $describable->getSecurity()
-
-The restricted getter method for the security association.
-
-Input parameters: none
-
-Return value: the current value of the security association : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getSecurity {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getSecurity: arguments passed to getter")
-    if @_;
-  return $self->{__SECURITY};
-}
-
 
 
 

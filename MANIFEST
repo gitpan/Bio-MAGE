@@ -312,3 +312,4 @@ t/Zone.t
 t/ZoneDefect.t
 t/ZoneGroup.t
 t/ZoneLayout.t
+META.yml                                 Module meta-data (added by MakeMaker)

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: ArrayDesign.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -63,10 +63,10 @@ $VERSION = q[$Id: ArrayDesign.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $
   my $arraydesign = Bio::MAGE::ArrayDesign::ArrayDesign->new(numberOfFeatures=>$numberOfFeatures_value,
 			version=>$version_value,
 			reporterGroups=>$reporterGroups_value,
-			protocolApplications=>$protocolApplications_value,
 			featureGroups=>$featureGroups_value,
-			compositeGroups=>$compositeGroups_value,
-			designProviders=>$designProviders_value);
+			protocolApplications=>$protocolApplications_value,
+			designProviders=>$designProviders_value,
+			compositeGroups=>$compositeGroups_value);
 
     # setting and retrieving object attributes
   my $numberOfFeatures_val = $arraydesign->numberOfFeatures();
@@ -79,17 +79,17 @@ $VERSION = q[$Id: ArrayDesign.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $
   my $reporterGroups_val = $arraydesign->reporterGroups();
   $arraydesign->reporterGroups($value);
 
-  my $protocolApplications_val = $arraydesign->protocolApplications();
-  $arraydesign->protocolApplications($value);
-
   my $featureGroups_val = $arraydesign->featureGroups();
   $arraydesign->featureGroups($value);
 
-  my $compositeGroups_val = $arraydesign->compositeGroups();
-  $arraydesign->compositeGroups($value);
+  my $protocolApplications_val = $arraydesign->protocolApplications();
+  $arraydesign->protocolApplications($value);
 
   my $designProviders_val = $arraydesign->designProviders();
   $arraydesign->designProviders($value);
+
+  my $compositeGroups_val = $arraydesign->compositeGroups();
+  $arraydesign->compositeGroups($value);
 
 
 =head2 DESCRIPTION
@@ -147,67 +147,102 @@ named-value style arguments:
 
 =item * numberOfFeatures
 
-Sets the value of the numberOfFeatures attribute (from C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+Sets the value of the numberOfFeatures attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+
 
 
 =item * version
 
-Sets the value of the version attribute (from C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+Sets the value of the version attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+
 
 
 =item * reporterGroups
 
-Sets the value of the reporterGroups association (from C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+Sets the value of the reporterGroups association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+
+The value will be of type C<ReporterGroup>.
 
 
 =item * protocolApplications
 
-Sets the value of the protocolApplications association (from C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+Sets the value of the protocolApplications association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+
+The value will be of type C<ProtocolApplication>.
 
 
 =item * featureGroups
 
-Sets the value of the featureGroups association (from C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+Sets the value of the featureGroups association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::ArrayDesign>).
 
-
-=item * compositeGroups
-
-Sets the value of the compositeGroups association (from C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+The value will be of type C<FeatureGroup>.
 
 
 =item * designProviders
 
-Sets the value of the designProviders association (from C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+Sets the value of the designProviders association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+
+The value will be of type C<Contact>.
+
+
+=item * compositeGroups
+
+Sets the value of the compositeGroups association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+
+The value will be of type C<CompositeGroup>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -353,7 +388,8 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('numberOfFeatures', 'version');
+  my @list = ('numberOfFeatures',
+'version');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -370,7 +406,11 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('reporterGroups', 'protocolApplications', 'featureGroups', 'compositeGroups', 'designProviders');
+  my @list = ('reporterGroups',
+'featureGroups',
+'protocolApplications',
+'designProviders',
+'compositeGroups');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -654,108 +694,108 @@ BEGIN {
   $__ASSOCIATIONS = [
           'protocolApplications',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Describes the application of any protocols, such as the methodology used to pick oligos, in the design of the array.',
-                                        '__CLASS_NAME' => 'ArrayDesign',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'protocolApplications',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Describes the application of any protocols, such as the methodology used to pick oligos, in the design of the array.',
-                                         '__CLASS_NAME' => 'ProtocolApplication',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'protocolApplications',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ProtocolApplication'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Describes the application of any protocols, such as the methodology used to pick oligos, in the design of the array.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ArrayDesign'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'featureGroups',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The grouping of like Features together.  Typically for a physical array design, this will be a single grouping of features whose type might be PCR Product or Oligo.  If more than one technology type occurs on the array, such as the mixing of Cloned BioMaterial and Oligos, then there would be multiple FeatureGroups to segregate the technology types.',
-                                        '__CLASS_NAME' => 'ArrayDesign',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'featureGroups',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The grouping of like Features together.  Typically for a physical array design, this will be a single grouping of features whose type might be PCR Product or Oligo.  If more than one technology type occurs on the array, such as the mixing of Cloned BioMaterial and Oligos, then there would be multiple FeatureGroups to segregate the technology types.',
-                                         '__CLASS_NAME' => 'FeatureGroup',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'featureGroups',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'FeatureGroup'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The grouping of like Features together.  Typically for a physical array design, this will be a single grouping of features whose type might be PCR Product or Oligo.  If more than one technology type occurs on the array, such as the mixing of Cloned BioMaterial and Oligos, then there would be multiple FeatureGroups to segregate the technology types.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ArrayDesign'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'reporterGroups',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The grouping of like Reporter together.  If more than one technology type occurs on the array, such as the mixing of Cloned BioMaterial and Oligos, then there would be multiple ReporterGroups to segregate the technology types.',
-                                        '__CLASS_NAME' => 'ArrayDesign',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'reporterGroups',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The grouping of like Reporter together.  If more than one technology type occurs on the array, such as the mixing of Cloned BioMaterial and Oligos, then there would be multiple ReporterGroups to segregate the technology types.',
-                                         '__CLASS_NAME' => 'ReporterGroup',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'reporterGroups',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ReporterGroup'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The grouping of like Reporter together.  If more than one technology type occurs on the array, such as the mixing of Cloned BioMaterial and Oligos, then there would be multiple ReporterGroups to segregate the technology types.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ArrayDesign'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'compositeGroups',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The grouping of like CompositeSequence together.  If more than one technology type occurs on the array, such as the mixing of Cloned BioMaterial and Oligos, then there would be multiple CompositeGroups to segregate the technology types.',
-                                        '__CLASS_NAME' => 'ArrayDesign',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'compositeGroups',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The grouping of like CompositeSequence together.  If more than one technology type occurs on the array, such as the mixing of Cloned BioMaterial and Oligos, then there would be multiple CompositeGroups to segregate the technology types.',
-                                         '__CLASS_NAME' => 'CompositeGroup',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'compositeGroups',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'CompositeGroup'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The grouping of like CompositeSequence together.  If more than one technology type occurs on the array, such as the mixing of Cloned BioMaterial and Oligos, then there would be multiple CompositeGroups to segregate the technology types.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ArrayDesign'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'designProviders',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The primary contact for information on the array design',
-                                        '__CLASS_NAME' => 'ArrayDesign',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'designProviders',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '5',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The primary contact for information on the array design',
-                                         '__CLASS_NAME' => 'Contact',
-                                         '__RANK' => '5',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'designProviders',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Contact'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The primary contact for information on the array design',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ArrayDesign'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -900,111 +940,6 @@ sub addReporterGroups {
 =back
 
 
-=item protocolApplications
-
-
-From the MAGE-OM documentation for the C<protocolApplications> association:
-
-Describes the application of any protocols, such as the methodology used to pick oligos, in the design of the array.
-
-
-
-=over
-
-
-=item $array_ref = $arraydesign->setProtocolApplications($array_ref)
-
-The restricted setter method for the protocolApplications association.
-
-Input parameters: the value to which the protocolApplications association will be set : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
-
-Return value: the current value of the protocolApplications association : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Protocol::ProtocolApplication> instances
-
-=cut
-
-sub setProtocolApplications {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setProtocolApplications: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setProtocolApplications: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-    croak(__PACKAGE__ . "::setProtocolApplications: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setProtocolApplications: wrong type: " . ref($val) . " expected Bio::MAGE::Protocol::ProtocolApplication")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::Protocol::ProtocolApplication');
-  }
-
-  return $self->{__PROTOCOLAPPLICATIONS} = $val;
-}
-
-
-
-=item $array_ref = $arraydesign->getProtocolApplications()
-
-The restricted getter method for the protocolApplications association.
-
-Input parameters: none
-
-Return value: the current value of the protocolApplications association : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getProtocolApplications {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getProtocolApplications: arguments passed to getter")
-    if @_;
-  return $self->{__PROTOCOLAPPLICATIONS};
-}
-
-
-
-=item $arraydesign->addProtocolApplications(@vals)
-
-Because the protocolApplications association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the protocolApplications
-association.
-
-Input parameters: the list of values C<@vals> to add to the protocolApplications
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Protocol::ProtocolApplication>
-
-=cut
-
-sub addProtocolApplications {
-  my $self = shift;
-  croak(__PACKAGE__ . "::addProtocolApplications: no arguments passed to setter")
-    unless @_;
-  my @vals = @_;
-    foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addProtocolApplications: wrong type: " . ref($val) . " expected Bio::MAGE::Protocol::ProtocolApplication")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::Protocol::ProtocolApplication');
-  }
-
-  push(@{$self->{__PROTOCOLAPPLICATIONS}},@vals);
-}
-
-
-
-=back
-
-
 =item featureGroups
 
 
@@ -1110,59 +1045,59 @@ sub addFeatureGroups {
 =back
 
 
-=item compositeGroups
+=item protocolApplications
 
 
-From the MAGE-OM documentation for the C<compositeGroups> association:
+From the MAGE-OM documentation for the C<protocolApplications> association:
 
-The grouping of like CompositeSequence together.  If more than one technology type occurs on the array, such as the mixing of Cloned BioMaterial and Oligos, then there would be multiple CompositeGroups to segregate the technology types.
+Describes the application of any protocols, such as the methodology used to pick oligos, in the design of the array.
 
 
 
 =over
 
 
-=item $array_ref = $arraydesign->setCompositeGroups($array_ref)
+=item $array_ref = $arraydesign->setProtocolApplications($array_ref)
 
-The restricted setter method for the compositeGroups association.
+The restricted setter method for the protocolApplications association.
 
-Input parameters: the value to which the compositeGroups association will be set : a reference to an array of objects of type C<Bio::MAGE::ArrayDesign::CompositeGroup>
+Input parameters: the value to which the protocolApplications association will be set : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
 
-Return value: the current value of the compositeGroups association : a reference to an array of objects of type C<Bio::MAGE::ArrayDesign::CompositeGroup>
+Return value: the current value of the protocolApplications association : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::ArrayDesign::CompositeGroup> instances
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Protocol::ProtocolApplication> instances
 
 =cut
 
-sub setCompositeGroups {
+sub setProtocolApplications {
   my $self = shift;
-  croak(__PACKAGE__ . "::setCompositeGroups: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setProtocolApplications: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setCompositeGroups: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setProtocolApplications: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
-    croak(__PACKAGE__ . "::setCompositeGroups: expected array reference, got $self")
+    croak(__PACKAGE__ . "::setProtocolApplications: expected array reference, got $self")
     unless UNIVERSAL::isa($val,'ARRAY');
   foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setCompositeGroups: wrong type: " . ref($val) . " expected Bio::MAGE::ArrayDesign::CompositeGroup")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::ArrayDesign::CompositeGroup');
+    croak(__PACKAGE__ . "::setProtocolApplications: wrong type: " . ref($val) . " expected Bio::MAGE::Protocol::ProtocolApplication")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Protocol::ProtocolApplication');
   }
 
-  return $self->{__COMPOSITEGROUPS} = $val;
+  return $self->{__PROTOCOLAPPLICATIONS} = $val;
 }
 
 
 
-=item $array_ref = $arraydesign->getCompositeGroups()
+=item $array_ref = $arraydesign->getProtocolApplications()
 
-The restricted getter method for the compositeGroups association.
+The restricted getter method for the protocolApplications association.
 
 Input parameters: none
 
-Return value: the current value of the compositeGroups association : a reference to an array of objects of type C<Bio::MAGE::ArrayDesign::CompositeGroup>
+Return value: the current value of the protocolApplications association : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
 
 Side effects: none
 
@@ -1170,22 +1105,22 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getCompositeGroups {
+sub getProtocolApplications {
   my $self = shift;
-  croak(__PACKAGE__ . "::getCompositeGroups: arguments passed to getter")
+  croak(__PACKAGE__ . "::getProtocolApplications: arguments passed to getter")
     if @_;
-  return $self->{__COMPOSITEGROUPS};
+  return $self->{__PROTOCOLAPPLICATIONS};
 }
 
 
 
-=item $arraydesign->addCompositeGroups(@vals)
+=item $arraydesign->addProtocolApplications(@vals)
 
-Because the compositeGroups association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the compositeGroups
+Because the protocolApplications association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the protocolApplications
 association.
 
-Input parameters: the list of values C<@vals> to add to the compositeGroups
+Input parameters: the list of values C<@vals> to add to the protocolApplications
 association. B<NOTE>: submitting a single value is permitted.
 
 Return value: none
@@ -1193,21 +1128,21 @@ Return value: none
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::ArrayDesign::CompositeGroup>
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Protocol::ProtocolApplication>
 
 =cut
 
-sub addCompositeGroups {
+sub addProtocolApplications {
   my $self = shift;
-  croak(__PACKAGE__ . "::addCompositeGroups: no arguments passed to setter")
+  croak(__PACKAGE__ . "::addProtocolApplications: no arguments passed to setter")
     unless @_;
   my @vals = @_;
     foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addCompositeGroups: wrong type: " . ref($val) . " expected Bio::MAGE::ArrayDesign::CompositeGroup")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::ArrayDesign::CompositeGroup');
+    croak(__PACKAGE__ . "::addProtocolApplications: wrong type: " . ref($val) . " expected Bio::MAGE::Protocol::ProtocolApplication")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Protocol::ProtocolApplication');
   }
 
-  push(@{$self->{__COMPOSITEGROUPS}},@vals);
+  push(@{$self->{__PROTOCOLAPPLICATIONS}},@vals);
 }
 
 
@@ -1313,6 +1248,111 @@ sub addDesignProviders {
   }
 
   push(@{$self->{__DESIGNPROVIDERS}},@vals);
+}
+
+
+
+=back
+
+
+=item compositeGroups
+
+
+From the MAGE-OM documentation for the C<compositeGroups> association:
+
+The grouping of like CompositeSequence together.  If more than one technology type occurs on the array, such as the mixing of Cloned BioMaterial and Oligos, then there would be multiple CompositeGroups to segregate the technology types.
+
+
+
+=over
+
+
+=item $array_ref = $arraydesign->setCompositeGroups($array_ref)
+
+The restricted setter method for the compositeGroups association.
+
+Input parameters: the value to which the compositeGroups association will be set : a reference to an array of objects of type C<Bio::MAGE::ArrayDesign::CompositeGroup>
+
+Return value: the current value of the compositeGroups association : a reference to an array of objects of type C<Bio::MAGE::ArrayDesign::CompositeGroup>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::ArrayDesign::CompositeGroup> instances
+
+=cut
+
+sub setCompositeGroups {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setCompositeGroups: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setCompositeGroups: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setCompositeGroups: expected array reference, got $self")
+    unless UNIVERSAL::isa($val,'ARRAY');
+  foreach my $val (@{$val}) {
+    croak(__PACKAGE__ . "::setCompositeGroups: wrong type: " . ref($val) . " expected Bio::MAGE::ArrayDesign::CompositeGroup")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::ArrayDesign::CompositeGroup');
+  }
+
+  return $self->{__COMPOSITEGROUPS} = $val;
+}
+
+
+
+=item $array_ref = $arraydesign->getCompositeGroups()
+
+The restricted getter method for the compositeGroups association.
+
+Input parameters: none
+
+Return value: the current value of the compositeGroups association : a reference to an array of objects of type C<Bio::MAGE::ArrayDesign::CompositeGroup>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getCompositeGroups {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getCompositeGroups: arguments passed to getter")
+    if @_;
+  return $self->{__COMPOSITEGROUPS};
+}
+
+
+
+=item $arraydesign->addCompositeGroups(@vals)
+
+Because the compositeGroups association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the compositeGroups
+association.
+
+Input parameters: the list of values C<@vals> to add to the compositeGroups
+association. B<NOTE>: submitting a single value is permitted.
+
+Return value: none
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::ArrayDesign::CompositeGroup>
+
+=cut
+
+sub addCompositeGroups {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addCompositeGroups: no arguments passed to setter")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addCompositeGroups: wrong type: " . ref($val) . " expected Bio::MAGE::ArrayDesign::CompositeGroup")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::ArrayDesign::CompositeGroup');
+  }
+
+  push(@{$self->{__COMPOSITEGROUPS}},@vals);
 }
 
 

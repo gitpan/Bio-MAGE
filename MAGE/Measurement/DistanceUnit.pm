@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Measurement::Unit Exporter);
-$VERSION = q[$Id: DistanceUnit.pm,v 1.1 2002/12/10 06:25:50 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -111,17 +111,24 @@ named-value style arguments:
 
 =item * unitNameCV
 
-Sets the value of the unitNameCV attribute (from C<Bio::MAGE::Measurement::DistanceUnit>).
+Sets the value of the unitNameCV attribute (this attribute was inherited
+from class C<Bio::MAGE::Measurement::DistanceUnit>).
+
 
 
 =item * unitName
 
-Sets the value of the unitName attribute (from C<Bio::MAGE::Measurement::Unit>).
+Sets the value of the unitName attribute (this attribute was inherited
+from class C<Bio::MAGE::Measurement::Unit>).
+
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: BioDataValues.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -127,7 +127,10 @@ named-value style arguments:
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -250,7 +253,8 @@ returns the list of subclasses for this class.
 =cut
 
 sub subclasses {
-  my @list = ('Bio::MAGE::BioAssayData::BioDataTuples', 'Bio::MAGE::BioAssayData::BioDataCube');
+  my @list = ('Bio::MAGE::BioAssayData::BioDataTuples',
+'Bio::MAGE::BioAssayData::BioDataCube');
   return @list;
 }
 

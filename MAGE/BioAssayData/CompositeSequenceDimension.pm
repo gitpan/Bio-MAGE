@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::BioAssayData::DesignElementDimension Exporter);
-$VERSION = q[$Id: CompositeSequenceDimension.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -111,37 +111,56 @@ named-value style arguments:
 
 =item * compositeSequences
 
-Sets the value of the compositeSequences association (from C<Bio::MAGE::BioAssayData::CompositeSequenceDimension>).
+Sets the value of the compositeSequences association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::CompositeSequenceDimension>).
+
+The value will be of type C<CompositeSequence>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -456,24 +475,24 @@ BEGIN {
   $__ASSOCIATIONS = [
           'compositeSequences',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The CompositeSequences for this Dimension.',
-                                        '__CLASS_NAME' => 'CompositeSequenceDimension',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'compositeSequences',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The CompositeSequences for this Dimension.',
-                                         '__CLASS_NAME' => 'CompositeSequence',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 1
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'compositeSequences',
+                                         '__ORDERED' => 1,
+                                         '__CLASS_NAME' => 'CompositeSequence'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The CompositeSequences for this Dimension.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'CompositeSequenceDimension'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Protocol::ParameterizableApplication Exporter);
-$VERSION = q[$Id: SoftwareApplication.pm,v 1.1 2002/12/10 06:25:50 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -120,42 +120,64 @@ named-value style arguments:
 
 =item * releaseDate
 
-Sets the value of the releaseDate attribute (from C<Bio::MAGE::Protocol::SoftwareApplication>).
+Sets the value of the releaseDate attribute (this attribute was inherited
+from class C<Bio::MAGE::Protocol::SoftwareApplication>).
+
 
 
 =item * version
 
-Sets the value of the version attribute (from C<Bio::MAGE::Protocol::SoftwareApplication>).
+Sets the value of the version attribute (this attribute was inherited
+from class C<Bio::MAGE::Protocol::SoftwareApplication>).
+
 
 
 =item * software
 
-Sets the value of the software association (from C<Bio::MAGE::Protocol::SoftwareApplication>).
+Sets the value of the software association (this association was inherited
+from class C<Bio::MAGE::Protocol::SoftwareApplication>).
+
+The value will be of type C<Software>.
 
 
 =item * parameterValues
 
-Sets the value of the parameterValues association (from C<Bio::MAGE::Protocol::ParameterizableApplication>).
+Sets the value of the parameterValues association (this association was inherited
+from class C<Bio::MAGE::Protocol::ParameterizableApplication>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
+The value will be of type C<ParameterValue>.
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -301,7 +323,8 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('releaseDate', 'version');
+  my @list = ('releaseDate',
+'version');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -508,24 +531,24 @@ BEGIN {
   $__ASSOCIATIONS = [
           'software',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The underlying software.',
-                                        '__CLASS_NAME' => 'SoftwareApplication',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'software',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The underlying software.',
-                                         '__CLASS_NAME' => 'Software',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'software',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Software'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The underlying software.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'SoftwareApplication'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

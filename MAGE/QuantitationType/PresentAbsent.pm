@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::QuantitationType::StandardQuantitationType Exporter);
-$VERSION = q[$Id: PresentAbsent.pm,v 1.1 2002/12/10 06:25:50 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -104,62 +104,95 @@ named-value style arguments:
 
 =item * isBackground
 
-Sets the value of the isBackground attribute (from C<Bio::MAGE::QuantitationType::QuantitationType>).
+Sets the value of the isBackground attribute (this attribute was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
 
-
-=item * channel
-
-Sets the value of the channel association (from C<Bio::MAGE::QuantitationType::QuantitationType>).
 
 
 =item * quantitationTypeMaps
 
-Sets the value of the quantitationTypeMaps association (from C<Bio::MAGE::QuantitationType::QuantitationType>).
+Sets the value of the quantitationTypeMaps association (this association was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
+
+The value will be of type C<QuantitationTypeMap>.
 
 
 =item * dataType
 
-Sets the value of the dataType association (from C<Bio::MAGE::QuantitationType::QuantitationType>).
+Sets the value of the dataType association (this association was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * scale
 
-Sets the value of the scale association (from C<Bio::MAGE::QuantitationType::QuantitationType>).
+Sets the value of the scale association (this association was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
+
+The value will be of type C<OntologyEntry>.
+
+
+=item * channel
+
+Sets the value of the channel association (this association was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
+
+The value will be of type C<Channel>.
 
 
 =item * confidenceIndicators
 
-Sets the value of the confidenceIndicators association (from C<Bio::MAGE::QuantitationType::QuantitationType>).
+Sets the value of the confidenceIndicators association (this association was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
+
+The value will be of type C<ConfidenceIndicator>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Protocol::ParameterizableApplication Exporter);
-$VERSION = q[$Id: ProtocolApplication.pm,v 1.1 2002/12/10 06:25:50 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -61,9 +61,9 @@ $VERSION = q[$Id: ProtocolApplication.pm,v 1.1 2002/12/10 06:25:50 jason_e_stewa
 
     # creating an already populated instance
   my $protocolapplication = Bio::MAGE::Protocol::ProtocolApplication->new(activityDate=>$activityDate_value,
-			hardwareApplications=>$hardwareApplications_value,
 			protocol=>$protocol_value,
 			softwareApplications=>$softwareApplications_value,
+			hardwareApplications=>$hardwareApplications_value,
 			performers=>$performers_value);
 
     # setting and retrieving object attributes
@@ -71,14 +71,14 @@ $VERSION = q[$Id: ProtocolApplication.pm,v 1.1 2002/12/10 06:25:50 jason_e_stewa
   $protocolapplication->activityDate($value);
 
     # setting and retrieving object associations
-  my $hardwareApplications_val = $protocolapplication->hardwareApplications();
-  $protocolapplication->hardwareApplications($value);
-
   my $protocol_val = $protocolapplication->protocol();
   $protocolapplication->protocol($value);
 
   my $softwareApplications_val = $protocolapplication->softwareApplications();
   $protocolapplication->softwareApplications($value);
+
+  my $hardwareApplications_val = $protocolapplication->hardwareApplications();
+  $protocolapplication->hardwareApplications($value);
 
   my $performers_val = $protocolapplication->performers();
   $protocolapplication->performers($value);
@@ -128,52 +128,81 @@ named-value style arguments:
 
 =item * activityDate
 
-Sets the value of the activityDate attribute (from C<Bio::MAGE::Protocol::ProtocolApplication>).
+Sets the value of the activityDate attribute (this attribute was inherited
+from class C<Bio::MAGE::Protocol::ProtocolApplication>).
 
-
-=item * hardwareApplications
-
-Sets the value of the hardwareApplications association (from C<Bio::MAGE::Protocol::ProtocolApplication>).
 
 
 =item * protocol
 
-Sets the value of the protocol association (from C<Bio::MAGE::Protocol::ProtocolApplication>).
+Sets the value of the protocol association (this association was inherited
+from class C<Bio::MAGE::Protocol::ProtocolApplication>).
+
+The value will be of type C<Protocol>.
 
 
 =item * softwareApplications
 
-Sets the value of the softwareApplications association (from C<Bio::MAGE::Protocol::ProtocolApplication>).
+Sets the value of the softwareApplications association (this association was inherited
+from class C<Bio::MAGE::Protocol::ProtocolApplication>).
+
+The value will be of type C<SoftwareApplication>.
 
 
 =item * performers
 
-Sets the value of the performers association (from C<Bio::MAGE::Protocol::ProtocolApplication>).
+Sets the value of the performers association (this association was inherited
+from class C<Bio::MAGE::Protocol::ProtocolApplication>).
+
+The value will be of type C<Person>.
+
+
+=item * hardwareApplications
+
+Sets the value of the hardwareApplications association (this association was inherited
+from class C<Bio::MAGE::Protocol::ProtocolApplication>).
+
+The value will be of type C<HardwareApplication>.
 
 
 =item * parameterValues
 
-Sets the value of the parameterValues association (from C<Bio::MAGE::Protocol::ParameterizableApplication>).
+Sets the value of the parameterValues association (this association was inherited
+from class C<Bio::MAGE::Protocol::ParameterizableApplication>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
+The value will be of type C<ParameterValue>.
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -336,7 +365,10 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('hardwareApplications', 'protocol', 'softwareApplications', 'performers');
+  my @list = ('protocol',
+'softwareApplications',
+'hardwareApplications',
+'performers');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -460,87 +492,87 @@ BEGIN {
   $__ASSOCIATIONS = [
           'hardwareApplications',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The use of hardware for the application of the protocol.',
-                                        '__CLASS_NAME' => 'ProtocolApplication',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'hardwareApplications',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The use of hardware for the application of the protocol.',
-                                         '__CLASS_NAME' => 'HardwareApplication',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'hardwareApplications',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'HardwareApplication'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The use of hardware for the application of the protocol.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ProtocolApplication'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'softwareApplications',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The use of software for the application of the protocol.',
-                                        '__CLASS_NAME' => 'ProtocolApplication',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'softwareApplications',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The use of software for the application of the protocol.',
-                                         '__CLASS_NAME' => 'SoftwareApplication',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'softwareApplications',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'SoftwareApplication'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The use of software for the application of the protocol.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ProtocolApplication'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'performers',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The people who performed the protocol.',
-                                        '__CLASS_NAME' => 'ProtocolApplication',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'performers',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The people who performed the protocol.',
-                                         '__CLASS_NAME' => 'Person',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'performers',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Person'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The people who performed the protocol.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ProtocolApplication'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'protocol',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The protocol that is being used.',
-                                        '__CLASS_NAME' => 'ProtocolApplication',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'protocol',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The protocol that is being used.',
-                                         '__CLASS_NAME' => 'Protocol',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'protocol',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Protocol'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The protocol that is being used.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ProtocolApplication'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -578,111 +610,6 @@ the association.
 Bio::MAGE::Protocol::ProtocolApplication: has the following association accessor methods:
 
 =over
-
-
-=item hardwareApplications
-
-
-From the MAGE-OM documentation for the C<hardwareApplications> association:
-
-The use of hardware for the application of the protocol.
-
-
-
-=over
-
-
-=item $array_ref = $protocolapplication->setHardwareApplications($array_ref)
-
-The restricted setter method for the hardwareApplications association.
-
-Input parameters: the value to which the hardwareApplications association will be set : a reference to an array of objects of type C<Bio::MAGE::Protocol::HardwareApplication>
-
-Return value: the current value of the hardwareApplications association : a reference to an array of objects of type C<Bio::MAGE::Protocol::HardwareApplication>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Protocol::HardwareApplication> instances
-
-=cut
-
-sub setHardwareApplications {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setHardwareApplications: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setHardwareApplications: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-    croak(__PACKAGE__ . "::setHardwareApplications: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setHardwareApplications: wrong type: " . ref($val) . " expected Bio::MAGE::Protocol::HardwareApplication")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::Protocol::HardwareApplication');
-  }
-
-  return $self->{__HARDWAREAPPLICATIONS} = $val;
-}
-
-
-
-=item $array_ref = $protocolapplication->getHardwareApplications()
-
-The restricted getter method for the hardwareApplications association.
-
-Input parameters: none
-
-Return value: the current value of the hardwareApplications association : a reference to an array of objects of type C<Bio::MAGE::Protocol::HardwareApplication>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getHardwareApplications {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getHardwareApplications: arguments passed to getter")
-    if @_;
-  return $self->{__HARDWAREAPPLICATIONS};
-}
-
-
-
-=item $protocolapplication->addHardwareApplications(@vals)
-
-Because the hardwareApplications association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the hardwareApplications
-association.
-
-Input parameters: the list of values C<@vals> to add to the hardwareApplications
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Protocol::HardwareApplication>
-
-=cut
-
-sub addHardwareApplications {
-  my $self = shift;
-  croak(__PACKAGE__ . "::addHardwareApplications: no arguments passed to setter")
-    unless @_;
-  my @vals = @_;
-    foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addHardwareApplications: wrong type: " . ref($val) . " expected Bio::MAGE::Protocol::HardwareApplication")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::Protocol::HardwareApplication');
-  }
-
-  push(@{$self->{__HARDWAREAPPLICATIONS}},@vals);
-}
-
-
-
-=back
 
 
 =item protocol
@@ -850,6 +777,111 @@ sub addSoftwareApplications {
   }
 
   push(@{$self->{__SOFTWAREAPPLICATIONS}},@vals);
+}
+
+
+
+=back
+
+
+=item hardwareApplications
+
+
+From the MAGE-OM documentation for the C<hardwareApplications> association:
+
+The use of hardware for the application of the protocol.
+
+
+
+=over
+
+
+=item $array_ref = $protocolapplication->setHardwareApplications($array_ref)
+
+The restricted setter method for the hardwareApplications association.
+
+Input parameters: the value to which the hardwareApplications association will be set : a reference to an array of objects of type C<Bio::MAGE::Protocol::HardwareApplication>
+
+Return value: the current value of the hardwareApplications association : a reference to an array of objects of type C<Bio::MAGE::Protocol::HardwareApplication>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Protocol::HardwareApplication> instances
+
+=cut
+
+sub setHardwareApplications {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setHardwareApplications: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setHardwareApplications: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setHardwareApplications: expected array reference, got $self")
+    unless UNIVERSAL::isa($val,'ARRAY');
+  foreach my $val (@{$val}) {
+    croak(__PACKAGE__ . "::setHardwareApplications: wrong type: " . ref($val) . " expected Bio::MAGE::Protocol::HardwareApplication")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Protocol::HardwareApplication');
+  }
+
+  return $self->{__HARDWAREAPPLICATIONS} = $val;
+}
+
+
+
+=item $array_ref = $protocolapplication->getHardwareApplications()
+
+The restricted getter method for the hardwareApplications association.
+
+Input parameters: none
+
+Return value: the current value of the hardwareApplications association : a reference to an array of objects of type C<Bio::MAGE::Protocol::HardwareApplication>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getHardwareApplications {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getHardwareApplications: arguments passed to getter")
+    if @_;
+  return $self->{__HARDWAREAPPLICATIONS};
+}
+
+
+
+=item $protocolapplication->addHardwareApplications(@vals)
+
+Because the hardwareApplications association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the hardwareApplications
+association.
+
+Input parameters: the list of values C<@vals> to add to the hardwareApplications
+association. B<NOTE>: submitting a single value is permitted.
+
+Return value: none
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Protocol::HardwareApplication>
+
+=cut
+
+sub addHardwareApplications {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addHardwareApplications: no arguments passed to setter")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addHardwareApplications: wrong type: " . ref($val) . " expected Bio::MAGE::Protocol::HardwareApplication")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Protocol::HardwareApplication');
+  }
+
+  push(@{$self->{__HARDWAREAPPLICATIONS}},@vals);
 }
 
 

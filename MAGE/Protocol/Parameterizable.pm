@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: Parameterizable.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -138,42 +138,63 @@ named-value style arguments:
 
 =item * URI
 
-Sets the value of the URI attribute (from C<Bio::MAGE::Protocol::Parameterizable>).
+Sets the value of the URI attribute (this attribute was inherited
+from class C<Bio::MAGE::Protocol::Parameterizable>).
+
 
 
 =item * parameterTypes
 
-Sets the value of the parameterTypes association (from C<Bio::MAGE::Protocol::Parameterizable>).
+Sets the value of the parameterTypes association (this association was inherited
+from class C<Bio::MAGE::Protocol::Parameterizable>).
+
+The value will be of type C<Parameter>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -296,7 +317,9 @@ returns the list of subclasses for this class.
 =cut
 
 sub subclasses {
-  my @list = ('Bio::MAGE::Protocol::Protocol', 'Bio::MAGE::Protocol::Hardware', 'Bio::MAGE::Protocol::Software');
+  my @list = ('Bio::MAGE::Protocol::Protocol',
+'Bio::MAGE::Protocol::Hardware',
+'Bio::MAGE::Protocol::Software');
   return @list;
 }
 
@@ -554,24 +577,24 @@ BEGIN {
   $__ASSOCIATIONS = [
           'parameterTypes',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The description of the parameters for the Parameterizable class instance.',
-                                        '__CLASS_NAME' => 'Parameterizable',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'parameterTypes',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The description of the parameters for the Parameterizable class instance.',
-                                         '__CLASS_NAME' => 'Parameter',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'parameterTypes',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Parameter'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The description of the parameters for the Parameterizable class instance.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Parameterizable'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

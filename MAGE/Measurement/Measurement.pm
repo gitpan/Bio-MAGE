@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: Measurement.pm,v 1.1 2002/12/10 06:25:50 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -61,23 +61,23 @@ $VERSION = q[$Id: Measurement.pm,v 1.1 2002/12/10 06:25:50 jason_e_stewart Exp $
 
     # creating an already populated instance
   my $measurement = Bio::MAGE::Measurement::Measurement->new(otherKind=>$otherKind_value,
-			value=>$value_value,
-			type=>$type_value,
 			kindCV=>$kindCV_value,
+			type=>$type_value,
+			value=>$value_value,
 			unit=>$unit_value);
 
     # setting and retrieving object attributes
   my $otherKind_val = $measurement->otherKind();
   $measurement->otherKind($value);
 
-  my $value_val = $measurement->value();
-  $measurement->value($value);
+  my $kindCV_val = $measurement->kindCV();
+  $measurement->kindCV($value);
 
   my $type_val = $measurement->type();
   $measurement->type($value);
 
-  my $kindCV_val = $measurement->kindCV();
-  $measurement->kindCV($value);
+  my $value_val = $measurement->value();
+  $measurement->value($value);
 
     # setting and retrieving object associations
   my $unit_val = $measurement->unit();
@@ -128,32 +128,46 @@ named-value style arguments:
 
 =item * otherKind
 
-Sets the value of the otherKind attribute (from C<Bio::MAGE::Measurement::Measurement>).
+Sets the value of the otherKind attribute (this attribute was inherited
+from class C<Bio::MAGE::Measurement::Measurement>).
 
-
-=item * value
-
-Sets the value of the value attribute (from C<Bio::MAGE::Measurement::Measurement>).
-
-
-=item * type
-
-Sets the value of the type attribute (from C<Bio::MAGE::Measurement::Measurement>).
 
 
 =item * kindCV
 
-Sets the value of the kindCV attribute (from C<Bio::MAGE::Measurement::Measurement>).
+Sets the value of the kindCV attribute (this attribute was inherited
+from class C<Bio::MAGE::Measurement::Measurement>).
+
+
+
+=item * type
+
+Sets the value of the type attribute (this attribute was inherited
+from class C<Bio::MAGE::Measurement::Measurement>).
+
+
+
+=item * value
+
+Sets the value of the value attribute (this attribute was inherited
+from class C<Bio::MAGE::Measurement::Measurement>).
+
 
 
 =item * unit
 
-Sets the value of the unit association (from C<Bio::MAGE::Measurement::Measurement>).
+Sets the value of the unit association (this association was inherited
+from class C<Bio::MAGE::Measurement::Measurement>).
+
+The value will be of type C<Unit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -299,7 +313,10 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('otherKind', 'value', 'type', 'kindCV');
+  my @list = ('otherKind',
+'kindCV',
+'type',
+'value');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -428,24 +445,24 @@ sub getOtherKind {
 =back
 
 
-=item value
+=item kindCV
 
-From the MAGE-OM documentation for the C<value> attribute:
+From the MAGE-OM documentation for the C<kindCV> attribute:
 
-The value of the measurement.  kindCV (and otherKind) determine with Unit the datatype of value.
+One of the enumeration values to determine the controlled vocabulary of the value.
 
 
 
 =over
 
 
-=item $val = $measurement->setValue($val)
+=item $val = $measurement->setKindCV($val)
 
-The restricted setter method for the value attribute.
+The restricted setter method for the kindCV attribute.
 
-Input parameters: the value to which the value attribute will be set 
+Input parameters: the value to which the kindCV attribute will be set 
 
-Return value: the current value of the value attribute 
+Return value: the current value of the kindCV attribute 
 
 Side effects: none
 
@@ -454,26 +471,26 @@ if too many input parameters are specified
 
 =cut
 
-sub setValue {
+sub setKindCV {
   my $self = shift;
-  croak(__PACKAGE__ . "::setValue: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setKindCV: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setValue: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setKindCV: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
   
-  return $self->{__VALUE} = $val;
+  return $self->{__KINDCV} = $val;
 }
 
 
 
-=item $val = $measurement->getValue()
+=item $val = $measurement->getKindCV()
 
-The restricted getter method for the value attribute.
+The restricted getter method for the kindCV attribute.
 
 Input parameters: none
 
-Return value: the current value of the value attribute 
+Return value: the current value of the kindCV attribute 
 
 Side effects: none
 
@@ -481,11 +498,11 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getValue {
+sub getKindCV {
   my $self = shift;
-  croak(__PACKAGE__ . "::getValue: arguments passed to getter")
+  croak(__PACKAGE__ . "::getKindCV: arguments passed to getter")
     if @_;
-  return $self->{__VALUE};
+  return $self->{__KINDCV};
 }
 
 
@@ -560,24 +577,24 @@ sub getType {
 =back
 
 
-=item kindCV
+=item value
 
-From the MAGE-OM documentation for the C<kindCV> attribute:
+From the MAGE-OM documentation for the C<value> attribute:
 
-One of the enumeration values to determine the controlled vocabulary of the value.
+The value of the measurement.  kindCV (and otherKind) determine with Unit the datatype of value.
 
 
 
 =over
 
 
-=item $val = $measurement->setKindCV($val)
+=item $val = $measurement->setValue($val)
 
-The restricted setter method for the kindCV attribute.
+The restricted setter method for the value attribute.
 
-Input parameters: the value to which the kindCV attribute will be set 
+Input parameters: the value to which the value attribute will be set 
 
-Return value: the current value of the kindCV attribute 
+Return value: the current value of the value attribute 
 
 Side effects: none
 
@@ -586,26 +603,26 @@ if too many input parameters are specified
 
 =cut
 
-sub setKindCV {
+sub setValue {
   my $self = shift;
-  croak(__PACKAGE__ . "::setKindCV: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setValue: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setKindCV: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setValue: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
   
-  return $self->{__KINDCV} = $val;
+  return $self->{__VALUE} = $val;
 }
 
 
 
-=item $val = $measurement->getKindCV()
+=item $val = $measurement->getValue()
 
-The restricted getter method for the kindCV attribute.
+The restricted getter method for the value attribute.
 
 Input parameters: none
 
-Return value: the current value of the kindCV attribute 
+Return value: the current value of the value attribute 
 
 Side effects: none
 
@@ -613,11 +630,11 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getKindCV {
+sub getValue {
   my $self = shift;
-  croak(__PACKAGE__ . "::getKindCV: arguments passed to getter")
+  croak(__PACKAGE__ . "::getValue: arguments passed to getter")
     if @_;
-  return $self->{__KINDCV};
+  return $self->{__VALUE};
 }
 
 
@@ -638,24 +655,24 @@ BEGIN {
   $__ASSOCIATIONS = [
           'unit',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The Unit associated with the Measurement.',
-                                        '__CLASS_NAME' => 'Measurement',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'unit',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The Unit associated with the Measurement.',
-                                         '__CLASS_NAME' => 'Unit',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'unit',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Unit'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The Unit associated with the Measurement.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Measurement'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

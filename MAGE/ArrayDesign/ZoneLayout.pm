@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: ZoneLayout.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,24 +60,24 @@ $VERSION = q[$Id: ZoneLayout.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $]
   my $zonelayout = Bio::MAGE::ArrayDesign::ZoneLayout->new();
 
     # creating an already populated instance
-  my $zonelayout = Bio::MAGE::ArrayDesign::ZoneLayout->new(numFeaturesPerRow=>$numFeaturesPerRow_value,
-			spacingBetweenRows=>$spacingBetweenRows_value,
-			numFeaturesPerCol=>$numFeaturesPerCol_value,
+  my $zonelayout = Bio::MAGE::ArrayDesign::ZoneLayout->new(numFeaturesPerCol=>$numFeaturesPerCol_value,
 			spacingBetweenCols=>$spacingBetweenCols_value,
+			spacingBetweenRows=>$spacingBetweenRows_value,
+			numFeaturesPerRow=>$numFeaturesPerRow_value,
 			distanceUnit=>$distanceUnit_value);
 
     # setting and retrieving object attributes
-  my $numFeaturesPerRow_val = $zonelayout->numFeaturesPerRow();
-  $zonelayout->numFeaturesPerRow($value);
-
-  my $spacingBetweenRows_val = $zonelayout->spacingBetweenRows();
-  $zonelayout->spacingBetweenRows($value);
-
   my $numFeaturesPerCol_val = $zonelayout->numFeaturesPerCol();
   $zonelayout->numFeaturesPerCol($value);
 
   my $spacingBetweenCols_val = $zonelayout->spacingBetweenCols();
   $zonelayout->spacingBetweenCols($value);
+
+  my $spacingBetweenRows_val = $zonelayout->spacingBetweenRows();
+  $zonelayout->spacingBetweenRows($value);
+
+  my $numFeaturesPerRow_val = $zonelayout->numFeaturesPerRow();
+  $zonelayout->numFeaturesPerRow($value);
 
     # setting and retrieving object associations
   my $distanceUnit_val = $zonelayout->distanceUnit();
@@ -126,34 +126,48 @@ named-value style arguments:
 =over
 
 
-=item * numFeaturesPerRow
-
-Sets the value of the numFeaturesPerRow attribute (from C<Bio::MAGE::ArrayDesign::ZoneLayout>).
-
-
-=item * spacingBetweenRows
-
-Sets the value of the spacingBetweenRows attribute (from C<Bio::MAGE::ArrayDesign::ZoneLayout>).
-
-
 =item * numFeaturesPerCol
 
-Sets the value of the numFeaturesPerCol attribute (from C<Bio::MAGE::ArrayDesign::ZoneLayout>).
+Sets the value of the numFeaturesPerCol attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::ZoneLayout>).
+
 
 
 =item * spacingBetweenCols
 
-Sets the value of the spacingBetweenCols attribute (from C<Bio::MAGE::ArrayDesign::ZoneLayout>).
+Sets the value of the spacingBetweenCols attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::ZoneLayout>).
+
+
+
+=item * spacingBetweenRows
+
+Sets the value of the spacingBetweenRows attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::ZoneLayout>).
+
+
+
+=item * numFeaturesPerRow
+
+Sets the value of the numFeaturesPerRow attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::ZoneLayout>).
+
 
 
 =item * distanceUnit
 
-Sets the value of the distanceUnit association (from C<Bio::MAGE::ArrayDesign::ZoneLayout>).
+Sets the value of the distanceUnit association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::ZoneLayout>).
+
+The value will be of type C<DistanceUnit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -299,7 +313,10 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('numFeaturesPerRow', 'spacingBetweenRows', 'numFeaturesPerCol', 'spacingBetweenCols');
+  my @list = ('numFeaturesPerCol',
+'spacingBetweenCols',
+'spacingBetweenRows',
+'numFeaturesPerRow');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -360,138 +377,6 @@ getter methods for each attribute.
 Bio::MAGE::ArrayDesign::ZoneLayout: has the following attribute accessor methods:
 
 =over
-
-
-=item numFeaturesPerRow
-
-From the MAGE-OM documentation for the C<numFeaturesPerRow> attribute:
-
-The number of features from left to right.
-
-
-
-=over
-
-
-=item $val = $zonelayout->setNumFeaturesPerRow($val)
-
-The restricted setter method for the numFeaturesPerRow attribute.
-
-Input parameters: the value to which the numFeaturesPerRow attribute will be set 
-
-Return value: the current value of the numFeaturesPerRow attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setNumFeaturesPerRow {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setNumFeaturesPerRow: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setNumFeaturesPerRow: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__NUMFEATURESPERROW} = $val;
-}
-
-
-
-=item $val = $zonelayout->getNumFeaturesPerRow()
-
-The restricted getter method for the numFeaturesPerRow attribute.
-
-Input parameters: none
-
-Return value: the current value of the numFeaturesPerRow attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getNumFeaturesPerRow {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getNumFeaturesPerRow: arguments passed to getter")
-    if @_;
-  return $self->{__NUMFEATURESPERROW};
-}
-
-
-
-
-=back
-
-
-=item spacingBetweenRows
-
-From the MAGE-OM documentation for the C<spacingBetweenRows> attribute:
-
-Spacing between the rows.
-
-
-
-=over
-
-
-=item $val = $zonelayout->setSpacingBetweenRows($val)
-
-The restricted setter method for the spacingBetweenRows attribute.
-
-Input parameters: the value to which the spacingBetweenRows attribute will be set 
-
-Return value: the current value of the spacingBetweenRows attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setSpacingBetweenRows {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setSpacingBetweenRows: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setSpacingBetweenRows: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__SPACINGBETWEENROWS} = $val;
-}
-
-
-
-=item $val = $zonelayout->getSpacingBetweenRows()
-
-The restricted getter method for the spacingBetweenRows attribute.
-
-Input parameters: none
-
-Return value: the current value of the spacingBetweenRows attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getSpacingBetweenRows {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getSpacingBetweenRows: arguments passed to getter")
-    if @_;
-  return $self->{__SPACINGBETWEENROWS};
-}
-
-
-
-
-=back
 
 
 =item numFeaturesPerCol
@@ -626,6 +511,138 @@ sub getSpacingBetweenCols {
 =back
 
 
+=item spacingBetweenRows
+
+From the MAGE-OM documentation for the C<spacingBetweenRows> attribute:
+
+Spacing between the rows.
+
+
+
+=over
+
+
+=item $val = $zonelayout->setSpacingBetweenRows($val)
+
+The restricted setter method for the spacingBetweenRows attribute.
+
+Input parameters: the value to which the spacingBetweenRows attribute will be set 
+
+Return value: the current value of the spacingBetweenRows attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setSpacingBetweenRows {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setSpacingBetweenRows: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setSpacingBetweenRows: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__SPACINGBETWEENROWS} = $val;
+}
+
+
+
+=item $val = $zonelayout->getSpacingBetweenRows()
+
+The restricted getter method for the spacingBetweenRows attribute.
+
+Input parameters: none
+
+Return value: the current value of the spacingBetweenRows attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getSpacingBetweenRows {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getSpacingBetweenRows: arguments passed to getter")
+    if @_;
+  return $self->{__SPACINGBETWEENROWS};
+}
+
+
+
+
+=back
+
+
+=item numFeaturesPerRow
+
+From the MAGE-OM documentation for the C<numFeaturesPerRow> attribute:
+
+The number of features from left to right.
+
+
+
+=over
+
+
+=item $val = $zonelayout->setNumFeaturesPerRow($val)
+
+The restricted setter method for the numFeaturesPerRow attribute.
+
+Input parameters: the value to which the numFeaturesPerRow attribute will be set 
+
+Return value: the current value of the numFeaturesPerRow attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setNumFeaturesPerRow {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setNumFeaturesPerRow: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setNumFeaturesPerRow: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__NUMFEATURESPERROW} = $val;
+}
+
+
+
+=item $val = $zonelayout->getNumFeaturesPerRow()
+
+The restricted getter method for the numFeaturesPerRow attribute.
+
+Input parameters: none
+
+Return value: the current value of the numFeaturesPerRow attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getNumFeaturesPerRow {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getNumFeaturesPerRow: arguments passed to getter")
+    if @_;
+  return $self->{__NUMFEATURESPERROW};
+}
+
+
+
+
+=back
+
+
 
 =back
 
@@ -638,24 +655,24 @@ BEGIN {
   $__ASSOCIATIONS = [
           'distanceUnit',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Unit of the ZoneLayout attributes.',
-                                        '__CLASS_NAME' => 'ZoneLayout',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'distanceUnit',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Unit of the ZoneLayout attributes.',
-                                         '__CLASS_NAME' => 'DistanceUnit',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'distanceUnit',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'DistanceUnit'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Unit of the ZoneLayout attributes.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ZoneLayout'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

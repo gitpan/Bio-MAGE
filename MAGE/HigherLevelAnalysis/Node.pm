@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Describable Exporter);
-$VERSION = q[$Id: Node.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,19 +60,19 @@ $VERSION = q[$Id: Node.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart Exp $];
   my $node = Bio::MAGE::HigherLevelAnalysis::Node->new();
 
     # creating an already populated instance
-  my $node = Bio::MAGE::HigherLevelAnalysis::Node->new(nodeValue=>$nodeValue_value,
-			nodeContents=>$nodeContents_value,
-			nodes=>$nodes_value);
+  my $node = Bio::MAGE::HigherLevelAnalysis::Node->new(nodeContents=>$nodeContents_value,
+			nodes=>$nodes_value,
+			nodeValue=>$nodeValue_value);
 
     # setting and retrieving object associations
-  my $nodeValue_val = $node->nodeValue();
-  $node->nodeValue($value);
-
   my $nodeContents_val = $node->nodeContents();
   $node->nodeContents($value);
 
   my $nodes_val = $node->nodes();
   $node->nodes($value);
+
+  my $nodeValue_val = $node->nodeValue();
+  $node->nodeValue($value);
 
 
 =head2 DESCRIPTION
@@ -117,39 +117,60 @@ named-value style arguments:
 =over
 
 
-=item * nodeValue
-
-Sets the value of the nodeValue association (from C<Bio::MAGE::HigherLevelAnalysis::Node>).
-
-
 =item * nodeContents
 
-Sets the value of the nodeContents association (from C<Bio::MAGE::HigherLevelAnalysis::Node>).
+Sets the value of the nodeContents association (this association was inherited
+from class C<Bio::MAGE::HigherLevelAnalysis::Node>).
+
+The value will be of type C<NodeContents>.
 
 
 =item * nodes
 
-Sets the value of the nodes association (from C<Bio::MAGE::HigherLevelAnalysis::Node>).
+Sets the value of the nodes association (this association was inherited
+from class C<Bio::MAGE::HigherLevelAnalysis::Node>).
+
+The value will be of type C<Node>.
 
 
-=item * security
+=item * nodeValue
 
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
+Sets the value of the nodeValue association (this association was inherited
+from class C<Bio::MAGE::HigherLevelAnalysis::Node>).
 
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
+The value will be of type C<NodeValue>.
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -312,7 +333,9 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('nodeValue', 'nodeContents', 'nodes');
+  my @list = ('nodeContents',
+'nodes',
+'nodeValue');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -370,66 +393,66 @@ BEGIN {
   $__ASSOCIATIONS = [
           'nodes',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Nested nodes of the BioAssayDataCluster.',
-                                        '__CLASS_NAME' => 'Node',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'nodes',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Nested nodes of the BioAssayDataCluster.',
-                                         '__CLASS_NAME' => 'Node',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'nodes',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Node'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Nested nodes of the BioAssayDataCluster.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Node'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'nodeContents',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The contents of the node, expressed as either a one, two or three dimensional object.',
-                                        '__CLASS_NAME' => 'Node',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'nodeContents',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The contents of the node, expressed as either a one, two or three dimensional object.',
-                                         '__CLASS_NAME' => 'NodeContents',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'nodeContents',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'NodeContents'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The contents of the node, expressed as either a one, two or three dimensional object.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Node'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'nodeValue',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Values or measurements for this node that may be produced by the clustering algorithm.  Typical are distance values for the nodes.',
-                                        '__CLASS_NAME' => 'Node',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'nodeValue',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Values or measurements for this node that may be produced by the clustering algorithm.  Typical are distance values for the nodes.',
-                                         '__CLASS_NAME' => 'NodeValue',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'nodeValue',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'NodeValue'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Values or measurements for this node that may be produced by the clustering algorithm.  Typical are distance values for the nodes.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Node'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -467,111 +490,6 @@ the association.
 Bio::MAGE::HigherLevelAnalysis::Node: has the following association accessor methods:
 
 =over
-
-
-=item nodeValue
-
-
-From the MAGE-OM documentation for the C<nodeValue> association:
-
-Values or measurements for this node that may be produced by the clustering algorithm.  Typical are distance values for the nodes.
-
-
-
-=over
-
-
-=item $array_ref = $node->setNodeValue($array_ref)
-
-The restricted setter method for the nodeValue association.
-
-Input parameters: the value to which the nodeValue association will be set : a reference to an array of objects of type C<Bio::MAGE::HigherLevelAnalysis::NodeValue>
-
-Return value: the current value of the nodeValue association : a reference to an array of objects of type C<Bio::MAGE::HigherLevelAnalysis::NodeValue>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::HigherLevelAnalysis::NodeValue> instances
-
-=cut
-
-sub setNodeValue {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setNodeValue: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setNodeValue: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-    croak(__PACKAGE__ . "::setNodeValue: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setNodeValue: wrong type: " . ref($val) . " expected Bio::MAGE::HigherLevelAnalysis::NodeValue")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::HigherLevelAnalysis::NodeValue');
-  }
-
-  return $self->{__NODEVALUE} = $val;
-}
-
-
-
-=item $array_ref = $node->getNodeValue()
-
-The restricted getter method for the nodeValue association.
-
-Input parameters: none
-
-Return value: the current value of the nodeValue association : a reference to an array of objects of type C<Bio::MAGE::HigherLevelAnalysis::NodeValue>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getNodeValue {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getNodeValue: arguments passed to getter")
-    if @_;
-  return $self->{__NODEVALUE};
-}
-
-
-
-=item $node->addNodeValue(@vals)
-
-Because the nodeValue association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the nodeValue
-association.
-
-Input parameters: the list of values C<@vals> to add to the nodeValue
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::HigherLevelAnalysis::NodeValue>
-
-=cut
-
-sub addNodeValue {
-  my $self = shift;
-  croak(__PACKAGE__ . "::addNodeValue: no arguments passed to setter")
-    unless @_;
-  my @vals = @_;
-    foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addNodeValue: wrong type: " . ref($val) . " expected Bio::MAGE::HigherLevelAnalysis::NodeValue")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::HigherLevelAnalysis::NodeValue');
-  }
-
-  push(@{$self->{__NODEVALUE}},@vals);
-}
-
-
-
-=back
 
 
 =item nodeContents
@@ -777,6 +695,111 @@ sub addNodes {
   }
 
   push(@{$self->{__NODES}},@vals);
+}
+
+
+
+=back
+
+
+=item nodeValue
+
+
+From the MAGE-OM documentation for the C<nodeValue> association:
+
+Values or measurements for this node that may be produced by the clustering algorithm.  Typical are distance values for the nodes.
+
+
+
+=over
+
+
+=item $array_ref = $node->setNodeValue($array_ref)
+
+The restricted setter method for the nodeValue association.
+
+Input parameters: the value to which the nodeValue association will be set : a reference to an array of objects of type C<Bio::MAGE::HigherLevelAnalysis::NodeValue>
+
+Return value: the current value of the nodeValue association : a reference to an array of objects of type C<Bio::MAGE::HigherLevelAnalysis::NodeValue>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::HigherLevelAnalysis::NodeValue> instances
+
+=cut
+
+sub setNodeValue {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setNodeValue: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setNodeValue: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setNodeValue: expected array reference, got $self")
+    unless UNIVERSAL::isa($val,'ARRAY');
+  foreach my $val (@{$val}) {
+    croak(__PACKAGE__ . "::setNodeValue: wrong type: " . ref($val) . " expected Bio::MAGE::HigherLevelAnalysis::NodeValue")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::HigherLevelAnalysis::NodeValue');
+  }
+
+  return $self->{__NODEVALUE} = $val;
+}
+
+
+
+=item $array_ref = $node->getNodeValue()
+
+The restricted getter method for the nodeValue association.
+
+Input parameters: none
+
+Return value: the current value of the nodeValue association : a reference to an array of objects of type C<Bio::MAGE::HigherLevelAnalysis::NodeValue>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getNodeValue {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getNodeValue: arguments passed to getter")
+    if @_;
+  return $self->{__NODEVALUE};
+}
+
+
+
+=item $node->addNodeValue(@vals)
+
+Because the nodeValue association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the nodeValue
+association.
+
+Input parameters: the list of values C<@vals> to add to the nodeValue
+association. B<NOTE>: submitting a single value is permitted.
+
+Return value: none
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::HigherLevelAnalysis::NodeValue>
+
+=cut
+
+sub addNodeValue {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addNodeValue: no arguments passed to setter")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addNodeValue: wrong type: " . ref($val) . " expected Bio::MAGE::HigherLevelAnalysis::NodeValue")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::HigherLevelAnalysis::NodeValue');
+  }
+
+  push(@{$self->{__NODEVALUE}},@vals);
 }
 
 

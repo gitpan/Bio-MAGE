@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::ArrayDesign::ArrayDesign Exporter);
-$VERSION = q[$Id: PhysicalArrayDesign.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,15 +60,15 @@ $VERSION = q[$Id: PhysicalArrayDesign.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewa
   my $physicalarraydesign = Bio::MAGE::ArrayDesign::PhysicalArrayDesign->new();
 
     # creating an already populated instance
-  my $physicalarraydesign = Bio::MAGE::ArrayDesign::PhysicalArrayDesign->new(zoneGroups=>$zoneGroups_value,
-			surfaceType=>$surfaceType_value);
+  my $physicalarraydesign = Bio::MAGE::ArrayDesign::PhysicalArrayDesign->new(surfaceType=>$surfaceType_value,
+			zoneGroups=>$zoneGroups_value);
 
     # setting and retrieving object associations
-  my $zoneGroups_val = $physicalarraydesign->zoneGroups();
-  $physicalarraydesign->zoneGroups($value);
-
   my $surfaceType_val = $physicalarraydesign->surfaceType();
   $physicalarraydesign->surfaceType($value);
+
+  my $zoneGroups_val = $physicalarraydesign->zoneGroups();
+  $physicalarraydesign->zoneGroups($value);
 
 
 =head2 DESCRIPTION
@@ -113,79 +113,120 @@ named-value style arguments:
 =over
 
 
-=item * zoneGroups
-
-Sets the value of the zoneGroups association (from C<Bio::MAGE::ArrayDesign::PhysicalArrayDesign>).
-
-
 =item * surfaceType
 
-Sets the value of the surfaceType association (from C<Bio::MAGE::ArrayDesign::PhysicalArrayDesign>).
+Sets the value of the surfaceType association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::PhysicalArrayDesign>).
+
+The value will be of type C<OntologyEntry>.
+
+
+=item * zoneGroups
+
+Sets the value of the zoneGroups association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::PhysicalArrayDesign>).
+
+The value will be of type C<ZoneGroup>.
 
 
 =item * version
 
-Sets the value of the version attribute (from C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+Sets the value of the version attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+
 
 
 =item * numberOfFeatures
 
-Sets the value of the numberOfFeatures attribute (from C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+Sets the value of the numberOfFeatures attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::ArrayDesign>).
 
-
-=item * protocolApplications
-
-Sets the value of the protocolApplications association (from C<Bio::MAGE::ArrayDesign::ArrayDesign>).
-
-
-=item * compositeGroups
-
-Sets the value of the compositeGroups association (from C<Bio::MAGE::ArrayDesign::ArrayDesign>).
-
-
-=item * designProviders
-
-Sets the value of the designProviders association (from C<Bio::MAGE::ArrayDesign::ArrayDesign>).
 
 
 =item * reporterGroups
 
-Sets the value of the reporterGroups association (from C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+Sets the value of the reporterGroups association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+
+The value will be of type C<ReporterGroup>.
+
+
+=item * protocolApplications
+
+Sets the value of the protocolApplications association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+
+The value will be of type C<ProtocolApplication>.
 
 
 =item * featureGroups
 
-Sets the value of the featureGroups association (from C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+Sets the value of the featureGroups association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+
+The value will be of type C<FeatureGroup>.
+
+
+=item * designProviders
+
+Sets the value of the designProviders association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+
+The value will be of type C<Contact>.
+
+
+=item * compositeGroups
+
+Sets the value of the compositeGroups association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::ArrayDesign>).
+
+The value will be of type C<CompositeGroup>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -348,7 +389,8 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('zoneGroups', 'surfaceType');
+  my @list = ('surfaceType',
+'zoneGroups');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -594,45 +636,45 @@ BEGIN {
   $__ASSOCIATIONS = [
           'surfaceType',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The type of surface from a controlled vocabulary that would include terms such as non-absorptive, absorptive, etc.',
-                                        '__CLASS_NAME' => 'PhysicalArrayDesign',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'surfaceType',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The type of surface from a controlled vocabulary that would include terms such as non-absorptive, absorptive, etc.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'surfaceType',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The type of surface from a controlled vocabulary that would include terms such as non-absorptive, absorptive, etc.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'PhysicalArrayDesign'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'zoneGroups',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'In the case where the array design is specified by one or more zones, allows specifying where those zones are located.',
-                                        '__CLASS_NAME' => 'PhysicalArrayDesign',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'zoneGroups',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'In the case where the array design is specified by one or more zones, allows specifying where those zones are located.',
-                                         '__CLASS_NAME' => 'ZoneGroup',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'zoneGroups',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ZoneGroup'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'In the case where the array design is specified by one or more zones, allows specifying where those zones are located.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'PhysicalArrayDesign'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -670,6 +712,73 @@ the association.
 Bio::MAGE::ArrayDesign::PhysicalArrayDesign: has the following association accessor methods:
 
 =over
+
+
+=item surfaceType
+
+
+From the MAGE-OM documentation for the C<surfaceType> association:
+
+The type of surface from a controlled vocabulary that would include terms such as non-absorptive, absorptive, etc.
+
+
+
+=over
+
+
+=item $val = $physicalarraydesign->setSurfaceType($val)
+
+The restricted setter method for the surfaceType association.
+
+Input parameters: the value to which the surfaceType association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Return value: the current value of the surfaceType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
+
+=cut
+
+sub setSurfaceType {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setSurfaceType: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setSurfaceType: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setSurfaceType: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  return $self->{__SURFACETYPE} = $val;
+}
+
+
+
+=item $val = $physicalarraydesign->getSurfaceType()
+
+The restricted getter method for the surfaceType association.
+
+Input parameters: none
+
+Return value: the current value of the surfaceType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getSurfaceType {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getSurfaceType: arguments passed to getter")
+    if @_;
+  return $self->{__SURFACETYPE};
+}
+
+
+
+
+=back
 
 
 =item zoneGroups
@@ -771,73 +880,6 @@ sub addZoneGroups {
 
   push(@{$self->{__ZONEGROUPS}},@vals);
 }
-
-
-
-=back
-
-
-=item surfaceType
-
-
-From the MAGE-OM documentation for the C<surfaceType> association:
-
-The type of surface from a controlled vocabulary that would include terms such as non-absorptive, absorptive, etc.
-
-
-
-=over
-
-
-=item $val = $physicalarraydesign->setSurfaceType($val)
-
-The restricted setter method for the surfaceType association.
-
-Input parameters: the value to which the surfaceType association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Return value: the current value of the surfaceType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
-
-=cut
-
-sub setSurfaceType {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setSurfaceType: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setSurfaceType: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setSurfaceType: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
-  return $self->{__SURFACETYPE} = $val;
-}
-
-
-
-=item $val = $physicalarraydesign->getSurfaceType()
-
-The restricted getter method for the surfaceType association.
-
-Input parameters: none
-
-Return value: the current value of the surfaceType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getSurfaceType {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getSurfaceType: arguments passed to getter")
-    if @_;
-  return $self->{__SURFACETYPE};
-}
-
 
 
 

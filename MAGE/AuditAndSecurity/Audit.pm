@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Describable Exporter);
-$VERSION = q[$Id: Audit.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -120,37 +120,56 @@ named-value style arguments:
 
 =item * date
 
-Sets the value of the date attribute (from C<Bio::MAGE::AuditAndSecurity::Audit>).
+Sets the value of the date attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Audit>).
+
 
 
 =item * action
 
-Sets the value of the action attribute (from C<Bio::MAGE::AuditAndSecurity::Audit>).
+Sets the value of the action attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Audit>).
+
 
 
 =item * performer
 
-Sets the value of the performer association (from C<Bio::MAGE::AuditAndSecurity::Audit>).
+Sets the value of the performer association (this association was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Audit>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
+The value will be of type C<Contact>.
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -296,7 +315,8 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('date', 'action');
+  my @list = ('date',
+'action');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -503,24 +523,24 @@ BEGIN {
   $__ASSOCIATIONS = [
           'performer',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The contact for creating or changing the instance referred to by the Audit.',
-                                        '__CLASS_NAME' => 'Audit',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'performer',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The contact for creating or changing the instance referred to by the Audit.',
-                                         '__CLASS_NAME' => 'Contact',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'performer',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Contact'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The contact for creating or changing the instance referred to by the Audit.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Audit'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

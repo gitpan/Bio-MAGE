@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: BioAssayDatum.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -61,23 +61,23 @@ $VERSION = q[$Id: BioAssayDatum.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp
 
     # creating an already populated instance
   my $bioassaydatum = Bio::MAGE::BioAssayData::BioAssayDatum->new(value=>$value_value,
+			designElement=>$designElement_value,
 			quantitationType=>$quantitationType_value,
-			bioAssay=>$bioAssay_value,
-			designElement=>$designElement_value);
+			bioAssay=>$bioAssay_value);
 
     # setting and retrieving object attributes
   my $value_val = $bioassaydatum->value();
   $bioassaydatum->value($value);
 
     # setting and retrieving object associations
+  my $designElement_val = $bioassaydatum->designElement();
+  $bioassaydatum->designElement($value);
+
   my $quantitationType_val = $bioassaydatum->quantitationType();
   $bioassaydatum->quantitationType($value);
 
   my $bioAssay_val = $bioassaydatum->bioAssay();
   $bioassaydatum->bioAssay($value);
-
-  my $designElement_val = $bioassaydatum->designElement();
-  $bioassaydatum->designElement($value);
 
 
 =head2 DESCRIPTION
@@ -124,27 +124,41 @@ named-value style arguments:
 
 =item * value
 
-Sets the value of the value attribute (from C<Bio::MAGE::BioAssayData::BioAssayDatum>).
+Sets the value of the value attribute (this attribute was inherited
+from class C<Bio::MAGE::BioAssayData::BioAssayDatum>).
 
-
-=item * quantitationType
-
-Sets the value of the quantitationType association (from C<Bio::MAGE::BioAssayData::BioAssayDatum>).
-
-
-=item * bioAssay
-
-Sets the value of the bioAssay association (from C<Bio::MAGE::BioAssayData::BioAssayDatum>).
 
 
 =item * designElement
 
-Sets the value of the designElement association (from C<Bio::MAGE::BioAssayData::BioAssayDatum>).
+Sets the value of the designElement association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::BioAssayDatum>).
+
+The value will be of type C<DesignElement>.
+
+
+=item * quantitationType
+
+Sets the value of the quantitationType association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::BioAssayDatum>).
+
+The value will be of type C<QuantitationType>.
+
+
+=item * bioAssay
+
+Sets the value of the bioAssay association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::BioAssayDatum>).
+
+The value will be of type C<BioAssay>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -307,7 +321,9 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('quantitationType', 'bioAssay', 'designElement');
+  my @list = ('designElement',
+'quantitationType',
+'bioAssay');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -431,66 +447,66 @@ BEGIN {
   $__ASSOCIATIONS = [
           'bioAssay',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The BioAssay associated with the value of the BioAssayDatum.',
-                                        '__CLASS_NAME' => 'BioAssayDatum',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'bioAssay',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The BioAssay associated with the value of the BioAssayDatum.',
-                                         '__CLASS_NAME' => 'BioAssay',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'bioAssay',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioAssay'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The BioAssay associated with the value of the BioAssayDatum.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioAssayDatum'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'designElement',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The DesignElement associated with the value of the BioAssayDatum.',
-                                        '__CLASS_NAME' => 'BioAssayDatum',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'designElement',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The DesignElement associated with the value of the BioAssayDatum.',
-                                         '__CLASS_NAME' => 'DesignElement',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'designElement',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'DesignElement'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The DesignElement associated with the value of the BioAssayDatum.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioAssayDatum'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'quantitationType',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The QuantitationType associated with the value of the BioAssayDatum.',
-                                        '__CLASS_NAME' => 'BioAssayDatum',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'quantitationType',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The QuantitationType associated with the value of the BioAssayDatum.',
-                                         '__CLASS_NAME' => 'QuantitationType',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'quantitationType',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'QuantitationType'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The QuantitationType associated with the value of the BioAssayDatum.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioAssayDatum'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -528,6 +544,73 @@ the association.
 Bio::MAGE::BioAssayData::BioAssayDatum: has the following association accessor methods:
 
 =over
+
+
+=item designElement
+
+
+From the MAGE-OM documentation for the C<designElement> association:
+
+The DesignElement associated with the value of the BioAssayDatum.
+
+
+
+=over
+
+
+=item $val = $bioassaydatum->setDesignElement($val)
+
+The restricted setter method for the designElement association.
+
+Input parameters: the value to which the designElement association will be set : an instance of type C<Bio::MAGE::DesignElement::DesignElement>.
+
+Return value: the current value of the designElement association : an instance of type C<Bio::MAGE::DesignElement::DesignElement>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::DesignElement::DesignElement>
+
+=cut
+
+sub setDesignElement {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setDesignElement: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setDesignElement: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setDesignElement: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::DesignElement") unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::DesignElement');
+  return $self->{__DESIGNELEMENT} = $val;
+}
+
+
+
+=item $val = $bioassaydatum->getDesignElement()
+
+The restricted getter method for the designElement association.
+
+Input parameters: none
+
+Return value: the current value of the designElement association : an instance of type C<Bio::MAGE::DesignElement::DesignElement>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getDesignElement {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getDesignElement: arguments passed to getter")
+    if @_;
+  return $self->{__DESIGNELEMENT};
+}
+
+
+
+
+=back
 
 
 =item quantitationType
@@ -656,73 +739,6 @@ sub getBioAssay {
   croak(__PACKAGE__ . "::getBioAssay: arguments passed to getter")
     if @_;
   return $self->{__BIOASSAY};
-}
-
-
-
-
-=back
-
-
-=item designElement
-
-
-From the MAGE-OM documentation for the C<designElement> association:
-
-The DesignElement associated with the value of the BioAssayDatum.
-
-
-
-=over
-
-
-=item $val = $bioassaydatum->setDesignElement($val)
-
-The restricted setter method for the designElement association.
-
-Input parameters: the value to which the designElement association will be set : an instance of type C<Bio::MAGE::DesignElement::DesignElement>.
-
-Return value: the current value of the designElement association : an instance of type C<Bio::MAGE::DesignElement::DesignElement>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::DesignElement::DesignElement>
-
-=cut
-
-sub setDesignElement {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setDesignElement: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setDesignElement: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setDesignElement: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::DesignElement") unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::DesignElement');
-  return $self->{__DESIGNELEMENT} = $val;
-}
-
-
-
-=item $val = $bioassaydatum->getDesignElement()
-
-The restricted getter method for the designElement association.
-
-Input parameters: none
-
-Return value: the current value of the designElement association : an instance of type C<Bio::MAGE::DesignElement::DesignElement>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getDesignElement {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getDesignElement: arguments passed to getter")
-    if @_;
-  return $self->{__DESIGNELEMENT};
 }
 
 

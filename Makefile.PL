@@ -3,7 +3,7 @@ use ExtUtils::MakeMaker;
 # the contents of the Makefile that is written.
 WriteMakefile(
     'NAME'              => 'Bio::MAGE',
-    'VERSION'           => '20020902.3',
+    'VERSION'           => '20020902.6',
     'PREREQ_PM'         => {Tie::IxHash=>1.21},
     ($] >= 5.005 ?
       (ABSTRACT         => 'Classes for MAGE-OM',

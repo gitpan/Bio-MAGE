@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: BioSequence.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,18 +60,21 @@ $VERSION = q[$Id: BioSequence.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp $
   my $biosequence = Bio::MAGE::BioSequence::BioSequence->new();
 
     # creating an already populated instance
-  my $biosequence = Bio::MAGE::BioSequence::BioSequence->new(isApproximateLength=>$isApproximateLength_value,
+  my $biosequence = Bio::MAGE::BioSequence::BioSequence->new(isCircular=>$isCircular_value,
+			isApproximateLength=>$isApproximateLength_value,
 			length=>$length_value,
 			sequence=>$sequence_value,
-			isCircular=>$isCircular_value,
-			sequenceDatabases=>$sequenceDatabases_value,
-			ontologyEntries=>$ontologyEntries_value,
 			seqFeatures=>$seqFeatures_value,
-			species=>$species_value,
+			polymerType=>$polymerType_value,
 			type=>$type_value,
-			polymerType=>$polymerType_value);
+			species=>$species_value,
+			ontologyEntries=>$ontologyEntries_value,
+			sequenceDatabases=>$sequenceDatabases_value);
 
     # setting and retrieving object attributes
+  my $isCircular_val = $biosequence->isCircular();
+  $biosequence->isCircular($value);
+
   my $isApproximateLength_val = $biosequence->isApproximateLength();
   $biosequence->isApproximateLength($value);
 
@@ -81,27 +84,24 @@ $VERSION = q[$Id: BioSequence.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp $
   my $sequence_val = $biosequence->sequence();
   $biosequence->sequence($value);
 
-  my $isCircular_val = $biosequence->isCircular();
-  $biosequence->isCircular($value);
-
     # setting and retrieving object associations
-  my $sequenceDatabases_val = $biosequence->sequenceDatabases();
-  $biosequence->sequenceDatabases($value);
-
-  my $ontologyEntries_val = $biosequence->ontologyEntries();
-  $biosequence->ontologyEntries($value);
-
   my $seqFeatures_val = $biosequence->seqFeatures();
   $biosequence->seqFeatures($value);
 
-  my $species_val = $biosequence->species();
-  $biosequence->species($value);
+  my $polymerType_val = $biosequence->polymerType();
+  $biosequence->polymerType($value);
 
   my $type_val = $biosequence->type();
   $biosequence->type($value);
 
-  my $polymerType_val = $biosequence->polymerType();
-  $biosequence->polymerType($value);
+  my $species_val = $biosequence->species();
+  $biosequence->species($value);
+
+  my $ontologyEntries_val = $biosequence->ontologyEntries();
+  $biosequence->ontologyEntries($value);
+
+  my $sequenceDatabases_val = $biosequence->sequenceDatabases();
+  $biosequence->sequenceDatabases($value);
 
 
 =head2 DESCRIPTION
@@ -146,84 +146,126 @@ named-value style arguments:
 =over
 
 
+=item * isCircular
+
+Sets the value of the isCircular attribute (this attribute was inherited
+from class C<Bio::MAGE::BioSequence::BioSequence>).
+
+
+
 =item * isApproximateLength
 
-Sets the value of the isApproximateLength attribute (from C<Bio::MAGE::BioSequence::BioSequence>).
+Sets the value of the isApproximateLength attribute (this attribute was inherited
+from class C<Bio::MAGE::BioSequence::BioSequence>).
+
 
 
 =item * length
 
-Sets the value of the length attribute (from C<Bio::MAGE::BioSequence::BioSequence>).
+Sets the value of the length attribute (this attribute was inherited
+from class C<Bio::MAGE::BioSequence::BioSequence>).
+
 
 
 =item * sequence
 
-Sets the value of the sequence attribute (from C<Bio::MAGE::BioSequence::BioSequence>).
+Sets the value of the sequence attribute (this attribute was inherited
+from class C<Bio::MAGE::BioSequence::BioSequence>).
 
-
-=item * isCircular
-
-Sets the value of the isCircular attribute (from C<Bio::MAGE::BioSequence::BioSequence>).
-
-
-=item * sequenceDatabases
-
-Sets the value of the sequenceDatabases association (from C<Bio::MAGE::BioSequence::BioSequence>).
-
-
-=item * ontologyEntries
-
-Sets the value of the ontologyEntries association (from C<Bio::MAGE::BioSequence::BioSequence>).
 
 
 =item * seqFeatures
 
-Sets the value of the seqFeatures association (from C<Bio::MAGE::BioSequence::BioSequence>).
+Sets the value of the seqFeatures association (this association was inherited
+from class C<Bio::MAGE::BioSequence::BioSequence>).
 
-
-=item * species
-
-Sets the value of the species association (from C<Bio::MAGE::BioSequence::BioSequence>).
-
-
-=item * type
-
-Sets the value of the type association (from C<Bio::MAGE::BioSequence::BioSequence>).
+The value will be of type C<SeqFeature>.
 
 
 =item * polymerType
 
-Sets the value of the polymerType association (from C<Bio::MAGE::BioSequence::BioSequence>).
+Sets the value of the polymerType association (this association was inherited
+from class C<Bio::MAGE::BioSequence::BioSequence>).
+
+The value will be of type C<OntologyEntry>.
+
+
+=item * type
+
+Sets the value of the type association (this association was inherited
+from class C<Bio::MAGE::BioSequence::BioSequence>).
+
+The value will be of type C<OntologyEntry>.
+
+
+=item * ontologyEntries
+
+Sets the value of the ontologyEntries association (this association was inherited
+from class C<Bio::MAGE::BioSequence::BioSequence>).
+
+The value will be of type C<OntologyEntry>.
+
+
+=item * species
+
+Sets the value of the species association (this association was inherited
+from class C<Bio::MAGE::BioSequence::BioSequence>).
+
+The value will be of type C<OntologyEntry>.
+
+
+=item * sequenceDatabases
+
+Sets the value of the sequenceDatabases association (this association was inherited
+from class C<Bio::MAGE::BioSequence::BioSequence>).
+
+The value will be of type C<DatabaseEntry>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -369,7 +411,10 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('isApproximateLength', 'length', 'sequence', 'isCircular');
+  my @list = ('isCircular',
+'isApproximateLength',
+'length',
+'sequence');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -386,7 +431,12 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('sequenceDatabases', 'ontologyEntries', 'seqFeatures', 'species', 'type', 'polymerType');
+  my @list = ('seqFeatures',
+'polymerType',
+'type',
+'species',
+'ontologyEntries',
+'sequenceDatabases');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -430,6 +480,72 @@ getter methods for each attribute.
 Bio::MAGE::BioSequence::BioSequence: has the following attribute accessor methods:
 
 =over
+
+
+=item isCircular
+
+From the MAGE-OM documentation for the C<isCircular> attribute:
+
+Indicates if the BioSequence is circular in nature.
+
+
+
+=over
+
+
+=item $val = $biosequence->setIsCircular($val)
+
+The restricted setter method for the isCircular attribute.
+
+Input parameters: the value to which the isCircular attribute will be set 
+
+Return value: the current value of the isCircular attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setIsCircular {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setIsCircular: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setIsCircular: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__ISCIRCULAR} = $val;
+}
+
+
+
+=item $val = $biosequence->getIsCircular()
+
+The restricted getter method for the isCircular attribute.
+
+Input parameters: none
+
+Return value: the current value of the isCircular attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getIsCircular {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getIsCircular: arguments passed to getter")
+    if @_;
+  return $self->{__ISCIRCULAR};
+}
+
+
+
+
+=back
 
 
 =item isApproximateLength
@@ -631,72 +747,6 @@ sub getSequence {
 
 =back
 
-
-=item isCircular
-
-From the MAGE-OM documentation for the C<isCircular> attribute:
-
-Indicates if the BioSequence is circular in nature.
-
-
-
-=over
-
-
-=item $val = $biosequence->setIsCircular($val)
-
-The restricted setter method for the isCircular attribute.
-
-Input parameters: the value to which the isCircular attribute will be set 
-
-Return value: the current value of the isCircular attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setIsCircular {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setIsCircular: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setIsCircular: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__ISCIRCULAR} = $val;
-}
-
-
-
-=item $val = $biosequence->getIsCircular()
-
-The restricted getter method for the isCircular attribute.
-
-Input parameters: none
-
-Return value: the current value of the isCircular attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getIsCircular {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getIsCircular: arguments passed to getter")
-    if @_;
-  return $self->{__ISCIRCULAR};
-}
-
-
-
-
-=back
-
 Attributes Inherited from Bio::MAGE::Identifiable
 
 
@@ -804,129 +854,129 @@ BEGIN {
   $__ASSOCIATIONS = [
           'sequenceDatabases',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'References an entry in a species database, like GenBank, UniGene, etc.',
-                                        '__CLASS_NAME' => 'BioSequence',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'sequenceDatabases',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'References an entry in a species database, like GenBank, UniGene, etc.',
-                                         '__CLASS_NAME' => 'DatabaseEntry',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'sequenceDatabases',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'DatabaseEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'References an entry in a species database, like GenBank, UniGene, etc.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioSequence'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'ontologyEntries',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Ontology entries referring to common values associated with BioSequences, such as gene names, go ids, etc.',
-                                        '__CLASS_NAME' => 'BioSequence',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'ontologyEntries',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Ontology entries referring to common values associated with BioSequences, such as gene names, go ids, etc.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'ontologyEntries',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Ontology entries referring to common values associated with BioSequences, such as gene names, go ids, etc.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioSequence'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'polymerType',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'A choice of protein, RNA, or DNA.',
-                                        '__CLASS_NAME' => 'BioSequence',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'polymerType',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'A choice of protein, RNA, or DNA.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'polymerType',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'A choice of protein, RNA, or DNA.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioSequence'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'type',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The type of biosequence, i.e. gene, exon, UniGene cluster, fragment, BAC, EST, etc.',
-                                        '__CLASS_NAME' => 'BioSequence',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'type',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The type of biosequence, i.e. gene, exon, UniGene cluster, fragment, BAC, EST, etc.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'type',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The type of biosequence, i.e. gene, exon, UniGene cluster, fragment, BAC, EST, etc.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioSequence'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'species',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The organism from which this sequence was obtained.',
-                                        '__CLASS_NAME' => 'BioSequence',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'species',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '5',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The organism from which this sequence was obtained.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '5',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'species',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The organism from which this sequence was obtained.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioSequence'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'seqFeatures',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Association to annotations for subsequences.  Corresponds to the GenBank Frame Table.',
-                                        '__CLASS_NAME' => 'BioSequence',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'seqFeatures',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '6',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Association to annotations for subsequences.  Corresponds to the GenBank Frame Table.',
-                                         '__CLASS_NAME' => 'SeqFeature',
-                                         '__RANK' => '6',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'seqFeatures',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'SeqFeature'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Association to annotations for subsequences.  Corresponds to the GenBank Frame Table.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioSequence'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -966,59 +1016,59 @@ Bio::MAGE::BioSequence::BioSequence: has the following association accessor meth
 =over
 
 
-=item sequenceDatabases
+=item seqFeatures
 
 
-From the MAGE-OM documentation for the C<sequenceDatabases> association:
+From the MAGE-OM documentation for the C<seqFeatures> association:
 
-References an entry in a species database, like GenBank, UniGene, etc.
+Association to annotations for subsequences.  Corresponds to the GenBank Frame Table.
 
 
 
 =over
 
 
-=item $array_ref = $biosequence->setSequenceDatabases($array_ref)
+=item $array_ref = $biosequence->setSeqFeatures($array_ref)
 
-The restricted setter method for the sequenceDatabases association.
+The restricted setter method for the seqFeatures association.
 
-Input parameters: the value to which the sequenceDatabases association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::DatabaseEntry>
+Input parameters: the value to which the seqFeatures association will be set : a reference to an array of objects of type C<Bio::MAGE::BioSequence::SeqFeature>
 
-Return value: the current value of the sequenceDatabases association : a reference to an array of objects of type C<Bio::MAGE::Description::DatabaseEntry>
+Return value: the current value of the seqFeatures association : a reference to an array of objects of type C<Bio::MAGE::BioSequence::SeqFeature>
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Description::DatabaseEntry> instances
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::BioSequence::SeqFeature> instances
 
 =cut
 
-sub setSequenceDatabases {
+sub setSeqFeatures {
   my $self = shift;
-  croak(__PACKAGE__ . "::setSequenceDatabases: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setSeqFeatures: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setSequenceDatabases: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setSeqFeatures: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
-    croak(__PACKAGE__ . "::setSequenceDatabases: expected array reference, got $self")
+    croak(__PACKAGE__ . "::setSeqFeatures: expected array reference, got $self")
     unless UNIVERSAL::isa($val,'ARRAY');
   foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setSequenceDatabases: wrong type: " . ref($val) . " expected Bio::MAGE::Description::DatabaseEntry")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::DatabaseEntry');
+    croak(__PACKAGE__ . "::setSeqFeatures: wrong type: " . ref($val) . " expected Bio::MAGE::BioSequence::SeqFeature")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::BioSequence::SeqFeature');
   }
 
-  return $self->{__SEQUENCEDATABASES} = $val;
+  return $self->{__SEQFEATURES} = $val;
 }
 
 
 
-=item $array_ref = $biosequence->getSequenceDatabases()
+=item $array_ref = $biosequence->getSeqFeatures()
 
-The restricted getter method for the sequenceDatabases association.
+The restricted getter method for the seqFeatures association.
 
 Input parameters: none
 
-Return value: the current value of the sequenceDatabases association : a reference to an array of objects of type C<Bio::MAGE::Description::DatabaseEntry>
+Return value: the current value of the seqFeatures association : a reference to an array of objects of type C<Bio::MAGE::BioSequence::SeqFeature>
 
 Side effects: none
 
@@ -1026,22 +1076,22 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getSequenceDatabases {
+sub getSeqFeatures {
   my $self = shift;
-  croak(__PACKAGE__ . "::getSequenceDatabases: arguments passed to getter")
+  croak(__PACKAGE__ . "::getSeqFeatures: arguments passed to getter")
     if @_;
-  return $self->{__SEQUENCEDATABASES};
+  return $self->{__SEQFEATURES};
 }
 
 
 
-=item $biosequence->addSequenceDatabases(@vals)
+=item $biosequence->addSeqFeatures(@vals)
 
-Because the sequenceDatabases association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the sequenceDatabases
+Because the seqFeatures association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the seqFeatures
 association.
 
-Input parameters: the list of values C<@vals> to add to the sequenceDatabases
+Input parameters: the list of values C<@vals> to add to the seqFeatures
 association. B<NOTE>: submitting a single value is permitted.
 
 Return value: none
@@ -1049,22 +1099,223 @@ Return value: none
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::DatabaseEntry>
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::BioSequence::SeqFeature>
 
 =cut
 
-sub addSequenceDatabases {
+sub addSeqFeatures {
   my $self = shift;
-  croak(__PACKAGE__ . "::addSequenceDatabases: no arguments passed to setter")
+  croak(__PACKAGE__ . "::addSeqFeatures: no arguments passed to setter")
     unless @_;
   my @vals = @_;
     foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addSequenceDatabases: wrong type: " . ref($val) . " expected Bio::MAGE::Description::DatabaseEntry")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::DatabaseEntry');
+    croak(__PACKAGE__ . "::addSeqFeatures: wrong type: " . ref($val) . " expected Bio::MAGE::BioSequence::SeqFeature")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::BioSequence::SeqFeature');
   }
 
-  push(@{$self->{__SEQUENCEDATABASES}},@vals);
+  push(@{$self->{__SEQFEATURES}},@vals);
 }
+
+
+
+=back
+
+
+=item polymerType
+
+
+From the MAGE-OM documentation for the C<polymerType> association:
+
+A choice of protein, RNA, or DNA.
+
+
+
+=over
+
+
+=item $val = $biosequence->setPolymerType($val)
+
+The restricted setter method for the polymerType association.
+
+Input parameters: the value to which the polymerType association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Return value: the current value of the polymerType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
+
+=cut
+
+sub setPolymerType {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setPolymerType: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setPolymerType: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setPolymerType: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  return $self->{__POLYMERTYPE} = $val;
+}
+
+
+
+=item $val = $biosequence->getPolymerType()
+
+The restricted getter method for the polymerType association.
+
+Input parameters: none
+
+Return value: the current value of the polymerType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getPolymerType {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getPolymerType: arguments passed to getter")
+    if @_;
+  return $self->{__POLYMERTYPE};
+}
+
+
+
+
+=back
+
+
+=item type
+
+
+From the MAGE-OM documentation for the C<type> association:
+
+The type of biosequence, i.e. gene, exon, UniGene cluster, fragment, BAC, EST, etc.
+
+
+
+=over
+
+
+=item $val = $biosequence->setType($val)
+
+The restricted setter method for the type association.
+
+Input parameters: the value to which the type association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Return value: the current value of the type association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
+
+=cut
+
+sub setType {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setType: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setType: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setType: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  return $self->{__TYPE} = $val;
+}
+
+
+
+=item $val = $biosequence->getType()
+
+The restricted getter method for the type association.
+
+Input parameters: none
+
+Return value: the current value of the type association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getType {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getType: arguments passed to getter")
+    if @_;
+  return $self->{__TYPE};
+}
+
+
+
+
+=back
+
+
+=item species
+
+
+From the MAGE-OM documentation for the C<species> association:
+
+The organism from which this sequence was obtained.
+
+
+
+=over
+
+
+=item $val = $biosequence->setSpecies($val)
+
+The restricted setter method for the species association.
+
+Input parameters: the value to which the species association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Return value: the current value of the species association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
+
+=cut
+
+sub setSpecies {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setSpecies: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setSpecies: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setSpecies: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  return $self->{__SPECIES} = $val;
+}
+
+
+
+=item $val = $biosequence->getSpecies()
+
+The restricted getter method for the species association.
+
+Input parameters: none
+
+Return value: the current value of the species association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getSpecies {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getSpecies: arguments passed to getter")
+    if @_;
+  return $self->{__SPECIES};
+}
+
 
 
 
@@ -1176,59 +1427,59 @@ sub addOntologyEntries {
 =back
 
 
-=item seqFeatures
+=item sequenceDatabases
 
 
-From the MAGE-OM documentation for the C<seqFeatures> association:
+From the MAGE-OM documentation for the C<sequenceDatabases> association:
 
-Association to annotations for subsequences.  Corresponds to the GenBank Frame Table.
+References an entry in a species database, like GenBank, UniGene, etc.
 
 
 
 =over
 
 
-=item $array_ref = $biosequence->setSeqFeatures($array_ref)
+=item $array_ref = $biosequence->setSequenceDatabases($array_ref)
 
-The restricted setter method for the seqFeatures association.
+The restricted setter method for the sequenceDatabases association.
 
-Input parameters: the value to which the seqFeatures association will be set : a reference to an array of objects of type C<Bio::MAGE::BioSequence::SeqFeature>
+Input parameters: the value to which the sequenceDatabases association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::DatabaseEntry>
 
-Return value: the current value of the seqFeatures association : a reference to an array of objects of type C<Bio::MAGE::BioSequence::SeqFeature>
+Return value: the current value of the sequenceDatabases association : a reference to an array of objects of type C<Bio::MAGE::Description::DatabaseEntry>
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::BioSequence::SeqFeature> instances
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Description::DatabaseEntry> instances
 
 =cut
 
-sub setSeqFeatures {
+sub setSequenceDatabases {
   my $self = shift;
-  croak(__PACKAGE__ . "::setSeqFeatures: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setSequenceDatabases: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setSeqFeatures: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setSequenceDatabases: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
-    croak(__PACKAGE__ . "::setSeqFeatures: expected array reference, got $self")
+    croak(__PACKAGE__ . "::setSequenceDatabases: expected array reference, got $self")
     unless UNIVERSAL::isa($val,'ARRAY');
   foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setSeqFeatures: wrong type: " . ref($val) . " expected Bio::MAGE::BioSequence::SeqFeature")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::BioSequence::SeqFeature');
+    croak(__PACKAGE__ . "::setSequenceDatabases: wrong type: " . ref($val) . " expected Bio::MAGE::Description::DatabaseEntry")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::DatabaseEntry');
   }
 
-  return $self->{__SEQFEATURES} = $val;
+  return $self->{__SEQUENCEDATABASES} = $val;
 }
 
 
 
-=item $array_ref = $biosequence->getSeqFeatures()
+=item $array_ref = $biosequence->getSequenceDatabases()
 
-The restricted getter method for the seqFeatures association.
+The restricted getter method for the sequenceDatabases association.
 
 Input parameters: none
 
-Return value: the current value of the seqFeatures association : a reference to an array of objects of type C<Bio::MAGE::BioSequence::SeqFeature>
+Return value: the current value of the sequenceDatabases association : a reference to an array of objects of type C<Bio::MAGE::Description::DatabaseEntry>
 
 Side effects: none
 
@@ -1236,22 +1487,22 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getSeqFeatures {
+sub getSequenceDatabases {
   my $self = shift;
-  croak(__PACKAGE__ . "::getSeqFeatures: arguments passed to getter")
+  croak(__PACKAGE__ . "::getSequenceDatabases: arguments passed to getter")
     if @_;
-  return $self->{__SEQFEATURES};
+  return $self->{__SEQUENCEDATABASES};
 }
 
 
 
-=item $biosequence->addSeqFeatures(@vals)
+=item $biosequence->addSequenceDatabases(@vals)
 
-Because the seqFeatures association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the seqFeatures
+Because the sequenceDatabases association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the sequenceDatabases
 association.
 
-Input parameters: the list of values C<@vals> to add to the seqFeatures
+Input parameters: the list of values C<@vals> to add to the sequenceDatabases
 association. B<NOTE>: submitting a single value is permitted.
 
 Return value: none
@@ -1259,223 +1510,22 @@ Return value: none
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::BioSequence::SeqFeature>
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::DatabaseEntry>
 
 =cut
 
-sub addSeqFeatures {
+sub addSequenceDatabases {
   my $self = shift;
-  croak(__PACKAGE__ . "::addSeqFeatures: no arguments passed to setter")
+  croak(__PACKAGE__ . "::addSequenceDatabases: no arguments passed to setter")
     unless @_;
   my @vals = @_;
     foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addSeqFeatures: wrong type: " . ref($val) . " expected Bio::MAGE::BioSequence::SeqFeature")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::BioSequence::SeqFeature');
+    croak(__PACKAGE__ . "::addSequenceDatabases: wrong type: " . ref($val) . " expected Bio::MAGE::Description::DatabaseEntry")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::DatabaseEntry');
   }
 
-  push(@{$self->{__SEQFEATURES}},@vals);
+  push(@{$self->{__SEQUENCEDATABASES}},@vals);
 }
-
-
-
-=back
-
-
-=item species
-
-
-From the MAGE-OM documentation for the C<species> association:
-
-The organism from which this sequence was obtained.
-
-
-
-=over
-
-
-=item $val = $biosequence->setSpecies($val)
-
-The restricted setter method for the species association.
-
-Input parameters: the value to which the species association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Return value: the current value of the species association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
-
-=cut
-
-sub setSpecies {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setSpecies: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setSpecies: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setSpecies: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
-  return $self->{__SPECIES} = $val;
-}
-
-
-
-=item $val = $biosequence->getSpecies()
-
-The restricted getter method for the species association.
-
-Input parameters: none
-
-Return value: the current value of the species association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getSpecies {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getSpecies: arguments passed to getter")
-    if @_;
-  return $self->{__SPECIES};
-}
-
-
-
-
-=back
-
-
-=item type
-
-
-From the MAGE-OM documentation for the C<type> association:
-
-The type of biosequence, i.e. gene, exon, UniGene cluster, fragment, BAC, EST, etc.
-
-
-
-=over
-
-
-=item $val = $biosequence->setType($val)
-
-The restricted setter method for the type association.
-
-Input parameters: the value to which the type association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Return value: the current value of the type association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
-
-=cut
-
-sub setType {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setType: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setType: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setType: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
-  return $self->{__TYPE} = $val;
-}
-
-
-
-=item $val = $biosequence->getType()
-
-The restricted getter method for the type association.
-
-Input parameters: none
-
-Return value: the current value of the type association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getType {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getType: arguments passed to getter")
-    if @_;
-  return $self->{__TYPE};
-}
-
-
-
-
-=back
-
-
-=item polymerType
-
-
-From the MAGE-OM documentation for the C<polymerType> association:
-
-A choice of protein, RNA, or DNA.
-
-
-
-=over
-
-
-=item $val = $biosequence->setPolymerType($val)
-
-The restricted setter method for the polymerType association.
-
-Input parameters: the value to which the polymerType association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Return value: the current value of the polymerType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
-
-=cut
-
-sub setPolymerType {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setPolymerType: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setPolymerType: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setPolymerType: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
-  return $self->{__POLYMERTYPE} = $val;
-}
-
-
-
-=item $val = $biosequence->getPolymerType()
-
-The restricted getter method for the polymerType association.
-
-Input parameters: none
-
-Return value: the current value of the polymerType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getPolymerType {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getPolymerType: arguments passed to getter")
-    if @_;
-  return $self->{__POLYMERTYPE};
-}
-
 
 
 

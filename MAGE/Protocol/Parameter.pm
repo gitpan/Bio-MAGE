@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: Parameter.pm,v 1.1 2002/12/10 06:25:50 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,15 +60,15 @@ $VERSION = q[$Id: Parameter.pm,v 1.1 2002/12/10 06:25:50 jason_e_stewart Exp $];
   my $parameter = Bio::MAGE::Protocol::Parameter->new();
 
     # creating an already populated instance
-  my $parameter = Bio::MAGE::Protocol::Parameter->new(dataType=>$dataType_value,
-			defaultValue=>$defaultValue_value);
+  my $parameter = Bio::MAGE::Protocol::Parameter->new(defaultValue=>$defaultValue_value,
+			dataType=>$dataType_value);
 
     # setting and retrieving object associations
-  my $dataType_val = $parameter->dataType();
-  $parameter->dataType($value);
-
   my $defaultValue_val = $parameter->defaultValue();
   $parameter->defaultValue($value);
+
+  my $dataType_val = $parameter->dataType();
+  $parameter->dataType($value);
 
 
 =head2 DESCRIPTION
@@ -115,42 +115,64 @@ named-value style arguments:
 
 =item * dataType
 
-Sets the value of the dataType association (from C<Bio::MAGE::Protocol::Parameter>).
+Sets the value of the dataType association (this association was inherited
+from class C<Bio::MAGE::Protocol::Parameter>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * defaultValue
 
-Sets the value of the defaultValue association (from C<Bio::MAGE::Protocol::Parameter>).
+Sets the value of the defaultValue association (this association was inherited
+from class C<Bio::MAGE::Protocol::Parameter>).
+
+The value will be of type C<Measurement>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -313,7 +335,8 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('dataType', 'defaultValue');
+  my @list = ('defaultValue',
+'dataType');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -465,45 +488,45 @@ BEGIN {
   $__ASSOCIATIONS = [
           'defaultValue',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Allows the optional specification of a default values and the unit for the Parameter',
-                                        '__CLASS_NAME' => 'Parameter',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'defaultValue',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Allows the optional specification of a default values and the unit for the Parameter',
-                                         '__CLASS_NAME' => 'Measurement',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'defaultValue',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Measurement'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Allows the optional specification of a default values and the unit for the Parameter',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Parameter'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'dataType',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The type of data generated by the parameter i.e. Boolean, float, etc...',
-                                        '__CLASS_NAME' => 'Parameter',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'dataType',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The type of data generated by the parameter i.e. Boolean, float, etc...',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'dataType',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The type of data generated by the parameter i.e. Boolean, float, etc...',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Parameter'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -541,73 +564,6 @@ the association.
 Bio::MAGE::Protocol::Parameter: has the following association accessor methods:
 
 =over
-
-
-=item dataType
-
-
-From the MAGE-OM documentation for the C<dataType> association:
-
-The type of data generated by the parameter i.e. Boolean, float, etc...
-
-
-
-=over
-
-
-=item $val = $parameter->setDataType($val)
-
-The restricted setter method for the dataType association.
-
-Input parameters: the value to which the dataType association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Return value: the current value of the dataType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
-
-=cut
-
-sub setDataType {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setDataType: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setDataType: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setDataType: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
-  return $self->{__DATATYPE} = $val;
-}
-
-
-
-=item $val = $parameter->getDataType()
-
-The restricted getter method for the dataType association.
-
-Input parameters: none
-
-Return value: the current value of the dataType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getDataType {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getDataType: arguments passed to getter")
-    if @_;
-  return $self->{__DATATYPE};
-}
-
-
-
-
-=back
 
 
 =item defaultValue
@@ -669,6 +625,73 @@ sub getDefaultValue {
   croak(__PACKAGE__ . "::getDefaultValue: arguments passed to getter")
     if @_;
   return $self->{__DEFAULTVALUE};
+}
+
+
+
+
+=back
+
+
+=item dataType
+
+
+From the MAGE-OM documentation for the C<dataType> association:
+
+The type of data generated by the parameter i.e. Boolean, float, etc...
+
+
+
+=over
+
+
+=item $val = $parameter->setDataType($val)
+
+The restricted setter method for the dataType association.
+
+Input parameters: the value to which the dataType association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Return value: the current value of the dataType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
+
+=cut
+
+sub setDataType {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setDataType: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setDataType: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setDataType: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  return $self->{__DATATYPE} = $val;
+}
+
+
+
+=item $val = $parameter->getDataType()
+
+The restricted getter method for the dataType association.
+
+Input parameters: none
+
+Return value: the current value of the dataType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getDataType {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getDataType: arguments passed to getter")
+    if @_;
+  return $self->{__DATATYPE};
 }
 
 

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: ArrayManufactureDeviation.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,15 +60,15 @@ $VERSION = q[$Id: ArrayManufactureDeviation.pm,v 1.1 2002/12/10 06:25:47 jason_e
   my $arraymanufacturedeviation = Bio::MAGE::Array::ArrayManufactureDeviation->new();
 
     # creating an already populated instance
-  my $arraymanufacturedeviation = Bio::MAGE::Array::ArrayManufactureDeviation->new(adjustments=>$adjustments_value,
-			featureDefects=>$featureDefects_value);
+  my $arraymanufacturedeviation = Bio::MAGE::Array::ArrayManufactureDeviation->new(featureDefects=>$featureDefects_value,
+			adjustments=>$adjustments_value);
 
     # setting and retrieving object associations
-  my $adjustments_val = $arraymanufacturedeviation->adjustments();
-  $arraymanufacturedeviation->adjustments($value);
-
   my $featureDefects_val = $arraymanufacturedeviation->featureDefects();
   $arraymanufacturedeviation->featureDefects($value);
+
+  my $adjustments_val = $arraymanufacturedeviation->adjustments();
+  $arraymanufacturedeviation->adjustments($value);
 
 
 =head2 DESCRIPTION
@@ -113,19 +113,28 @@ named-value style arguments:
 =over
 
 
-=item * adjustments
-
-Sets the value of the adjustments association (from C<Bio::MAGE::Array::ArrayManufactureDeviation>).
-
-
 =item * featureDefects
 
-Sets the value of the featureDefects association (from C<Bio::MAGE::Array::ArrayManufactureDeviation>).
+Sets the value of the featureDefects association (this association was inherited
+from class C<Bio::MAGE::Array::ArrayManufactureDeviation>).
+
+The value will be of type C<FeatureDefect>.
+
+
+=item * adjustments
+
+Sets the value of the adjustments association (this association was inherited
+from class C<Bio::MAGE::Array::ArrayManufactureDeviation>).
+
+The value will be of type C<ZoneDefect>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -288,7 +297,8 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('adjustments', 'featureDefects');
+  my @list = ('featureDefects',
+'adjustments');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -346,45 +356,45 @@ BEGIN {
   $__ASSOCIATIONS = [
           'adjustments',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Descriptions of how a Zone has been printed differently than specified in the ArrayDesign.',
-                                        '__CLASS_NAME' => 'ArrayManufactureDeviation',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'adjustments',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Descriptions of how a Zone has been printed differently than specified in the ArrayDesign.',
-                                         '__CLASS_NAME' => 'ZoneDefect',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'adjustments',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ZoneDefect'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Descriptions of how a Zone has been printed differently than specified in the ArrayDesign.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ArrayManufactureDeviation'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'featureDefects',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Description on features who are manufactured in a different location than specified in the ArrayDesign.',
-                                        '__CLASS_NAME' => 'ArrayManufactureDeviation',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'featureDefects',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Description on features who are manufactured in a different location than specified in the ArrayDesign.',
-                                         '__CLASS_NAME' => 'FeatureDefect',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'featureDefects',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'FeatureDefect'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Description on features who are manufactured in a different location than specified in the ArrayDesign.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ArrayManufactureDeviation'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -422,111 +432,6 @@ the association.
 Bio::MAGE::Array::ArrayManufactureDeviation: has the following association accessor methods:
 
 =over
-
-
-=item adjustments
-
-
-From the MAGE-OM documentation for the C<adjustments> association:
-
-Descriptions of how a Zone has been printed differently than specified in the ArrayDesign.
-
-
-
-=over
-
-
-=item $array_ref = $arraymanufacturedeviation->setAdjustments($array_ref)
-
-The restricted setter method for the adjustments association.
-
-Input parameters: the value to which the adjustments association will be set : a reference to an array of objects of type C<Bio::MAGE::Array::ZoneDefect>
-
-Return value: the current value of the adjustments association : a reference to an array of objects of type C<Bio::MAGE::Array::ZoneDefect>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Array::ZoneDefect> instances
-
-=cut
-
-sub setAdjustments {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setAdjustments: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setAdjustments: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-    croak(__PACKAGE__ . "::setAdjustments: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setAdjustments: wrong type: " . ref($val) . " expected Bio::MAGE::Array::ZoneDefect")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::Array::ZoneDefect');
-  }
-
-  return $self->{__ADJUSTMENTS} = $val;
-}
-
-
-
-=item $array_ref = $arraymanufacturedeviation->getAdjustments()
-
-The restricted getter method for the adjustments association.
-
-Input parameters: none
-
-Return value: the current value of the adjustments association : a reference to an array of objects of type C<Bio::MAGE::Array::ZoneDefect>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getAdjustments {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getAdjustments: arguments passed to getter")
-    if @_;
-  return $self->{__ADJUSTMENTS};
-}
-
-
-
-=item $arraymanufacturedeviation->addAdjustments(@vals)
-
-Because the adjustments association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the adjustments
-association.
-
-Input parameters: the list of values C<@vals> to add to the adjustments
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Array::ZoneDefect>
-
-=cut
-
-sub addAdjustments {
-  my $self = shift;
-  croak(__PACKAGE__ . "::addAdjustments: no arguments passed to setter")
-    unless @_;
-  my @vals = @_;
-    foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addAdjustments: wrong type: " . ref($val) . " expected Bio::MAGE::Array::ZoneDefect")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::Array::ZoneDefect');
-  }
-
-  push(@{$self->{__ADJUSTMENTS}},@vals);
-}
-
-
-
-=back
 
 
 =item featureDefects
@@ -627,6 +532,111 @@ sub addFeatureDefects {
   }
 
   push(@{$self->{__FEATUREDEFECTS}},@vals);
+}
+
+
+
+=back
+
+
+=item adjustments
+
+
+From the MAGE-OM documentation for the C<adjustments> association:
+
+Descriptions of how a Zone has been printed differently than specified in the ArrayDesign.
+
+
+
+=over
+
+
+=item $array_ref = $arraymanufacturedeviation->setAdjustments($array_ref)
+
+The restricted setter method for the adjustments association.
+
+Input parameters: the value to which the adjustments association will be set : a reference to an array of objects of type C<Bio::MAGE::Array::ZoneDefect>
+
+Return value: the current value of the adjustments association : a reference to an array of objects of type C<Bio::MAGE::Array::ZoneDefect>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Array::ZoneDefect> instances
+
+=cut
+
+sub setAdjustments {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setAdjustments: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setAdjustments: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setAdjustments: expected array reference, got $self")
+    unless UNIVERSAL::isa($val,'ARRAY');
+  foreach my $val (@{$val}) {
+    croak(__PACKAGE__ . "::setAdjustments: wrong type: " . ref($val) . " expected Bio::MAGE::Array::ZoneDefect")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Array::ZoneDefect');
+  }
+
+  return $self->{__ADJUSTMENTS} = $val;
+}
+
+
+
+=item $array_ref = $arraymanufacturedeviation->getAdjustments()
+
+The restricted getter method for the adjustments association.
+
+Input parameters: none
+
+Return value: the current value of the adjustments association : a reference to an array of objects of type C<Bio::MAGE::Array::ZoneDefect>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getAdjustments {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getAdjustments: arguments passed to getter")
+    if @_;
+  return $self->{__ADJUSTMENTS};
+}
+
+
+
+=item $arraymanufacturedeviation->addAdjustments(@vals)
+
+Because the adjustments association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the adjustments
+association.
+
+Input parameters: the list of values C<@vals> to add to the adjustments
+association. B<NOTE>: submitting a single value is permitted.
+
+Return value: none
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Array::ZoneDefect>
+
+=cut
+
+sub addAdjustments {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addAdjustments: no arguments passed to setter")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addAdjustments: wrong type: " . ref($val) . " expected Bio::MAGE::Array::ZoneDefect")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Array::ZoneDefect');
+  }
+
+  push(@{$self->{__ADJUSTMENTS}},@vals);
 }
 
 

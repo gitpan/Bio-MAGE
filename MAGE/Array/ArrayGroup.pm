@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: ArrayGroup.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,34 +60,22 @@ $VERSION = q[$Id: ArrayGroup.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp $]
   my $arraygroup = Bio::MAGE::Array::ArrayGroup->new();
 
     # creating an already populated instance
-  my $arraygroup = Bio::MAGE::Array::ArrayGroup->new(width=>$width_value,
-			numArrays=>$numArrays_value,
-			arraySpacingY=>$arraySpacingY_value,
-			length=>$length_value,
-			orientationMarkPosition=>$orientationMarkPosition_value,
+  my $arraygroup = Bio::MAGE::Array::ArrayGroup->new(orientationMark=>$orientationMark_value,
 			arraySpacingX=>$arraySpacingX_value,
 			barcode=>$barcode_value,
-			orientationMark=>$orientationMark_value,
-			arrays=>$arrays_value,
-			distanceUnit=>$distanceUnit_value,
+			arraySpacingY=>$arraySpacingY_value,
+			length=>$length_value,
+			numArrays=>$numArrays_value,
+			orientationMarkPosition=>$orientationMarkPosition_value,
+			width=>$width_value,
 			substrateType=>$substrateType_value,
-			fiducials=>$fiducials_value);
+			arrays=>$arrays_value,
+			fiducials=>$fiducials_value,
+			distanceUnit=>$distanceUnit_value);
 
     # setting and retrieving object attributes
-  my $width_val = $arraygroup->width();
-  $arraygroup->width($value);
-
-  my $numArrays_val = $arraygroup->numArrays();
-  $arraygroup->numArrays($value);
-
-  my $arraySpacingY_val = $arraygroup->arraySpacingY();
-  $arraygroup->arraySpacingY($value);
-
-  my $length_val = $arraygroup->length();
-  $arraygroup->length($value);
-
-  my $orientationMarkPosition_val = $arraygroup->orientationMarkPosition();
-  $arraygroup->orientationMarkPosition($value);
+  my $orientationMark_val = $arraygroup->orientationMark();
+  $arraygroup->orientationMark($value);
 
   my $arraySpacingX_val = $arraygroup->arraySpacingX();
   $arraygroup->arraySpacingX($value);
@@ -95,21 +83,33 @@ $VERSION = q[$Id: ArrayGroup.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp $]
   my $barcode_val = $arraygroup->barcode();
   $arraygroup->barcode($value);
 
-  my $orientationMark_val = $arraygroup->orientationMark();
-  $arraygroup->orientationMark($value);
+  my $arraySpacingY_val = $arraygroup->arraySpacingY();
+  $arraygroup->arraySpacingY($value);
+
+  my $length_val = $arraygroup->length();
+  $arraygroup->length($value);
+
+  my $numArrays_val = $arraygroup->numArrays();
+  $arraygroup->numArrays($value);
+
+  my $orientationMarkPosition_val = $arraygroup->orientationMarkPosition();
+  $arraygroup->orientationMarkPosition($value);
+
+  my $width_val = $arraygroup->width();
+  $arraygroup->width($value);
 
     # setting and retrieving object associations
-  my $arrays_val = $arraygroup->arrays();
-  $arraygroup->arrays($value);
-
-  my $distanceUnit_val = $arraygroup->distanceUnit();
-  $arraygroup->distanceUnit($value);
-
   my $substrateType_val = $arraygroup->substrateType();
   $arraygroup->substrateType($value);
 
+  my $arrays_val = $arraygroup->arrays();
+  $arraygroup->arrays($value);
+
   my $fiducials_val = $arraygroup->fiducials();
   $arraygroup->fiducials($value);
+
+  my $distanceUnit_val = $arraygroup->distanceUnit();
+  $arraygroup->distanceUnit($value);
 
 
 =head2 DESCRIPTION
@@ -156,94 +156,138 @@ named-value style arguments:
 =over
 
 
-=item * width
+=item * orientationMark
 
-Sets the value of the width attribute (from C<Bio::MAGE::Array::ArrayGroup>).
+Sets the value of the orientationMark attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::ArrayGroup>).
 
-
-=item * numArrays
-
-Sets the value of the numArrays attribute (from C<Bio::MAGE::Array::ArrayGroup>).
-
-
-=item * arraySpacingY
-
-Sets the value of the arraySpacingY attribute (from C<Bio::MAGE::Array::ArrayGroup>).
-
-
-=item * length
-
-Sets the value of the length attribute (from C<Bio::MAGE::Array::ArrayGroup>).
-
-
-=item * orientationMarkPosition
-
-Sets the value of the orientationMarkPosition attribute (from C<Bio::MAGE::Array::ArrayGroup>).
 
 
 =item * arraySpacingX
 
-Sets the value of the arraySpacingX attribute (from C<Bio::MAGE::Array::ArrayGroup>).
+Sets the value of the arraySpacingX attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::ArrayGroup>).
+
 
 
 =item * barcode
 
-Sets the value of the barcode attribute (from C<Bio::MAGE::Array::ArrayGroup>).
+Sets the value of the barcode attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::ArrayGroup>).
 
 
-=item * orientationMark
 
-Sets the value of the orientationMark attribute (from C<Bio::MAGE::Array::ArrayGroup>).
+=item * arraySpacingY
 
-
-=item * arrays
-
-Sets the value of the arrays association (from C<Bio::MAGE::Array::ArrayGroup>).
+Sets the value of the arraySpacingY attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::ArrayGroup>).
 
 
-=item * distanceUnit
 
-Sets the value of the distanceUnit association (from C<Bio::MAGE::Array::ArrayGroup>).
+=item * length
+
+Sets the value of the length attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::ArrayGroup>).
+
+
+
+=item * numArrays
+
+Sets the value of the numArrays attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::ArrayGroup>).
+
+
+
+=item * orientationMarkPosition
+
+Sets the value of the orientationMarkPosition attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::ArrayGroup>).
+
+
+
+=item * width
+
+Sets the value of the width attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::ArrayGroup>).
+
 
 
 =item * substrateType
 
-Sets the value of the substrateType association (from C<Bio::MAGE::Array::ArrayGroup>).
+Sets the value of the substrateType association (this association was inherited
+from class C<Bio::MAGE::Array::ArrayGroup>).
+
+The value will be of type C<OntologyEntry>.
+
+
+=item * arrays
+
+Sets the value of the arrays association (this association was inherited
+from class C<Bio::MAGE::Array::ArrayGroup>).
+
+The value will be of type C<Array>.
 
 
 =item * fiducials
 
-Sets the value of the fiducials association (from C<Bio::MAGE::Array::ArrayGroup>).
+Sets the value of the fiducials association (this association was inherited
+from class C<Bio::MAGE::Array::ArrayGroup>).
+
+The value will be of type C<Fiducial>.
+
+
+=item * distanceUnit
+
+Sets the value of the distanceUnit association (this association was inherited
+from class C<Bio::MAGE::Array::ArrayGroup>).
+
+The value will be of type C<DistanceUnit>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -389,7 +433,14 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('width', 'numArrays', 'arraySpacingY', 'length', 'orientationMarkPosition', 'arraySpacingX', 'barcode', 'orientationMark');
+  my @list = ('orientationMark',
+'arraySpacingX',
+'barcode',
+'arraySpacingY',
+'length',
+'numArrays',
+'orientationMarkPosition',
+'width');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -406,7 +457,10 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('arrays', 'distanceUnit', 'substrateType', 'fiducials');
+  my @list = ('substrateType',
+'arrays',
+'fiducials',
+'distanceUnit');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -452,24 +506,24 @@ Bio::MAGE::Array::ArrayGroup: has the following attribute accessor methods:
 =over
 
 
-=item width
+=item orientationMark
 
-From the MAGE-OM documentation for the C<width> attribute:
+From the MAGE-OM documentation for the C<orientationMark> attribute:
 
-The width of the platform
+For a human to determine where the top left side of the array is, such as a barcode or frosted side of the glass, etc.
 
 
 
 =over
 
 
-=item $val = $arraygroup->setWidth($val)
+=item $val = $arraygroup->setOrientationMark($val)
 
-The restricted setter method for the width attribute.
+The restricted setter method for the orientationMark attribute.
 
-Input parameters: the value to which the width attribute will be set 
+Input parameters: the value to which the orientationMark attribute will be set 
 
-Return value: the current value of the width attribute 
+Return value: the current value of the orientationMark attribute 
 
 Side effects: none
 
@@ -478,26 +532,26 @@ if too many input parameters are specified
 
 =cut
 
-sub setWidth {
+sub setOrientationMark {
   my $self = shift;
-  croak(__PACKAGE__ . "::setWidth: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setOrientationMark: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setWidth: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setOrientationMark: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
   
-  return $self->{__WIDTH} = $val;
+  return $self->{__ORIENTATIONMARK} = $val;
 }
 
 
 
-=item $val = $arraygroup->getWidth()
+=item $val = $arraygroup->getOrientationMark()
 
-The restricted getter method for the width attribute.
+The restricted getter method for the orientationMark attribute.
 
 Input parameters: none
 
-Return value: the current value of the width attribute 
+Return value: the current value of the orientationMark attribute 
 
 Side effects: none
 
@@ -505,275 +559,11 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getWidth {
+sub getOrientationMark {
   my $self = shift;
-  croak(__PACKAGE__ . "::getWidth: arguments passed to getter")
+  croak(__PACKAGE__ . "::getOrientationMark: arguments passed to getter")
     if @_;
-  return $self->{__WIDTH};
-}
-
-
-
-
-=back
-
-
-=item numArrays
-
-From the MAGE-OM documentation for the C<numArrays> attribute:
-
-This attribute defines the number of arrays on a chip or a slide. 
-
-
-
-=over
-
-
-=item $val = $arraygroup->setNumArrays($val)
-
-The restricted setter method for the numArrays attribute.
-
-Input parameters: the value to which the numArrays attribute will be set 
-
-Return value: the current value of the numArrays attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setNumArrays {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setNumArrays: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setNumArrays: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__NUMARRAYS} = $val;
-}
-
-
-
-=item $val = $arraygroup->getNumArrays()
-
-The restricted getter method for the numArrays attribute.
-
-Input parameters: none
-
-Return value: the current value of the numArrays attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getNumArrays {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getNumArrays: arguments passed to getter")
-    if @_;
-  return $self->{__NUMARRAYS};
-}
-
-
-
-
-=back
-
-
-=item arraySpacingY
-
-From the MAGE-OM documentation for the C<arraySpacingY> attribute:
-
-If there exist more than one array on a slide or a chip, then the spacing between the arrays is useful so that scanning / feature extraction software can crop images representing 1 unique bioassay. 
-
-
-
-=over
-
-
-=item $val = $arraygroup->setArraySpacingY($val)
-
-The restricted setter method for the arraySpacingY attribute.
-
-Input parameters: the value to which the arraySpacingY attribute will be set 
-
-Return value: the current value of the arraySpacingY attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setArraySpacingY {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setArraySpacingY: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setArraySpacingY: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__ARRAYSPACINGY} = $val;
-}
-
-
-
-=item $val = $arraygroup->getArraySpacingY()
-
-The restricted getter method for the arraySpacingY attribute.
-
-Input parameters: none
-
-Return value: the current value of the arraySpacingY attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getArraySpacingY {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getArraySpacingY: arguments passed to getter")
-    if @_;
-  return $self->{__ARRAYSPACINGY};
-}
-
-
-
-
-=back
-
-
-=item length
-
-From the MAGE-OM documentation for the C<length> attribute:
-
-The length of the platform.
-
-
-
-=over
-
-
-=item $val = $arraygroup->setLength($val)
-
-The restricted setter method for the length attribute.
-
-Input parameters: the value to which the length attribute will be set 
-
-Return value: the current value of the length attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setLength {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setLength: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setLength: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__LENGTH} = $val;
-}
-
-
-
-=item $val = $arraygroup->getLength()
-
-The restricted getter method for the length attribute.
-
-Input parameters: none
-
-Return value: the current value of the length attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getLength {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getLength: arguments passed to getter")
-    if @_;
-  return $self->{__LENGTH};
-}
-
-
-
-
-=back
-
-
-=item orientationMarkPosition
-
-From the MAGE-OM documentation for the C<orientationMarkPosition> attribute:
-
-One of top, bottom, left or right.
-
-
-
-=over
-
-
-=item $val = $arraygroup->setOrientationMarkPosition($val)
-
-The restricted setter method for the orientationMarkPosition attribute.
-
-Input parameters: the value to which the orientationMarkPosition attribute will be set 
-
-Return value: the current value of the orientationMarkPosition attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setOrientationMarkPosition {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setOrientationMarkPosition: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setOrientationMarkPosition: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__ORIENTATIONMARKPOSITION} = $val;
-}
-
-
-
-=item $val = $arraygroup->getOrientationMarkPosition()
-
-The restricted getter method for the orientationMarkPosition attribute.
-
-Input parameters: none
-
-Return value: the current value of the orientationMarkPosition attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getOrientationMarkPosition {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getOrientationMarkPosition: arguments passed to getter")
-    if @_;
-  return $self->{__ORIENTATIONMARKPOSITION};
+  return $self->{__ORIENTATIONMARK};
 }
 
 
@@ -914,24 +704,24 @@ sub getBarcode {
 =back
 
 
-=item orientationMark
+=item arraySpacingY
 
-From the MAGE-OM documentation for the C<orientationMark> attribute:
+From the MAGE-OM documentation for the C<arraySpacingY> attribute:
 
-For a human to determine where the top left side of the array is, such as a barcode or frosted side of the glass, etc.
+If there exist more than one array on a slide or a chip, then the spacing between the arrays is useful so that scanning / feature extraction software can crop images representing 1 unique bioassay. 
 
 
 
 =over
 
 
-=item $val = $arraygroup->setOrientationMark($val)
+=item $val = $arraygroup->setArraySpacingY($val)
 
-The restricted setter method for the orientationMark attribute.
+The restricted setter method for the arraySpacingY attribute.
 
-Input parameters: the value to which the orientationMark attribute will be set 
+Input parameters: the value to which the arraySpacingY attribute will be set 
 
-Return value: the current value of the orientationMark attribute 
+Return value: the current value of the arraySpacingY attribute 
 
 Side effects: none
 
@@ -940,26 +730,26 @@ if too many input parameters are specified
 
 =cut
 
-sub setOrientationMark {
+sub setArraySpacingY {
   my $self = shift;
-  croak(__PACKAGE__ . "::setOrientationMark: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setArraySpacingY: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setOrientationMark: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setArraySpacingY: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
   
-  return $self->{__ORIENTATIONMARK} = $val;
+  return $self->{__ARRAYSPACINGY} = $val;
 }
 
 
 
-=item $val = $arraygroup->getOrientationMark()
+=item $val = $arraygroup->getArraySpacingY()
 
-The restricted getter method for the orientationMark attribute.
+The restricted getter method for the arraySpacingY attribute.
 
 Input parameters: none
 
-Return value: the current value of the orientationMark attribute 
+Return value: the current value of the arraySpacingY attribute 
 
 Side effects: none
 
@@ -967,11 +757,275 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getOrientationMark {
+sub getArraySpacingY {
   my $self = shift;
-  croak(__PACKAGE__ . "::getOrientationMark: arguments passed to getter")
+  croak(__PACKAGE__ . "::getArraySpacingY: arguments passed to getter")
     if @_;
-  return $self->{__ORIENTATIONMARK};
+  return $self->{__ARRAYSPACINGY};
+}
+
+
+
+
+=back
+
+
+=item length
+
+From the MAGE-OM documentation for the C<length> attribute:
+
+The length of the platform.
+
+
+
+=over
+
+
+=item $val = $arraygroup->setLength($val)
+
+The restricted setter method for the length attribute.
+
+Input parameters: the value to which the length attribute will be set 
+
+Return value: the current value of the length attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setLength {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setLength: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setLength: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__LENGTH} = $val;
+}
+
+
+
+=item $val = $arraygroup->getLength()
+
+The restricted getter method for the length attribute.
+
+Input parameters: none
+
+Return value: the current value of the length attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getLength {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getLength: arguments passed to getter")
+    if @_;
+  return $self->{__LENGTH};
+}
+
+
+
+
+=back
+
+
+=item numArrays
+
+From the MAGE-OM documentation for the C<numArrays> attribute:
+
+This attribute defines the number of arrays on a chip or a slide. 
+
+
+
+=over
+
+
+=item $val = $arraygroup->setNumArrays($val)
+
+The restricted setter method for the numArrays attribute.
+
+Input parameters: the value to which the numArrays attribute will be set 
+
+Return value: the current value of the numArrays attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setNumArrays {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setNumArrays: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setNumArrays: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__NUMARRAYS} = $val;
+}
+
+
+
+=item $val = $arraygroup->getNumArrays()
+
+The restricted getter method for the numArrays attribute.
+
+Input parameters: none
+
+Return value: the current value of the numArrays attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getNumArrays {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getNumArrays: arguments passed to getter")
+    if @_;
+  return $self->{__NUMARRAYS};
+}
+
+
+
+
+=back
+
+
+=item orientationMarkPosition
+
+From the MAGE-OM documentation for the C<orientationMarkPosition> attribute:
+
+One of top, bottom, left or right.
+
+
+
+=over
+
+
+=item $val = $arraygroup->setOrientationMarkPosition($val)
+
+The restricted setter method for the orientationMarkPosition attribute.
+
+Input parameters: the value to which the orientationMarkPosition attribute will be set 
+
+Return value: the current value of the orientationMarkPosition attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setOrientationMarkPosition {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setOrientationMarkPosition: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setOrientationMarkPosition: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__ORIENTATIONMARKPOSITION} = $val;
+}
+
+
+
+=item $val = $arraygroup->getOrientationMarkPosition()
+
+The restricted getter method for the orientationMarkPosition attribute.
+
+Input parameters: none
+
+Return value: the current value of the orientationMarkPosition attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getOrientationMarkPosition {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getOrientationMarkPosition: arguments passed to getter")
+    if @_;
+  return $self->{__ORIENTATIONMARKPOSITION};
+}
+
+
+
+
+=back
+
+
+=item width
+
+From the MAGE-OM documentation for the C<width> attribute:
+
+The width of the platform
+
+
+
+=over
+
+
+=item $val = $arraygroup->setWidth($val)
+
+The restricted setter method for the width attribute.
+
+Input parameters: the value to which the width attribute will be set 
+
+Return value: the current value of the width attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setWidth {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setWidth: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setWidth: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__WIDTH} = $val;
+}
+
+
+
+=item $val = $arraygroup->getWidth()
+
+The restricted getter method for the width attribute.
+
+Input parameters: none
+
+Return value: the current value of the width attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getWidth {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getWidth: arguments passed to getter")
+    if @_;
+  return $self->{__WIDTH};
 }
 
 
@@ -1086,87 +1140,87 @@ BEGIN {
   $__ASSOCIATIONS = [
           'fiducials',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Association to the marks on the Array for alignment for the scanner.',
-                                        '__CLASS_NAME' => 'ArrayGroup',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'fiducials',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Association to the marks on the Array for alignment for the scanner.',
-                                         '__CLASS_NAME' => 'Fiducial',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'fiducials',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Fiducial'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Association to the marks on the Array for alignment for the scanner.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ArrayGroup'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'arrays',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'arrayGroup',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..1',
-                                        '__DOCUMENTATION' => 'Association between an ArrayGroup and its Arrays, typically the ArrayGroup will represent a slide and the Arrays will be the manufactured so that they may be hybridized separately on that slide. ',
-                                        '__CLASS_NAME' => 'ArrayGroup',
-                                        '__RANK' => '3',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'arrays',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '1..N',
                                          '__DOCUMENTATION' => 'Association between an ArrayGroup and its Arrays, typically the ArrayGroup will represent a slide and the Arrays will be the manufactured so that they may be hybridized separately on that slide. ',
-                                         '__CLASS_NAME' => 'Array',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'arrays',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Array'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '3',
+                                        '__CARDINALITY' => '0..1',
+                                        '__DOCUMENTATION' => 'Association between an ArrayGroup and its Arrays, typically the ArrayGroup will represent a slide and the Arrays will be the manufactured so that they may be hybridized separately on that slide. ',
+                                        '__NAME' => 'arrayGroup',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'ArrayGroup'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'substrateType',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Commonly, arrays will be spotted on 1x3 glass microscope slides but there is nothing that says this must be the case.  This association is for scanners to inform them on the possible different formats of slides that can contain arrays.',
-                                        '__CLASS_NAME' => 'ArrayGroup',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'substrateType',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Commonly, arrays will be spotted on 1x3 glass microscope slides but there is nothing that says this must be the case.  This association is for scanners to inform them on the possible different formats of slides that can contain arrays.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'substrateType',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Commonly, arrays will be spotted on 1x3 glass microscope slides but there is nothing that says this must be the case.  This association is for scanners to inform them on the possible different formats of slides that can contain arrays.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ArrayGroup'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'distanceUnit',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The unit of the measurement attributes.',
-                                        '__CLASS_NAME' => 'ArrayGroup',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'distanceUnit',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The unit of the measurement attributes.',
-                                         '__CLASS_NAME' => 'DistanceUnit',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'distanceUnit',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'DistanceUnit'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The unit of the measurement attributes.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ArrayGroup'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -1204,6 +1258,73 @@ the association.
 Bio::MAGE::Array::ArrayGroup: has the following association accessor methods:
 
 =over
+
+
+=item substrateType
+
+
+From the MAGE-OM documentation for the C<substrateType> association:
+
+Commonly, arrays will be spotted on 1x3 glass microscope slides but there is nothing that says this must be the case.  This association is for scanners to inform them on the possible different formats of slides that can contain arrays.
+
+
+
+=over
+
+
+=item $val = $arraygroup->setSubstrateType($val)
+
+The restricted setter method for the substrateType association.
+
+Input parameters: the value to which the substrateType association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Return value: the current value of the substrateType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
+
+=cut
+
+sub setSubstrateType {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setSubstrateType: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setSubstrateType: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setSubstrateType: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  return $self->{__SUBSTRATETYPE} = $val;
+}
+
+
+
+=item $val = $arraygroup->getSubstrateType()
+
+The restricted getter method for the substrateType association.
+
+Input parameters: none
+
+Return value: the current value of the substrateType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getSubstrateType {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getSubstrateType: arguments passed to getter")
+    if @_;
+  return $self->{__SUBSTRATETYPE};
+}
+
+
+
+
+=back
 
 
 =item arrays
@@ -1311,140 +1432,6 @@ sub addArrays {
 =back
 
 
-=item distanceUnit
-
-
-From the MAGE-OM documentation for the C<distanceUnit> association:
-
-The unit of the measurement attributes.
-
-
-
-=over
-
-
-=item $val = $arraygroup->setDistanceUnit($val)
-
-The restricted setter method for the distanceUnit association.
-
-Input parameters: the value to which the distanceUnit association will be set : an instance of type C<Bio::MAGE::Measurement::DistanceUnit>.
-
-Return value: the current value of the distanceUnit association : an instance of type C<Bio::MAGE::Measurement::DistanceUnit>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Measurement::DistanceUnit>
-
-=cut
-
-sub setDistanceUnit {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setDistanceUnit: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setDistanceUnit: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setDistanceUnit: wrong type: " . ref($val) . " expected Bio::MAGE::Measurement::DistanceUnit") unless UNIVERSAL::isa($val,'Bio::MAGE::Measurement::DistanceUnit');
-  return $self->{__DISTANCEUNIT} = $val;
-}
-
-
-
-=item $val = $arraygroup->getDistanceUnit()
-
-The restricted getter method for the distanceUnit association.
-
-Input parameters: none
-
-Return value: the current value of the distanceUnit association : an instance of type C<Bio::MAGE::Measurement::DistanceUnit>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getDistanceUnit {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getDistanceUnit: arguments passed to getter")
-    if @_;
-  return $self->{__DISTANCEUNIT};
-}
-
-
-
-
-=back
-
-
-=item substrateType
-
-
-From the MAGE-OM documentation for the C<substrateType> association:
-
-Commonly, arrays will be spotted on 1x3 glass microscope slides but there is nothing that says this must be the case.  This association is for scanners to inform them on the possible different formats of slides that can contain arrays.
-
-
-
-=over
-
-
-=item $val = $arraygroup->setSubstrateType($val)
-
-The restricted setter method for the substrateType association.
-
-Input parameters: the value to which the substrateType association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Return value: the current value of the substrateType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
-
-=cut
-
-sub setSubstrateType {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setSubstrateType: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setSubstrateType: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setSubstrateType: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
-  return $self->{__SUBSTRATETYPE} = $val;
-}
-
-
-
-=item $val = $arraygroup->getSubstrateType()
-
-The restricted getter method for the substrateType association.
-
-Input parameters: none
-
-Return value: the current value of the substrateType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getSubstrateType {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getSubstrateType: arguments passed to getter")
-    if @_;
-  return $self->{__SUBSTRATETYPE};
-}
-
-
-
-
-=back
-
-
 =item fiducials
 
 
@@ -1544,6 +1531,73 @@ sub addFiducials {
 
   push(@{$self->{__FIDUCIALS}},@vals);
 }
+
+
+
+=back
+
+
+=item distanceUnit
+
+
+From the MAGE-OM documentation for the C<distanceUnit> association:
+
+The unit of the measurement attributes.
+
+
+
+=over
+
+
+=item $val = $arraygroup->setDistanceUnit($val)
+
+The restricted setter method for the distanceUnit association.
+
+Input parameters: the value to which the distanceUnit association will be set : an instance of type C<Bio::MAGE::Measurement::DistanceUnit>.
+
+Return value: the current value of the distanceUnit association : an instance of type C<Bio::MAGE::Measurement::DistanceUnit>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Measurement::DistanceUnit>
+
+=cut
+
+sub setDistanceUnit {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setDistanceUnit: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setDistanceUnit: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setDistanceUnit: wrong type: " . ref($val) . " expected Bio::MAGE::Measurement::DistanceUnit") unless UNIVERSAL::isa($val,'Bio::MAGE::Measurement::DistanceUnit');
+  return $self->{__DISTANCEUNIT} = $val;
+}
+
+
+
+=item $val = $arraygroup->getDistanceUnit()
+
+The restricted getter method for the distanceUnit association.
+
+Input parameters: none
+
+Return value: the current value of the distanceUnit association : an instance of type C<Bio::MAGE::Measurement::DistanceUnit>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getDistanceUnit {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getDistanceUnit: arguments passed to getter")
+    if @_;
+  return $self->{__DISTANCEUNIT};
+}
+
 
 
 

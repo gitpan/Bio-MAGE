@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Describable Exporter);
-$VERSION = q[$Id: Fiducial.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,19 +60,19 @@ $VERSION = q[$Id: Fiducial.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
   my $fiducial = Bio::MAGE::Array::Fiducial->new();
 
     # creating an already populated instance
-  my $fiducial = Bio::MAGE::Array::Fiducial->new(distanceUnit=>$distanceUnit_value,
-			position=>$position_value,
-			fiducialType=>$fiducialType_value);
+  my $fiducial = Bio::MAGE::Array::Fiducial->new(fiducialType=>$fiducialType_value,
+			distanceUnit=>$distanceUnit_value,
+			position=>$position_value);
 
     # setting and retrieving object associations
+  my $fiducialType_val = $fiducial->fiducialType();
+  $fiducial->fiducialType($value);
+
   my $distanceUnit_val = $fiducial->distanceUnit();
   $fiducial->distanceUnit($value);
 
   my $position_val = $fiducial->position();
   $fiducial->position($value);
-
-  my $fiducialType_val = $fiducial->fiducialType();
-  $fiducial->fiducialType($value);
 
 
 =head2 DESCRIPTION
@@ -117,39 +117,60 @@ named-value style arguments:
 =over
 
 
+=item * fiducialType
+
+Sets the value of the fiducialType association (this association was inherited
+from class C<Bio::MAGE::Array::Fiducial>).
+
+The value will be of type C<OntologyEntry>.
+
+
 =item * distanceUnit
 
-Sets the value of the distanceUnit association (from C<Bio::MAGE::Array::Fiducial>).
+Sets the value of the distanceUnit association (this association was inherited
+from class C<Bio::MAGE::Array::Fiducial>).
+
+The value will be of type C<DistanceUnit>.
 
 
 =item * position
 
-Sets the value of the position association (from C<Bio::MAGE::Array::Fiducial>).
+Sets the value of the position association (this association was inherited
+from class C<Bio::MAGE::Array::Fiducial>).
 
-
-=item * fiducialType
-
-Sets the value of the fiducialType association (from C<Bio::MAGE::Array::Fiducial>).
-
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
+The value will be of type C<Position>.
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -312,7 +333,9 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('distanceUnit', 'position', 'fiducialType');
+  my @list = ('fiducialType',
+'distanceUnit',
+'position');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -370,66 +393,66 @@ BEGIN {
   $__ASSOCIATIONS = [
           'fiducialType',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'A descriptive string that indicates the type of a fiducial (e.g. the chrome border on an Affymetrix array, a laser ablation mark).',
-                                        '__CLASS_NAME' => 'Fiducial',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'fiducialType',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'A descriptive string that indicates the type of a fiducial (e.g. the chrome border on an Affymetrix array, a laser ablation mark).',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'fiducialType',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'A descriptive string that indicates the type of a fiducial (e.g. the chrome border on an Affymetrix array, a laser ablation mark).',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Fiducial'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'distanceUnit',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The units the fiducial is measured in.',
-                                        '__CLASS_NAME' => 'Fiducial',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'distanceUnit',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The units the fiducial is measured in.',
-                                         '__CLASS_NAME' => 'DistanceUnit',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'distanceUnit',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'DistanceUnit'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The units the fiducial is measured in.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Fiducial'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'position',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The position, relative to the upper left corner, of the fiducial',
-                                        '__CLASS_NAME' => 'Fiducial',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'position',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The position, relative to the upper left corner, of the fiducial',
-                                         '__CLASS_NAME' => 'Position',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'position',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Position'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The position, relative to the upper left corner, of the fiducial',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Fiducial'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -467,6 +490,73 @@ the association.
 Bio::MAGE::Array::Fiducial: has the following association accessor methods:
 
 =over
+
+
+=item fiducialType
+
+
+From the MAGE-OM documentation for the C<fiducialType> association:
+
+A descriptive string that indicates the type of a fiducial (e.g. the chrome border on an Affymetrix array, a laser ablation mark).
+
+
+
+=over
+
+
+=item $val = $fiducial->setFiducialType($val)
+
+The restricted setter method for the fiducialType association.
+
+Input parameters: the value to which the fiducialType association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Return value: the current value of the fiducialType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
+
+=cut
+
+sub setFiducialType {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setFiducialType: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setFiducialType: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setFiducialType: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  return $self->{__FIDUCIALTYPE} = $val;
+}
+
+
+
+=item $val = $fiducial->getFiducialType()
+
+The restricted getter method for the fiducialType association.
+
+Input parameters: none
+
+Return value: the current value of the fiducialType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getFiducialType {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getFiducialType: arguments passed to getter")
+    if @_;
+  return $self->{__FIDUCIALTYPE};
+}
+
+
+
+
+=back
 
 
 =item distanceUnit
@@ -595,73 +685,6 @@ sub getPosition {
   croak(__PACKAGE__ . "::getPosition: arguments passed to getter")
     if @_;
   return $self->{__POSITION};
-}
-
-
-
-
-=back
-
-
-=item fiducialType
-
-
-From the MAGE-OM documentation for the C<fiducialType> association:
-
-A descriptive string that indicates the type of a fiducial (e.g. the chrome border on an Affymetrix array, a laser ablation mark).
-
-
-
-=over
-
-
-=item $val = $fiducial->setFiducialType($val)
-
-The restricted setter method for the fiducialType association.
-
-Input parameters: the value to which the fiducialType association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Return value: the current value of the fiducialType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
-
-=cut
-
-sub setFiducialType {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setFiducialType: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setFiducialType: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setFiducialType: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
-  return $self->{__FIDUCIALTYPE} = $val;
-}
-
-
-
-=item $val = $fiducial->getFiducialType()
-
-The restricted getter method for the fiducialType association.
-
-Input parameters: none
-
-Return value: the current value of the fiducialType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getFiducialType {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getFiducialType: arguments passed to getter")
-    if @_;
-  return $self->{__FIDUCIALTYPE};
 }
 
 

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: Experiment.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,13 +60,19 @@ $VERSION = q[$Id: Experiment.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart Exp $]
   my $experiment = Bio::MAGE::Experiment::Experiment->new();
 
     # creating an already populated instance
-  my $experiment = Bio::MAGE::Experiment::Experiment->new(bioAssays=>$bioAssays_value,
-			providers=>$providers_value,
-			bioAssayData=>$bioAssayData_value,
+  my $experiment = Bio::MAGE::Experiment::Experiment->new(experimentDesign=>$experimentDesign_value,
 			analysisResults=>$analysisResults_value,
-			experimentDesign=>$experimentDesign_value);
+			bioAssays=>$bioAssays_value,
+			providers=>$providers_value,
+			bioAssayData=>$bioAssayData_value);
 
     # setting and retrieving object associations
+  my $experimentDesign_val = $experiment->experimentDesign();
+  $experiment->experimentDesign($value);
+
+  my $analysisResults_val = $experiment->analysisResults();
+  $experiment->analysisResults($value);
+
   my $bioAssays_val = $experiment->bioAssays();
   $experiment->bioAssays($value);
 
@@ -75,12 +81,6 @@ $VERSION = q[$Id: Experiment.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart Exp $]
 
   my $bioAssayData_val = $experiment->bioAssayData();
   $experiment->bioAssayData($value);
-
-  my $analysisResults_val = $experiment->analysisResults();
-  $experiment->analysisResults($value);
-
-  my $experimentDesign_val = $experiment->experimentDesign();
-  $experiment->experimentDesign($value);
 
 
 =head2 DESCRIPTION
@@ -125,59 +125,90 @@ named-value style arguments:
 =over
 
 
-=item * bioAssays
+=item * experimentDesign
 
-Sets the value of the bioAssays association (from C<Bio::MAGE::Experiment::Experiment>).
+Sets the value of the experimentDesign association (this association was inherited
+from class C<Bio::MAGE::Experiment::Experiment>).
 
-
-=item * providers
-
-Sets the value of the providers association (from C<Bio::MAGE::Experiment::Experiment>).
-
-
-=item * bioAssayData
-
-Sets the value of the bioAssayData association (from C<Bio::MAGE::Experiment::Experiment>).
+The value will be of type C<ExperimentDesign>.
 
 
 =item * analysisResults
 
-Sets the value of the analysisResults association (from C<Bio::MAGE::Experiment::Experiment>).
+Sets the value of the analysisResults association (this association was inherited
+from class C<Bio::MAGE::Experiment::Experiment>).
+
+The value will be of type C<BioAssayDataCluster>.
 
 
-=item * experimentDesign
+=item * bioAssays
 
-Sets the value of the experimentDesign association (from C<Bio::MAGE::Experiment::Experiment>).
+Sets the value of the bioAssays association (this association was inherited
+from class C<Bio::MAGE::Experiment::Experiment>).
+
+The value will be of type C<BioAssay>.
+
+
+=item * providers
+
+Sets the value of the providers association (this association was inherited
+from class C<Bio::MAGE::Experiment::Experiment>).
+
+The value will be of type C<Contact>.
+
+
+=item * bioAssayData
+
+Sets the value of the bioAssayData association (this association was inherited
+from class C<Bio::MAGE::Experiment::Experiment>).
+
+The value will be of type C<BioAssayData>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -340,7 +371,11 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('bioAssays', 'providers', 'bioAssayData', 'analysisResults', 'experimentDesign');
+  my @list = ('experimentDesign',
+'analysisResults',
+'bioAssays',
+'providers',
+'bioAssayData');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -492,108 +527,108 @@ BEGIN {
   $__ASSOCIATIONS = [
           'providers',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The providers of the Experiment, its data and annotation.',
-                                        '__CLASS_NAME' => 'Experiment',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'providers',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The providers of the Experiment, its data and annotation.',
-                                         '__CLASS_NAME' => 'Contact',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'providers',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Contact'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The providers of the Experiment, its data and annotation.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Experiment'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'analysisResults',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The results of analyzing the data, typically with a clustering algorithm.',
-                                        '__CLASS_NAME' => 'Experiment',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'analysisResults',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The results of analyzing the data, typically with a clustering algorithm.',
-                                         '__CLASS_NAME' => 'BioAssayDataCluster',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'analysisResults',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioAssayDataCluster'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The results of analyzing the data, typically with a clustering algorithm.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Experiment'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'bioAssayData',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The collection of BioAssayDatas for this Experiment.',
-                                        '__CLASS_NAME' => 'Experiment',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'bioAssayData',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The collection of BioAssayDatas for this Experiment.',
-                                         '__CLASS_NAME' => 'BioAssayData',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'bioAssayData',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioAssayData'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The collection of BioAssayDatas for this Experiment.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Experiment'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'bioAssays',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The collection of BioAssays for this Experiment.',
-                                        '__CLASS_NAME' => 'Experiment',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'bioAssays',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The collection of BioAssays for this Experiment.',
-                                         '__CLASS_NAME' => 'BioAssay',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'bioAssays',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioAssay'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The collection of BioAssays for this Experiment.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Experiment'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'experimentDesign',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The association to the description and annotation of the Experiment, along with the grouping of the top-level BioAssays.',
-                                        '__CLASS_NAME' => 'Experiment',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'experimentDesign',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '5',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The association to the description and annotation of the Experiment, along with the grouping of the top-level BioAssays.',
-                                         '__CLASS_NAME' => 'ExperimentDesign',
-                                         '__RANK' => '5',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'experimentDesign',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ExperimentDesign'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The association to the description and annotation of the Experiment, along with the grouping of the top-level BioAssays.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Experiment'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -631,6 +666,178 @@ the association.
 Bio::MAGE::Experiment::Experiment: has the following association accessor methods:
 
 =over
+
+
+=item experimentDesign
+
+
+From the MAGE-OM documentation for the C<experimentDesign> association:
+
+The association to the description and annotation of the Experiment, along with the grouping of the top-level BioAssays.
+
+
+
+=over
+
+
+=item $val = $experiment->setExperimentDesign($val)
+
+The restricted setter method for the experimentDesign association.
+
+Input parameters: the value to which the experimentDesign association will be set : an instance of type C<Bio::MAGE::Experiment::ExperimentDesign>.
+
+Return value: the current value of the experimentDesign association : an instance of type C<Bio::MAGE::Experiment::ExperimentDesign>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Experiment::ExperimentDesign>
+
+=cut
+
+sub setExperimentDesign {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setExperimentDesign: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setExperimentDesign: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setExperimentDesign: wrong type: " . ref($val) . " expected Bio::MAGE::Experiment::ExperimentDesign") unless UNIVERSAL::isa($val,'Bio::MAGE::Experiment::ExperimentDesign');
+  return $self->{__EXPERIMENTDESIGN} = $val;
+}
+
+
+
+=item $val = $experiment->getExperimentDesign()
+
+The restricted getter method for the experimentDesign association.
+
+Input parameters: none
+
+Return value: the current value of the experimentDesign association : an instance of type C<Bio::MAGE::Experiment::ExperimentDesign>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getExperimentDesign {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getExperimentDesign: arguments passed to getter")
+    if @_;
+  return $self->{__EXPERIMENTDESIGN};
+}
+
+
+
+
+=back
+
+
+=item analysisResults
+
+
+From the MAGE-OM documentation for the C<analysisResults> association:
+
+The results of analyzing the data, typically with a clustering algorithm.
+
+
+
+=over
+
+
+=item $array_ref = $experiment->setAnalysisResults($array_ref)
+
+The restricted setter method for the analysisResults association.
+
+Input parameters: the value to which the analysisResults association will be set : a reference to an array of objects of type C<Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster>
+
+Return value: the current value of the analysisResults association : a reference to an array of objects of type C<Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster> instances
+
+=cut
+
+sub setAnalysisResults {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setAnalysisResults: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setAnalysisResults: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setAnalysisResults: expected array reference, got $self")
+    unless UNIVERSAL::isa($val,'ARRAY');
+  foreach my $val (@{$val}) {
+    croak(__PACKAGE__ . "::setAnalysisResults: wrong type: " . ref($val) . " expected Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster');
+  }
+
+  return $self->{__ANALYSISRESULTS} = $val;
+}
+
+
+
+=item $array_ref = $experiment->getAnalysisResults()
+
+The restricted getter method for the analysisResults association.
+
+Input parameters: none
+
+Return value: the current value of the analysisResults association : a reference to an array of objects of type C<Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getAnalysisResults {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getAnalysisResults: arguments passed to getter")
+    if @_;
+  return $self->{__ANALYSISRESULTS};
+}
+
+
+
+=item $experiment->addAnalysisResults(@vals)
+
+Because the analysisResults association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the analysisResults
+association.
+
+Input parameters: the list of values C<@vals> to add to the analysisResults
+association. B<NOTE>: submitting a single value is permitted.
+
+Return value: none
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster>
+
+=cut
+
+sub addAnalysisResults {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addAnalysisResults: no arguments passed to setter")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addAnalysisResults: wrong type: " . ref($val) . " expected Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster');
+  }
+
+  push(@{$self->{__ANALYSISRESULTS}},@vals);
+}
+
+
+
+=back
 
 
 =item bioAssays
@@ -942,178 +1149,6 @@ sub addBioAssayData {
 
   push(@{$self->{__BIOASSAYDATA}},@vals);
 }
-
-
-
-=back
-
-
-=item analysisResults
-
-
-From the MAGE-OM documentation for the C<analysisResults> association:
-
-The results of analyzing the data, typically with a clustering algorithm.
-
-
-
-=over
-
-
-=item $array_ref = $experiment->setAnalysisResults($array_ref)
-
-The restricted setter method for the analysisResults association.
-
-Input parameters: the value to which the analysisResults association will be set : a reference to an array of objects of type C<Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster>
-
-Return value: the current value of the analysisResults association : a reference to an array of objects of type C<Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster> instances
-
-=cut
-
-sub setAnalysisResults {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setAnalysisResults: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setAnalysisResults: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-    croak(__PACKAGE__ . "::setAnalysisResults: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setAnalysisResults: wrong type: " . ref($val) . " expected Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster');
-  }
-
-  return $self->{__ANALYSISRESULTS} = $val;
-}
-
-
-
-=item $array_ref = $experiment->getAnalysisResults()
-
-The restricted getter method for the analysisResults association.
-
-Input parameters: none
-
-Return value: the current value of the analysisResults association : a reference to an array of objects of type C<Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getAnalysisResults {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getAnalysisResults: arguments passed to getter")
-    if @_;
-  return $self->{__ANALYSISRESULTS};
-}
-
-
-
-=item $experiment->addAnalysisResults(@vals)
-
-Because the analysisResults association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the analysisResults
-association.
-
-Input parameters: the list of values C<@vals> to add to the analysisResults
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster>
-
-=cut
-
-sub addAnalysisResults {
-  my $self = shift;
-  croak(__PACKAGE__ . "::addAnalysisResults: no arguments passed to setter")
-    unless @_;
-  my @vals = @_;
-    foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addAnalysisResults: wrong type: " . ref($val) . " expected Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster');
-  }
-
-  push(@{$self->{__ANALYSISRESULTS}},@vals);
-}
-
-
-
-=back
-
-
-=item experimentDesign
-
-
-From the MAGE-OM documentation for the C<experimentDesign> association:
-
-The association to the description and annotation of the Experiment, along with the grouping of the top-level BioAssays.
-
-
-
-=over
-
-
-=item $val = $experiment->setExperimentDesign($val)
-
-The restricted setter method for the experimentDesign association.
-
-Input parameters: the value to which the experimentDesign association will be set : an instance of type C<Bio::MAGE::Experiment::ExperimentDesign>.
-
-Return value: the current value of the experimentDesign association : an instance of type C<Bio::MAGE::Experiment::ExperimentDesign>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Experiment::ExperimentDesign>
-
-=cut
-
-sub setExperimentDesign {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setExperimentDesign: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setExperimentDesign: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setExperimentDesign: wrong type: " . ref($val) . " expected Bio::MAGE::Experiment::ExperimentDesign") unless UNIVERSAL::isa($val,'Bio::MAGE::Experiment::ExperimentDesign');
-  return $self->{__EXPERIMENTDESIGN} = $val;
-}
-
-
-
-=item $val = $experiment->getExperimentDesign()
-
-The restricted getter method for the experimentDesign association.
-
-Input parameters: none
-
-Return value: the current value of the experimentDesign association : an instance of type C<Bio::MAGE::Experiment::ExperimentDesign>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getExperimentDesign {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getExperimentDesign: arguments passed to getter")
-    if @_;
-  return $self->{__EXPERIMENTDESIGN};
-}
-
 
 
 

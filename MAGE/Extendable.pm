@@ -41,7 +41,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base  Exporter);
-$VERSION = q[$Id: Extendable.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -194,7 +194,10 @@ named-value style arguments:
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -317,7 +320,33 @@ returns the list of subclasses for this class.
 =cut
 
 sub subclasses {
-  my @list = ('Bio::MAGE::BioAssayData::BioAssayDatum', 'Bio::MAGE::BioAssayData::BioDataValues', 'Bio::MAGE::Description::ExternalReference', 'Bio::MAGE::Array::ZoneDefect', 'Bio::MAGE::BioAssayData::DesignElementMapping', 'Bio::MAGE::DesignElement::FeatureLocation', 'Bio::MAGE::BioAssayData::QuantitationTypeMapping', 'Bio::MAGE::BioMaterial::BioMaterialMeasurement', 'Bio::MAGE::Description::OntologyEntry', 'Bio::MAGE::Protocol::ParameterValue', 'Bio::MAGE::DesignElement::Position', 'Bio::MAGE::DesignElement::MismatchInformation', 'Bio::MAGE::HigherLevelAnalysis::NodeValue', 'Bio::MAGE::Measurement::Measurement', 'Bio::MAGE::ArrayDesign::ZoneLayout', 'Bio::MAGE::Measurement::Unit', 'Bio::MAGE::Array::ArrayManufactureDeviation', 'Bio::MAGE::BioAssayData::BioAssayMapping', 'Bio::MAGE::DesignElement::FeatureInformation', 'Bio::MAGE::BioMaterial::CompoundMeasurement', 'Bio::MAGE::BioSequence::SeqFeatureLocation', 'Bio::MAGE::Array::PositionDelta', 'Bio::MAGE::Description::DatabaseEntry', 'Bio::MAGE::Describable', 'Bio::MAGE::ArrayDesign::ZoneGroup', 'Bio::MAGE::Array::FeatureDefect', 'Bio::MAGE::BioSequence::SequencePosition');
+  my @list = ('Bio::MAGE::BioAssayData::BioAssayDatum',
+'Bio::MAGE::BioAssayData::BioDataValues',
+'Bio::MAGE::Description::ExternalReference',
+'Bio::MAGE::Array::ZoneDefect',
+'Bio::MAGE::BioAssayData::DesignElementMapping',
+'Bio::MAGE::DesignElement::FeatureLocation',
+'Bio::MAGE::BioAssayData::QuantitationTypeMapping',
+'Bio::MAGE::BioMaterial::BioMaterialMeasurement',
+'Bio::MAGE::Description::OntologyEntry',
+'Bio::MAGE::Protocol::ParameterValue',
+'Bio::MAGE::DesignElement::Position',
+'Bio::MAGE::DesignElement::MismatchInformation',
+'Bio::MAGE::HigherLevelAnalysis::NodeValue',
+'Bio::MAGE::Measurement::Measurement',
+'Bio::MAGE::ArrayDesign::ZoneLayout',
+'Bio::MAGE::Measurement::Unit',
+'Bio::MAGE::Array::ArrayManufactureDeviation',
+'Bio::MAGE::BioAssayData::BioAssayMapping',
+'Bio::MAGE::DesignElement::FeatureInformation',
+'Bio::MAGE::BioMaterial::CompoundMeasurement',
+'Bio::MAGE::BioSequence::SeqFeatureLocation',
+'Bio::MAGE::Array::PositionDelta',
+'Bio::MAGE::Description::DatabaseEntry',
+'Bio::MAGE::Describable',
+'Bio::MAGE::ArrayDesign::ZoneGroup',
+'Bio::MAGE::Array::FeatureDefect',
+'Bio::MAGE::BioSequence::SequencePosition');
   return @list;
 }
 
@@ -415,24 +444,24 @@ BEGIN {
   $__ASSOCIATIONS = [
           'propertySets',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Allows specification of name/value pairs.  Meant to primarily help in-house, pipeline processing of instances by providing a place for values that aren\'t part of the specification proper.',
-                                        '__CLASS_NAME' => 'Extendable',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'propertySets',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Allows specification of name/value pairs.  Meant to primarily help in-house, pipeline processing of instances by providing a place for values that aren\'t part of the specification proper.',
-                                         '__CLASS_NAME' => 'NameValueType',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'propertySets',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'NameValueType'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Allows specification of name/value pairs.  Meant to primarily help in-house, pipeline processing of instances by providing a place for values that aren\'t part of the specification proper.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Extendable'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

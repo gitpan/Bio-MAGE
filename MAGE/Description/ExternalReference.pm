@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: ExternalReference.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,15 +60,12 @@ $VERSION = q[$Id: ExternalReference.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart
   my $externalreference = Bio::MAGE::Description::ExternalReference->new();
 
     # creating an already populated instance
-  my $externalreference = Bio::MAGE::Description::ExternalReference->new(exportedFromDB=>$exportedFromDB_value,
-			exportName=>$exportName_value,
+  my $externalreference = Bio::MAGE::Description::ExternalReference->new(exportName=>$exportName_value,
 			exportID=>$exportID_value,
-			exportedFromServer=>$exportedFromServer_value);
+			exportedFromServer=>$exportedFromServer_value,
+			exportedFromDB=>$exportedFromDB_value);
 
     # setting and retrieving object attributes
-  my $exportedFromDB_val = $externalreference->exportedFromDB();
-  $externalreference->exportedFromDB($value);
-
   my $exportName_val = $externalreference->exportName();
   $externalreference->exportName($value);
 
@@ -77,6 +74,9 @@ $VERSION = q[$Id: ExternalReference.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart
 
   my $exportedFromServer_val = $externalreference->exportedFromServer();
   $externalreference->exportedFromServer($value);
+
+  my $exportedFromDB_val = $externalreference->exportedFromDB();
+  $externalreference->exportedFromDB($value);
 
 
 =head2 DESCRIPTION
@@ -121,29 +121,40 @@ named-value style arguments:
 =over
 
 
-=item * exportedFromDB
-
-Sets the value of the exportedFromDB attribute (from C<Bio::MAGE::Description::ExternalReference>).
-
-
 =item * exportName
 
-Sets the value of the exportName attribute (from C<Bio::MAGE::Description::ExternalReference>).
+Sets the value of the exportName attribute (this attribute was inherited
+from class C<Bio::MAGE::Description::ExternalReference>).
+
 
 
 =item * exportID
 
-Sets the value of the exportID attribute (from C<Bio::MAGE::Description::ExternalReference>).
+Sets the value of the exportID attribute (this attribute was inherited
+from class C<Bio::MAGE::Description::ExternalReference>).
+
 
 
 =item * exportedFromServer
 
-Sets the value of the exportedFromServer attribute (from C<Bio::MAGE::Description::ExternalReference>).
+Sets the value of the exportedFromServer attribute (this attribute was inherited
+from class C<Bio::MAGE::Description::ExternalReference>).
+
+
+
+=item * exportedFromDB
+
+Sets the value of the exportedFromDB attribute (this attribute was inherited
+from class C<Bio::MAGE::Description::ExternalReference>).
+
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -289,7 +300,10 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('exportedFromDB', 'exportName', 'exportID', 'exportedFromServer');
+  my @list = ('exportName',
+'exportID',
+'exportedFromServer',
+'exportedFromDB');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -350,72 +364,6 @@ getter methods for each attribute.
 Bio::MAGE::Description::ExternalReference: has the following attribute accessor methods:
 
 =over
-
-
-=item exportedFromDB
-
-From the MAGE-OM documentation for the C<exportedFromDB> attribute:
-
-Name of the database, if applicable, that the object was exported from.
-
-
-
-=over
-
-
-=item $val = $externalreference->setExportedFromDB($val)
-
-The restricted setter method for the exportedFromDB attribute.
-
-Input parameters: the value to which the exportedFromDB attribute will be set 
-
-Return value: the current value of the exportedFromDB attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setExportedFromDB {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setExportedFromDB: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setExportedFromDB: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__EXPORTEDFROMDB} = $val;
-}
-
-
-
-=item $val = $externalreference->getExportedFromDB()
-
-The restricted getter method for the exportedFromDB attribute.
-
-Input parameters: none
-
-Return value: the current value of the exportedFromDB attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getExportedFromDB {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getExportedFromDB: arguments passed to getter")
-    if @_;
-  return $self->{__EXPORTEDFROMDB};
-}
-
-
-
-
-=back
 
 
 =item exportName
@@ -608,6 +556,72 @@ sub getExportedFromServer {
   croak(__PACKAGE__ . "::getExportedFromServer: arguments passed to getter")
     if @_;
   return $self->{__EXPORTEDFROMSERVER};
+}
+
+
+
+
+=back
+
+
+=item exportedFromDB
+
+From the MAGE-OM documentation for the C<exportedFromDB> attribute:
+
+Name of the database, if applicable, that the object was exported from.
+
+
+
+=over
+
+
+=item $val = $externalreference->setExportedFromDB($val)
+
+The restricted setter method for the exportedFromDB attribute.
+
+Input parameters: the value to which the exportedFromDB attribute will be set 
+
+Return value: the current value of the exportedFromDB attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setExportedFromDB {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setExportedFromDB: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setExportedFromDB: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__EXPORTEDFROMDB} = $val;
+}
+
+
+
+=item $val = $externalreference->getExportedFromDB()
+
+The restricted getter method for the exportedFromDB attribute.
+
+Input parameters: none
+
+Return value: the current value of the exportedFromDB attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getExportedFromDB {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getExportedFromDB: arguments passed to getter")
+    if @_;
+  return $self->{__EXPORTEDFROMDB};
 }
 
 

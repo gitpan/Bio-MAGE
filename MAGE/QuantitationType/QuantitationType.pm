@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: QuantitationType.pm,v 1.2 2002/12/11 01:32:20 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -67,6 +67,9 @@ $VERSION = q[$Id: QuantitationType.pm,v 1.2 2002/12/11 01:32:20 jason_e_stewart 
   my $dataType_val = $quantitationtype->dataType();
   $quantitationtype->dataType($value);
 
+  my $quantitationTypeMaps_val = $quantitationtype->quantitationTypeMaps();
+  $quantitationtype->quantitationTypeMaps($value);
+
   my $scale_val = $quantitationtype->scale();
   $quantitationtype->scale($value);
 
@@ -75,9 +78,6 @@ $VERSION = q[$Id: QuantitationType.pm,v 1.2 2002/12/11 01:32:20 jason_e_stewart 
 
   my $confidenceIndicators_val = $quantitationtype->confidenceIndicators();
   $quantitationtype->confidenceIndicators($value);
-
-  my $quantitationTypeMaps_val = $quantitationtype->quantitationTypeMaps();
-  $quantitationtype->quantitationTypeMaps($value);
 
 
 =head2 DESCRIPTION
@@ -148,62 +148,95 @@ named-value style arguments:
 
 =item * isBackground
 
-Sets the value of the isBackground attribute (from C<Bio::MAGE::QuantitationType::QuantitationType>).
+Sets the value of the isBackground attribute (this attribute was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
 
-
-=item * dataType
-
-Sets the value of the dataType association (from C<Bio::MAGE::QuantitationType::QuantitationType>).
-
-
-=item * scale
-
-Sets the value of the scale association (from C<Bio::MAGE::QuantitationType::QuantitationType>).
-
-
-=item * channel
-
-Sets the value of the channel association (from C<Bio::MAGE::QuantitationType::QuantitationType>).
-
-
-=item * confidenceIndicators
-
-Sets the value of the confidenceIndicators association (from C<Bio::MAGE::QuantitationType::QuantitationType>).
 
 
 =item * quantitationTypeMaps
 
-Sets the value of the quantitationTypeMaps association (from C<Bio::MAGE::QuantitationType::QuantitationType>).
+Sets the value of the quantitationTypeMaps association (this association was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
+
+The value will be of type C<QuantitationTypeMap>.
+
+
+=item * dataType
+
+Sets the value of the dataType association (this association was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
+
+The value will be of type C<OntologyEntry>.
+
+
+=item * scale
+
+Sets the value of the scale association (this association was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
+
+The value will be of type C<OntologyEntry>.
+
+
+=item * channel
+
+Sets the value of the channel association (this association was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
+
+The value will be of type C<Channel>.
+
+
+=item * confidenceIndicators
+
+Sets the value of the confidenceIndicators association (this association was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
+
+The value will be of type C<ConfidenceIndicator>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -326,7 +359,8 @@ returns the list of subclasses for this class.
 =cut
 
 sub subclasses {
-  my @list = ('Bio::MAGE::QuantitationType::SpecializedQuantitationType', 'Bio::MAGE::QuantitationType::StandardQuantitationType');
+  my @list = ('Bio::MAGE::QuantitationType::SpecializedQuantitationType',
+'Bio::MAGE::QuantitationType::StandardQuantitationType');
   return @list;
 }
 
@@ -366,7 +400,11 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('dataType', 'scale', 'channel', 'confidenceIndicators', 'quantitationTypeMaps');
+  my @list = ('dataType',
+'quantitationTypeMaps',
+'scale',
+'channel',
+'confidenceIndicators');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -584,108 +622,108 @@ BEGIN {
   $__ASSOCIATIONS = [
           'channel',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The optional channel associated with the QuantitationType.',
-                                        '__CLASS_NAME' => 'QuantitationType',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'channel',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The optional channel associated with the QuantitationType.',
-                                         '__CLASS_NAME' => 'Channel',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'channel',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Channel'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The optional channel associated with the QuantitationType.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'QuantitationType'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'scale',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Indication of how to interpret the value.  From a suggested vocabulary of {LINEAR | LN | LOG2 |LOG10 | FOLD_CHANGE | OTHER} ',
-                                        '__CLASS_NAME' => 'QuantitationType',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'scale',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'Indication of how to interpret the value.  From a suggested vocabulary of {LINEAR | LN | LOG2 |LOG10 | FOLD_CHANGE | OTHER} ',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'scale',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Indication of how to interpret the value.  From a suggested vocabulary of {LINEAR | LN | LOG2 |LOG10 | FOLD_CHANGE | OTHER} ',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'QuantitationType'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'dataType',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The specific type for the quantitations.  From a controlled vocabulary of {float, int, boolean, etc.}',
-                                        '__CLASS_NAME' => 'QuantitationType',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'dataType',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The specific type for the quantitations.  From a controlled vocabulary of {float, int, boolean, etc.}',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'dataType',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The specific type for the quantitations.  From a controlled vocabulary of {float, int, boolean, etc.}',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'QuantitationType'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'confidenceIndicators',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'targetQuantitationType',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The association between a ConfidenceIndicator and the QuantitationType its is an indicator for.',
-                                        '__CLASS_NAME' => 'QuantitationType',
-                                        '__RANK' => '1',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'confidenceIndicators',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The association between a ConfidenceIndicator and the QuantitationType its is an indicator for.',
-                                         '__CLASS_NAME' => 'ConfidenceIndicator',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'confidenceIndicators',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ConfidenceIndicator'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '1',
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The association between a ConfidenceIndicator and the QuantitationType its is an indicator for.',
+                                        '__NAME' => 'targetQuantitationType',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'QuantitationType'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'quantitationTypeMaps',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'targetQuantitationType',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The QuantitationType whose value will be produced from the values of the source QuantitationType according to the Protocol.',
-                                        '__CLASS_NAME' => 'QuantitationType',
-                                        '__RANK' => '1',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'quantitationTypeMaps',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '5',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The QuantitationType whose value will be produced from the values of the source QuantitationType according to the Protocol.',
-                                         '__CLASS_NAME' => 'QuantitationTypeMap',
-                                         '__RANK' => '5',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'quantitationTypeMaps',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'QuantitationTypeMap'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '1',
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The QuantitationType whose value will be produced from the values of the source QuantitationType according to the Protocol.',
+                                        '__NAME' => 'targetQuantitationType',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'QuantitationType'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -786,6 +824,111 @@ sub getDataType {
   return $self->{__DATATYPE};
 }
 
+
+
+
+=back
+
+
+=item quantitationTypeMaps
+
+
+From the MAGE-OM documentation for the C<quantitationTypeMaps> association:
+
+The QuantitationType whose value will be produced from the values of the source QuantitationType according to the Protocol.
+
+
+
+=over
+
+
+=item $array_ref = $quantitationtype->setQuantitationTypeMaps($array_ref)
+
+The restricted setter method for the quantitationTypeMaps association.
+
+Input parameters: the value to which the quantitationTypeMaps association will be set : a reference to an array of objects of type C<Bio::MAGE::BioAssayData::QuantitationTypeMap>
+
+Return value: the current value of the quantitationTypeMaps association : a reference to an array of objects of type C<Bio::MAGE::BioAssayData::QuantitationTypeMap>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::BioAssayData::QuantitationTypeMap> instances
+
+=cut
+
+sub setQuantitationTypeMaps {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setQuantitationTypeMaps: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setQuantitationTypeMaps: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setQuantitationTypeMaps: expected array reference, got $self")
+    unless UNIVERSAL::isa($val,'ARRAY');
+  foreach my $val (@{$val}) {
+    croak(__PACKAGE__ . "::setQuantitationTypeMaps: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::QuantitationTypeMap")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::QuantitationTypeMap');
+  }
+
+  return $self->{__QUANTITATIONTYPEMAPS} = $val;
+}
+
+
+
+=item $array_ref = $quantitationtype->getQuantitationTypeMaps()
+
+The restricted getter method for the quantitationTypeMaps association.
+
+Input parameters: none
+
+Return value: the current value of the quantitationTypeMaps association : a reference to an array of objects of type C<Bio::MAGE::BioAssayData::QuantitationTypeMap>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getQuantitationTypeMaps {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getQuantitationTypeMaps: arguments passed to getter")
+    if @_;
+  return $self->{__QUANTITATIONTYPEMAPS};
+}
+
+
+
+=item $quantitationtype->addQuantitationTypeMaps(@vals)
+
+Because the quantitationTypeMaps association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the quantitationTypeMaps
+association.
+
+Input parameters: the list of values C<@vals> to add to the quantitationTypeMaps
+association. B<NOTE>: submitting a single value is permitted.
+
+Return value: none
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::BioAssayData::QuantitationTypeMap>
+
+=cut
+
+sub addQuantitationTypeMaps {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addQuantitationTypeMaps: no arguments passed to setter")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addQuantitationTypeMaps: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::QuantitationTypeMap")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::QuantitationTypeMap');
+  }
+
+  push(@{$self->{__QUANTITATIONTYPEMAPS}},@vals);
+}
 
 
 
@@ -1024,111 +1167,6 @@ sub addConfidenceIndicators {
   }
 
   push(@{$self->{__CONFIDENCEINDICATORS}},@vals);
-}
-
-
-
-=back
-
-
-=item quantitationTypeMaps
-
-
-From the MAGE-OM documentation for the C<quantitationTypeMaps> association:
-
-The QuantitationType whose value will be produced from the values of the source QuantitationType according to the Protocol.
-
-
-
-=over
-
-
-=item $array_ref = $quantitationtype->setQuantitationTypeMaps($array_ref)
-
-The restricted setter method for the quantitationTypeMaps association.
-
-Input parameters: the value to which the quantitationTypeMaps association will be set : a reference to an array of objects of type C<Bio::MAGE::BioAssayData::QuantitationTypeMap>
-
-Return value: the current value of the quantitationTypeMaps association : a reference to an array of objects of type C<Bio::MAGE::BioAssayData::QuantitationTypeMap>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::BioAssayData::QuantitationTypeMap> instances
-
-=cut
-
-sub setQuantitationTypeMaps {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setQuantitationTypeMaps: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setQuantitationTypeMaps: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-    croak(__PACKAGE__ . "::setQuantitationTypeMaps: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setQuantitationTypeMaps: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::QuantitationTypeMap")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::QuantitationTypeMap');
-  }
-
-  return $self->{__QUANTITATIONTYPEMAPS} = $val;
-}
-
-
-
-=item $array_ref = $quantitationtype->getQuantitationTypeMaps()
-
-The restricted getter method for the quantitationTypeMaps association.
-
-Input parameters: none
-
-Return value: the current value of the quantitationTypeMaps association : a reference to an array of objects of type C<Bio::MAGE::BioAssayData::QuantitationTypeMap>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getQuantitationTypeMaps {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getQuantitationTypeMaps: arguments passed to getter")
-    if @_;
-  return $self->{__QUANTITATIONTYPEMAPS};
-}
-
-
-
-=item $quantitationtype->addQuantitationTypeMaps(@vals)
-
-Because the quantitationTypeMaps association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the quantitationTypeMaps
-association.
-
-Input parameters: the list of values C<@vals> to add to the quantitationTypeMaps
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::BioAssayData::QuantitationTypeMap>
-
-=cut
-
-sub addQuantitationTypeMaps {
-  my $self = shift;
-  croak(__PACKAGE__ . "::addQuantitationTypeMaps: no arguments passed to setter")
-    unless @_;
-  my @vals = @_;
-    foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addQuantitationTypeMaps: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::QuantitationTypeMap")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::QuantitationTypeMap');
-  }
-
-  push(@{$self->{__QUANTITATIONTYPEMAPS}},@vals);
 }
 
 

@@ -1,5 +1,5 @@
 #
-# Bio::MAGE::XMLWriter.pm
+# Bio::MAGE::XML::Writer.pm
 #   a module for exporting MAGE-ML
 #
 package Bio::MAGE::XML::Writer;
@@ -44,6 +44,9 @@ Bio::MAGE::XML::Writer - a module for exporting MAGE-ML
   #
   # attributes to modify the output format
   #
+
+  # which format is the external data file
+  $writer->data_format($dataformat);
 
   # to change the level of indent for each new tag (defaul == 2)
   $writer->indent_increment($num);
@@ -115,6 +118,8 @@ sub initialize {
     unless defined $self->indent_increment();
   $self->indent_level(0)
     unless defined $self->indent_level();
+  $self->data_format('tab delimited')
+    unless defined $self->data_format();
   $self->external_data(0)
     unless defined $self->external_data();
   $self->external_data_dir('/tmp')
@@ -575,26 +580,28 @@ sub obj2mageml {
     if ($self->external_data()) {
       my %attributes;
       if ($self->cube_holds_path()) {
-	$attributes{filenameURI} = $data;
+        $attributes{filenameURI} = $data;
       } else {
-	$attributes{filenameURI} = $self->external_file_id();
+        $attributes{filenameURI} = $self->external_file_id();
       }
+      $attributes{dataFormat} = $self->data_format();
+
       my $tag = 'DataExternal_assn';
       $self->write_start_tag($tag,my $empty=0);
       # we need to make it external
       {
-	my $tag = 'DataExternal';
-	$self->write_start_tag($tag,my $empty=1,%attributes);
-
-	# if we've been told the cube is already written, we don't
-	# bother re-writing it
-	unless ($self->cube_holds_path()) {
-	  my $dir = $self->external_data_dir();
-	  open(DATA, ">$dir/$attributes{filenameURI}")
-	    or die "Couldn't open $dir/$attributes{filenameURI} for writing";
-	  print DATA $data;
-	  close(DATA);
-	}
+        my $tag = 'DataExternal';
+        $self->write_start_tag($tag,my $empty=1,%attributes);
+        
+        # if we've been told the cube is already written, we don't
+        # bother re-writing it
+        unless ($self->cube_holds_path()) {
+          my $dir = $self->external_data_dir();
+          open(DATA, ">$dir/$attributes{filenameURI}")
+            or die "Couldn't open $dir/$attributes{filenameURI} for writing";
+          print DATA $data;
+          close(DATA);
+        }
       }
       $self->write_end_tag($tag);
     } else {
@@ -602,11 +609,12 @@ sub obj2mageml {
       my $tag = 'DataInternal_assn';
       $self->write_start_tag($tag,0);
       {
-	my $tag = 'DataInternal';
-	$self->write_start_tag($tag,0);
-	my $fh = $self->fh();
-	print $fh "<![CDATA[$data]]>";
-	$self->write_end_tag($tag);
+        my $tag = 'DataInternal';
+        $self->write_start_tag($tag,0);
+        $self->flush_tag_buffer;
+        my $fh = $self->fh();
+        print $fh "<![CDATA[$data]]>";
+        $self->write_end_tag($tag);
       }
       $self->write_end_tag($tag);
     }
@@ -660,6 +668,7 @@ sub indent_level {
   }
   return $self->{__INDENT_LEVEL};
 }
+
 
 
 =item indent_increment($num)
@@ -877,6 +886,23 @@ sub external_data {
     $self->{__EXTERNAL_DATA} = shift;
   }
   return $self->{__EXTERNAL_DATA};
+}
+
+
+=item data_format($format)
+
+$format is either 'tab delimited' or 'space delimited'
+
+B<Default Value:> 'tab delimited'
+
+=cut
+
+sub data_format {
+  my $self = shift;
+  if (@_) {
+    $self->{__DATA_FORMAT} = shift;
+  }
+  return $self->{__DATA_FORMAT};
 }
 
 =item external_data_dir($path)

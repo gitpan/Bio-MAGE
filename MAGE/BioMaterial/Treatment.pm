@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::BioEvent::BioEvent Exporter);
-$VERSION = q[$Id: Treatment.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -61,27 +61,27 @@ $VERSION = q[$Id: Treatment.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
 
     # creating an already populated instance
   my $treatment = Bio::MAGE::BioMaterial::Treatment->new(order=>$order_value,
-			sourceBioMaterialMeasurements=>$sourceBioMaterialMeasurements_value,
-			action=>$action_value,
 			actionMeasurement=>$actionMeasurement_value,
-			compoundMeasurements=>$compoundMeasurements_value);
+			action=>$action_value,
+			compoundMeasurements=>$compoundMeasurements_value,
+			sourceBioMaterialMeasurements=>$sourceBioMaterialMeasurements_value);
 
     # setting and retrieving object attributes
   my $order_val = $treatment->order();
   $treatment->order($value);
 
     # setting and retrieving object associations
-  my $sourceBioMaterialMeasurements_val = $treatment->sourceBioMaterialMeasurements();
-  $treatment->sourceBioMaterialMeasurements($value);
+  my $actionMeasurement_val = $treatment->actionMeasurement();
+  $treatment->actionMeasurement($value);
 
   my $action_val = $treatment->action();
   $treatment->action($value);
 
-  my $actionMeasurement_val = $treatment->actionMeasurement();
-  $treatment->actionMeasurement($value);
-
   my $compoundMeasurements_val = $treatment->compoundMeasurements();
   $treatment->compoundMeasurements($value);
+
+  my $sourceBioMaterialMeasurements_val = $treatment->sourceBioMaterialMeasurements();
+  $treatment->sourceBioMaterialMeasurements($value);
 
 
 =head2 DESCRIPTION
@@ -128,62 +128,95 @@ named-value style arguments:
 
 =item * order
 
-Sets the value of the order attribute (from C<Bio::MAGE::BioMaterial::Treatment>).
+Sets the value of the order attribute (this attribute was inherited
+from class C<Bio::MAGE::BioMaterial::Treatment>).
 
-
-=item * sourceBioMaterialMeasurements
-
-Sets the value of the sourceBioMaterialMeasurements association (from C<Bio::MAGE::BioMaterial::Treatment>).
-
-
-=item * action
-
-Sets the value of the action association (from C<Bio::MAGE::BioMaterial::Treatment>).
 
 
 =item * actionMeasurement
 
-Sets the value of the actionMeasurement association (from C<Bio::MAGE::BioMaterial::Treatment>).
+Sets the value of the actionMeasurement association (this association was inherited
+from class C<Bio::MAGE::BioMaterial::Treatment>).
+
+The value will be of type C<Measurement>.
+
+
+=item * action
+
+Sets the value of the action association (this association was inherited
+from class C<Bio::MAGE::BioMaterial::Treatment>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * compoundMeasurements
 
-Sets the value of the compoundMeasurements association (from C<Bio::MAGE::BioMaterial::Treatment>).
+Sets the value of the compoundMeasurements association (this association was inherited
+from class C<Bio::MAGE::BioMaterial::Treatment>).
+
+The value will be of type C<CompoundMeasurement>.
+
+
+=item * sourceBioMaterialMeasurements
+
+Sets the value of the sourceBioMaterialMeasurements association (this association was inherited
+from class C<Bio::MAGE::BioMaterial::Treatment>).
+
+The value will be of type C<BioMaterialMeasurement>.
 
 
 =item * protocolApplications
 
-Sets the value of the protocolApplications association (from C<Bio::MAGE::BioEvent::BioEvent>).
+Sets the value of the protocolApplications association (this association was inherited
+from class C<Bio::MAGE::BioEvent::BioEvent>).
+
+The value will be of type C<ProtocolApplication>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -346,7 +379,10 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('sourceBioMaterialMeasurements', 'action', 'actionMeasurement', 'compoundMeasurements');
+  my @list = ('actionMeasurement',
+'action',
+'compoundMeasurements',
+'sourceBioMaterialMeasurements');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -564,87 +600,87 @@ BEGIN {
   $__ASSOCIATIONS = [
           'action',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The event that occurred (e.g. grow, wait, add, etc...).  The actions should be a recommended vocabulary',
-                                        '__CLASS_NAME' => 'Treatment',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'action',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The event that occurred (e.g. grow, wait, add, etc...).  The actions should be a recommended vocabulary',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'action',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The event that occurred (e.g. grow, wait, add, etc...).  The actions should be a recommended vocabulary',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Treatment'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'actionMeasurement',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Measures events like duration, centrifuge speed, etc.',
-                                        '__CLASS_NAME' => 'Treatment',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'actionMeasurement',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Measures events like duration, centrifuge speed, etc.',
-                                         '__CLASS_NAME' => 'Measurement',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'actionMeasurement',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Measurement'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Measures events like duration, centrifuge speed, etc.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Treatment'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'compoundMeasurements',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The compounds and their amounts used in the treatment.',
-                                        '__CLASS_NAME' => 'Treatment',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'compoundMeasurements',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The compounds and their amounts used in the treatment.',
-                                         '__CLASS_NAME' => 'CompoundMeasurement',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'compoundMeasurements',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'CompoundMeasurement'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The compounds and their amounts used in the treatment.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Treatment'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'sourceBioMaterialMeasurements',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The BioMaterials and the amounts used in the treatment',
-                                        '__CLASS_NAME' => 'Treatment',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'sourceBioMaterialMeasurements',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The BioMaterials and the amounts used in the treatment',
-                                         '__CLASS_NAME' => 'BioMaterialMeasurement',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'sourceBioMaterialMeasurements',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioMaterialMeasurement'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The BioMaterials and the amounts used in the treatment',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Treatment'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -684,59 +720,53 @@ Bio::MAGE::BioMaterial::Treatment: has the following association accessor method
 =over
 
 
-=item sourceBioMaterialMeasurements
+=item actionMeasurement
 
 
-From the MAGE-OM documentation for the C<sourceBioMaterialMeasurements> association:
+From the MAGE-OM documentation for the C<actionMeasurement> association:
 
-The BioMaterials and the amounts used in the treatment
+Measures events like duration, centrifuge speed, etc.
 
 
 
 =over
 
 
-=item $array_ref = $treatment->setSourceBioMaterialMeasurements($array_ref)
+=item $val = $treatment->setActionMeasurement($val)
 
-The restricted setter method for the sourceBioMaterialMeasurements association.
+The restricted setter method for the actionMeasurement association.
 
-Input parameters: the value to which the sourceBioMaterialMeasurements association will be set : a reference to an array of objects of type C<Bio::MAGE::BioMaterial::BioMaterialMeasurement>
+Input parameters: the value to which the actionMeasurement association will be set : an instance of type C<Bio::MAGE::Measurement::Measurement>.
 
-Return value: the current value of the sourceBioMaterialMeasurements association : a reference to an array of objects of type C<Bio::MAGE::BioMaterial::BioMaterialMeasurement>
+Return value: the current value of the actionMeasurement association : an instance of type C<Bio::MAGE::Measurement::Measurement>.
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::BioMaterial::BioMaterialMeasurement> instances
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Measurement::Measurement>
 
 =cut
 
-sub setSourceBioMaterialMeasurements {
+sub setActionMeasurement {
   my $self = shift;
-  croak(__PACKAGE__ . "::setSourceBioMaterialMeasurements: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setActionMeasurement: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setSourceBioMaterialMeasurements: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setActionMeasurement: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
-    croak(__PACKAGE__ . "::setSourceBioMaterialMeasurements: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setSourceBioMaterialMeasurements: wrong type: " . ref($val) . " expected Bio::MAGE::BioMaterial::BioMaterialMeasurement")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::BioMaterial::BioMaterialMeasurement');
-  }
-
-  return $self->{__SOURCEBIOMATERIALMEASUREMENTS} = $val;
+  croak(__PACKAGE__ . "::setActionMeasurement: wrong type: " . ref($val) . " expected Bio::MAGE::Measurement::Measurement") unless UNIVERSAL::isa($val,'Bio::MAGE::Measurement::Measurement');
+  return $self->{__ACTIONMEASUREMENT} = $val;
 }
 
 
 
-=item $array_ref = $treatment->getSourceBioMaterialMeasurements()
+=item $val = $treatment->getActionMeasurement()
 
-The restricted getter method for the sourceBioMaterialMeasurements association.
+The restricted getter method for the actionMeasurement association.
 
 Input parameters: none
 
-Return value: the current value of the sourceBioMaterialMeasurements association : a reference to an array of objects of type C<Bio::MAGE::BioMaterial::BioMaterialMeasurement>
+Return value: the current value of the actionMeasurement association : an instance of type C<Bio::MAGE::Measurement::Measurement>.
 
 Side effects: none
 
@@ -744,45 +774,13 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getSourceBioMaterialMeasurements {
+sub getActionMeasurement {
   my $self = shift;
-  croak(__PACKAGE__ . "::getSourceBioMaterialMeasurements: arguments passed to getter")
+  croak(__PACKAGE__ . "::getActionMeasurement: arguments passed to getter")
     if @_;
-  return $self->{__SOURCEBIOMATERIALMEASUREMENTS};
+  return $self->{__ACTIONMEASUREMENT};
 }
 
-
-
-=item $treatment->addSourceBioMaterialMeasurements(@vals)
-
-Because the sourceBioMaterialMeasurements association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the sourceBioMaterialMeasurements
-association.
-
-Input parameters: the list of values C<@vals> to add to the sourceBioMaterialMeasurements
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::BioMaterial::BioMaterialMeasurement>
-
-=cut
-
-sub addSourceBioMaterialMeasurements {
-  my $self = shift;
-  croak(__PACKAGE__ . "::addSourceBioMaterialMeasurements: no arguments passed to setter")
-    unless @_;
-  my @vals = @_;
-    foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addSourceBioMaterialMeasurements: wrong type: " . ref($val) . " expected Bio::MAGE::BioMaterial::BioMaterialMeasurement")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::BioMaterial::BioMaterialMeasurement');
-  }
-
-  push(@{$self->{__SOURCEBIOMATERIALMEASUREMENTS}},@vals);
-}
 
 
 
@@ -848,73 +846,6 @@ sub getAction {
   croak(__PACKAGE__ . "::getAction: arguments passed to getter")
     if @_;
   return $self->{__ACTION};
-}
-
-
-
-
-=back
-
-
-=item actionMeasurement
-
-
-From the MAGE-OM documentation for the C<actionMeasurement> association:
-
-Measures events like duration, centrifuge speed, etc.
-
-
-
-=over
-
-
-=item $val = $treatment->setActionMeasurement($val)
-
-The restricted setter method for the actionMeasurement association.
-
-Input parameters: the value to which the actionMeasurement association will be set : an instance of type C<Bio::MAGE::Measurement::Measurement>.
-
-Return value: the current value of the actionMeasurement association : an instance of type C<Bio::MAGE::Measurement::Measurement>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Measurement::Measurement>
-
-=cut
-
-sub setActionMeasurement {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setActionMeasurement: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setActionMeasurement: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setActionMeasurement: wrong type: " . ref($val) . " expected Bio::MAGE::Measurement::Measurement") unless UNIVERSAL::isa($val,'Bio::MAGE::Measurement::Measurement');
-  return $self->{__ACTIONMEASUREMENT} = $val;
-}
-
-
-
-=item $val = $treatment->getActionMeasurement()
-
-The restricted getter method for the actionMeasurement association.
-
-Input parameters: none
-
-Return value: the current value of the actionMeasurement association : an instance of type C<Bio::MAGE::Measurement::Measurement>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getActionMeasurement {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getActionMeasurement: arguments passed to getter")
-    if @_;
-  return $self->{__ACTIONMEASUREMENT};
 }
 
 
@@ -1021,6 +952,111 @@ sub addCompoundMeasurements {
   }
 
   push(@{$self->{__COMPOUNDMEASUREMENTS}},@vals);
+}
+
+
+
+=back
+
+
+=item sourceBioMaterialMeasurements
+
+
+From the MAGE-OM documentation for the C<sourceBioMaterialMeasurements> association:
+
+The BioMaterials and the amounts used in the treatment
+
+
+
+=over
+
+
+=item $array_ref = $treatment->setSourceBioMaterialMeasurements($array_ref)
+
+The restricted setter method for the sourceBioMaterialMeasurements association.
+
+Input parameters: the value to which the sourceBioMaterialMeasurements association will be set : a reference to an array of objects of type C<Bio::MAGE::BioMaterial::BioMaterialMeasurement>
+
+Return value: the current value of the sourceBioMaterialMeasurements association : a reference to an array of objects of type C<Bio::MAGE::BioMaterial::BioMaterialMeasurement>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::BioMaterial::BioMaterialMeasurement> instances
+
+=cut
+
+sub setSourceBioMaterialMeasurements {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setSourceBioMaterialMeasurements: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setSourceBioMaterialMeasurements: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setSourceBioMaterialMeasurements: expected array reference, got $self")
+    unless UNIVERSAL::isa($val,'ARRAY');
+  foreach my $val (@{$val}) {
+    croak(__PACKAGE__ . "::setSourceBioMaterialMeasurements: wrong type: " . ref($val) . " expected Bio::MAGE::BioMaterial::BioMaterialMeasurement")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::BioMaterial::BioMaterialMeasurement');
+  }
+
+  return $self->{__SOURCEBIOMATERIALMEASUREMENTS} = $val;
+}
+
+
+
+=item $array_ref = $treatment->getSourceBioMaterialMeasurements()
+
+The restricted getter method for the sourceBioMaterialMeasurements association.
+
+Input parameters: none
+
+Return value: the current value of the sourceBioMaterialMeasurements association : a reference to an array of objects of type C<Bio::MAGE::BioMaterial::BioMaterialMeasurement>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getSourceBioMaterialMeasurements {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getSourceBioMaterialMeasurements: arguments passed to getter")
+    if @_;
+  return $self->{__SOURCEBIOMATERIALMEASUREMENTS};
+}
+
+
+
+=item $treatment->addSourceBioMaterialMeasurements(@vals)
+
+Because the sourceBioMaterialMeasurements association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the sourceBioMaterialMeasurements
+association.
+
+Input parameters: the list of values C<@vals> to add to the sourceBioMaterialMeasurements
+association. B<NOTE>: submitting a single value is permitted.
+
+Return value: none
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::BioMaterial::BioMaterialMeasurement>
+
+=cut
+
+sub addSourceBioMaterialMeasurements {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addSourceBioMaterialMeasurements: no arguments passed to setter")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addSourceBioMaterialMeasurements: wrong type: " . ref($val) . " expected Bio::MAGE::BioMaterial::BioMaterialMeasurement")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::BioMaterial::BioMaterialMeasurement');
+  }
+
+  push(@{$self->{__SOURCEBIOMATERIALMEASUREMENTS}},@vals);
 }
 
 

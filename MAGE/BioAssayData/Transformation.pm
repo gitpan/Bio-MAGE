@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::BioEvent::BioEvent Exporter);
-$VERSION = q[$Id: Transformation.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -61,17 +61,17 @@ $VERSION = q[$Id: Transformation.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Ex
 
     # creating an already populated instance
   my $transformation = Bio::MAGE::BioAssayData::Transformation->new(quantitationTypeMapping=>$quantitationTypeMapping_value,
-			designElementMapping=>$designElementMapping_value,
+			bioAssayMapping=>$bioAssayMapping_value,
 			derivedBioAssayDataTarget=>$derivedBioAssayDataTarget_value,
 			bioAssayDataSources=>$bioAssayDataSources_value,
-			bioAssayMapping=>$bioAssayMapping_value);
+			designElementMapping=>$designElementMapping_value);
 
     # setting and retrieving object associations
   my $quantitationTypeMapping_val = $transformation->quantitationTypeMapping();
   $transformation->quantitationTypeMapping($value);
 
-  my $designElementMapping_val = $transformation->designElementMapping();
-  $transformation->designElementMapping($value);
+  my $bioAssayMapping_val = $transformation->bioAssayMapping();
+  $transformation->bioAssayMapping($value);
 
   my $derivedBioAssayDataTarget_val = $transformation->derivedBioAssayDataTarget();
   $transformation->derivedBioAssayDataTarget($value);
@@ -79,8 +79,8 @@ $VERSION = q[$Id: Transformation.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Ex
   my $bioAssayDataSources_val = $transformation->bioAssayDataSources();
   $transformation->bioAssayDataSources($value);
 
-  my $bioAssayMapping_val = $transformation->bioAssayMapping();
-  $transformation->bioAssayMapping($value);
+  my $designElementMapping_val = $transformation->designElementMapping();
+  $transformation->designElementMapping($value);
 
 
 =head2 DESCRIPTION
@@ -127,62 +127,96 @@ named-value style arguments:
 
 =item * quantitationTypeMapping
 
-Sets the value of the quantitationTypeMapping association (from C<Bio::MAGE::BioAssayData::Transformation>).
+Sets the value of the quantitationTypeMapping association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::Transformation>).
 
-
-=item * designElementMapping
-
-Sets the value of the designElementMapping association (from C<Bio::MAGE::BioAssayData::Transformation>).
-
-
-=item * derivedBioAssayDataTarget
-
-Sets the value of the derivedBioAssayDataTarget association (from C<Bio::MAGE::BioAssayData::Transformation>).
-
-
-=item * bioAssayDataSources
-
-Sets the value of the bioAssayDataSources association (from C<Bio::MAGE::BioAssayData::Transformation>).
+The value will be of type C<QuantitationTypeMapping>.
 
 
 =item * bioAssayMapping
 
-Sets the value of the bioAssayMapping association (from C<Bio::MAGE::BioAssayData::Transformation>).
+Sets the value of the bioAssayMapping association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::Transformation>).
+
+The value will be of type C<BioAssayMapping>.
+
+
+=item * derivedBioAssayDataTarget
+
+Sets the value of the derivedBioAssayDataTarget association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::Transformation>).
+
+The value will be of type C<DerivedBioAssayData>.
+
+
+=item * bioAssayDataSources
+
+Sets the value of the bioAssayDataSources association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::Transformation>).
+
+The value will be of type C<BioAssayData>.
+
+
+=item * designElementMapping
+
+Sets the value of the designElementMapping association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::Transformation>).
+
+The value will be of type C<DesignElementMapping>.
 
 
 =item * protocolApplications
 
-Sets the value of the protocolApplications association (from C<Bio::MAGE::BioEvent::BioEvent>).
+Sets the value of the protocolApplications association (this association was inherited
+from class C<Bio::MAGE::BioEvent::BioEvent>).
+
+The value will be of type C<ProtocolApplication>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -345,7 +379,11 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('quantitationTypeMapping', 'designElementMapping', 'derivedBioAssayDataTarget', 'bioAssayDataSources', 'bioAssayMapping');
+  my @list = ('quantitationTypeMapping',
+'bioAssayMapping',
+'derivedBioAssayDataTarget',
+'bioAssayDataSources',
+'designElementMapping');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -497,108 +535,108 @@ BEGIN {
   $__ASSOCIATIONS = [
           'bioAssayDataSources',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The BioAssayData sources that the Transformation event uses to produce the target DerivedBioAssayData.',
-                                        '__CLASS_NAME' => 'Transformation',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'bioAssayDataSources',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The BioAssayData sources that the Transformation event uses to produce the target DerivedBioAssayData.',
-                                         '__CLASS_NAME' => 'BioAssayData',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'bioAssayDataSources',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioAssayData'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The BioAssayData sources that the Transformation event uses to produce the target DerivedBioAssayData.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Transformation'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'derivedBioAssayDataTarget',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'producerTransformation',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..1',
-                                        '__DOCUMENTATION' => 'The association between the DerivedBioAssayData and the Transformation event that produced it.',
-                                        '__CLASS_NAME' => 'Transformation',
-                                        '__RANK' => '1',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'derivedBioAssayDataTarget',
                                          '__IS_REF' => 0,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The association between the DerivedBioAssayData and the Transformation event that produced it.',
-                                         '__CLASS_NAME' => 'DerivedBioAssayData',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'derivedBioAssayDataTarget',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'DerivedBioAssayData'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '1',
+                                        '__CARDINALITY' => '0..1',
+                                        '__DOCUMENTATION' => 'The association between the DerivedBioAssayData and the Transformation event that produced it.',
+                                        '__NAME' => 'producerTransformation',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'Transformation'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'quantitationTypeMapping',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The collection of mappings for the QuantitationTypes.',
-                                        '__CLASS_NAME' => 'Transformation',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'quantitationTypeMapping',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The collection of mappings for the QuantitationTypes.',
-                                         '__CLASS_NAME' => 'QuantitationTypeMapping',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'quantitationTypeMapping',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'QuantitationTypeMapping'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The collection of mappings for the QuantitationTypes.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Transformation'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'designElementMapping',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The collection of mappings for the DesignElements.',
-                                        '__CLASS_NAME' => 'Transformation',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'designElementMapping',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The collection of mappings for the DesignElements.',
-                                         '__CLASS_NAME' => 'DesignElementMapping',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'designElementMapping',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'DesignElementMapping'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The collection of mappings for the DesignElements.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Transformation'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'bioAssayMapping',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The collection of mappings for the BioAssays.',
-                                        '__CLASS_NAME' => 'Transformation',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'bioAssayMapping',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '5',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The collection of mappings for the BioAssays.',
-                                         '__CLASS_NAME' => 'BioAssayMapping',
-                                         '__RANK' => '5',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'bioAssayMapping',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioAssayMapping'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The collection of mappings for the BioAssays.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Transformation'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -705,53 +743,53 @@ sub getQuantitationTypeMapping {
 =back
 
 
-=item designElementMapping
+=item bioAssayMapping
 
 
-From the MAGE-OM documentation for the C<designElementMapping> association:
+From the MAGE-OM documentation for the C<bioAssayMapping> association:
 
-The collection of mappings for the DesignElements.
+The collection of mappings for the BioAssays.
 
 
 
 =over
 
 
-=item $val = $transformation->setDesignElementMapping($val)
+=item $val = $transformation->setBioAssayMapping($val)
 
-The restricted setter method for the designElementMapping association.
+The restricted setter method for the bioAssayMapping association.
 
-Input parameters: the value to which the designElementMapping association will be set : an instance of type C<Bio::MAGE::BioAssayData::DesignElementMapping>.
+Input parameters: the value to which the bioAssayMapping association will be set : an instance of type C<Bio::MAGE::BioAssayData::BioAssayMapping>.
 
-Return value: the current value of the designElementMapping association : an instance of type C<Bio::MAGE::BioAssayData::DesignElementMapping>.
+Return value: the current value of the bioAssayMapping association : an instance of type C<Bio::MAGE::BioAssayData::BioAssayMapping>.
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssayData::DesignElementMapping>
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssayData::BioAssayMapping>
 
 =cut
 
-sub setDesignElementMapping {
+sub setBioAssayMapping {
   my $self = shift;
-  croak(__PACKAGE__ . "::setDesignElementMapping: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setBioAssayMapping: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setDesignElementMapping: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setBioAssayMapping: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
-  croak(__PACKAGE__ . "::setDesignElementMapping: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::DesignElementMapping") unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::DesignElementMapping');
-  return $self->{__DESIGNELEMENTMAPPING} = $val;
+  croak(__PACKAGE__ . "::setBioAssayMapping: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::BioAssayMapping") unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::BioAssayMapping');
+  return $self->{__BIOASSAYMAPPING} = $val;
 }
 
 
 
-=item $val = $transformation->getDesignElementMapping()
+=item $val = $transformation->getBioAssayMapping()
 
-The restricted getter method for the designElementMapping association.
+The restricted getter method for the bioAssayMapping association.
 
 Input parameters: none
 
-Return value: the current value of the designElementMapping association : an instance of type C<Bio::MAGE::BioAssayData::DesignElementMapping>.
+Return value: the current value of the bioAssayMapping association : an instance of type C<Bio::MAGE::BioAssayData::BioAssayMapping>.
 
 Side effects: none
 
@@ -759,11 +797,11 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getDesignElementMapping {
+sub getBioAssayMapping {
   my $self = shift;
-  croak(__PACKAGE__ . "::getDesignElementMapping: arguments passed to getter")
+  croak(__PACKAGE__ . "::getBioAssayMapping: arguments passed to getter")
     if @_;
-  return $self->{__DESIGNELEMENTMAPPING};
+  return $self->{__BIOASSAYMAPPING};
 }
 
 
@@ -944,53 +982,53 @@ sub addBioAssayDataSources {
 =back
 
 
-=item bioAssayMapping
+=item designElementMapping
 
 
-From the MAGE-OM documentation for the C<bioAssayMapping> association:
+From the MAGE-OM documentation for the C<designElementMapping> association:
 
-The collection of mappings for the BioAssays.
+The collection of mappings for the DesignElements.
 
 
 
 =over
 
 
-=item $val = $transformation->setBioAssayMapping($val)
+=item $val = $transformation->setDesignElementMapping($val)
 
-The restricted setter method for the bioAssayMapping association.
+The restricted setter method for the designElementMapping association.
 
-Input parameters: the value to which the bioAssayMapping association will be set : an instance of type C<Bio::MAGE::BioAssayData::BioAssayMapping>.
+Input parameters: the value to which the designElementMapping association will be set : an instance of type C<Bio::MAGE::BioAssayData::DesignElementMapping>.
 
-Return value: the current value of the bioAssayMapping association : an instance of type C<Bio::MAGE::BioAssayData::BioAssayMapping>.
+Return value: the current value of the designElementMapping association : an instance of type C<Bio::MAGE::BioAssayData::DesignElementMapping>.
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssayData::BioAssayMapping>
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssayData::DesignElementMapping>
 
 =cut
 
-sub setBioAssayMapping {
+sub setDesignElementMapping {
   my $self = shift;
-  croak(__PACKAGE__ . "::setBioAssayMapping: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setDesignElementMapping: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setBioAssayMapping: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setDesignElementMapping: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
-  croak(__PACKAGE__ . "::setBioAssayMapping: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::BioAssayMapping") unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::BioAssayMapping');
-  return $self->{__BIOASSAYMAPPING} = $val;
+  croak(__PACKAGE__ . "::setDesignElementMapping: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::DesignElementMapping") unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::DesignElementMapping');
+  return $self->{__DESIGNELEMENTMAPPING} = $val;
 }
 
 
 
-=item $val = $transformation->getBioAssayMapping()
+=item $val = $transformation->getDesignElementMapping()
 
-The restricted getter method for the bioAssayMapping association.
+The restricted getter method for the designElementMapping association.
 
 Input parameters: none
 
-Return value: the current value of the bioAssayMapping association : an instance of type C<Bio::MAGE::BioAssayData::BioAssayMapping>.
+Return value: the current value of the designElementMapping association : an instance of type C<Bio::MAGE::BioAssayData::DesignElementMapping>.
 
 Side effects: none
 
@@ -998,11 +1036,11 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getBioAssayMapping {
+sub getDesignElementMapping {
   my $self = shift;
-  croak(__PACKAGE__ . "::getBioAssayMapping: arguments passed to getter")
+  croak(__PACKAGE__ . "::getDesignElementMapping: arguments passed to getter")
     if @_;
-  return $self->{__BIOASSAYMAPPING};
+  return $self->{__DESIGNELEMENTMAPPING};
 }
 
 

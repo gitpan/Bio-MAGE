@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: BioAssayData.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,20 +60,20 @@ $VERSION = q[$Id: BioAssayData.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp 
     # instanciated. These examples indicate how subclass objects behave
 
     # setting and retrieving object associations
+  my $quantitationTypeDimension_val = $bioassaydata->quantitationTypeDimension();
+  $bioassaydata->quantitationTypeDimension($value);
+
   my $designElementDimension_val = $bioassaydata->designElementDimension();
   $bioassaydata->designElementDimension($value);
 
   my $bioAssayDimension_val = $bioassaydata->bioAssayDimension();
   $bioassaydata->bioAssayDimension($value);
 
-  my $bioDataValues_val = $bioassaydata->bioDataValues();
-  $bioassaydata->bioDataValues($value);
-
-  my $quantitationTypeDimension_val = $bioassaydata->quantitationTypeDimension();
-  $bioassaydata->quantitationTypeDimension($value);
-
   my $summaryStatistics_val = $bioassaydata->summaryStatistics();
   $bioassaydata->summaryStatistics($value);
+
+  my $bioDataValues_val = $bioassaydata->bioDataValues();
+  $bioassaydata->bioDataValues($value);
 
 
 =head2 DESCRIPTION
@@ -143,57 +143,88 @@ named-value style arguments:
 
 =item * designElementDimension
 
-Sets the value of the designElementDimension association (from C<Bio::MAGE::BioAssayData::BioAssayData>).
+Sets the value of the designElementDimension association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::BioAssayData>).
 
-
-=item * bioAssayDimension
-
-Sets the value of the bioAssayDimension association (from C<Bio::MAGE::BioAssayData::BioAssayData>).
-
-
-=item * bioDataValues
-
-Sets the value of the bioDataValues association (from C<Bio::MAGE::BioAssayData::BioAssayData>).
+The value will be of type C<DesignElementDimension>.
 
 
 =item * quantitationTypeDimension
 
-Sets the value of the quantitationTypeDimension association (from C<Bio::MAGE::BioAssayData::BioAssayData>).
+Sets the value of the quantitationTypeDimension association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::BioAssayData>).
+
+The value will be of type C<QuantitationTypeDimension>.
+
+
+=item * bioAssayDimension
+
+Sets the value of the bioAssayDimension association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::BioAssayData>).
+
+The value will be of type C<BioAssayDimension>.
 
 
 =item * summaryStatistics
 
-Sets the value of the summaryStatistics association (from C<Bio::MAGE::BioAssayData::BioAssayData>).
+Sets the value of the summaryStatistics association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::BioAssayData>).
+
+The value will be of type C<NameValueType>.
+
+
+=item * bioDataValues
+
+Sets the value of the bioDataValues association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::BioAssayData>).
+
+The value will be of type C<BioDataValues>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -316,7 +347,8 @@ returns the list of subclasses for this class.
 =cut
 
 sub subclasses {
-  my @list = ('Bio::MAGE::BioAssayData::MeasuredBioAssayData', 'Bio::MAGE::BioAssayData::DerivedBioAssayData');
+  my @list = ('Bio::MAGE::BioAssayData::MeasuredBioAssayData',
+'Bio::MAGE::BioAssayData::DerivedBioAssayData');
   return @list;
 }
 
@@ -356,7 +388,11 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('designElementDimension', 'bioAssayDimension', 'bioDataValues', 'quantitationTypeDimension', 'summaryStatistics');
+  my @list = ('quantitationTypeDimension',
+'designElementDimension',
+'bioAssayDimension',
+'summaryStatistics',
+'bioDataValues');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -508,108 +544,108 @@ BEGIN {
   $__ASSOCIATIONS = [
           'summaryStatistics',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Statistics on the Quality of the BioAssayData.',
-                                        '__CLASS_NAME' => 'BioAssayData',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'summaryStatistics',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Statistics on the Quality of the BioAssayData.',
-                                         '__CLASS_NAME' => 'NameValueType',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'summaryStatistics',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'NameValueType'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Statistics on the Quality of the BioAssayData.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioAssayData'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'bioAssayDimension',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The BioAssays of the BioAssayData.',
-                                        '__CLASS_NAME' => 'BioAssayData',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'bioAssayDimension',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The BioAssays of the BioAssayData.',
-                                         '__CLASS_NAME' => 'BioAssayDimension',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'bioAssayDimension',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioAssayDimension'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The BioAssays of the BioAssayData.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioAssayData'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'designElementDimension',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The DesignElements of the BioAssayData.',
-                                        '__CLASS_NAME' => 'BioAssayData',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'designElementDimension',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The DesignElements of the BioAssayData.',
-                                         '__CLASS_NAME' => 'DesignElementDimension',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'designElementDimension',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'DesignElementDimension'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The DesignElements of the BioAssayData.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioAssayData'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'quantitationTypeDimension',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The QuantitationTypes of the BioAssayData.',
-                                        '__CLASS_NAME' => 'BioAssayData',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'quantitationTypeDimension',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The QuantitationTypes of the BioAssayData.',
-                                         '__CLASS_NAME' => 'QuantitationTypeDimension',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'quantitationTypeDimension',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'QuantitationTypeDimension'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The QuantitationTypes of the BioAssayData.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioAssayData'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'bioDataValues',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The data values of the BioAssayData.',
-                                        '__CLASS_NAME' => 'BioAssayData',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'bioDataValues',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '5',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The data values of the BioAssayData.',
-                                         '__CLASS_NAME' => 'BioDataValues',
-                                         '__RANK' => '5',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'bioDataValues',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioDataValues'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The data values of the BioAssayData.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioAssayData'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -647,6 +683,73 @@ the association.
 Bio::MAGE::BioAssayData::BioAssayData: has the following association accessor methods:
 
 =over
+
+
+=item quantitationTypeDimension
+
+
+From the MAGE-OM documentation for the C<quantitationTypeDimension> association:
+
+The QuantitationTypes of the BioAssayData.
+
+
+
+=over
+
+
+=item $val = $bioassaydata->setQuantitationTypeDimension($val)
+
+The restricted setter method for the quantitationTypeDimension association.
+
+Input parameters: the value to which the quantitationTypeDimension association will be set : an instance of type C<Bio::MAGE::BioAssayData::QuantitationTypeDimension>.
+
+Return value: the current value of the quantitationTypeDimension association : an instance of type C<Bio::MAGE::BioAssayData::QuantitationTypeDimension>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssayData::QuantitationTypeDimension>
+
+=cut
+
+sub setQuantitationTypeDimension {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setQuantitationTypeDimension: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setQuantitationTypeDimension: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setQuantitationTypeDimension: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::QuantitationTypeDimension") unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::QuantitationTypeDimension');
+  return $self->{__QUANTITATIONTYPEDIMENSION} = $val;
+}
+
+
+
+=item $val = $bioassaydata->getQuantitationTypeDimension()
+
+The restricted getter method for the quantitationTypeDimension association.
+
+Input parameters: none
+
+Return value: the current value of the quantitationTypeDimension association : an instance of type C<Bio::MAGE::BioAssayData::QuantitationTypeDimension>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getQuantitationTypeDimension {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getQuantitationTypeDimension: arguments passed to getter")
+    if @_;
+  return $self->{__QUANTITATIONTYPEDIMENSION};
+}
+
+
+
+
+=back
 
 
 =item designElementDimension
@@ -783,140 +886,6 @@ sub getBioAssayDimension {
 =back
 
 
-=item bioDataValues
-
-
-From the MAGE-OM documentation for the C<bioDataValues> association:
-
-The data values of the BioAssayData.
-
-
-
-=over
-
-
-=item $val = $bioassaydata->setBioDataValues($val)
-
-The restricted setter method for the bioDataValues association.
-
-Input parameters: the value to which the bioDataValues association will be set : an instance of type C<Bio::MAGE::BioAssayData::BioDataValues>.
-
-Return value: the current value of the bioDataValues association : an instance of type C<Bio::MAGE::BioAssayData::BioDataValues>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssayData::BioDataValues>
-
-=cut
-
-sub setBioDataValues {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setBioDataValues: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setBioDataValues: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setBioDataValues: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::BioDataValues") unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::BioDataValues');
-  return $self->{__BIODATAVALUES} = $val;
-}
-
-
-
-=item $val = $bioassaydata->getBioDataValues()
-
-The restricted getter method for the bioDataValues association.
-
-Input parameters: none
-
-Return value: the current value of the bioDataValues association : an instance of type C<Bio::MAGE::BioAssayData::BioDataValues>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getBioDataValues {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getBioDataValues: arguments passed to getter")
-    if @_;
-  return $self->{__BIODATAVALUES};
-}
-
-
-
-
-=back
-
-
-=item quantitationTypeDimension
-
-
-From the MAGE-OM documentation for the C<quantitationTypeDimension> association:
-
-The QuantitationTypes of the BioAssayData.
-
-
-
-=over
-
-
-=item $val = $bioassaydata->setQuantitationTypeDimension($val)
-
-The restricted setter method for the quantitationTypeDimension association.
-
-Input parameters: the value to which the quantitationTypeDimension association will be set : an instance of type C<Bio::MAGE::BioAssayData::QuantitationTypeDimension>.
-
-Return value: the current value of the quantitationTypeDimension association : an instance of type C<Bio::MAGE::BioAssayData::QuantitationTypeDimension>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssayData::QuantitationTypeDimension>
-
-=cut
-
-sub setQuantitationTypeDimension {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setQuantitationTypeDimension: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setQuantitationTypeDimension: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setQuantitationTypeDimension: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::QuantitationTypeDimension") unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::QuantitationTypeDimension');
-  return $self->{__QUANTITATIONTYPEDIMENSION} = $val;
-}
-
-
-
-=item $val = $bioassaydata->getQuantitationTypeDimension()
-
-The restricted getter method for the quantitationTypeDimension association.
-
-Input parameters: none
-
-Return value: the current value of the quantitationTypeDimension association : an instance of type C<Bio::MAGE::BioAssayData::QuantitationTypeDimension>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getQuantitationTypeDimension {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getQuantitationTypeDimension: arguments passed to getter")
-    if @_;
-  return $self->{__QUANTITATIONTYPEDIMENSION};
-}
-
-
-
-
-=back
-
-
 =item summaryStatistics
 
 
@@ -1016,6 +985,73 @@ sub addSummaryStatistics {
 
   push(@{$self->{__SUMMARYSTATISTICS}},@vals);
 }
+
+
+
+=back
+
+
+=item bioDataValues
+
+
+From the MAGE-OM documentation for the C<bioDataValues> association:
+
+The data values of the BioAssayData.
+
+
+
+=over
+
+
+=item $val = $bioassaydata->setBioDataValues($val)
+
+The restricted setter method for the bioDataValues association.
+
+Input parameters: the value to which the bioDataValues association will be set : an instance of type C<Bio::MAGE::BioAssayData::BioDataValues>.
+
+Return value: the current value of the bioDataValues association : an instance of type C<Bio::MAGE::BioAssayData::BioDataValues>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssayData::BioDataValues>
+
+=cut
+
+sub setBioDataValues {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setBioDataValues: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setBioDataValues: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setBioDataValues: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::BioDataValues") unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::BioDataValues');
+  return $self->{__BIODATAVALUES} = $val;
+}
+
+
+
+=item $val = $bioassaydata->getBioDataValues()
+
+The restricted getter method for the bioDataValues association.
+
+Input parameters: none
+
+Return value: the current value of the bioDataValues association : an instance of type C<Bio::MAGE::BioAssayData::BioDataValues>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getBioDataValues {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getBioDataValues: arguments passed to getter")
+    if @_;
+  return $self->{__BIODATAVALUES};
+}
+
 
 
 

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::ArrayDesign::DesignElementGroup Exporter);
-$VERSION = q[$Id: FeatureGroup.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,27 +60,27 @@ $VERSION = q[$Id: FeatureGroup.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp 
   my $featuregroup = Bio::MAGE::ArrayDesign::FeatureGroup->new();
 
     # creating an already populated instance
-  my $featuregroup = Bio::MAGE::ArrayDesign::FeatureGroup->new(featureLength=>$featureLength_value,
-			featureWidth=>$featureWidth_value,
+  my $featuregroup = Bio::MAGE::ArrayDesign::FeatureGroup->new(featureWidth=>$featureWidth_value,
 			featureHeight=>$featureHeight_value,
-			featureShape=>$featureShape_value,
+			featureLength=>$featureLength_value,
+			technologyType=>$technologyType_value,
 			features=>$features_value,
 			distanceUnit=>$distanceUnit_value,
-			technologyType=>$technologyType_value);
+			featureShape=>$featureShape_value);
 
     # setting and retrieving object attributes
-  my $featureLength_val = $featuregroup->featureLength();
-  $featuregroup->featureLength($value);
-
   my $featureWidth_val = $featuregroup->featureWidth();
   $featuregroup->featureWidth($value);
 
   my $featureHeight_val = $featuregroup->featureHeight();
   $featuregroup->featureHeight($value);
 
+  my $featureLength_val = $featuregroup->featureLength();
+  $featuregroup->featureLength($value);
+
     # setting and retrieving object associations
-  my $featureShape_val = $featuregroup->featureShape();
-  $featuregroup->featureShape($value);
+  my $technologyType_val = $featuregroup->technologyType();
+  $featuregroup->technologyType($value);
 
   my $features_val = $featuregroup->features();
   $featuregroup->features($value);
@@ -88,8 +88,8 @@ $VERSION = q[$Id: FeatureGroup.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp 
   my $distanceUnit_val = $featuregroup->distanceUnit();
   $featuregroup->distanceUnit($value);
 
-  my $technologyType_val = $featuregroup->technologyType();
-  $featuregroup->technologyType($value);
+  my $featureShape_val = $featuregroup->featureShape();
+  $featuregroup->featureShape($value);
 
 
 =head2 DESCRIPTION
@@ -134,79 +134,119 @@ named-value style arguments:
 =over
 
 
-=item * featureLength
-
-Sets the value of the featureLength attribute (from C<Bio::MAGE::ArrayDesign::FeatureGroup>).
-
-
 =item * featureWidth
 
-Sets the value of the featureWidth attribute (from C<Bio::MAGE::ArrayDesign::FeatureGroup>).
+Sets the value of the featureWidth attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::FeatureGroup>).
+
 
 
 =item * featureHeight
 
-Sets the value of the featureHeight attribute (from C<Bio::MAGE::ArrayDesign::FeatureGroup>).
+Sets the value of the featureHeight attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::FeatureGroup>).
 
 
-=item * featureShape
 
-Sets the value of the featureShape association (from C<Bio::MAGE::ArrayDesign::FeatureGroup>).
+=item * featureLength
 
+Sets the value of the featureLength attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::FeatureGroup>).
 
-=item * features
-
-Sets the value of the features association (from C<Bio::MAGE::ArrayDesign::FeatureGroup>).
-
-
-=item * distanceUnit
-
-Sets the value of the distanceUnit association (from C<Bio::MAGE::ArrayDesign::FeatureGroup>).
 
 
 =item * technologyType
 
-Sets the value of the technologyType association (from C<Bio::MAGE::ArrayDesign::FeatureGroup>).
+Sets the value of the technologyType association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::FeatureGroup>).
+
+The value will be of type C<OntologyEntry>.
 
 
-=item * species
+=item * distanceUnit
 
-Sets the value of the species association (from C<Bio::MAGE::ArrayDesign::DesignElementGroup>).
+Sets the value of the distanceUnit association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::FeatureGroup>).
+
+The value will be of type C<DistanceUnit>.
+
+
+=item * features
+
+Sets the value of the features association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::FeatureGroup>).
+
+The value will be of type C<Feature>.
+
+
+=item * featureShape
+
+Sets the value of the featureShape association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::FeatureGroup>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * types
 
-Sets the value of the types association (from C<Bio::MAGE::ArrayDesign::DesignElementGroup>).
+Sets the value of the types association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::DesignElementGroup>).
+
+The value will be of type C<OntologyEntry>.
+
+
+=item * species
+
+Sets the value of the species association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::DesignElementGroup>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -352,7 +392,9 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('featureLength', 'featureWidth', 'featureHeight');
+  my @list = ('featureWidth',
+'featureHeight',
+'featureLength');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -369,7 +411,10 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('featureShape', 'features', 'distanceUnit', 'technologyType');
+  my @list = ('technologyType',
+'features',
+'distanceUnit',
+'featureShape');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -413,72 +458,6 @@ getter methods for each attribute.
 Bio::MAGE::ArrayDesign::FeatureGroup: has the following attribute accessor methods:
 
 =over
-
-
-=item featureLength
-
-From the MAGE-OM documentation for the C<featureLength> attribute:
-
-The length of the feature.
-
-
-
-=over
-
-
-=item $val = $featuregroup->setFeatureLength($val)
-
-The restricted setter method for the featureLength attribute.
-
-Input parameters: the value to which the featureLength attribute will be set 
-
-Return value: the current value of the featureLength attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setFeatureLength {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setFeatureLength: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setFeatureLength: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__FEATURELENGTH} = $val;
-}
-
-
-
-=item $val = $featuregroup->getFeatureLength()
-
-The restricted getter method for the featureLength attribute.
-
-Input parameters: none
-
-Return value: the current value of the featureLength attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getFeatureLength {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getFeatureLength: arguments passed to getter")
-    if @_;
-  return $self->{__FEATURELENGTH};
-}
-
-
-
-
-=back
 
 
 =item featureWidth
@@ -612,6 +591,72 @@ sub getFeatureHeight {
 
 =back
 
+
+=item featureLength
+
+From the MAGE-OM documentation for the C<featureLength> attribute:
+
+The length of the feature.
+
+
+
+=over
+
+
+=item $val = $featuregroup->setFeatureLength($val)
+
+The restricted setter method for the featureLength attribute.
+
+Input parameters: the value to which the featureLength attribute will be set 
+
+Return value: the current value of the featureLength attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setFeatureLength {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setFeatureLength: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setFeatureLength: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__FEATURELENGTH} = $val;
+}
+
+
+
+=item $val = $featuregroup->getFeatureLength()
+
+The restricted getter method for the featureLength attribute.
+
+Input parameters: none
+
+Return value: the current value of the featureLength attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getFeatureLength {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getFeatureLength: arguments passed to getter")
+    if @_;
+  return $self->{__FEATURELENGTH};
+}
+
+
+
+
+=back
+
 Attributes Inherited from Bio::MAGE::Identifiable
 
 
@@ -719,87 +764,87 @@ BEGIN {
   $__ASSOCIATIONS = [
           'technologyType',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The technology type of this design.  By specifying a technology type, higher level analysis can use appropriate algorithms to compare the results from multiple arrays.  The technology type may be spotted cDNA or in situ photolithography.',
-                                        '__CLASS_NAME' => 'FeatureGroup',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'technologyType',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The technology type of this design.  By specifying a technology type, higher level analysis can use appropriate algorithms to compare the results from multiple arrays.  The technology type may be spotted cDNA or in situ photolithography.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'technologyType',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The technology type of this design.  By specifying a technology type, higher level analysis can use appropriate algorithms to compare the results from multiple arrays.  The technology type may be spotted cDNA or in situ photolithography.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'FeatureGroup'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'featureShape',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The expected shape of the feature on the array: circular, oval, square, etc.',
-                                        '__CLASS_NAME' => 'FeatureGroup',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'featureShape',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The expected shape of the feature on the array: circular, oval, square, etc.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'featureShape',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The expected shape of the feature on the array: circular, oval, square, etc.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'FeatureGroup'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'distanceUnit',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The unit for the feature measures.',
-                                        '__CLASS_NAME' => 'FeatureGroup',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'distanceUnit',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The unit for the feature measures.',
-                                         '__CLASS_NAME' => 'DistanceUnit',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'distanceUnit',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'DistanceUnit'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The unit for the feature measures.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'FeatureGroup'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'features',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'featureGroup',
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The features that belong to this group.',
-                                        '__CLASS_NAME' => 'FeatureGroup',
-                                        '__RANK' => '6',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'features',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '1..N',
                                          '__DOCUMENTATION' => 'The features that belong to this group.',
-                                         '__CLASS_NAME' => 'Feature',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'features',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Feature'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => '6',
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The features that belong to this group.',
+                                        '__NAME' => 'featureGroup',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'FeatureGroup'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -839,25 +884,25 @@ Bio::MAGE::ArrayDesign::FeatureGroup: has the following association accessor met
 =over
 
 
-=item featureShape
+=item technologyType
 
 
-From the MAGE-OM documentation for the C<featureShape> association:
+From the MAGE-OM documentation for the C<technologyType> association:
 
-The expected shape of the feature on the array: circular, oval, square, etc.
+The technology type of this design.  By specifying a technology type, higher level analysis can use appropriate algorithms to compare the results from multiple arrays.  The technology type may be spotted cDNA or in situ photolithography.
 
 
 
 =over
 
 
-=item $val = $featuregroup->setFeatureShape($val)
+=item $val = $featuregroup->setTechnologyType($val)
 
-The restricted setter method for the featureShape association.
+The restricted setter method for the technologyType association.
 
-Input parameters: the value to which the featureShape association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+Input parameters: the value to which the technologyType association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
 
-Return value: the current value of the featureShape association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+Return value: the current value of the technologyType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
 
 Side effects: none
 
@@ -866,26 +911,26 @@ if too many input parameters are specified , or if $val is not an instance of cl
 
 =cut
 
-sub setFeatureShape {
+sub setTechnologyType {
   my $self = shift;
-  croak(__PACKAGE__ . "::setFeatureShape: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setTechnologyType: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setFeatureShape: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setTechnologyType: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
-  croak(__PACKAGE__ . "::setFeatureShape: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
-  return $self->{__FEATURESHAPE} = $val;
+  croak(__PACKAGE__ . "::setTechnologyType: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  return $self->{__TECHNOLOGYTYPE} = $val;
 }
 
 
 
-=item $val = $featuregroup->getFeatureShape()
+=item $val = $featuregroup->getTechnologyType()
 
-The restricted getter method for the featureShape association.
+The restricted getter method for the technologyType association.
 
 Input parameters: none
 
-Return value: the current value of the featureShape association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+Return value: the current value of the technologyType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
 
 Side effects: none
 
@@ -893,11 +938,11 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getFeatureShape {
+sub getTechnologyType {
   my $self = shift;
-  croak(__PACKAGE__ . "::getFeatureShape: arguments passed to getter")
+  croak(__PACKAGE__ . "::getTechnologyType: arguments passed to getter")
     if @_;
-  return $self->{__FEATURESHAPE};
+  return $self->{__TECHNOLOGYTYPE};
 }
 
 
@@ -1078,25 +1123,25 @@ sub getDistanceUnit {
 =back
 
 
-=item technologyType
+=item featureShape
 
 
-From the MAGE-OM documentation for the C<technologyType> association:
+From the MAGE-OM documentation for the C<featureShape> association:
 
-The technology type of this design.  By specifying a technology type, higher level analysis can use appropriate algorithms to compare the results from multiple arrays.  The technology type may be spotted cDNA or in situ photolithography.
+The expected shape of the feature on the array: circular, oval, square, etc.
 
 
 
 =over
 
 
-=item $val = $featuregroup->setTechnologyType($val)
+=item $val = $featuregroup->setFeatureShape($val)
 
-The restricted setter method for the technologyType association.
+The restricted setter method for the featureShape association.
 
-Input parameters: the value to which the technologyType association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+Input parameters: the value to which the featureShape association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
 
-Return value: the current value of the technologyType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+Return value: the current value of the featureShape association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
 
 Side effects: none
 
@@ -1105,26 +1150,26 @@ if too many input parameters are specified , or if $val is not an instance of cl
 
 =cut
 
-sub setTechnologyType {
+sub setFeatureShape {
   my $self = shift;
-  croak(__PACKAGE__ . "::setTechnologyType: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setFeatureShape: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setTechnologyType: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setFeatureShape: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
-  croak(__PACKAGE__ . "::setTechnologyType: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
-  return $self->{__TECHNOLOGYTYPE} = $val;
+  croak(__PACKAGE__ . "::setFeatureShape: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  return $self->{__FEATURESHAPE} = $val;
 }
 
 
 
-=item $val = $featuregroup->getTechnologyType()
+=item $val = $featuregroup->getFeatureShape()
 
-The restricted getter method for the technologyType association.
+The restricted getter method for the featureShape association.
 
 Input parameters: none
 
-Return value: the current value of the technologyType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+Return value: the current value of the featureShape association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
 
 Side effects: none
 
@@ -1132,11 +1177,11 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getTechnologyType {
+sub getFeatureShape {
   my $self = shift;
-  croak(__PACKAGE__ . "::getTechnologyType: arguments passed to getter")
+  croak(__PACKAGE__ . "::getFeatureShape: arguments passed to getter")
     if @_;
-  return $self->{__TECHNOLOGYTYPE};
+  return $self->{__FEATURESHAPE};
 }
 
 

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::BioEvent::BioEvent Exporter);
-$VERSION = q[$Id: Map.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -130,37 +130,56 @@ named-value style arguments:
 
 =item * protocolApplications
 
-Sets the value of the protocolApplications association (from C<Bio::MAGE::BioEvent::BioEvent>).
+Sets the value of the protocolApplications association (this association was inherited
+from class C<Bio::MAGE::BioEvent::BioEvent>).
+
+The value will be of type C<ProtocolApplication>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -283,7 +302,9 @@ returns the list of subclasses for this class.
 =cut
 
 sub subclasses {
-  my @list = ('Bio::MAGE::BioAssayData::BioAssayMap', 'Bio::MAGE::BioAssayData::QuantitationTypeMap', 'Bio::MAGE::BioAssayData::DesignElementMap');
+  my @list = ('Bio::MAGE::BioAssayData::BioAssayMap',
+'Bio::MAGE::BioAssayData::QuantitationTypeMap',
+'Bio::MAGE::BioAssayData::DesignElementMap');
   return @list;
 }
 

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::BioEvent::BioEvent Exporter);
-$VERSION = q[$Id: BioAssayTreatment.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -124,49 +124,74 @@ named-value style arguments:
 =over
 
 
-=item * target
-
-Sets the value of the target association (from C<Bio::MAGE::BioAssay::BioAssayTreatment>).
-
-
 =item * physicalBioAssay
 
-Sets the value of the physicalBioAssay association (from C<Bio::MAGE::BioAssay::BioAssayTreatment>).
+Sets the value of the physicalBioAssay association (this association was inherited
+from class C<Bio::MAGE::BioAssay::BioAssayTreatment>).
+
+The value will be of type C<PhysicalBioAssay>.
+
+
+=item * target
+
+Sets the value of the target association (this association was inherited
+from class C<Bio::MAGE::BioAssay::BioAssayTreatment>).
+
+The value will be of type C<PhysicalBioAssay>.
 
 
 =item * protocolApplications
 
-Sets the value of the protocolApplications association (from C<Bio::MAGE::BioEvent::BioEvent>).
+Sets the value of the protocolApplications association (this association was inherited
+from class C<Bio::MAGE::BioEvent::BioEvent>).
+
+The value will be of type C<ProtocolApplication>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -329,7 +354,8 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('target', 'physicalBioAssay');
+  my @list = ('target',
+'physicalBioAssay');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -481,45 +507,45 @@ BEGIN {
   $__ASSOCIATIONS = [
           'physicalBioAssay',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'bioAssayTreatments',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The set of treatments undergone by this PhysicalBioAssay.',
-                                        '__CLASS_NAME' => 'BioAssayTreatment',
-                                        '__RANK' => '3',
-                                        '__ORDERED' => 1
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'physicalBioAssay',
                                          '__IS_REF' => 0,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The set of treatments undergone by this PhysicalBioAssay.',
-                                         '__CLASS_NAME' => 'PhysicalBioAssay',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'physicalBioAssay',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'PhysicalBioAssay'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '3',
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The set of treatments undergone by this PhysicalBioAssay.',
+                                        '__NAME' => 'bioAssayTreatments',
+                                        '__ORDERED' => 1,
+                                        '__CLASS_NAME' => 'BioAssayTreatment'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'target',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The PhysicalBioAssay that was treated.',
-                                        '__CLASS_NAME' => 'BioAssayTreatment',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'target',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The PhysicalBioAssay that was treated.',
-                                         '__CLASS_NAME' => 'PhysicalBioAssay',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'target',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'PhysicalBioAssay'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The PhysicalBioAssay that was treated.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioAssayTreatment'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

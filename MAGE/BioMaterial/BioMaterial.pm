@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: BioMaterial.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,14 +60,14 @@ $VERSION = q[$Id: BioMaterial.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp $
     # instanciated. These examples indicate how subclass objects behave
 
     # setting and retrieving object associations
-  my $characteristics_val = $biomaterial->characteristics();
-  $biomaterial->characteristics($value);
-
   my $treatments_val = $biomaterial->treatments();
   $biomaterial->treatments($value);
 
   my $qualityControlStatistics_val = $biomaterial->qualityControlStatistics();
   $biomaterial->qualityControlStatistics($value);
+
+  my $characteristics_val = $biomaterial->characteristics();
+  $biomaterial->characteristics($value);
 
   my $materialType_val = $biomaterial->materialType();
   $biomaterial->materialType($value);
@@ -141,54 +141,82 @@ named-value style arguments:
 =over
 
 
-=item * characteristics
-
-Sets the value of the characteristics association (from C<Bio::MAGE::BioMaterial::BioMaterial>).
-
-
 =item * treatments
 
-Sets the value of the treatments association (from C<Bio::MAGE::BioMaterial::BioMaterial>).
+Sets the value of the treatments association (this association was inherited
+from class C<Bio::MAGE::BioMaterial::BioMaterial>).
+
+The value will be of type C<Treatment>.
 
 
 =item * qualityControlStatistics
 
-Sets the value of the qualityControlStatistics association (from C<Bio::MAGE::BioMaterial::BioMaterial>).
+Sets the value of the qualityControlStatistics association (this association was inherited
+from class C<Bio::MAGE::BioMaterial::BioMaterial>).
+
+The value will be of type C<NameValueType>.
 
 
 =item * materialType
 
-Sets the value of the materialType association (from C<Bio::MAGE::BioMaterial::BioMaterial>).
+Sets the value of the materialType association (this association was inherited
+from class C<Bio::MAGE::BioMaterial::BioMaterial>).
+
+The value will be of type C<OntologyEntry>.
+
+
+=item * characteristics
+
+Sets the value of the characteristics association (this association was inherited
+from class C<Bio::MAGE::BioMaterial::BioMaterial>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -311,7 +339,9 @@ returns the list of subclasses for this class.
 =cut
 
 sub subclasses {
-  my @list = ('Bio::MAGE::BioMaterial::LabeledExtract', 'Bio::MAGE::BioMaterial::BioSource', 'Bio::MAGE::BioMaterial::BioSample');
+  my @list = ('Bio::MAGE::BioMaterial::LabeledExtract',
+'Bio::MAGE::BioMaterial::BioSource',
+'Bio::MAGE::BioMaterial::BioSample');
   return @list;
 }
 
@@ -351,7 +381,10 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('characteristics', 'treatments', 'qualityControlStatistics', 'materialType');
+  my @list = ('treatments',
+'qualityControlStatistics',
+'characteristics',
+'materialType');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -503,87 +536,87 @@ BEGIN {
   $__ASSOCIATIONS = [
           'qualityControlStatistics',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Measures of the quality of the BioMaterial.',
-                                        '__CLASS_NAME' => 'BioMaterial',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'qualityControlStatistics',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Measures of the quality of the BioMaterial.',
-                                         '__CLASS_NAME' => 'NameValueType',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'qualityControlStatistics',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'NameValueType'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Measures of the quality of the BioMaterial.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioMaterial'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'characteristics',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Innate properties of the biosource, such as genotype, cultivar, tissue type, cell type, ploidy, etc.',
-                                        '__CLASS_NAME' => 'BioMaterial',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'characteristics',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Innate properties of the biosource, such as genotype, cultivar, tissue type, cell type, ploidy, etc.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'characteristics',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Innate properties of the biosource, such as genotype, cultivar, tissue type, cell type, ploidy, etc.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioMaterial'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'materialType',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The type of material used, i.e. rna, dna, lipid, phosphoprotein, etc.',
-                                        '__CLASS_NAME' => 'BioMaterial',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'materialType',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The type of material used, i.e. rna, dna, lipid, phosphoprotein, etc.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'materialType',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The type of material used, i.e. rna, dna, lipid, phosphoprotein, etc.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioMaterial'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'treatments',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'This association is one way from BioMaterial to Treatment.  From this a BioMaterial can discover the amount and type of BioMaterial that was part of the treatment that produced it.',
-                                        '__CLASS_NAME' => 'BioMaterial',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'treatments',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'This association is one way from BioMaterial to Treatment.  From this a BioMaterial can discover the amount and type of BioMaterial that was part of the treatment that produced it.',
-                                         '__CLASS_NAME' => 'Treatment',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'treatments',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Treatment'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'This association is one way from BioMaterial to Treatment.  From this a BioMaterial can discover the amount and type of BioMaterial that was part of the treatment that produced it.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioMaterial'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -621,111 +654,6 @@ the association.
 Bio::MAGE::BioMaterial::BioMaterial: has the following association accessor methods:
 
 =over
-
-
-=item characteristics
-
-
-From the MAGE-OM documentation for the C<characteristics> association:
-
-Innate properties of the biosource, such as genotype, cultivar, tissue type, cell type, ploidy, etc.
-
-
-
-=over
-
-
-=item $array_ref = $biomaterial->setCharacteristics($array_ref)
-
-The restricted setter method for the characteristics association.
-
-Input parameters: the value to which the characteristics association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
-
-Return value: the current value of the characteristics association : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Description::OntologyEntry> instances
-
-=cut
-
-sub setCharacteristics {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setCharacteristics: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setCharacteristics: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-    croak(__PACKAGE__ . "::setCharacteristics: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setCharacteristics: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
-  }
-
-  return $self->{__CHARACTERISTICS} = $val;
-}
-
-
-
-=item $array_ref = $biomaterial->getCharacteristics()
-
-The restricted getter method for the characteristics association.
-
-Input parameters: none
-
-Return value: the current value of the characteristics association : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getCharacteristics {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getCharacteristics: arguments passed to getter")
-    if @_;
-  return $self->{__CHARACTERISTICS};
-}
-
-
-
-=item $biomaterial->addCharacteristics(@vals)
-
-Because the characteristics association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the characteristics
-association.
-
-Input parameters: the list of values C<@vals> to add to the characteristics
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
-
-=cut
-
-sub addCharacteristics {
-  my $self = shift;
-  croak(__PACKAGE__ . "::addCharacteristics: no arguments passed to setter")
-    unless @_;
-  my @vals = @_;
-    foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addCharacteristics: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
-  }
-
-  push(@{$self->{__CHARACTERISTICS}},@vals);
-}
-
-
-
-=back
 
 
 =item treatments
@@ -931,6 +859,111 @@ sub addQualityControlStatistics {
   }
 
   push(@{$self->{__QUALITYCONTROLSTATISTICS}},@vals);
+}
+
+
+
+=back
+
+
+=item characteristics
+
+
+From the MAGE-OM documentation for the C<characteristics> association:
+
+Innate properties of the biosource, such as genotype, cultivar, tissue type, cell type, ploidy, etc.
+
+
+
+=over
+
+
+=item $array_ref = $biomaterial->setCharacteristics($array_ref)
+
+The restricted setter method for the characteristics association.
+
+Input parameters: the value to which the characteristics association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
+
+Return value: the current value of the characteristics association : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Description::OntologyEntry> instances
+
+=cut
+
+sub setCharacteristics {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setCharacteristics: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setCharacteristics: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setCharacteristics: expected array reference, got $self")
+    unless UNIVERSAL::isa($val,'ARRAY');
+  foreach my $val (@{$val}) {
+    croak(__PACKAGE__ . "::setCharacteristics: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  }
+
+  return $self->{__CHARACTERISTICS} = $val;
+}
+
+
+
+=item $array_ref = $biomaterial->getCharacteristics()
+
+The restricted getter method for the characteristics association.
+
+Input parameters: none
+
+Return value: the current value of the characteristics association : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getCharacteristics {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getCharacteristics: arguments passed to getter")
+    if @_;
+  return $self->{__CHARACTERISTICS};
+}
+
+
+
+=item $biomaterial->addCharacteristics(@vals)
+
+Because the characteristics association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the characteristics
+association.
+
+Input parameters: the list of values C<@vals> to add to the characteristics
+association. B<NOTE>: submitting a single value is permitted.
+
+Return value: none
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
+
+=cut
+
+sub addCharacteristics {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addCharacteristics: no arguments passed to setter")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addCharacteristics: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  }
+
+  push(@{$self->{__CHARACTERISTICS}},@vals);
 }
 
 

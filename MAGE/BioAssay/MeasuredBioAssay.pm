@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::BioAssay::BioAssay Exporter);
-$VERSION = q[$Id: MeasuredBioAssay.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -115,52 +115,80 @@ named-value style arguments:
 
 =item * featureExtraction
 
-Sets the value of the featureExtraction association (from C<Bio::MAGE::BioAssay::MeasuredBioAssay>).
+Sets the value of the featureExtraction association (this association was inherited
+from class C<Bio::MAGE::BioAssay::MeasuredBioAssay>).
+
+The value will be of type C<FeatureExtraction>.
 
 
 =item * measuredBioAssayData
 
-Sets the value of the measuredBioAssayData association (from C<Bio::MAGE::BioAssay::MeasuredBioAssay>).
+Sets the value of the measuredBioAssayData association (this association was inherited
+from class C<Bio::MAGE::BioAssay::MeasuredBioAssay>).
 
-
-=item * channels
-
-Sets the value of the channels association (from C<Bio::MAGE::BioAssay::BioAssay>).
+The value will be of type C<MeasuredBioAssayData>.
 
 
 =item * bioAssayFactorValues
 
-Sets the value of the bioAssayFactorValues association (from C<Bio::MAGE::BioAssay::BioAssay>).
+Sets the value of the bioAssayFactorValues association (this association was inherited
+from class C<Bio::MAGE::BioAssay::BioAssay>).
+
+The value will be of type C<FactorValue>.
+
+
+=item * channels
+
+Sets the value of the channels association (this association was inherited
+from class C<Bio::MAGE::BioAssay::BioAssay>).
+
+The value will be of type C<Channel>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -323,7 +351,8 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('featureExtraction', 'measuredBioAssayData');
+  my @list = ('featureExtraction',
+'measuredBioAssayData');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -475,45 +504,45 @@ BEGIN {
   $__ASSOCIATIONS = [
           'featureExtraction',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'measuredBioAssayTarget',
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The association between the MeasuredBioAssay and the FeatureExtraction Event.',
-                                        '__CLASS_NAME' => 'MeasuredBioAssay',
-                                        '__RANK' => '2',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'featureExtraction',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The association between the MeasuredBioAssay and the FeatureExtraction Event.',
-                                         '__CLASS_NAME' => 'FeatureExtraction',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'featureExtraction',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'FeatureExtraction'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => '2',
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The association between the MeasuredBioAssay and the FeatureExtraction Event.',
+                                        '__NAME' => 'measuredBioAssayTarget',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'MeasuredBioAssay'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'measuredBioAssayData',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '1..N',
-                                        '__DOCUMENTATION' => 'The data associated with the MeasuredBioAssay.',
-                                        '__CLASS_NAME' => 'MeasuredBioAssay',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'measuredBioAssayData',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The data associated with the MeasuredBioAssay.',
-                                         '__CLASS_NAME' => 'MeasuredBioAssayData',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'measuredBioAssayData',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'MeasuredBioAssayData'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1..N',
+                                        '__DOCUMENTATION' => 'The data associated with the MeasuredBioAssay.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'MeasuredBioAssay'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

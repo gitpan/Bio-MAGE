@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::BioAssayData::DesignElementMap Exporter);
-$VERSION = q[$Id: ReporterCompositeMap.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,15 +60,15 @@ $VERSION = q[$Id: ReporterCompositeMap.pm,v 1.1 2002/12/10 06:25:49 jason_e_stew
   my $reportercompositemap = Bio::MAGE::DesignElement::ReporterCompositeMap->new();
 
     # creating an already populated instance
-  my $reportercompositemap = Bio::MAGE::DesignElement::ReporterCompositeMap->new(reporterPositionSources=>$reporterPositionSources_value,
-			compositeSequence=>$compositeSequence_value);
+  my $reportercompositemap = Bio::MAGE::DesignElement::ReporterCompositeMap->new(compositeSequence=>$compositeSequence_value,
+			reporterPositionSources=>$reporterPositionSources_value);
 
     # setting and retrieving object associations
-  my $reporterPositionSources_val = $reportercompositemap->reporterPositionSources();
-  $reportercompositemap->reporterPositionSources($value);
-
   my $compositeSequence_val = $reportercompositemap->compositeSequence();
   $reportercompositemap->compositeSequence($value);
+
+  my $reporterPositionSources_val = $reportercompositemap->reporterPositionSources();
+  $reportercompositemap->reporterPositionSources($value);
 
 
 =head2 DESCRIPTION
@@ -113,49 +113,74 @@ named-value style arguments:
 =over
 
 
-=item * reporterPositionSources
-
-Sets the value of the reporterPositionSources association (from C<Bio::MAGE::DesignElement::ReporterCompositeMap>).
-
-
 =item * compositeSequence
 
-Sets the value of the compositeSequence association (from C<Bio::MAGE::DesignElement::ReporterCompositeMap>).
+Sets the value of the compositeSequence association (this association was inherited
+from class C<Bio::MAGE::DesignElement::ReporterCompositeMap>).
+
+The value will be of type C<CompositeSequence>.
+
+
+=item * reporterPositionSources
+
+Sets the value of the reporterPositionSources association (this association was inherited
+from class C<Bio::MAGE::DesignElement::ReporterCompositeMap>).
+
+The value will be of type C<ReporterPosition>.
 
 
 =item * protocolApplications
 
-Sets the value of the protocolApplications association (from C<Bio::MAGE::BioEvent::BioEvent>).
+Sets the value of the protocolApplications association (this association was inherited
+from class C<Bio::MAGE::BioEvent::BioEvent>).
+
+The value will be of type C<ProtocolApplication>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -318,7 +343,8 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('reporterPositionSources', 'compositeSequence');
+  my @list = ('compositeSequence',
+'reporterPositionSources');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -470,45 +496,45 @@ BEGIN {
   $__ASSOCIATIONS = [
           'compositeSequence',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'reporterCompositeMaps',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'A map to the reporters that compose this CompositeSequence.',
-                                        '__CLASS_NAME' => 'ReporterCompositeMap',
-                                        '__RANK' => '2',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'compositeSequence',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'A map to the reporters that compose this CompositeSequence.',
-                                         '__CLASS_NAME' => 'CompositeSequence',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'compositeSequence',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'CompositeSequence'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '2',
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'A map to the reporters that compose this CompositeSequence.',
+                                        '__NAME' => 'reporterCompositeMaps',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'ReporterCompositeMap'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'reporterPositionSources',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Association to the reporters that compose this CompositeSequence and where those reporters occur.',
-                                        '__CLASS_NAME' => 'ReporterCompositeMap',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'reporterPositionSources',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '1..N',
                                          '__DOCUMENTATION' => 'Association to the reporters that compose this CompositeSequence and where those reporters occur.',
-                                         '__CLASS_NAME' => 'ReporterPosition',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'reporterPositionSources',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ReporterPosition'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Association to the reporters that compose this CompositeSequence and where those reporters occur.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ReporterCompositeMap'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -546,6 +572,73 @@ the association.
 Bio::MAGE::DesignElement::ReporterCompositeMap: has the following association accessor methods:
 
 =over
+
+
+=item compositeSequence
+
+
+From the MAGE-OM documentation for the C<compositeSequence> association:
+
+A map to the reporters that compose this CompositeSequence.
+
+
+
+=over
+
+
+=item $val = $reportercompositemap->setCompositeSequence($val)
+
+The restricted setter method for the compositeSequence association.
+
+Input parameters: the value to which the compositeSequence association will be set : an instance of type C<Bio::MAGE::DesignElement::CompositeSequence>.
+
+Return value: the current value of the compositeSequence association : an instance of type C<Bio::MAGE::DesignElement::CompositeSequence>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::DesignElement::CompositeSequence>
+
+=cut
+
+sub setCompositeSequence {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setCompositeSequence: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setCompositeSequence: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setCompositeSequence: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::CompositeSequence") unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::CompositeSequence');
+  return $self->{__COMPOSITESEQUENCE} = $val;
+}
+
+
+
+=item $val = $reportercompositemap->getCompositeSequence()
+
+The restricted getter method for the compositeSequence association.
+
+Input parameters: none
+
+Return value: the current value of the compositeSequence association : an instance of type C<Bio::MAGE::DesignElement::CompositeSequence>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getCompositeSequence {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getCompositeSequence: arguments passed to getter")
+    if @_;
+  return $self->{__COMPOSITESEQUENCE};
+}
+
+
+
+
+=back
 
 
 =item reporterPositionSources
@@ -647,73 +740,6 @@ sub addReporterPositionSources {
 
   push(@{$self->{__REPORTERPOSITIONSOURCES}},@vals);
 }
-
-
-
-=back
-
-
-=item compositeSequence
-
-
-From the MAGE-OM documentation for the C<compositeSequence> association:
-
-A map to the reporters that compose this CompositeSequence.
-
-
-
-=over
-
-
-=item $val = $reportercompositemap->setCompositeSequence($val)
-
-The restricted setter method for the compositeSequence association.
-
-Input parameters: the value to which the compositeSequence association will be set : an instance of type C<Bio::MAGE::DesignElement::CompositeSequence>.
-
-Return value: the current value of the compositeSequence association : an instance of type C<Bio::MAGE::DesignElement::CompositeSequence>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::DesignElement::CompositeSequence>
-
-=cut
-
-sub setCompositeSequence {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setCompositeSequence: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setCompositeSequence: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setCompositeSequence: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::CompositeSequence") unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::CompositeSequence');
-  return $self->{__COMPOSITESEQUENCE} = $val;
-}
-
-
-
-=item $val = $reportercompositemap->getCompositeSequence()
-
-The restricted getter method for the compositeSequence association.
-
-Input parameters: none
-
-Return value: the current value of the compositeSequence association : an instance of type C<Bio::MAGE::DesignElement::CompositeSequence>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getCompositeSequence {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getCompositeSequence: arguments passed to getter")
-    if @_;
-  return $self->{__COMPOSITESEQUENCE};
-}
-
 
 
 

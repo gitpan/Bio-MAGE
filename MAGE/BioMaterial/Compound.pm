@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: Compound.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -61,23 +61,23 @@ $VERSION = q[$Id: Compound.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
 
     # creating an already populated instance
   my $compound = Bio::MAGE::BioMaterial::Compound->new(isSolvent=>$isSolvent_value,
+			merckIndex=>$merckIndex_value,
 			componentCompounds=>$componentCompounds_value,
-			externalLIMS=>$externalLIMS_value,
-			merckIndex=>$merckIndex_value);
+			externalLIMS=>$externalLIMS_value);
 
     # setting and retrieving object attributes
   my $isSolvent_val = $compound->isSolvent();
   $compound->isSolvent($value);
 
     # setting and retrieving object associations
+  my $merckIndex_val = $compound->merckIndex();
+  $compound->merckIndex($value);
+
   my $componentCompounds_val = $compound->componentCompounds();
   $compound->componentCompounds($value);
 
   my $externalLIMS_val = $compound->externalLIMS();
   $compound->externalLIMS($value);
-
-  my $merckIndex_val = $compound->merckIndex();
-  $compound->merckIndex($value);
 
 
 =head2 DESCRIPTION
@@ -124,52 +124,79 @@ named-value style arguments:
 
 =item * isSolvent
 
-Sets the value of the isSolvent attribute (from C<Bio::MAGE::BioMaterial::Compound>).
+Sets the value of the isSolvent attribute (this attribute was inherited
+from class C<Bio::MAGE::BioMaterial::Compound>).
 
-
-=item * componentCompounds
-
-Sets the value of the componentCompounds association (from C<Bio::MAGE::BioMaterial::Compound>).
-
-
-=item * externalLIMS
-
-Sets the value of the externalLIMS association (from C<Bio::MAGE::BioMaterial::Compound>).
 
 
 =item * merckIndex
 
-Sets the value of the merckIndex association (from C<Bio::MAGE::BioMaterial::Compound>).
+Sets the value of the merckIndex association (this association was inherited
+from class C<Bio::MAGE::BioMaterial::Compound>).
+
+The value will be of type C<OntologyEntry>.
+
+
+=item * componentCompounds
+
+Sets the value of the componentCompounds association (this association was inherited
+from class C<Bio::MAGE::BioMaterial::Compound>).
+
+The value will be of type C<CompoundMeasurement>.
+
+
+=item * externalLIMS
+
+Sets the value of the externalLIMS association (this association was inherited
+from class C<Bio::MAGE::BioMaterial::Compound>).
+
+The value will be of type C<DatabaseEntry>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -332,7 +359,9 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('componentCompounds', 'externalLIMS', 'merckIndex');
+  my @list = ('merckIndex',
+'componentCompounds',
+'externalLIMS');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -550,66 +579,66 @@ BEGIN {
   $__ASSOCIATIONS = [
           'merckIndex',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The Merck Index of this Compound.',
-                                        '__CLASS_NAME' => 'Compound',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'merckIndex',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The Merck Index of this Compound.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'merckIndex',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The Merck Index of this Compound.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Compound'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'componentCompounds',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The Compounds and their amounts used to create this Compound.',
-                                        '__CLASS_NAME' => 'Compound',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'componentCompounds',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The Compounds and their amounts used to create this Compound.',
-                                         '__CLASS_NAME' => 'CompoundMeasurement',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'componentCompounds',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'CompoundMeasurement'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The Compounds and their amounts used to create this Compound.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Compound'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'externalLIMS',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Reference to an entry in an external LIMS data source.',
-                                        '__CLASS_NAME' => 'Compound',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'externalLIMS',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Reference to an entry in an external LIMS data source.',
-                                         '__CLASS_NAME' => 'DatabaseEntry',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'externalLIMS',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'DatabaseEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Reference to an entry in an external LIMS data source.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Compound'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -647,6 +676,73 @@ the association.
 Bio::MAGE::BioMaterial::Compound: has the following association accessor methods:
 
 =over
+
+
+=item merckIndex
+
+
+From the MAGE-OM documentation for the C<merckIndex> association:
+
+The Merck Index of this Compound.
+
+
+
+=over
+
+
+=item $val = $compound->setMerckIndex($val)
+
+The restricted setter method for the merckIndex association.
+
+Input parameters: the value to which the merckIndex association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Return value: the current value of the merckIndex association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
+
+=cut
+
+sub setMerckIndex {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setMerckIndex: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setMerckIndex: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setMerckIndex: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  return $self->{__MERCKINDEX} = $val;
+}
+
+
+
+=item $val = $compound->getMerckIndex()
+
+The restricted getter method for the merckIndex association.
+
+Input parameters: none
+
+Return value: the current value of the merckIndex association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getMerckIndex {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getMerckIndex: arguments passed to getter")
+    if @_;
+  return $self->{__MERCKINDEX};
+}
+
+
+
+
+=back
 
 
 =item componentCompounds
@@ -813,73 +909,6 @@ sub getExternalLIMS {
   croak(__PACKAGE__ . "::getExternalLIMS: arguments passed to getter")
     if @_;
   return $self->{__EXTERNALLIMS};
-}
-
-
-
-
-=back
-
-
-=item merckIndex
-
-
-From the MAGE-OM documentation for the C<merckIndex> association:
-
-The Merck Index of this Compound.
-
-
-
-=over
-
-
-=item $val = $compound->setMerckIndex($val)
-
-The restricted setter method for the merckIndex association.
-
-Input parameters: the value to which the merckIndex association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Return value: the current value of the merckIndex association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
-
-=cut
-
-sub setMerckIndex {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setMerckIndex: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setMerckIndex: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setMerckIndex: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
-  return $self->{__MERCKINDEX} = $val;
-}
-
-
-
-=item $val = $compound->getMerckIndex()
-
-The restricted getter method for the merckIndex association.
-
-Input parameters: none
-
-Return value: the current value of the merckIndex association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getMerckIndex {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getMerckIndex: arguments passed to getter")
-    if @_;
-  return $self->{__MERCKINDEX};
 }
 
 

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: DatabaseEntry.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -61,8 +61,8 @@ $VERSION = q[$Id: DatabaseEntry.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp
 
     # creating an already populated instance
   my $databaseentry = Bio::MAGE::Description::DatabaseEntry->new(URI=>$URI_value,
-			accession=>$accession_value,
 			accessionVersion=>$accessionVersion_value,
+			accession=>$accession_value,
 			database=>$database_value,
 			type=>$type_value);
 
@@ -70,11 +70,11 @@ $VERSION = q[$Id: DatabaseEntry.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp
   my $URI_val = $databaseentry->URI();
   $databaseentry->URI($value);
 
-  my $accession_val = $databaseentry->accession();
-  $databaseentry->accession($value);
-
   my $accessionVersion_val = $databaseentry->accessionVersion();
   $databaseentry->accessionVersion($value);
+
+  my $accession_val = $databaseentry->accession();
+  $databaseentry->accession($value);
 
     # setting and retrieving object associations
   my $database_val = $databaseentry->database();
@@ -128,32 +128,47 @@ named-value style arguments:
 
 =item * URI
 
-Sets the value of the URI attribute (from C<Bio::MAGE::Description::DatabaseEntry>).
+Sets the value of the URI attribute (this attribute was inherited
+from class C<Bio::MAGE::Description::DatabaseEntry>).
 
-
-=item * accession
-
-Sets the value of the accession attribute (from C<Bio::MAGE::Description::DatabaseEntry>).
 
 
 =item * accessionVersion
 
-Sets the value of the accessionVersion attribute (from C<Bio::MAGE::Description::DatabaseEntry>).
+Sets the value of the accessionVersion attribute (this attribute was inherited
+from class C<Bio::MAGE::Description::DatabaseEntry>).
+
+
+
+=item * accession
+
+Sets the value of the accession attribute (this attribute was inherited
+from class C<Bio::MAGE::Description::DatabaseEntry>).
+
 
 
 =item * database
 
-Sets the value of the database association (from C<Bio::MAGE::Description::DatabaseEntry>).
+Sets the value of the database association (this association was inherited
+from class C<Bio::MAGE::Description::DatabaseEntry>).
+
+The value will be of type C<Database>.
 
 
 =item * type
 
-Sets the value of the type association (from C<Bio::MAGE::Description::DatabaseEntry>).
+Sets the value of the type association (this association was inherited
+from class C<Bio::MAGE::Description::DatabaseEntry>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -299,7 +314,9 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('URI', 'accession', 'accessionVersion');
+  my @list = ('URI',
+'accessionVersion',
+'accession');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -316,7 +333,8 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('database', 'type');
+  my @list = ('database',
+'type');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -428,72 +446,6 @@ sub getURI {
 =back
 
 
-=item accession
-
-From the MAGE-OM documentation for the C<accession> attribute:
-
-The identifier used to look up the record.
-
-
-
-=over
-
-
-=item $val = $databaseentry->setAccession($val)
-
-The restricted setter method for the accession attribute.
-
-Input parameters: the value to which the accession attribute will be set 
-
-Return value: the current value of the accession attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setAccession {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setAccession: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setAccession: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__ACCESSION} = $val;
-}
-
-
-
-=item $val = $databaseentry->getAccession()
-
-The restricted getter method for the accession attribute.
-
-Input parameters: none
-
-Return value: the current value of the accession attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getAccession {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getAccession: arguments passed to getter")
-    if @_;
-  return $self->{__ACCESSION};
-}
-
-
-
-
-=back
-
-
 =item accessionVersion
 
 From the MAGE-OM documentation for the C<accessionVersion> attribute:
@@ -560,6 +512,72 @@ sub getAccessionVersion {
 =back
 
 
+=item accession
+
+From the MAGE-OM documentation for the C<accession> attribute:
+
+The identifier used to look up the record.
+
+
+
+=over
+
+
+=item $val = $databaseentry->setAccession($val)
+
+The restricted setter method for the accession attribute.
+
+Input parameters: the value to which the accession attribute will be set 
+
+Return value: the current value of the accession attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setAccession {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setAccession: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setAccession: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__ACCESSION} = $val;
+}
+
+
+
+=item $val = $databaseentry->getAccession()
+
+The restricted getter method for the accession attribute.
+
+Input parameters: none
+
+Return value: the current value of the accession attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getAccession {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getAccession: arguments passed to getter")
+    if @_;
+  return $self->{__ACCESSION};
+}
+
+
+
+
+=back
+
+
 
 =back
 
@@ -572,45 +590,45 @@ BEGIN {
   $__ASSOCIATIONS = [
           'type',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The type of record (e.g. a protein in SwissProt, or a yeast strain in SGD).',
-                                        '__CLASS_NAME' => 'DatabaseEntry',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'type',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The type of record (e.g. a protein in SwissProt, or a yeast strain in SGD).',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'type',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The type of record (e.g. a protein in SwissProt, or a yeast strain in SGD).',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'DatabaseEntry'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'database',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'Reference to the database where the DataEntry instance can be found.',
-                                        '__CLASS_NAME' => 'DatabaseEntry',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'database',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'Reference to the database where the DataEntry instance can be found.',
-                                         '__CLASS_NAME' => 'Database',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'database',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Database'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'Reference to the database where the DataEntry instance can be found.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'DatabaseEntry'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

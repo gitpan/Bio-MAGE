@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: Zone.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,20 +60,23 @@ $VERSION = q[$Id: Zone.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
   my $zone = Bio::MAGE::ArrayDesign::Zone->new();
 
     # creating an already populated instance
-  my $zone = Bio::MAGE::ArrayDesign::Zone->new(lowerRightY=>$lowerRightY_value,
+  my $zone = Bio::MAGE::ArrayDesign::Zone->new(column=>$column_value,
 			lowerRightX=>$lowerRightX_value,
+			lowerRightY=>$lowerRightY_value,
 			upperLeftX=>$upperLeftX_value,
 			upperLeftY=>$upperLeftY_value,
 			row=>$row_value,
-			column=>$column_value,
 			distanceUnit=>$distanceUnit_value);
 
     # setting and retrieving object attributes
-  my $lowerRightY_val = $zone->lowerRightY();
-  $zone->lowerRightY($value);
+  my $column_val = $zone->column();
+  $zone->column($value);
 
   my $lowerRightX_val = $zone->lowerRightX();
   $zone->lowerRightX($value);
+
+  my $lowerRightY_val = $zone->lowerRightY();
+  $zone->lowerRightY($value);
 
   my $upperLeftX_val = $zone->upperLeftX();
   $zone->upperLeftX($value);
@@ -83,9 +86,6 @@ $VERSION = q[$Id: Zone.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
 
   my $row_val = $zone->row();
   $zone->row($value);
-
-  my $column_val = $zone->column();
-  $zone->column($value);
 
     # setting and retrieving object associations
   my $distanceUnit_val = $zone->distanceUnit();
@@ -134,69 +134,100 @@ named-value style arguments:
 =over
 
 
-=item * lowerRightY
+=item * column
 
-Sets the value of the lowerRightY attribute (from C<Bio::MAGE::ArrayDesign::Zone>).
+Sets the value of the column attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::Zone>).
+
 
 
 =item * lowerRightX
 
-Sets the value of the lowerRightX attribute (from C<Bio::MAGE::ArrayDesign::Zone>).
+Sets the value of the lowerRightX attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::Zone>).
+
+
+
+=item * lowerRightY
+
+Sets the value of the lowerRightY attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::Zone>).
+
 
 
 =item * upperLeftX
 
-Sets the value of the upperLeftX attribute (from C<Bio::MAGE::ArrayDesign::Zone>).
+Sets the value of the upperLeftX attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::Zone>).
+
 
 
 =item * upperLeftY
 
-Sets the value of the upperLeftY attribute (from C<Bio::MAGE::ArrayDesign::Zone>).
+Sets the value of the upperLeftY attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::Zone>).
+
 
 
 =item * row
 
-Sets the value of the row attribute (from C<Bio::MAGE::ArrayDesign::Zone>).
+Sets the value of the row attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::Zone>).
 
-
-=item * column
-
-Sets the value of the column attribute (from C<Bio::MAGE::ArrayDesign::Zone>).
 
 
 =item * distanceUnit
 
-Sets the value of the distanceUnit association (from C<Bio::MAGE::ArrayDesign::Zone>).
+Sets the value of the distanceUnit association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::Zone>).
+
+The value will be of type C<DistanceUnit>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -342,7 +373,12 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('lowerRightY', 'lowerRightX', 'upperLeftX', 'upperLeftY', 'row', 'column');
+  my @list = ('column',
+'lowerRightX',
+'lowerRightY',
+'upperLeftX',
+'upperLeftY',
+'row');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -405,24 +441,24 @@ Bio::MAGE::ArrayDesign::Zone: has the following attribute accessor methods:
 =over
 
 
-=item lowerRightY
+=item column
 
-From the MAGE-OM documentation for the C<lowerRightY> attribute:
+From the MAGE-OM documentation for the C<column> attribute:
 
-Boundary horizontal lower right position relative to (0,0).
+column position in the ZoneGroup.
 
 
 
 =over
 
 
-=item $val = $zone->setLowerRightY($val)
+=item $val = $zone->setColumn($val)
 
-The restricted setter method for the lowerRightY attribute.
+The restricted setter method for the column attribute.
 
-Input parameters: the value to which the lowerRightY attribute will be set 
+Input parameters: the value to which the column attribute will be set 
 
-Return value: the current value of the lowerRightY attribute 
+Return value: the current value of the column attribute 
 
 Side effects: none
 
@@ -431,26 +467,26 @@ if too many input parameters are specified
 
 =cut
 
-sub setLowerRightY {
+sub setColumn {
   my $self = shift;
-  croak(__PACKAGE__ . "::setLowerRightY: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setColumn: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setLowerRightY: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setColumn: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
   
-  return $self->{__LOWERRIGHTY} = $val;
+  return $self->{__COLUMN} = $val;
 }
 
 
 
-=item $val = $zone->getLowerRightY()
+=item $val = $zone->getColumn()
 
-The restricted getter method for the lowerRightY attribute.
+The restricted getter method for the column attribute.
 
 Input parameters: none
 
-Return value: the current value of the lowerRightY attribute 
+Return value: the current value of the column attribute 
 
 Side effects: none
 
@@ -458,11 +494,11 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getLowerRightY {
+sub getColumn {
   my $self = shift;
-  croak(__PACKAGE__ . "::getLowerRightY: arguments passed to getter")
+  croak(__PACKAGE__ . "::getColumn: arguments passed to getter")
     if @_;
-  return $self->{__LOWERRIGHTY};
+  return $self->{__COLUMN};
 }
 
 
@@ -529,6 +565,72 @@ sub getLowerRightX {
   croak(__PACKAGE__ . "::getLowerRightX: arguments passed to getter")
     if @_;
   return $self->{__LOWERRIGHTX};
+}
+
+
+
+
+=back
+
+
+=item lowerRightY
+
+From the MAGE-OM documentation for the C<lowerRightY> attribute:
+
+Boundary horizontal lower right position relative to (0,0).
+
+
+
+=over
+
+
+=item $val = $zone->setLowerRightY($val)
+
+The restricted setter method for the lowerRightY attribute.
+
+Input parameters: the value to which the lowerRightY attribute will be set 
+
+Return value: the current value of the lowerRightY attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setLowerRightY {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setLowerRightY: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setLowerRightY: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__LOWERRIGHTY} = $val;
+}
+
+
+
+=item $val = $zone->getLowerRightY()
+
+The restricted getter method for the lowerRightY attribute.
+
+Input parameters: none
+
+Return value: the current value of the lowerRightY attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getLowerRightY {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getLowerRightY: arguments passed to getter")
+    if @_;
+  return $self->{__LOWERRIGHTY};
 }
 
 
@@ -734,72 +836,6 @@ sub getRow {
 
 =back
 
-
-=item column
-
-From the MAGE-OM documentation for the C<column> attribute:
-
-column position in the ZoneGroup.
-
-
-
-=over
-
-
-=item $val = $zone->setColumn($val)
-
-The restricted setter method for the column attribute.
-
-Input parameters: the value to which the column attribute will be set 
-
-Return value: the current value of the column attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setColumn {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setColumn: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setColumn: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__COLUMN} = $val;
-}
-
-
-
-=item $val = $zone->getColumn()
-
-The restricted getter method for the column attribute.
-
-Input parameters: none
-
-Return value: the current value of the column attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getColumn {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getColumn: arguments passed to getter")
-    if @_;
-  return $self->{__COLUMN};
-}
-
-
-
-
-=back
-
 Attributes Inherited from Bio::MAGE::Identifiable
 
 
@@ -907,24 +943,24 @@ BEGIN {
   $__ASSOCIATIONS = [
           'distanceUnit',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Unit for the Zone attributes.',
-                                        '__CLASS_NAME' => 'Zone',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'distanceUnit',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Unit for the Zone attributes.',
-                                         '__CLASS_NAME' => 'DistanceUnit',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'distanceUnit',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'DistanceUnit'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Unit for the Zone attributes.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Zone'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

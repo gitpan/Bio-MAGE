@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: BioAssayDataCluster.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,15 +60,15 @@ $VERSION = q[$Id: BioAssayDataCluster.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewa
   my $bioassaydatacluster = Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster->new();
 
     # creating an already populated instance
-  my $bioassaydatacluster = Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster->new(nodes=>$nodes_value,
-			clusterBioAssayData=>$clusterBioAssayData_value);
+  my $bioassaydatacluster = Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster->new(clusterBioAssayData=>$clusterBioAssayData_value,
+			nodes=>$nodes_value);
 
     # setting and retrieving object associations
-  my $nodes_val = $bioassaydatacluster->nodes();
-  $bioassaydatacluster->nodes($value);
-
   my $clusterBioAssayData_val = $bioassaydatacluster->clusterBioAssayData();
   $bioassaydatacluster->clusterBioAssayData($value);
+
+  my $nodes_val = $bioassaydatacluster->nodes();
+  $bioassaydatacluster->nodes($value);
 
 
 =head2 DESCRIPTION
@@ -113,44 +113,66 @@ named-value style arguments:
 =over
 
 
-=item * nodes
-
-Sets the value of the nodes association (from C<Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster>).
-
-
 =item * clusterBioAssayData
 
-Sets the value of the clusterBioAssayData association (from C<Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster>).
+Sets the value of the clusterBioAssayData association (this association was inherited
+from class C<Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster>).
+
+The value will be of type C<BioAssayData>.
+
+
+=item * nodes
+
+Sets the value of the nodes association (this association was inherited
+from class C<Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster>).
+
+The value will be of type C<Node>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -313,7 +335,8 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('nodes', 'clusterBioAssayData');
+  my @list = ('clusterBioAssayData',
+'nodes');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -465,45 +488,45 @@ BEGIN {
   $__ASSOCIATIONS = [
           'clusterBioAssayData',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The BioAssayData whose values were used by the cluster algorithm.',
-                                        '__CLASS_NAME' => 'BioAssayDataCluster',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'clusterBioAssayData',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The BioAssayData whose values were used by the cluster algorithm.',
-                                         '__CLASS_NAME' => 'BioAssayData',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'clusterBioAssayData',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioAssayData'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The BioAssayData whose values were used by the cluster algorithm.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioAssayDataCluster'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'nodes',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The nodes of the cluster.',
-                                        '__CLASS_NAME' => 'BioAssayDataCluster',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'nodes',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '1..N',
                                          '__DOCUMENTATION' => 'The nodes of the cluster.',
-                                         '__CLASS_NAME' => 'Node',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'nodes',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Node'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The nodes of the cluster.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioAssayDataCluster'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -541,6 +564,73 @@ the association.
 Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster: has the following association accessor methods:
 
 =over
+
+
+=item clusterBioAssayData
+
+
+From the MAGE-OM documentation for the C<clusterBioAssayData> association:
+
+The BioAssayData whose values were used by the cluster algorithm.
+
+
+
+=over
+
+
+=item $val = $bioassaydatacluster->setClusterBioAssayData($val)
+
+The restricted setter method for the clusterBioAssayData association.
+
+Input parameters: the value to which the clusterBioAssayData association will be set : an instance of type C<Bio::MAGE::BioAssayData::BioAssayData>.
+
+Return value: the current value of the clusterBioAssayData association : an instance of type C<Bio::MAGE::BioAssayData::BioAssayData>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssayData::BioAssayData>
+
+=cut
+
+sub setClusterBioAssayData {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setClusterBioAssayData: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setClusterBioAssayData: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setClusterBioAssayData: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::BioAssayData") unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::BioAssayData');
+  return $self->{__CLUSTERBIOASSAYDATA} = $val;
+}
+
+
+
+=item $val = $bioassaydatacluster->getClusterBioAssayData()
+
+The restricted getter method for the clusterBioAssayData association.
+
+Input parameters: none
+
+Return value: the current value of the clusterBioAssayData association : an instance of type C<Bio::MAGE::BioAssayData::BioAssayData>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getClusterBioAssayData {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getClusterBioAssayData: arguments passed to getter")
+    if @_;
+  return $self->{__CLUSTERBIOASSAYDATA};
+}
+
+
+
+
+=back
 
 
 =item nodes
@@ -642,73 +732,6 @@ sub addNodes {
 
   push(@{$self->{__NODES}},@vals);
 }
-
-
-
-=back
-
-
-=item clusterBioAssayData
-
-
-From the MAGE-OM documentation for the C<clusterBioAssayData> association:
-
-The BioAssayData whose values were used by the cluster algorithm.
-
-
-
-=over
-
-
-=item $val = $bioassaydatacluster->setClusterBioAssayData($val)
-
-The restricted setter method for the clusterBioAssayData association.
-
-Input parameters: the value to which the clusterBioAssayData association will be set : an instance of type C<Bio::MAGE::BioAssayData::BioAssayData>.
-
-Return value: the current value of the clusterBioAssayData association : an instance of type C<Bio::MAGE::BioAssayData::BioAssayData>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssayData::BioAssayData>
-
-=cut
-
-sub setClusterBioAssayData {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setClusterBioAssayData: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setClusterBioAssayData: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setClusterBioAssayData: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::BioAssayData") unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::BioAssayData');
-  return $self->{__CLUSTERBIOASSAYDATA} = $val;
-}
-
-
-
-=item $val = $bioassaydatacluster->getClusterBioAssayData()
-
-The restricted getter method for the clusterBioAssayData association.
-
-Input parameters: none
-
-Return value: the current value of the clusterBioAssayData association : an instance of type C<Bio::MAGE::BioAssayData::BioAssayData>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getClusterBioAssayData {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getClusterBioAssayData: arguments passed to getter")
-    if @_;
-  return $self->{__CLUSTERBIOASSAYDATA};
-}
-
 
 
 

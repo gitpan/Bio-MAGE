@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: Contact.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,23 +60,23 @@ $VERSION = q[$Id: Contact.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp $];
     # instanciated. These examples indicate how subclass objects behave
 
     # setting and retrieving object attributes
-  my $email_val = $contact->email();
-  $contact->email($value);
+  my $fax_val = $contact->fax();
+  $contact->fax($value);
+
+  my $phone_val = $contact->phone();
+  $contact->phone($value);
 
   my $URI_val = $contact->URI();
   $contact->URI($value);
 
-  my $fax_val = $contact->fax();
-  $contact->fax($value);
+  my $email_val = $contact->email();
+  $contact->email($value);
 
   my $tollFreePhone_val = $contact->tollFreePhone();
   $contact->tollFreePhone($value);
 
   my $address_val = $contact->address();
   $contact->address($value);
-
-  my $phone_val = $contact->phone();
-  $contact->phone($value);
 
     # setting and retrieving object associations
   my $roles_val = $contact->roles();
@@ -148,69 +148,100 @@ named-value style arguments:
 =over
 
 
-=item * email
-
-Sets the value of the email attribute (from C<Bio::MAGE::AuditAndSecurity::Contact>).
-
-
-=item * URI
-
-Sets the value of the URI attribute (from C<Bio::MAGE::AuditAndSecurity::Contact>).
-
-
 =item * fax
 
-Sets the value of the fax attribute (from C<Bio::MAGE::AuditAndSecurity::Contact>).
+Sets the value of the fax attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Contact>).
 
-
-=item * tollFreePhone
-
-Sets the value of the tollFreePhone attribute (from C<Bio::MAGE::AuditAndSecurity::Contact>).
-
-
-=item * address
-
-Sets the value of the address attribute (from C<Bio::MAGE::AuditAndSecurity::Contact>).
 
 
 =item * phone
 
-Sets the value of the phone attribute (from C<Bio::MAGE::AuditAndSecurity::Contact>).
+Sets the value of the phone attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+
+
+
+=item * URI
+
+Sets the value of the URI attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+
+
+
+=item * email
+
+Sets the value of the email attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+
+
+
+=item * tollFreePhone
+
+Sets the value of the tollFreePhone attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+
+
+
+=item * address
+
+Sets the value of the address attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+
 
 
 =item * roles
 
-Sets the value of the roles association (from C<Bio::MAGE::AuditAndSecurity::Contact>).
+Sets the value of the roles association (this association was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -333,7 +364,8 @@ returns the list of subclasses for this class.
 =cut
 
 sub subclasses {
-  my @list = ('Bio::MAGE::AuditAndSecurity::Organization', 'Bio::MAGE::AuditAndSecurity::Person');
+  my @list = ('Bio::MAGE::AuditAndSecurity::Organization',
+'Bio::MAGE::AuditAndSecurity::Person');
   return @list;
 }
 
@@ -356,7 +388,12 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('email', 'URI', 'fax', 'tollFreePhone', 'address', 'phone');
+  my @list = ('fax',
+'phone',
+'URI',
+'email',
+'tollFreePhone',
+'address');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -419,20 +456,20 @@ Bio::MAGE::AuditAndSecurity::Contact: has the following attribute accessor metho
 =over
 
 
-=item email
+=item fax
 
-Methods for the email attribute.
+Methods for the fax attribute.
 
 =over
 
 
-=item $val = $contact->setEmail($val)
+=item $val = $contact->setFax($val)
 
-The restricted setter method for the email attribute.
+The restricted setter method for the fax attribute.
 
-Input parameters: the value to which the email attribute will be set 
+Input parameters: the value to which the fax attribute will be set 
 
-Return value: the current value of the email attribute 
+Return value: the current value of the fax attribute 
 
 Side effects: none
 
@@ -441,26 +478,26 @@ if too many input parameters are specified
 
 =cut
 
-sub setEmail {
+sub setFax {
   my $self = shift;
-  croak(__PACKAGE__ . "::setEmail: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setFax: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setEmail: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setFax: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
   
-  return $self->{__EMAIL} = $val;
+  return $self->{__FAX} = $val;
 }
 
 
 
-=item $val = $contact->getEmail()
+=item $val = $contact->getFax()
 
-The restricted getter method for the email attribute.
+The restricted getter method for the fax attribute.
 
 Input parameters: none
 
-Return value: the current value of the email attribute 
+Return value: the current value of the fax attribute 
 
 Side effects: none
 
@@ -468,11 +505,73 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getEmail {
+sub getFax {
   my $self = shift;
-  croak(__PACKAGE__ . "::getEmail: arguments passed to getter")
+  croak(__PACKAGE__ . "::getFax: arguments passed to getter")
     if @_;
-  return $self->{__EMAIL};
+  return $self->{__FAX};
+}
+
+
+
+
+=back
+
+
+=item phone
+
+Methods for the phone attribute.
+
+=over
+
+
+=item $val = $contact->setPhone($val)
+
+The restricted setter method for the phone attribute.
+
+Input parameters: the value to which the phone attribute will be set 
+
+Return value: the current value of the phone attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setPhone {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setPhone: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setPhone: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__PHONE} = $val;
+}
+
+
+
+=item $val = $contact->getPhone()
+
+The restricted getter method for the phone attribute.
+
+Input parameters: none
+
+Return value: the current value of the phone attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getPhone {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getPhone: arguments passed to getter")
+    if @_;
+  return $self->{__PHONE};
 }
 
 
@@ -543,20 +642,20 @@ sub getURI {
 =back
 
 
-=item fax
+=item email
 
-Methods for the fax attribute.
+Methods for the email attribute.
 
 =over
 
 
-=item $val = $contact->setFax($val)
+=item $val = $contact->setEmail($val)
 
-The restricted setter method for the fax attribute.
+The restricted setter method for the email attribute.
 
-Input parameters: the value to which the fax attribute will be set 
+Input parameters: the value to which the email attribute will be set 
 
-Return value: the current value of the fax attribute 
+Return value: the current value of the email attribute 
 
 Side effects: none
 
@@ -565,26 +664,26 @@ if too many input parameters are specified
 
 =cut
 
-sub setFax {
+sub setEmail {
   my $self = shift;
-  croak(__PACKAGE__ . "::setFax: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setEmail: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setFax: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setEmail: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
   
-  return $self->{__FAX} = $val;
+  return $self->{__EMAIL} = $val;
 }
 
 
 
-=item $val = $contact->getFax()
+=item $val = $contact->getEmail()
 
-The restricted getter method for the fax attribute.
+The restricted getter method for the email attribute.
 
 Input parameters: none
 
-Return value: the current value of the fax attribute 
+Return value: the current value of the email attribute 
 
 Side effects: none
 
@@ -592,11 +691,11 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getFax {
+sub getEmail {
   my $self = shift;
-  croak(__PACKAGE__ . "::getFax: arguments passed to getter")
+  croak(__PACKAGE__ . "::getEmail: arguments passed to getter")
     if @_;
-  return $self->{__FAX};
+  return $self->{__EMAIL};
 }
 
 
@@ -728,68 +827,6 @@ sub getAddress {
 
 =back
 
-
-=item phone
-
-Methods for the phone attribute.
-
-=over
-
-
-=item $val = $contact->setPhone($val)
-
-The restricted setter method for the phone attribute.
-
-Input parameters: the value to which the phone attribute will be set 
-
-Return value: the current value of the phone attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setPhone {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setPhone: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setPhone: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__PHONE} = $val;
-}
-
-
-
-=item $val = $contact->getPhone()
-
-The restricted getter method for the phone attribute.
-
-Input parameters: none
-
-Return value: the current value of the phone attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getPhone {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getPhone: arguments passed to getter")
-    if @_;
-  return $self->{__PHONE};
-}
-
-
-
-
-=back
-
 Attributes Inherited from Bio::MAGE::Identifiable
 
 
@@ -897,24 +934,24 @@ BEGIN {
   $__ASSOCIATIONS = [
           'roles',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The roles (lab equipment sales, contractor, etc.) the contact fills.',
-                                        '__CLASS_NAME' => 'Contact',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'roles',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The roles (lab equipment sales, contractor, etc.) the contact fills.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'roles',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The roles (lab equipment sales, contractor, etc.) the contact fills.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Contact'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

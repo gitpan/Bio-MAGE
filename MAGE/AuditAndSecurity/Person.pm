@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::AuditAndSecurity::Contact Exporter);
-$VERSION = q[$Id: Person.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,17 +60,17 @@ $VERSION = q[$Id: Person.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
   my $person = Bio::MAGE::AuditAndSecurity::Person->new();
 
     # creating an already populated instance
-  my $person = Bio::MAGE::AuditAndSecurity::Person->new(firstName=>$firstName_value,
-			midInitials=>$midInitials_value,
+  my $person = Bio::MAGE::AuditAndSecurity::Person->new(midInitials=>$midInitials_value,
+			firstName=>$firstName_value,
 			lastName=>$lastName_value,
 			affiliation=>$affiliation_value);
 
     # setting and retrieving object attributes
-  my $firstName_val = $person->firstName();
-  $person->firstName($value);
-
   my $midInitials_val = $person->midInitials();
   $person->midInitials($value);
+
+  my $firstName_val = $person->firstName();
+  $person->firstName($value);
 
   my $lastName_val = $person->lastName();
   $person->lastName($value);
@@ -122,89 +122,129 @@ named-value style arguments:
 =over
 
 
-=item * firstName
-
-Sets the value of the firstName attribute (from C<Bio::MAGE::AuditAndSecurity::Person>).
-
-
 =item * midInitials
 
-Sets the value of the midInitials attribute (from C<Bio::MAGE::AuditAndSecurity::Person>).
+Sets the value of the midInitials attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Person>).
+
+
+
+=item * firstName
+
+Sets the value of the firstName attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Person>).
+
 
 
 =item * lastName
 
-Sets the value of the lastName attribute (from C<Bio::MAGE::AuditAndSecurity::Person>).
+Sets the value of the lastName attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Person>).
+
 
 
 =item * affiliation
 
-Sets the value of the affiliation association (from C<Bio::MAGE::AuditAndSecurity::Person>).
+Sets the value of the affiliation association (this association was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Person>).
+
+The value will be of type C<Organization>.
 
 
 =item * URI
 
-Sets the value of the URI attribute (from C<Bio::MAGE::AuditAndSecurity::Contact>).
+Sets the value of the URI attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+
 
 
 =item * address
 
-Sets the value of the address attribute (from C<Bio::MAGE::AuditAndSecurity::Contact>).
+Sets the value of the address attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+
 
 
 =item * phone
 
-Sets the value of the phone attribute (from C<Bio::MAGE::AuditAndSecurity::Contact>).
+Sets the value of the phone attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+
 
 
 =item * tollFreePhone
 
-Sets the value of the tollFreePhone attribute (from C<Bio::MAGE::AuditAndSecurity::Contact>).
+Sets the value of the tollFreePhone attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+
 
 
 =item * email
 
-Sets the value of the email attribute (from C<Bio::MAGE::AuditAndSecurity::Contact>).
+Sets the value of the email attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+
 
 
 =item * fax
 
-Sets the value of the fax attribute (from C<Bio::MAGE::AuditAndSecurity::Contact>).
+Sets the value of the fax attribute (this attribute was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+
 
 
 =item * roles
 
-Sets the value of the roles association (from C<Bio::MAGE::AuditAndSecurity::Contact>).
+Sets the value of the roles association (this association was inherited
+from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -350,7 +390,9 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('firstName', 'midInitials', 'lastName');
+  my @list = ('midInitials',
+'firstName',
+'lastName');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -413,68 +455,6 @@ Bio::MAGE::AuditAndSecurity::Person: has the following attribute accessor method
 =over
 
 
-=item firstName
-
-Methods for the firstName attribute.
-
-=over
-
-
-=item $val = $person->setFirstName($val)
-
-The restricted setter method for the firstName attribute.
-
-Input parameters: the value to which the firstName attribute will be set 
-
-Return value: the current value of the firstName attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setFirstName {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setFirstName: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setFirstName: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__FIRSTNAME} = $val;
-}
-
-
-
-=item $val = $person->getFirstName()
-
-The restricted getter method for the firstName attribute.
-
-Input parameters: none
-
-Return value: the current value of the firstName attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getFirstName {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getFirstName: arguments passed to getter")
-    if @_;
-  return $self->{__FIRSTNAME};
-}
-
-
-
-
-=back
-
-
 =item midInitials
 
 Methods for the midInitials attribute.
@@ -529,6 +509,68 @@ sub getMidInitials {
   croak(__PACKAGE__ . "::getMidInitials: arguments passed to getter")
     if @_;
   return $self->{__MIDINITIALS};
+}
+
+
+
+
+=back
+
+
+=item firstName
+
+Methods for the firstName attribute.
+
+=over
+
+
+=item $val = $person->setFirstName($val)
+
+The restricted setter method for the firstName attribute.
+
+Input parameters: the value to which the firstName attribute will be set 
+
+Return value: the current value of the firstName attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setFirstName {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setFirstName: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setFirstName: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__FIRSTNAME} = $val;
+}
+
+
+
+=item $val = $person->getFirstName()
+
+The restricted getter method for the firstName attribute.
+
+Input parameters: none
+
+Return value: the current value of the firstName attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getFirstName {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getFirstName: arguments passed to getter")
+    if @_;
+  return $self->{__FIRSTNAME};
 }
 
 
@@ -959,24 +1001,24 @@ BEGIN {
   $__ASSOCIATIONS = [
           'affiliation',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The organization a person belongs to.',
-                                        '__CLASS_NAME' => 'Person',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'affiliation',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The organization a person belongs to.',
-                                         '__CLASS_NAME' => 'Organization',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'affiliation',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Organization'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The organization a person belongs to.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Person'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

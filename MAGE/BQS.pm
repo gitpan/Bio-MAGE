@@ -42,7 +42,7 @@ use Bio::MAGE::BQS::BibliographicReference;
 use vars qw(@ISA $VERSION @EXPORT_OK %EXPORT_TAGS $__MAGEML_LISTS);
 
 @ISA = qw(Bio::MAGE::Base Exporter);
-$VERSION = q[$Id: BQS.pm,v 1.1 2002/12/10 06:20:46 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 sub initialize {
   my $self = shift;

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: Array.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,40 +60,40 @@ $VERSION = q[$Id: Array.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
   my $array = Bio::MAGE::Array::Array->new();
 
     # creating an already populated instance
-  my $array = Bio::MAGE::Array::Array->new(arrayXOrigin=>$arrayXOrigin_value,
-			arrayYOrigin=>$arrayYOrigin_value,
-			arrayIdentifier=>$arrayIdentifier_value,
+  my $array = Bio::MAGE::Array::Array->new(arrayIdentifier=>$arrayIdentifier_value,
+			arrayXOrigin=>$arrayXOrigin_value,
 			originRelativeTo=>$originRelativeTo_value,
-			arrayGroup=>$arrayGroup_value,
-			arrayDesign=>$arrayDesign_value,
+			arrayYOrigin=>$arrayYOrigin_value,
+			arrayManufactureDeviations=>$arrayManufactureDeviations_value,
 			information=>$information_value,
-			arrayManufactureDeviations=>$arrayManufactureDeviations_value);
+			arrayDesign=>$arrayDesign_value,
+			arrayGroup=>$arrayGroup_value);
 
     # setting and retrieving object attributes
-  my $arrayXOrigin_val = $array->arrayXOrigin();
-  $array->arrayXOrigin($value);
-
-  my $arrayYOrigin_val = $array->arrayYOrigin();
-  $array->arrayYOrigin($value);
-
   my $arrayIdentifier_val = $array->arrayIdentifier();
   $array->arrayIdentifier($value);
+
+  my $arrayXOrigin_val = $array->arrayXOrigin();
+  $array->arrayXOrigin($value);
 
   my $originRelativeTo_val = $array->originRelativeTo();
   $array->originRelativeTo($value);
 
-    # setting and retrieving object associations
-  my $arrayGroup_val = $array->arrayGroup();
-  $array->arrayGroup($value);
+  my $arrayYOrigin_val = $array->arrayYOrigin();
+  $array->arrayYOrigin($value);
 
-  my $arrayDesign_val = $array->arrayDesign();
-  $array->arrayDesign($value);
+    # setting and retrieving object associations
+  my $arrayManufactureDeviations_val = $array->arrayManufactureDeviations();
+  $array->arrayManufactureDeviations($value);
 
   my $information_val = $array->information();
   $array->information($value);
 
-  my $arrayManufactureDeviations_val = $array->arrayManufactureDeviations();
-  $array->arrayManufactureDeviations($value);
+  my $arrayDesign_val = $array->arrayDesign();
+  $array->arrayDesign($value);
+
+  my $arrayGroup_val = $array->arrayGroup();
+  $array->arrayGroup($value);
 
 
 =head2 DESCRIPTION
@@ -138,74 +138,110 @@ named-value style arguments:
 =over
 
 
-=item * arrayXOrigin
-
-Sets the value of the arrayXOrigin attribute (from C<Bio::MAGE::Array::Array>).
-
-
-=item * arrayYOrigin
-
-Sets the value of the arrayYOrigin attribute (from C<Bio::MAGE::Array::Array>).
-
-
 =item * arrayIdentifier
 
-Sets the value of the arrayIdentifier attribute (from C<Bio::MAGE::Array::Array>).
+Sets the value of the arrayIdentifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::Array>).
+
+
+
+=item * arrayXOrigin
+
+Sets the value of the arrayXOrigin attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::Array>).
+
 
 
 =item * originRelativeTo
 
-Sets the value of the originRelativeTo attribute (from C<Bio::MAGE::Array::Array>).
+Sets the value of the originRelativeTo attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::Array>).
 
 
-=item * arrayGroup
 
-Sets the value of the arrayGroup association (from C<Bio::MAGE::Array::Array>).
+=item * arrayYOrigin
 
+Sets the value of the arrayYOrigin attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::Array>).
 
-=item * arrayDesign
-
-Sets the value of the arrayDesign association (from C<Bio::MAGE::Array::Array>).
 
 
 =item * information
 
-Sets the value of the information association (from C<Bio::MAGE::Array::Array>).
+Sets the value of the information association (this association was inherited
+from class C<Bio::MAGE::Array::Array>).
+
+The value will be of type C<ArrayManufacture>.
 
 
 =item * arrayManufactureDeviations
 
-Sets the value of the arrayManufactureDeviations association (from C<Bio::MAGE::Array::Array>).
+Sets the value of the arrayManufactureDeviations association (this association was inherited
+from class C<Bio::MAGE::Array::Array>).
+
+The value will be of type C<ArrayManufactureDeviation>.
+
+
+=item * arrayDesign
+
+Sets the value of the arrayDesign association (this association was inherited
+from class C<Bio::MAGE::Array::Array>).
+
+The value will be of type C<ArrayDesign>.
+
+
+=item * arrayGroup
+
+Sets the value of the arrayGroup association (this association was inherited
+from class C<Bio::MAGE::Array::Array>).
+
+The value will be of type C<ArrayGroup>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -351,7 +387,10 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('arrayXOrigin', 'arrayYOrigin', 'arrayIdentifier', 'originRelativeTo');
+  my @list = ('arrayIdentifier',
+'arrayXOrigin',
+'originRelativeTo',
+'arrayYOrigin');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -368,7 +407,10 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('arrayGroup', 'arrayDesign', 'information', 'arrayManufactureDeviations');
+  my @list = ('arrayManufactureDeviations',
+'information',
+'arrayDesign',
+'arrayGroup');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -412,138 +454,6 @@ getter methods for each attribute.
 Bio::MAGE::Array::Array: has the following attribute accessor methods:
 
 =over
-
-
-=item arrayXOrigin
-
-From the MAGE-OM documentation for the C<arrayXOrigin> attribute:
-
-This can indicate the x position on a slide, chip, etc. of the first Feature and is usually specified relative to the fiducial.
-
-
-
-=over
-
-
-=item $val = $array->setArrayXOrigin($val)
-
-The restricted setter method for the arrayXOrigin attribute.
-
-Input parameters: the value to which the arrayXOrigin attribute will be set 
-
-Return value: the current value of the arrayXOrigin attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setArrayXOrigin {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setArrayXOrigin: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setArrayXOrigin: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__ARRAYXORIGIN} = $val;
-}
-
-
-
-=item $val = $array->getArrayXOrigin()
-
-The restricted getter method for the arrayXOrigin attribute.
-
-Input parameters: none
-
-Return value: the current value of the arrayXOrigin attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getArrayXOrigin {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getArrayXOrigin: arguments passed to getter")
-    if @_;
-  return $self->{__ARRAYXORIGIN};
-}
-
-
-
-
-=back
-
-
-=item arrayYOrigin
-
-From the MAGE-OM documentation for the C<arrayYOrigin> attribute:
-
-This can indicate the y position on a slide, chip, etc. of the first Feature and is usually specified relative to the fiducial.
-
-
-
-=over
-
-
-=item $val = $array->setArrayYOrigin($val)
-
-The restricted setter method for the arrayYOrigin attribute.
-
-Input parameters: the value to which the arrayYOrigin attribute will be set 
-
-Return value: the current value of the arrayYOrigin attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setArrayYOrigin {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setArrayYOrigin: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setArrayYOrigin: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__ARRAYYORIGIN} = $val;
-}
-
-
-
-=item $val = $array->getArrayYOrigin()
-
-The restricted getter method for the arrayYOrigin attribute.
-
-Input parameters: none
-
-Return value: the current value of the arrayYOrigin attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getArrayYOrigin {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getArrayYOrigin: arguments passed to getter")
-    if @_;
-  return $self->{__ARRAYYORIGIN};
-}
-
-
-
-
-=back
 
 
 =item arrayIdentifier
@@ -612,6 +522,72 @@ sub getArrayIdentifier {
 =back
 
 
+=item arrayXOrigin
+
+From the MAGE-OM documentation for the C<arrayXOrigin> attribute:
+
+This can indicate the x position on a slide, chip, etc. of the first Feature and is usually specified relative to the fiducial.
+
+
+
+=over
+
+
+=item $val = $array->setArrayXOrigin($val)
+
+The restricted setter method for the arrayXOrigin attribute.
+
+Input parameters: the value to which the arrayXOrigin attribute will be set 
+
+Return value: the current value of the arrayXOrigin attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setArrayXOrigin {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setArrayXOrigin: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setArrayXOrigin: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__ARRAYXORIGIN} = $val;
+}
+
+
+
+=item $val = $array->getArrayXOrigin()
+
+The restricted getter method for the arrayXOrigin attribute.
+
+Input parameters: none
+
+Return value: the current value of the arrayXOrigin attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getArrayXOrigin {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getArrayXOrigin: arguments passed to getter")
+    if @_;
+  return $self->{__ARRAYXORIGIN};
+}
+
+
+
+
+=back
+
+
 =item originRelativeTo
 
 From the MAGE-OM documentation for the C<originRelativeTo> attribute:
@@ -670,6 +646,72 @@ sub getOriginRelativeTo {
   croak(__PACKAGE__ . "::getOriginRelativeTo: arguments passed to getter")
     if @_;
   return $self->{__ORIGINRELATIVETO};
+}
+
+
+
+
+=back
+
+
+=item arrayYOrigin
+
+From the MAGE-OM documentation for the C<arrayYOrigin> attribute:
+
+This can indicate the y position on a slide, chip, etc. of the first Feature and is usually specified relative to the fiducial.
+
+
+
+=over
+
+
+=item $val = $array->setArrayYOrigin($val)
+
+The restricted setter method for the arrayYOrigin attribute.
+
+Input parameters: the value to which the arrayYOrigin attribute will be set 
+
+Return value: the current value of the arrayYOrigin attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setArrayYOrigin {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setArrayYOrigin: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setArrayYOrigin: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__ARRAYYORIGIN} = $val;
+}
+
+
+
+=item $val = $array->getArrayYOrigin()
+
+The restricted getter method for the arrayYOrigin attribute.
+
+Input parameters: none
+
+Return value: the current value of the arrayYOrigin attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getArrayYOrigin {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getArrayYOrigin: arguments passed to getter")
+    if @_;
+  return $self->{__ARRAYYORIGIN};
 }
 
 
@@ -784,87 +826,87 @@ BEGIN {
   $__ASSOCIATIONS = [
           'arrayDesign',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The association of a physical array with its array design.',
-                                        '__CLASS_NAME' => 'Array',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'arrayDesign',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The association of a physical array with its array design.',
-                                         '__CLASS_NAME' => 'ArrayDesign',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'arrayDesign',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ArrayDesign'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The association of a physical array with its array design.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Array'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'information',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'arrays',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '1..N',
-                                        '__DOCUMENTATION' => 'Association between the manufactured array and the information on that manufacture.',
-                                        '__CLASS_NAME' => 'Array',
-                                        '__RANK' => '1',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'information',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'Association between the manufactured array and the information on that manufacture.',
-                                         '__CLASS_NAME' => 'ArrayManufacture',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'information',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ArrayManufacture'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '1',
+                                        '__CARDINALITY' => '1..N',
+                                        '__DOCUMENTATION' => 'Association between the manufactured array and the information on that manufacture.',
+                                        '__NAME' => 'arrays',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'Array'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'arrayGroup',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'arrays',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '1..N',
-                                        '__DOCUMENTATION' => 'Association between an ArrayGroup and its Arrays, typically the ArrayGroup will represent a slide and the Arrays will be the manufactured so that they may be hybridized separately on that slide. ',
-                                        '__CLASS_NAME' => 'Array',
-                                        '__RANK' => '2',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'arrayGroup',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Association between an ArrayGroup and its Arrays, typically the ArrayGroup will represent a slide and the Arrays will be the manufactured so that they may be hybridized separately on that slide. ',
-                                         '__CLASS_NAME' => 'ArrayGroup',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'arrayGroup',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ArrayGroup'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '2',
+                                        '__CARDINALITY' => '1..N',
+                                        '__DOCUMENTATION' => 'Association between an ArrayGroup and its Arrays, typically the ArrayGroup will represent a slide and the Arrays will be the manufactured so that they may be hybridized separately on that slide. ',
+                                        '__NAME' => 'arrays',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'Array'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'arrayManufactureDeviations',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Association to classes to describe deviations from the ArrayDesign.',
-                                        '__CLASS_NAME' => 'Array',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'arrayManufactureDeviations',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Association to classes to describe deviations from the ArrayDesign.',
-                                         '__CLASS_NAME' => 'ArrayManufactureDeviation',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'arrayManufactureDeviations',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ArrayManufactureDeviation'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Association to classes to describe deviations from the ArrayDesign.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Array'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -902,207 +944,6 @@ the association.
 Bio::MAGE::Array::Array: has the following association accessor methods:
 
 =over
-
-
-=item arrayGroup
-
-
-From the MAGE-OM documentation for the C<arrayGroup> association:
-
-Association between an ArrayGroup and its Arrays, typically the ArrayGroup will represent a slide and the Arrays will be the manufactured so that they may be hybridized separately on that slide. 
-
-
-
-=over
-
-
-=item $val = $array->setArrayGroup($val)
-
-The restricted setter method for the arrayGroup association.
-
-Input parameters: the value to which the arrayGroup association will be set : an instance of type C<Bio::MAGE::Array::ArrayGroup>.
-
-Return value: the current value of the arrayGroup association : an instance of type C<Bio::MAGE::Array::ArrayGroup>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Array::ArrayGroup>
-
-=cut
-
-sub setArrayGroup {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setArrayGroup: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setArrayGroup: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setArrayGroup: wrong type: " . ref($val) . " expected Bio::MAGE::Array::ArrayGroup") unless UNIVERSAL::isa($val,'Bio::MAGE::Array::ArrayGroup');
-  return $self->{__ARRAYGROUP} = $val;
-}
-
-
-
-=item $val = $array->getArrayGroup()
-
-The restricted getter method for the arrayGroup association.
-
-Input parameters: none
-
-Return value: the current value of the arrayGroup association : an instance of type C<Bio::MAGE::Array::ArrayGroup>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getArrayGroup {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getArrayGroup: arguments passed to getter")
-    if @_;
-  return $self->{__ARRAYGROUP};
-}
-
-
-
-
-=back
-
-
-=item arrayDesign
-
-
-From the MAGE-OM documentation for the C<arrayDesign> association:
-
-The association of a physical array with its array design.
-
-
-
-=over
-
-
-=item $val = $array->setArrayDesign($val)
-
-The restricted setter method for the arrayDesign association.
-
-Input parameters: the value to which the arrayDesign association will be set : an instance of type C<Bio::MAGE::ArrayDesign::ArrayDesign>.
-
-Return value: the current value of the arrayDesign association : an instance of type C<Bio::MAGE::ArrayDesign::ArrayDesign>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::ArrayDesign::ArrayDesign>
-
-=cut
-
-sub setArrayDesign {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setArrayDesign: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setArrayDesign: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setArrayDesign: wrong type: " . ref($val) . " expected Bio::MAGE::ArrayDesign::ArrayDesign") unless UNIVERSAL::isa($val,'Bio::MAGE::ArrayDesign::ArrayDesign');
-  return $self->{__ARRAYDESIGN} = $val;
-}
-
-
-
-=item $val = $array->getArrayDesign()
-
-The restricted getter method for the arrayDesign association.
-
-Input parameters: none
-
-Return value: the current value of the arrayDesign association : an instance of type C<Bio::MAGE::ArrayDesign::ArrayDesign>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getArrayDesign {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getArrayDesign: arguments passed to getter")
-    if @_;
-  return $self->{__ARRAYDESIGN};
-}
-
-
-
-
-=back
-
-
-=item information
-
-
-From the MAGE-OM documentation for the C<information> association:
-
-Association between the manufactured array and the information on that manufacture.
-
-
-
-=over
-
-
-=item $val = $array->setInformation($val)
-
-The restricted setter method for the information association.
-
-Input parameters: the value to which the information association will be set : an instance of type C<Bio::MAGE::Array::ArrayManufacture>.
-
-Return value: the current value of the information association : an instance of type C<Bio::MAGE::Array::ArrayManufacture>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Array::ArrayManufacture>
-
-=cut
-
-sub setInformation {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setInformation: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setInformation: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setInformation: wrong type: " . ref($val) . " expected Bio::MAGE::Array::ArrayManufacture") unless UNIVERSAL::isa($val,'Bio::MAGE::Array::ArrayManufacture');
-  return $self->{__INFORMATION} = $val;
-}
-
-
-
-=item $val = $array->getInformation()
-
-The restricted getter method for the information association.
-
-Input parameters: none
-
-Return value: the current value of the information association : an instance of type C<Bio::MAGE::Array::ArrayManufacture>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getInformation {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getInformation: arguments passed to getter")
-    if @_;
-  return $self->{__INFORMATION};
-}
-
-
-
-
-=back
 
 
 =item arrayManufactureDeviations
@@ -1204,6 +1045,207 @@ sub addArrayManufactureDeviations {
 
   push(@{$self->{__ARRAYMANUFACTUREDEVIATIONS}},@vals);
 }
+
+
+
+=back
+
+
+=item information
+
+
+From the MAGE-OM documentation for the C<information> association:
+
+Association between the manufactured array and the information on that manufacture.
+
+
+
+=over
+
+
+=item $val = $array->setInformation($val)
+
+The restricted setter method for the information association.
+
+Input parameters: the value to which the information association will be set : an instance of type C<Bio::MAGE::Array::ArrayManufacture>.
+
+Return value: the current value of the information association : an instance of type C<Bio::MAGE::Array::ArrayManufacture>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Array::ArrayManufacture>
+
+=cut
+
+sub setInformation {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setInformation: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setInformation: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setInformation: wrong type: " . ref($val) . " expected Bio::MAGE::Array::ArrayManufacture") unless UNIVERSAL::isa($val,'Bio::MAGE::Array::ArrayManufacture');
+  return $self->{__INFORMATION} = $val;
+}
+
+
+
+=item $val = $array->getInformation()
+
+The restricted getter method for the information association.
+
+Input parameters: none
+
+Return value: the current value of the information association : an instance of type C<Bio::MAGE::Array::ArrayManufacture>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getInformation {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getInformation: arguments passed to getter")
+    if @_;
+  return $self->{__INFORMATION};
+}
+
+
+
+
+=back
+
+
+=item arrayDesign
+
+
+From the MAGE-OM documentation for the C<arrayDesign> association:
+
+The association of a physical array with its array design.
+
+
+
+=over
+
+
+=item $val = $array->setArrayDesign($val)
+
+The restricted setter method for the arrayDesign association.
+
+Input parameters: the value to which the arrayDesign association will be set : an instance of type C<Bio::MAGE::ArrayDesign::ArrayDesign>.
+
+Return value: the current value of the arrayDesign association : an instance of type C<Bio::MAGE::ArrayDesign::ArrayDesign>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::ArrayDesign::ArrayDesign>
+
+=cut
+
+sub setArrayDesign {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setArrayDesign: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setArrayDesign: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setArrayDesign: wrong type: " . ref($val) . " expected Bio::MAGE::ArrayDesign::ArrayDesign") unless UNIVERSAL::isa($val,'Bio::MAGE::ArrayDesign::ArrayDesign');
+  return $self->{__ARRAYDESIGN} = $val;
+}
+
+
+
+=item $val = $array->getArrayDesign()
+
+The restricted getter method for the arrayDesign association.
+
+Input parameters: none
+
+Return value: the current value of the arrayDesign association : an instance of type C<Bio::MAGE::ArrayDesign::ArrayDesign>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getArrayDesign {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getArrayDesign: arguments passed to getter")
+    if @_;
+  return $self->{__ARRAYDESIGN};
+}
+
+
+
+
+=back
+
+
+=item arrayGroup
+
+
+From the MAGE-OM documentation for the C<arrayGroup> association:
+
+Association between an ArrayGroup and its Arrays, typically the ArrayGroup will represent a slide and the Arrays will be the manufactured so that they may be hybridized separately on that slide. 
+
+
+
+=over
+
+
+=item $val = $array->setArrayGroup($val)
+
+The restricted setter method for the arrayGroup association.
+
+Input parameters: the value to which the arrayGroup association will be set : an instance of type C<Bio::MAGE::Array::ArrayGroup>.
+
+Return value: the current value of the arrayGroup association : an instance of type C<Bio::MAGE::Array::ArrayGroup>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Array::ArrayGroup>
+
+=cut
+
+sub setArrayGroup {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setArrayGroup: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setArrayGroup: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setArrayGroup: wrong type: " . ref($val) . " expected Bio::MAGE::Array::ArrayGroup") unless UNIVERSAL::isa($val,'Bio::MAGE::Array::ArrayGroup');
+  return $self->{__ARRAYGROUP} = $val;
+}
+
+
+
+=item $val = $array->getArrayGroup()
+
+The restricted getter method for the arrayGroup association.
+
+Input parameters: none
+
+Return value: the current value of the arrayGroup association : an instance of type C<Bio::MAGE::Array::ArrayGroup>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getArrayGroup {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getArrayGroup: arguments passed to getter")
+    if @_;
+  return $self->{__ARRAYGROUP};
+}
+
 
 
 

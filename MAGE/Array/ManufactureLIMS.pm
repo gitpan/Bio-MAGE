@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Describable Exporter);
-$VERSION = q[$Id: ManufactureLIMS.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -61,23 +61,23 @@ $VERSION = q[$Id: ManufactureLIMS.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart E
 
     # creating an already populated instance
   my $manufacturelims = Bio::MAGE::Array::ManufactureLIMS->new(quality=>$quality_value,
+			bioMaterial=>$bioMaterial_value,
 			feature=>$feature_value,
-			identifierLIMS=>$identifierLIMS_value,
-			bioMaterial=>$bioMaterial_value);
+			identifierLIMS=>$identifierLIMS_value);
 
     # setting and retrieving object attributes
   my $quality_val = $manufacturelims->quality();
   $manufacturelims->quality($value);
 
     # setting and retrieving object associations
+  my $bioMaterial_val = $manufacturelims->bioMaterial();
+  $manufacturelims->bioMaterial($value);
+
   my $feature_val = $manufacturelims->feature();
   $manufacturelims->feature($value);
 
   my $identifierLIMS_val = $manufacturelims->identifierLIMS();
   $manufacturelims->identifierLIMS($value);
-
-  my $bioMaterial_val = $manufacturelims->bioMaterial();
-  $manufacturelims->bioMaterial($value);
 
 
 =head2 DESCRIPTION
@@ -135,42 +135,65 @@ named-value style arguments:
 
 =item * quality
 
-Sets the value of the quality attribute (from C<Bio::MAGE::Array::ManufactureLIMS>).
+Sets the value of the quality attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::ManufactureLIMS>).
 
-
-=item * feature
-
-Sets the value of the feature association (from C<Bio::MAGE::Array::ManufactureLIMS>).
-
-
-=item * identifierLIMS
-
-Sets the value of the identifierLIMS association (from C<Bio::MAGE::Array::ManufactureLIMS>).
 
 
 =item * bioMaterial
 
-Sets the value of the bioMaterial association (from C<Bio::MAGE::Array::ManufactureLIMS>).
+Sets the value of the bioMaterial association (this association was inherited
+from class C<Bio::MAGE::Array::ManufactureLIMS>).
+
+The value will be of type C<BioMaterial>.
 
 
-=item * security
+=item * feature
 
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
+Sets the value of the feature association (this association was inherited
+from class C<Bio::MAGE::Array::ManufactureLIMS>).
+
+The value will be of type C<Feature>.
 
 
-=item * auditTrail
+=item * identifierLIMS
 
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
+Sets the value of the identifierLIMS association (this association was inherited
+from class C<Bio::MAGE::Array::ManufactureLIMS>).
+
+The value will be of type C<DatabaseEntry>.
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -333,7 +356,9 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('feature', 'identifierLIMS', 'bioMaterial');
+  my @list = ('bioMaterial',
+'feature',
+'identifierLIMS');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -457,66 +482,66 @@ BEGIN {
   $__ASSOCIATIONS = [
           'feature',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The feature whose LIMS information is being described.',
-                                        '__CLASS_NAME' => 'ManufactureLIMS',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'feature',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The feature whose LIMS information is being described.',
-                                         '__CLASS_NAME' => 'Feature',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'feature',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Feature'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The feature whose LIMS information is being described.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ManufactureLIMS'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'bioMaterial',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The BioMaterial used for the feature.',
-                                        '__CLASS_NAME' => 'ManufactureLIMS',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'bioMaterial',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The BioMaterial used for the feature.',
-                                         '__CLASS_NAME' => 'BioMaterial',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'bioMaterial',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioMaterial'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The BioMaterial used for the feature.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ManufactureLIMS'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'identifierLIMS',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Association to a LIMS data source for further information on the manufacturing process.',
-                                        '__CLASS_NAME' => 'ManufactureLIMS',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'identifierLIMS',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Association to a LIMS data source for further information on the manufacturing process.',
-                                         '__CLASS_NAME' => 'DatabaseEntry',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'identifierLIMS',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'DatabaseEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Association to a LIMS data source for further information on the manufacturing process.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ManufactureLIMS'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -554,6 +579,73 @@ the association.
 Bio::MAGE::Array::ManufactureLIMS: has the following association accessor methods:
 
 =over
+
+
+=item bioMaterial
+
+
+From the MAGE-OM documentation for the C<bioMaterial> association:
+
+The BioMaterial used for the feature.
+
+
+
+=over
+
+
+=item $val = $manufacturelims->setBioMaterial($val)
+
+The restricted setter method for the bioMaterial association.
+
+Input parameters: the value to which the bioMaterial association will be set : an instance of type C<Bio::MAGE::BioMaterial::BioMaterial>.
+
+Return value: the current value of the bioMaterial association : an instance of type C<Bio::MAGE::BioMaterial::BioMaterial>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioMaterial::BioMaterial>
+
+=cut
+
+sub setBioMaterial {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setBioMaterial: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setBioMaterial: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setBioMaterial: wrong type: " . ref($val) . " expected Bio::MAGE::BioMaterial::BioMaterial") unless UNIVERSAL::isa($val,'Bio::MAGE::BioMaterial::BioMaterial');
+  return $self->{__BIOMATERIAL} = $val;
+}
+
+
+
+=item $val = $manufacturelims->getBioMaterial()
+
+The restricted getter method for the bioMaterial association.
+
+Input parameters: none
+
+Return value: the current value of the bioMaterial association : an instance of type C<Bio::MAGE::BioMaterial::BioMaterial>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getBioMaterial {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getBioMaterial: arguments passed to getter")
+    if @_;
+  return $self->{__BIOMATERIAL};
+}
+
+
+
+
+=back
 
 
 =item feature
@@ -682,73 +774,6 @@ sub getIdentifierLIMS {
   croak(__PACKAGE__ . "::getIdentifierLIMS: arguments passed to getter")
     if @_;
   return $self->{__IDENTIFIERLIMS};
-}
-
-
-
-
-=back
-
-
-=item bioMaterial
-
-
-From the MAGE-OM documentation for the C<bioMaterial> association:
-
-The BioMaterial used for the feature.
-
-
-
-=over
-
-
-=item $val = $manufacturelims->setBioMaterial($val)
-
-The restricted setter method for the bioMaterial association.
-
-Input parameters: the value to which the bioMaterial association will be set : an instance of type C<Bio::MAGE::BioMaterial::BioMaterial>.
-
-Return value: the current value of the bioMaterial association : an instance of type C<Bio::MAGE::BioMaterial::BioMaterial>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioMaterial::BioMaterial>
-
-=cut
-
-sub setBioMaterial {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setBioMaterial: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setBioMaterial: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setBioMaterial: wrong type: " . ref($val) . " expected Bio::MAGE::BioMaterial::BioMaterial") unless UNIVERSAL::isa($val,'Bio::MAGE::BioMaterial::BioMaterial');
-  return $self->{__BIOMATERIAL} = $val;
-}
-
-
-
-=item $val = $manufacturelims->getBioMaterial()
-
-The restricted getter method for the bioMaterial association.
-
-Input parameters: none
-
-Return value: the current value of the bioMaterial association : an instance of type C<Bio::MAGE::BioMaterial::BioMaterial>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getBioMaterial {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getBioMaterial: arguments passed to getter")
-    if @_;
-  return $self->{__BIOMATERIAL};
 }
 
 

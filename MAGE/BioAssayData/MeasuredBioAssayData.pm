@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::BioAssayData::BioAssayData Exporter);
-$VERSION = q[$Id: MeasuredBioAssayData.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -102,59 +102,90 @@ named-value style arguments:
 =over
 
 
-=item * bioAssayDimension
-
-Sets the value of the bioAssayDimension association (from C<Bio::MAGE::BioAssayData::BioAssayData>).
-
-
 =item * designElementDimension
 
-Sets the value of the designElementDimension association (from C<Bio::MAGE::BioAssayData::BioAssayData>).
+Sets the value of the designElementDimension association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::BioAssayData>).
+
+The value will be of type C<DesignElementDimension>.
 
 
 =item * quantitationTypeDimension
 
-Sets the value of the quantitationTypeDimension association (from C<Bio::MAGE::BioAssayData::BioAssayData>).
+Sets the value of the quantitationTypeDimension association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::BioAssayData>).
+
+The value will be of type C<QuantitationTypeDimension>.
+
+
+=item * bioAssayDimension
+
+Sets the value of the bioAssayDimension association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::BioAssayData>).
+
+The value will be of type C<BioAssayDimension>.
 
 
 =item * summaryStatistics
 
-Sets the value of the summaryStatistics association (from C<Bio::MAGE::BioAssayData::BioAssayData>).
+Sets the value of the summaryStatistics association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::BioAssayData>).
+
+The value will be of type C<NameValueType>.
 
 
 =item * bioDataValues
 
-Sets the value of the bioDataValues association (from C<Bio::MAGE::BioAssayData::BioAssayData>).
+Sets the value of the bioDataValues association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::BioAssayData>).
+
+The value will be of type C<BioDataValues>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back

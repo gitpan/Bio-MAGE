@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Array::ManufactureLIMS Exporter);
-$VERSION = q[$Id: ManufactureLIMSBiomaterial.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -61,18 +61,18 @@ $VERSION = q[$Id: ManufactureLIMSBiomaterial.pm,v 1.1 2002/12/10 06:25:47 jason_
 
     # creating an already populated instance
   my $manufacturelimsbiomaterial = Bio::MAGE::Array::ManufactureLIMSBiomaterial->new(bioMaterialPlateCol=>$bioMaterialPlateCol_value,
-			bioMaterialPlateRow=>$bioMaterialPlateRow_value,
-			bioMaterialPlateIdentifier=>$bioMaterialPlateIdentifier_value);
+			bioMaterialPlateIdentifier=>$bioMaterialPlateIdentifier_value,
+			bioMaterialPlateRow=>$bioMaterialPlateRow_value);
 
     # setting and retrieving object attributes
   my $bioMaterialPlateCol_val = $manufacturelimsbiomaterial->bioMaterialPlateCol();
   $manufacturelimsbiomaterial->bioMaterialPlateCol($value);
 
-  my $bioMaterialPlateRow_val = $manufacturelimsbiomaterial->bioMaterialPlateRow();
-  $manufacturelimsbiomaterial->bioMaterialPlateRow($value);
-
   my $bioMaterialPlateIdentifier_val = $manufacturelimsbiomaterial->bioMaterialPlateIdentifier();
   $manufacturelimsbiomaterial->bioMaterialPlateIdentifier($value);
+
+  my $bioMaterialPlateRow_val = $manufacturelimsbiomaterial->bioMaterialPlateRow();
+  $manufacturelimsbiomaterial->bioMaterialPlateRow($value);
 
 
 =head2 DESCRIPTION
@@ -119,57 +119,86 @@ named-value style arguments:
 
 =item * bioMaterialPlateCol
 
-Sets the value of the bioMaterialPlateCol attribute (from C<Bio::MAGE::Array::ManufactureLIMSBiomaterial>).
+Sets the value of the bioMaterialPlateCol attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::ManufactureLIMSBiomaterial>).
 
-
-=item * bioMaterialPlateRow
-
-Sets the value of the bioMaterialPlateRow attribute (from C<Bio::MAGE::Array::ManufactureLIMSBiomaterial>).
 
 
 =item * bioMaterialPlateIdentifier
 
-Sets the value of the bioMaterialPlateIdentifier attribute (from C<Bio::MAGE::Array::ManufactureLIMSBiomaterial>).
+Sets the value of the bioMaterialPlateIdentifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::ManufactureLIMSBiomaterial>).
+
+
+
+=item * bioMaterialPlateRow
+
+Sets the value of the bioMaterialPlateRow attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::ManufactureLIMSBiomaterial>).
+
 
 
 =item * quality
 
-Sets the value of the quality attribute (from C<Bio::MAGE::Array::ManufactureLIMS>).
+Sets the value of the quality attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::ManufactureLIMS>).
 
-
-=item * feature
-
-Sets the value of the feature association (from C<Bio::MAGE::Array::ManufactureLIMS>).
-
-
-=item * identifierLIMS
-
-Sets the value of the identifierLIMS association (from C<Bio::MAGE::Array::ManufactureLIMS>).
 
 
 =item * bioMaterial
 
-Sets the value of the bioMaterial association (from C<Bio::MAGE::Array::ManufactureLIMS>).
+Sets the value of the bioMaterial association (this association was inherited
+from class C<Bio::MAGE::Array::ManufactureLIMS>).
+
+The value will be of type C<BioMaterial>.
 
 
-=item * security
+=item * feature
 
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
+Sets the value of the feature association (this association was inherited
+from class C<Bio::MAGE::Array::ManufactureLIMS>).
+
+The value will be of type C<Feature>.
 
 
-=item * auditTrail
+=item * identifierLIMS
 
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
+Sets the value of the identifierLIMS association (this association was inherited
+from class C<Bio::MAGE::Array::ManufactureLIMS>).
+
+The value will be of type C<DatabaseEntry>.
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -315,7 +344,9 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('bioMaterialPlateCol', 'bioMaterialPlateRow', 'bioMaterialPlateIdentifier');
+  my @list = ('bioMaterialPlateCol',
+'bioMaterialPlateIdentifier',
+'bioMaterialPlateRow');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -444,72 +475,6 @@ sub getBioMaterialPlateCol {
 =back
 
 
-=item bioMaterialPlateRow
-
-From the MAGE-OM documentation for the C<bioMaterialPlateRow> attribute:
-
-The plate row from which a biomaterial was obtained.  Specified by a letter.
-
-
-
-=over
-
-
-=item $val = $manufacturelimsbiomaterial->setBioMaterialPlateRow($val)
-
-The restricted setter method for the bioMaterialPlateRow attribute.
-
-Input parameters: the value to which the bioMaterialPlateRow attribute will be set 
-
-Return value: the current value of the bioMaterialPlateRow attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setBioMaterialPlateRow {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setBioMaterialPlateRow: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setBioMaterialPlateRow: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__BIOMATERIALPLATEROW} = $val;
-}
-
-
-
-=item $val = $manufacturelimsbiomaterial->getBioMaterialPlateRow()
-
-The restricted getter method for the bioMaterialPlateRow attribute.
-
-Input parameters: none
-
-Return value: the current value of the bioMaterialPlateRow attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getBioMaterialPlateRow {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getBioMaterialPlateRow: arguments passed to getter")
-    if @_;
-  return $self->{__BIOMATERIALPLATEROW};
-}
-
-
-
-
-=back
-
-
 =item bioMaterialPlateIdentifier
 
 From the MAGE-OM documentation for the C<bioMaterialPlateIdentifier> attribute:
@@ -568,6 +533,72 @@ sub getBioMaterialPlateIdentifier {
   croak(__PACKAGE__ . "::getBioMaterialPlateIdentifier: arguments passed to getter")
     if @_;
   return $self->{__BIOMATERIALPLATEIDENTIFIER};
+}
+
+
+
+
+=back
+
+
+=item bioMaterialPlateRow
+
+From the MAGE-OM documentation for the C<bioMaterialPlateRow> attribute:
+
+The plate row from which a biomaterial was obtained.  Specified by a letter.
+
+
+
+=over
+
+
+=item $val = $manufacturelimsbiomaterial->setBioMaterialPlateRow($val)
+
+The restricted setter method for the bioMaterialPlateRow attribute.
+
+Input parameters: the value to which the bioMaterialPlateRow attribute will be set 
+
+Return value: the current value of the bioMaterialPlateRow attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setBioMaterialPlateRow {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setBioMaterialPlateRow: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setBioMaterialPlateRow: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__BIOMATERIALPLATEROW} = $val;
+}
+
+
+
+=item $val = $manufacturelimsbiomaterial->getBioMaterialPlateRow()
+
+The restricted getter method for the bioMaterialPlateRow attribute.
+
+Input parameters: none
+
+Return value: the current value of the bioMaterialPlateRow attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getBioMaterialPlateRow {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getBioMaterialPlateRow: arguments passed to getter")
+    if @_;
+  return $self->{__BIOMATERIALPLATEROW};
 }
 
 

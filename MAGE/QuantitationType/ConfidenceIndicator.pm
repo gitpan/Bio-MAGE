@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::QuantitationType::StandardQuantitationType Exporter);
-$VERSION = q[$Id: ConfidenceIndicator.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -134,67 +134,103 @@ named-value style arguments:
 
 =item * targetQuantitationType
 
-Sets the value of the targetQuantitationType association (from C<Bio::MAGE::QuantitationType::ConfidenceIndicator>).
+Sets the value of the targetQuantitationType association (this association was inherited
+from class C<Bio::MAGE::QuantitationType::ConfidenceIndicator>).
+
+The value will be of type C<QuantitationType>.
 
 
 =item * isBackground
 
-Sets the value of the isBackground attribute (from C<Bio::MAGE::QuantitationType::QuantitationType>).
+Sets the value of the isBackground attribute (this attribute was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
 
-
-=item * channel
-
-Sets the value of the channel association (from C<Bio::MAGE::QuantitationType::QuantitationType>).
 
 
 =item * quantitationTypeMaps
 
-Sets the value of the quantitationTypeMaps association (from C<Bio::MAGE::QuantitationType::QuantitationType>).
+Sets the value of the quantitationTypeMaps association (this association was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
+
+The value will be of type C<QuantitationTypeMap>.
 
 
 =item * dataType
 
-Sets the value of the dataType association (from C<Bio::MAGE::QuantitationType::QuantitationType>).
+Sets the value of the dataType association (this association was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * scale
 
-Sets the value of the scale association (from C<Bio::MAGE::QuantitationType::QuantitationType>).
+Sets the value of the scale association (this association was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
+
+The value will be of type C<OntologyEntry>.
+
+
+=item * channel
+
+Sets the value of the channel association (this association was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
+
+The value will be of type C<Channel>.
 
 
 =item * confidenceIndicators
 
-Sets the value of the confidenceIndicators association (from C<Bio::MAGE::QuantitationType::QuantitationType>).
+Sets the value of the confidenceIndicators association (this association was inherited
+from class C<Bio::MAGE::QuantitationType::QuantitationType>).
+
+The value will be of type C<ConfidenceIndicator>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -317,7 +353,9 @@ returns the list of subclasses for this class.
 =cut
 
 sub subclasses {
-  my @list = ('Bio::MAGE::QuantitationType::ExpectedValue', 'Bio::MAGE::QuantitationType::PValue', 'Bio::MAGE::QuantitationType::Error');
+  my @list = ('Bio::MAGE::QuantitationType::ExpectedValue',
+'Bio::MAGE::QuantitationType::PValue',
+'Bio::MAGE::QuantitationType::Error');
   return @list;
 }
 
@@ -557,24 +595,24 @@ BEGIN {
   $__ASSOCIATIONS = [
           'targetQuantitationType',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'confidenceIndicators',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The association between a ConfidenceIndicator and the QuantitationType its is an indicator for.',
-                                        '__CLASS_NAME' => 'ConfidenceIndicator',
-                                        '__RANK' => '4',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'targetQuantitationType',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The association between a ConfidenceIndicator and the QuantitationType its is an indicator for.',
-                                         '__CLASS_NAME' => 'QuantitationType',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'targetQuantitationType',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'QuantitationType'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '4',
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The association between a ConfidenceIndicator and the QuantitationType its is an indicator for.',
+                                        '__NAME' => 'confidenceIndicators',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'ConfidenceIndicator'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

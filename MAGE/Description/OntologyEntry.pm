@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: OntologyEntry.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,21 +60,21 @@ $VERSION = q[$Id: OntologyEntry.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp
   my $ontologyentry = Bio::MAGE::Description::OntologyEntry->new();
 
     # creating an already populated instance
-  my $ontologyentry = Bio::MAGE::Description::OntologyEntry->new(value=>$value_value,
+  my $ontologyentry = Bio::MAGE::Description::OntologyEntry->new(category=>$category_value,
 			description=>$description_value,
-			category=>$category_value,
+			value=>$value_value,
 			associations=>$associations_value,
 			ontologyReference=>$ontologyReference_value);
 
     # setting and retrieving object attributes
-  my $value_val = $ontologyentry->value();
-  $ontologyentry->value($value);
+  my $category_val = $ontologyentry->category();
+  $ontologyentry->category($value);
 
   my $description_val = $ontologyentry->description();
   $ontologyentry->description($value);
 
-  my $category_val = $ontologyentry->category();
-  $ontologyentry->category($value);
+  my $value_val = $ontologyentry->value();
+  $ontologyentry->value($value);
 
     # setting and retrieving object associations
   my $associations_val = $ontologyentry->associations();
@@ -126,34 +126,49 @@ named-value style arguments:
 =over
 
 
-=item * value
+=item * category
 
-Sets the value of the value attribute (from C<Bio::MAGE::Description::OntologyEntry>).
+Sets the value of the category attribute (this attribute was inherited
+from class C<Bio::MAGE::Description::OntologyEntry>).
+
 
 
 =item * description
 
-Sets the value of the description attribute (from C<Bio::MAGE::Description::OntologyEntry>).
+Sets the value of the description attribute (this attribute was inherited
+from class C<Bio::MAGE::Description::OntologyEntry>).
 
 
-=item * category
 
-Sets the value of the category attribute (from C<Bio::MAGE::Description::OntologyEntry>).
+=item * value
+
+Sets the value of the value attribute (this attribute was inherited
+from class C<Bio::MAGE::Description::OntologyEntry>).
+
 
 
 =item * associations
 
-Sets the value of the associations association (from C<Bio::MAGE::Description::OntologyEntry>).
+Sets the value of the associations association (this association was inherited
+from class C<Bio::MAGE::Description::OntologyEntry>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * ontologyReference
 
-Sets the value of the ontologyReference association (from C<Bio::MAGE::Description::OntologyEntry>).
+Sets the value of the ontologyReference association (this association was inherited
+from class C<Bio::MAGE::Description::OntologyEntry>).
+
+The value will be of type C<DatabaseEntry>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -299,7 +314,9 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('value', 'description', 'category');
+  my @list = ('category',
+'description',
+'value');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -316,7 +333,8 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('associations', 'ontologyReference');
+  my @list = ('associations',
+'ontologyReference');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -362,24 +380,24 @@ Bio::MAGE::Description::OntologyEntry: has the following attribute accessor meth
 =over
 
 
-=item value
+=item category
 
-From the MAGE-OM documentation for the C<value> attribute:
+From the MAGE-OM documentation for the C<category> attribute:
 
-The value for this entry in this category.  
+The category to which this entry belongs.
 
 
 
 =over
 
 
-=item $val = $ontologyentry->setValue($val)
+=item $val = $ontologyentry->setCategory($val)
 
-The restricted setter method for the value attribute.
+The restricted setter method for the category attribute.
 
-Input parameters: the value to which the value attribute will be set 
+Input parameters: the value to which the category attribute will be set 
 
-Return value: the current value of the value attribute 
+Return value: the current value of the category attribute 
 
 Side effects: none
 
@@ -388,26 +406,26 @@ if too many input parameters are specified
 
 =cut
 
-sub setValue {
+sub setCategory {
   my $self = shift;
-  croak(__PACKAGE__ . "::setValue: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setCategory: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setValue: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setCategory: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
   
-  return $self->{__VALUE} = $val;
+  return $self->{__CATEGORY} = $val;
 }
 
 
 
-=item $val = $ontologyentry->getValue()
+=item $val = $ontologyentry->getCategory()
 
-The restricted getter method for the value attribute.
+The restricted getter method for the category attribute.
 
 Input parameters: none
 
-Return value: the current value of the value attribute 
+Return value: the current value of the category attribute 
 
 Side effects: none
 
@@ -415,11 +433,11 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getValue {
+sub getCategory {
   my $self = shift;
-  croak(__PACKAGE__ . "::getValue: arguments passed to getter")
+  croak(__PACKAGE__ . "::getCategory: arguments passed to getter")
     if @_;
-  return $self->{__VALUE};
+  return $self->{__CATEGORY};
 }
 
 
@@ -494,24 +512,24 @@ sub getDescription {
 =back
 
 
-=item category
+=item value
 
-From the MAGE-OM documentation for the C<category> attribute:
+From the MAGE-OM documentation for the C<value> attribute:
 
-The category to which this entry belongs.
+The value for this entry in this category.  
 
 
 
 =over
 
 
-=item $val = $ontologyentry->setCategory($val)
+=item $val = $ontologyentry->setValue($val)
 
-The restricted setter method for the category attribute.
+The restricted setter method for the value attribute.
 
-Input parameters: the value to which the category attribute will be set 
+Input parameters: the value to which the value attribute will be set 
 
-Return value: the current value of the category attribute 
+Return value: the current value of the value attribute 
 
 Side effects: none
 
@@ -520,26 +538,26 @@ if too many input parameters are specified
 
 =cut
 
-sub setCategory {
+sub setValue {
   my $self = shift;
-  croak(__PACKAGE__ . "::setCategory: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setValue: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setCategory: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setValue: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
   
-  return $self->{__CATEGORY} = $val;
+  return $self->{__VALUE} = $val;
 }
 
 
 
-=item $val = $ontologyentry->getCategory()
+=item $val = $ontologyentry->getValue()
 
-The restricted getter method for the category attribute.
+The restricted getter method for the value attribute.
 
 Input parameters: none
 
-Return value: the current value of the category attribute 
+Return value: the current value of the value attribute 
 
 Side effects: none
 
@@ -547,11 +565,11 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getCategory {
+sub getValue {
   my $self = shift;
-  croak(__PACKAGE__ . "::getCategory: arguments passed to getter")
+  croak(__PACKAGE__ . "::getValue: arguments passed to getter")
     if @_;
-  return $self->{__CATEGORY};
+  return $self->{__VALUE};
 }
 
 
@@ -572,49 +590,49 @@ BEGIN {
   $__ASSOCIATIONS = [
           'ontologyReference',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Many ontology entries will not yet have formalized ontologies.  In those cases, they will not have a database reference to the ontology.
-
-In the future it is highly encouraged that these ontologies be developed and ontologyEntry be subclassed from DatabaseReference.',
-                                        '__CLASS_NAME' => 'OntologyEntry',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'ontologyReference',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Many ontology entries will not yet have formalized ontologies.  In those cases, they will not have a database reference to the ontology.
 
 In the future it is highly encouraged that these ontologies be developed and ontologyEntry be subclassed from DatabaseReference.',
-                                         '__CLASS_NAME' => 'DatabaseEntry',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'ontologyReference',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'DatabaseEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Many ontology entries will not yet have formalized ontologies.  In those cases, they will not have a database reference to the ontology.
+
+In the future it is highly encouraged that these ontologies be developed and ontologyEntry be subclassed from DatabaseReference.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'OntologyEntry'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'associations',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Allows an instance of an OntologyEntry to be further qualified.',
-                                        '__CLASS_NAME' => 'OntologyEntry',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'associations',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Allows an instance of an OntologyEntry to be further qualified.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'associations',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Allows an instance of an OntologyEntry to be further qualified.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'OntologyEntry'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: FeatureLocation.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,15 +60,15 @@ $VERSION = q[$Id: FeatureLocation.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart E
   my $featurelocation = Bio::MAGE::DesignElement::FeatureLocation->new();
 
     # creating an already populated instance
-  my $featurelocation = Bio::MAGE::DesignElement::FeatureLocation->new(row=>$row_value,
-			column=>$column_value);
+  my $featurelocation = Bio::MAGE::DesignElement::FeatureLocation->new(column=>$column_value,
+			row=>$row_value);
 
     # setting and retrieving object attributes
-  my $row_val = $featurelocation->row();
-  $featurelocation->row($value);
-
   my $column_val = $featurelocation->column();
   $featurelocation->column($value);
+
+  my $row_val = $featurelocation->row();
+  $featurelocation->row($value);
 
 
 =head2 DESCRIPTION
@@ -113,19 +113,26 @@ named-value style arguments:
 =over
 
 
-=item * row
-
-Sets the value of the row attribute (from C<Bio::MAGE::DesignElement::FeatureLocation>).
-
-
 =item * column
 
-Sets the value of the column attribute (from C<Bio::MAGE::DesignElement::FeatureLocation>).
+Sets the value of the column attribute (this attribute was inherited
+from class C<Bio::MAGE::DesignElement::FeatureLocation>).
+
+
+
+=item * row
+
+Sets the value of the row attribute (this attribute was inherited
+from class C<Bio::MAGE::DesignElement::FeatureLocation>).
+
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -271,7 +278,8 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('row', 'column');
+  my @list = ('column',
+'row');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -334,72 +342,6 @@ Bio::MAGE::DesignElement::FeatureLocation: has the following attribute accessor 
 =over
 
 
-=item row
-
-From the MAGE-OM documentation for the C<row> attribute:
-
-row position in the Zone
-
-
-
-=over
-
-
-=item $val = $featurelocation->setRow($val)
-
-The restricted setter method for the row attribute.
-
-Input parameters: the value to which the row attribute will be set 
-
-Return value: the current value of the row attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setRow {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setRow: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setRow: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__ROW} = $val;
-}
-
-
-
-=item $val = $featurelocation->getRow()
-
-The restricted getter method for the row attribute.
-
-Input parameters: none
-
-Return value: the current value of the row attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getRow {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getRow: arguments passed to getter")
-    if @_;
-  return $self->{__ROW};
-}
-
-
-
-
-=back
-
-
 =item column
 
 From the MAGE-OM documentation for the C<column> attribute:
@@ -458,6 +400,72 @@ sub getColumn {
   croak(__PACKAGE__ . "::getColumn: arguments passed to getter")
     if @_;
   return $self->{__COLUMN};
+}
+
+
+
+
+=back
+
+
+=item row
+
+From the MAGE-OM documentation for the C<row> attribute:
+
+row position in the Zone
+
+
+
+=over
+
+
+=item $val = $featurelocation->setRow($val)
+
+The restricted setter method for the row attribute.
+
+Input parameters: the value to which the row attribute will be set 
+
+Return value: the current value of the row attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setRow {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setRow: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setRow: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__ROW} = $val;
+}
+
+
+
+=item $val = $featurelocation->getRow()
+
+The restricted getter method for the row attribute.
+
+Input parameters: none
+
+Return value: the current value of the row attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getRow {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getRow: arguments passed to getter")
+    if @_;
+  return $self->{__ROW};
 }
 
 

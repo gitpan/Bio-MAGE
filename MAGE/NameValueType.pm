@@ -41,7 +41,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base  Exporter);
-$VERSION = q[$Id: NameValueType.pm,v 1.1 2002/12/10 06:20:46 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -59,20 +59,20 @@ $VERSION = q[$Id: NameValueType.pm,v 1.1 2002/12/10 06:20:46 jason_e_stewart Exp
   my $namevaluetype = Bio::MAGE::NameValueType->new();
 
     # creating an already populated instance
-  my $namevaluetype = Bio::MAGE::NameValueType->new(value=>$value_value,
-			name=>$name_value,
+  my $namevaluetype = Bio::MAGE::NameValueType->new(name=>$name_value,
 			type=>$type_value,
+			value=>$value_value,
 			propertySets=>$propertySets_value);
 
     # setting and retrieving object attributes
-  my $value_val = $namevaluetype->value();
-  $namevaluetype->value($value);
-
   my $name_val = $namevaluetype->name();
   $namevaluetype->name($value);
 
   my $type_val = $namevaluetype->type();
   $namevaluetype->type($value);
+
+  my $value_val = $namevaluetype->value();
+  $namevaluetype->value($value);
 
     # setting and retrieving object associations
   my $propertySets_val = $namevaluetype->propertySets();
@@ -107,24 +107,33 @@ named-value style arguments:
 =over
 
 
-=item * value
-
-Sets the value of the value attribute (from C<Bio::MAGE::NameValueType>).
-
-
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::NameValueType>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::NameValueType>).
+
 
 
 =item * type
 
-Sets the value of the type attribute (from C<Bio::MAGE::NameValueType>).
+Sets the value of the type attribute (this attribute was inherited
+from class C<Bio::MAGE::NameValueType>).
+
+
+
+=item * value
+
+Sets the value of the value attribute (this attribute was inherited
+from class C<Bio::MAGE::NameValueType>).
+
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::NameValueType>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::NameValueType>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -270,7 +279,9 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('value', 'name', 'type');
+  my @list = ('name',
+'type',
+'value');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -331,72 +342,6 @@ getter methods for each attribute.
 Bio::MAGE::NameValueType: has the following attribute accessor methods:
 
 =over
-
-
-=item value
-
-From the MAGE-OM documentation for the C<value> attribute:
-
-The value of the name.
-
-
-
-=over
-
-
-=item $val = $namevaluetype->setValue($val)
-
-The restricted setter method for the value attribute.
-
-Input parameters: the value to which the value attribute will be set 
-
-Return value: the current value of the value attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setValue {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setValue: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setValue: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__VALUE} = $val;
-}
-
-
-
-=item $val = $namevaluetype->getValue()
-
-The restricted getter method for the value attribute.
-
-Input parameters: none
-
-Return value: the current value of the value attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getValue {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getValue: arguments passed to getter")
-    if @_;
-  return $self->{__VALUE};
-}
-
-
-
-
-=back
 
 
 =item name
@@ -531,6 +476,72 @@ sub getType {
 =back
 
 
+=item value
+
+From the MAGE-OM documentation for the C<value> attribute:
+
+The value of the name.
+
+
+
+=over
+
+
+=item $val = $namevaluetype->setValue($val)
+
+The restricted setter method for the value attribute.
+
+Input parameters: the value to which the value attribute will be set 
+
+Return value: the current value of the value attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setValue {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setValue: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setValue: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__VALUE} = $val;
+}
+
+
+
+=item $val = $namevaluetype->getValue()
+
+The restricted getter method for the value attribute.
+
+Input parameters: none
+
+Return value: the current value of the value attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getValue {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getValue: arguments passed to getter")
+    if @_;
+  return $self->{__VALUE};
+}
+
+
+
+
+=back
+
+
 
 =back
 
@@ -543,24 +554,24 @@ BEGIN {
   $__ASSOCIATIONS = [
           'propertySets',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Allows nested specification of name/value pairs',
-                                        '__CLASS_NAME' => 'NameValueType',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'propertySets',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Allows nested specification of name/value pairs',
-                                         '__CLASS_NAME' => 'NameValueType',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'propertySets',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'NameValueType'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Allows nested specification of name/value pairs',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'NameValueType'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

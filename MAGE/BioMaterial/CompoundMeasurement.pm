@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: CompoundMeasurement.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,15 +60,15 @@ $VERSION = q[$Id: CompoundMeasurement.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewa
   my $compoundmeasurement = Bio::MAGE::BioMaterial::CompoundMeasurement->new();
 
     # creating an already populated instance
-  my $compoundmeasurement = Bio::MAGE::BioMaterial::CompoundMeasurement->new(measurement=>$measurement_value,
-			compound=>$compound_value);
+  my $compoundmeasurement = Bio::MAGE::BioMaterial::CompoundMeasurement->new(compound=>$compound_value,
+			measurement=>$measurement_value);
 
     # setting and retrieving object associations
-  my $measurement_val = $compoundmeasurement->measurement();
-  $compoundmeasurement->measurement($value);
-
   my $compound_val = $compoundmeasurement->compound();
   $compoundmeasurement->compound($value);
+
+  my $measurement_val = $compoundmeasurement->measurement();
+  $compoundmeasurement->measurement($value);
 
 
 =head2 DESCRIPTION
@@ -113,19 +113,28 @@ named-value style arguments:
 =over
 
 
-=item * measurement
-
-Sets the value of the measurement association (from C<Bio::MAGE::BioMaterial::CompoundMeasurement>).
-
-
 =item * compound
 
-Sets the value of the compound association (from C<Bio::MAGE::BioMaterial::CompoundMeasurement>).
+Sets the value of the compound association (this association was inherited
+from class C<Bio::MAGE::BioMaterial::CompoundMeasurement>).
+
+The value will be of type C<Compound>.
+
+
+=item * measurement
+
+Sets the value of the measurement association (this association was inherited
+from class C<Bio::MAGE::BioMaterial::CompoundMeasurement>).
+
+The value will be of type C<Measurement>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -288,7 +297,8 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('measurement', 'compound');
+  my @list = ('compound',
+'measurement');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -346,45 +356,45 @@ BEGIN {
   $__ASSOCIATIONS = [
           'compound',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'A Compound to be used to create another Compound.',
-                                        '__CLASS_NAME' => 'CompoundMeasurement',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'compound',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'A Compound to be used to create another Compound.',
-                                         '__CLASS_NAME' => 'Compound',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'compound',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Compound'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'A Compound to be used to create another Compound.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'CompoundMeasurement'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'measurement',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The amount of the Compound.',
-                                        '__CLASS_NAME' => 'CompoundMeasurement',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'measurement',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The amount of the Compound.',
-                                         '__CLASS_NAME' => 'Measurement',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'measurement',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Measurement'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The amount of the Compound.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'CompoundMeasurement'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -422,73 +432,6 @@ the association.
 Bio::MAGE::BioMaterial::CompoundMeasurement: has the following association accessor methods:
 
 =over
-
-
-=item measurement
-
-
-From the MAGE-OM documentation for the C<measurement> association:
-
-The amount of the Compound.
-
-
-
-=over
-
-
-=item $val = $compoundmeasurement->setMeasurement($val)
-
-The restricted setter method for the measurement association.
-
-Input parameters: the value to which the measurement association will be set : an instance of type C<Bio::MAGE::Measurement::Measurement>.
-
-Return value: the current value of the measurement association : an instance of type C<Bio::MAGE::Measurement::Measurement>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Measurement::Measurement>
-
-=cut
-
-sub setMeasurement {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setMeasurement: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setMeasurement: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setMeasurement: wrong type: " . ref($val) . " expected Bio::MAGE::Measurement::Measurement") unless UNIVERSAL::isa($val,'Bio::MAGE::Measurement::Measurement');
-  return $self->{__MEASUREMENT} = $val;
-}
-
-
-
-=item $val = $compoundmeasurement->getMeasurement()
-
-The restricted getter method for the measurement association.
-
-Input parameters: none
-
-Return value: the current value of the measurement association : an instance of type C<Bio::MAGE::Measurement::Measurement>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getMeasurement {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getMeasurement: arguments passed to getter")
-    if @_;
-  return $self->{__MEASUREMENT};
-}
-
-
-
-
-=back
 
 
 =item compound
@@ -550,6 +493,73 @@ sub getCompound {
   croak(__PACKAGE__ . "::getCompound: arguments passed to getter")
     if @_;
   return $self->{__COMPOUND};
+}
+
+
+
+
+=back
+
+
+=item measurement
+
+
+From the MAGE-OM documentation for the C<measurement> association:
+
+The amount of the Compound.
+
+
+
+=over
+
+
+=item $val = $compoundmeasurement->setMeasurement($val)
+
+The restricted setter method for the measurement association.
+
+Input parameters: the value to which the measurement association will be set : an instance of type C<Bio::MAGE::Measurement::Measurement>.
+
+Return value: the current value of the measurement association : an instance of type C<Bio::MAGE::Measurement::Measurement>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Measurement::Measurement>
+
+=cut
+
+sub setMeasurement {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setMeasurement: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setMeasurement: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setMeasurement: wrong type: " . ref($val) . " expected Bio::MAGE::Measurement::Measurement") unless UNIVERSAL::isa($val,'Bio::MAGE::Measurement::Measurement');
+  return $self->{__MEASUREMENT} = $val;
+}
+
+
+
+=item $val = $compoundmeasurement->getMeasurement()
+
+The restricted getter method for the measurement association.
+
+Input parameters: none
+
+Return value: the current value of the measurement association : an instance of type C<Bio::MAGE::Measurement::Measurement>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getMeasurement {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getMeasurement: arguments passed to getter")
+    if @_;
+  return $self->{__MEASUREMENT};
 }
 
 

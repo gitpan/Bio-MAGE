@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Describable Exporter);
-$VERSION = q[$Id: ExperimentDesign.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,31 +60,31 @@ $VERSION = q[$Id: ExperimentDesign.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart 
   my $experimentdesign = Bio::MAGE::Experiment::ExperimentDesign->new();
 
     # creating an already populated instance
-  my $experimentdesign = Bio::MAGE::Experiment::ExperimentDesign->new(replicateDescription=>$replicateDescription_value,
-			types=>$types_value,
-			experimentalFactors=>$experimentalFactors_value,
+  my $experimentdesign = Bio::MAGE::Experiment::ExperimentDesign->new(types=>$types_value,
+			replicateDescription=>$replicateDescription_value,
 			qualityControlDescription=>$qualityControlDescription_value,
-			topLevelBioAssays=>$topLevelBioAssays_value,
-			normalizationDescription=>$normalizationDescription_value);
+			normalizationDescription=>$normalizationDescription_value,
+			experimentalFactors=>$experimentalFactors_value,
+			topLevelBioAssays=>$topLevelBioAssays_value);
 
     # setting and retrieving object associations
-  my $replicateDescription_val = $experimentdesign->replicateDescription();
-  $experimentdesign->replicateDescription($value);
-
   my $types_val = $experimentdesign->types();
   $experimentdesign->types($value);
 
-  my $experimentalFactors_val = $experimentdesign->experimentalFactors();
-  $experimentdesign->experimentalFactors($value);
+  my $replicateDescription_val = $experimentdesign->replicateDescription();
+  $experimentdesign->replicateDescription($value);
 
   my $qualityControlDescription_val = $experimentdesign->qualityControlDescription();
   $experimentdesign->qualityControlDescription($value);
 
-  my $topLevelBioAssays_val = $experimentdesign->topLevelBioAssays();
-  $experimentdesign->topLevelBioAssays($value);
-
   my $normalizationDescription_val = $experimentdesign->normalizationDescription();
   $experimentdesign->normalizationDescription($value);
+
+  my $experimentalFactors_val = $experimentdesign->experimentalFactors();
+  $experimentdesign->experimentalFactors($value);
+
+  my $topLevelBioAssays_val = $experimentdesign->topLevelBioAssays();
+  $experimentdesign->topLevelBioAssays($value);
 
 
 =head2 DESCRIPTION
@@ -129,54 +129,84 @@ named-value style arguments:
 =over
 
 
-=item * replicateDescription
-
-Sets the value of the replicateDescription association (from C<Bio::MAGE::Experiment::ExperimentDesign>).
-
-
 =item * types
 
-Sets the value of the types association (from C<Bio::MAGE::Experiment::ExperimentDesign>).
+Sets the value of the types association (this association was inherited
+from class C<Bio::MAGE::Experiment::ExperimentDesign>).
+
+The value will be of type C<OntologyEntry>.
 
 
-=item * experimentalFactors
+=item * replicateDescription
 
-Sets the value of the experimentalFactors association (from C<Bio::MAGE::Experiment::ExperimentDesign>).
+Sets the value of the replicateDescription association (this association was inherited
+from class C<Bio::MAGE::Experiment::ExperimentDesign>).
+
+The value will be of type C<Description>.
 
 
 =item * qualityControlDescription
 
-Sets the value of the qualityControlDescription association (from C<Bio::MAGE::Experiment::ExperimentDesign>).
+Sets the value of the qualityControlDescription association (this association was inherited
+from class C<Bio::MAGE::Experiment::ExperimentDesign>).
+
+The value will be of type C<Description>.
 
 
 =item * topLevelBioAssays
 
-Sets the value of the topLevelBioAssays association (from C<Bio::MAGE::Experiment::ExperimentDesign>).
+Sets the value of the topLevelBioAssays association (this association was inherited
+from class C<Bio::MAGE::Experiment::ExperimentDesign>).
+
+The value will be of type C<BioAssay>.
+
+
+=item * experimentalFactors
+
+Sets the value of the experimentalFactors association (this association was inherited
+from class C<Bio::MAGE::Experiment::ExperimentDesign>).
+
+The value will be of type C<ExperimentalFactor>.
 
 
 =item * normalizationDescription
 
-Sets the value of the normalizationDescription association (from C<Bio::MAGE::Experiment::ExperimentDesign>).
+Sets the value of the normalizationDescription association (this association was inherited
+from class C<Bio::MAGE::Experiment::ExperimentDesign>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
+The value will be of type C<Description>.
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -339,7 +369,12 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('replicateDescription', 'types', 'experimentalFactors', 'qualityControlDescription', 'topLevelBioAssays', 'normalizationDescription');
+  my @list = ('types',
+'replicateDescription',
+'qualityControlDescription',
+'normalizationDescription',
+'experimentalFactors',
+'topLevelBioAssays');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -397,129 +432,129 @@ BEGIN {
   $__ASSOCIATIONS = [
           'types',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Classification of an experiment.  For example \'normal vs. diseased\', \'treated vs. untreated\', \'time course\', \'tiling\', etc.',
-                                        '__CLASS_NAME' => 'ExperimentDesign',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'types',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Classification of an experiment.  For example \'normal vs. diseased\', \'treated vs. untreated\', \'time course\', \'tiling\', etc.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'types',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Classification of an experiment.  For example \'normal vs. diseased\', \'treated vs. untreated\', \'time course\', \'tiling\', etc.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ExperimentDesign'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'topLevelBioAssays',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The organization of the BioAssays as specified by the ExperimentDesign (TimeCourse, Dosage, etc.)',
-                                        '__CLASS_NAME' => 'ExperimentDesign',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'topLevelBioAssays',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The organization of the BioAssays as specified by the ExperimentDesign (TimeCourse, Dosage, etc.)',
-                                         '__CLASS_NAME' => 'BioAssay',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'topLevelBioAssays',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioAssay'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The organization of the BioAssays as specified by the ExperimentDesign (TimeCourse, Dosage, etc.)',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ExperimentDesign'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'experimentalFactors',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The description of the factors (TimeCourse, Dosage, etc.) that group the BioAssays.',
-                                        '__CLASS_NAME' => 'ExperimentDesign',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'experimentalFactors',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The description of the factors (TimeCourse, Dosage, etc.) that group the BioAssays.',
-                                         '__CLASS_NAME' => 'ExperimentalFactor',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'experimentalFactors',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ExperimentalFactor'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The description of the factors (TimeCourse, Dosage, etc.) that group the BioAssays.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ExperimentDesign'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'qualityControlDescription',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Description of the quality control aspects of the Experiment.',
-                                        '__CLASS_NAME' => 'ExperimentDesign',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'qualityControlDescription',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Description of the quality control aspects of the Experiment.',
-                                         '__CLASS_NAME' => 'Description',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'qualityControlDescription',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Description'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Description of the quality control aspects of the Experiment.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ExperimentDesign'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'normalizationDescription',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Description of the normalization strategy of the Experiment.',
-                                        '__CLASS_NAME' => 'ExperimentDesign',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'normalizationDescription',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '5',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Description of the normalization strategy of the Experiment.',
-                                         '__CLASS_NAME' => 'Description',
-                                         '__RANK' => '5',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'normalizationDescription',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Description'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Description of the normalization strategy of the Experiment.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ExperimentDesign'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'replicateDescription',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Description of the replicate strategy of the Experiment.',
-                                        '__CLASS_NAME' => 'ExperimentDesign',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'replicateDescription',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '6',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Description of the replicate strategy of the Experiment.',
-                                         '__CLASS_NAME' => 'Description',
-                                         '__RANK' => '6',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'replicateDescription',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Description'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Description of the replicate strategy of the Experiment.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ExperimentDesign'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -557,73 +592,6 @@ the association.
 Bio::MAGE::Experiment::ExperimentDesign: has the following association accessor methods:
 
 =over
-
-
-=item replicateDescription
-
-
-From the MAGE-OM documentation for the C<replicateDescription> association:
-
-Description of the replicate strategy of the Experiment.
-
-
-
-=over
-
-
-=item $val = $experimentdesign->setReplicateDescription($val)
-
-The restricted setter method for the replicateDescription association.
-
-Input parameters: the value to which the replicateDescription association will be set : an instance of type C<Bio::MAGE::Description::Description>.
-
-Return value: the current value of the replicateDescription association : an instance of type C<Bio::MAGE::Description::Description>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::Description>
-
-=cut
-
-sub setReplicateDescription {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setReplicateDescription: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setReplicateDescription: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setReplicateDescription: wrong type: " . ref($val) . " expected Bio::MAGE::Description::Description") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::Description');
-  return $self->{__REPLICATEDESCRIPTION} = $val;
-}
-
-
-
-=item $val = $experimentdesign->getReplicateDescription()
-
-The restricted getter method for the replicateDescription association.
-
-Input parameters: none
-
-Return value: the current value of the replicateDescription association : an instance of type C<Bio::MAGE::Description::Description>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getReplicateDescription {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getReplicateDescription: arguments passed to getter")
-    if @_;
-  return $self->{__REPLICATEDESCRIPTION};
-}
-
-
-
-
-=back
 
 
 =item types
@@ -725,6 +693,207 @@ sub addTypes {
 
   push(@{$self->{__TYPES}},@vals);
 }
+
+
+
+=back
+
+
+=item replicateDescription
+
+
+From the MAGE-OM documentation for the C<replicateDescription> association:
+
+Description of the replicate strategy of the Experiment.
+
+
+
+=over
+
+
+=item $val = $experimentdesign->setReplicateDescription($val)
+
+The restricted setter method for the replicateDescription association.
+
+Input parameters: the value to which the replicateDescription association will be set : an instance of type C<Bio::MAGE::Description::Description>.
+
+Return value: the current value of the replicateDescription association : an instance of type C<Bio::MAGE::Description::Description>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::Description>
+
+=cut
+
+sub setReplicateDescription {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setReplicateDescription: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setReplicateDescription: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setReplicateDescription: wrong type: " . ref($val) . " expected Bio::MAGE::Description::Description") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::Description');
+  return $self->{__REPLICATEDESCRIPTION} = $val;
+}
+
+
+
+=item $val = $experimentdesign->getReplicateDescription()
+
+The restricted getter method for the replicateDescription association.
+
+Input parameters: none
+
+Return value: the current value of the replicateDescription association : an instance of type C<Bio::MAGE::Description::Description>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getReplicateDescription {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getReplicateDescription: arguments passed to getter")
+    if @_;
+  return $self->{__REPLICATEDESCRIPTION};
+}
+
+
+
+
+=back
+
+
+=item qualityControlDescription
+
+
+From the MAGE-OM documentation for the C<qualityControlDescription> association:
+
+Description of the quality control aspects of the Experiment.
+
+
+
+=over
+
+
+=item $val = $experimentdesign->setQualityControlDescription($val)
+
+The restricted setter method for the qualityControlDescription association.
+
+Input parameters: the value to which the qualityControlDescription association will be set : an instance of type C<Bio::MAGE::Description::Description>.
+
+Return value: the current value of the qualityControlDescription association : an instance of type C<Bio::MAGE::Description::Description>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::Description>
+
+=cut
+
+sub setQualityControlDescription {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setQualityControlDescription: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setQualityControlDescription: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setQualityControlDescription: wrong type: " . ref($val) . " expected Bio::MAGE::Description::Description") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::Description');
+  return $self->{__QUALITYCONTROLDESCRIPTION} = $val;
+}
+
+
+
+=item $val = $experimentdesign->getQualityControlDescription()
+
+The restricted getter method for the qualityControlDescription association.
+
+Input parameters: none
+
+Return value: the current value of the qualityControlDescription association : an instance of type C<Bio::MAGE::Description::Description>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getQualityControlDescription {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getQualityControlDescription: arguments passed to getter")
+    if @_;
+  return $self->{__QUALITYCONTROLDESCRIPTION};
+}
+
+
+
+
+=back
+
+
+=item normalizationDescription
+
+
+From the MAGE-OM documentation for the C<normalizationDescription> association:
+
+Description of the normalization strategy of the Experiment.
+
+
+
+=over
+
+
+=item $val = $experimentdesign->setNormalizationDescription($val)
+
+The restricted setter method for the normalizationDescription association.
+
+Input parameters: the value to which the normalizationDescription association will be set : an instance of type C<Bio::MAGE::Description::Description>.
+
+Return value: the current value of the normalizationDescription association : an instance of type C<Bio::MAGE::Description::Description>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::Description>
+
+=cut
+
+sub setNormalizationDescription {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setNormalizationDescription: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setNormalizationDescription: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setNormalizationDescription: wrong type: " . ref($val) . " expected Bio::MAGE::Description::Description") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::Description');
+  return $self->{__NORMALIZATIONDESCRIPTION} = $val;
+}
+
+
+
+=item $val = $experimentdesign->getNormalizationDescription()
+
+The restricted getter method for the normalizationDescription association.
+
+Input parameters: none
+
+Return value: the current value of the normalizationDescription association : an instance of type C<Bio::MAGE::Description::Description>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getNormalizationDescription {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getNormalizationDescription: arguments passed to getter")
+    if @_;
+  return $self->{__NORMALIZATIONDESCRIPTION};
+}
+
 
 
 
@@ -836,73 +1005,6 @@ sub addExperimentalFactors {
 =back
 
 
-=item qualityControlDescription
-
-
-From the MAGE-OM documentation for the C<qualityControlDescription> association:
-
-Description of the quality control aspects of the Experiment.
-
-
-
-=over
-
-
-=item $val = $experimentdesign->setQualityControlDescription($val)
-
-The restricted setter method for the qualityControlDescription association.
-
-Input parameters: the value to which the qualityControlDescription association will be set : an instance of type C<Bio::MAGE::Description::Description>.
-
-Return value: the current value of the qualityControlDescription association : an instance of type C<Bio::MAGE::Description::Description>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::Description>
-
-=cut
-
-sub setQualityControlDescription {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setQualityControlDescription: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setQualityControlDescription: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setQualityControlDescription: wrong type: " . ref($val) . " expected Bio::MAGE::Description::Description") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::Description');
-  return $self->{__QUALITYCONTROLDESCRIPTION} = $val;
-}
-
-
-
-=item $val = $experimentdesign->getQualityControlDescription()
-
-The restricted getter method for the qualityControlDescription association.
-
-Input parameters: none
-
-Return value: the current value of the qualityControlDescription association : an instance of type C<Bio::MAGE::Description::Description>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getQualityControlDescription {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getQualityControlDescription: arguments passed to getter")
-    if @_;
-  return $self->{__QUALITYCONTROLDESCRIPTION};
-}
-
-
-
-
-=back
-
-
 =item topLevelBioAssays
 
 
@@ -1002,73 +1104,6 @@ sub addTopLevelBioAssays {
 
   push(@{$self->{__TOPLEVELBIOASSAYS}},@vals);
 }
-
-
-
-=back
-
-
-=item normalizationDescription
-
-
-From the MAGE-OM documentation for the C<normalizationDescription> association:
-
-Description of the normalization strategy of the Experiment.
-
-
-
-=over
-
-
-=item $val = $experimentdesign->setNormalizationDescription($val)
-
-The restricted setter method for the normalizationDescription association.
-
-Input parameters: the value to which the normalizationDescription association will be set : an instance of type C<Bio::MAGE::Description::Description>.
-
-Return value: the current value of the normalizationDescription association : an instance of type C<Bio::MAGE::Description::Description>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::Description>
-
-=cut
-
-sub setNormalizationDescription {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setNormalizationDescription: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setNormalizationDescription: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setNormalizationDescription: wrong type: " . ref($val) . " expected Bio::MAGE::Description::Description") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::Description');
-  return $self->{__NORMALIZATIONDESCRIPTION} = $val;
-}
-
-
-
-=item $val = $experimentdesign->getNormalizationDescription()
-
-The restricted getter method for the normalizationDescription association.
-
-Input parameters: none
-
-Return value: the current value of the normalizationDescription association : an instance of type C<Bio::MAGE::Description::Description>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getNormalizationDescription {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getNormalizationDescription: arguments passed to getter")
-    if @_;
-  return $self->{__NORMALIZATIONDESCRIPTION};
-}
-
 
 
 

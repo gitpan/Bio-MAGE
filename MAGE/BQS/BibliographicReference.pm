@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Describable Exporter);
-$VERSION = q[$Id: BibliographicReference.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,36 +60,24 @@ $VERSION = q[$Id: BibliographicReference.pm,v 1.2 2002/12/11 01:32:18 jason_e_st
   my $bibliographicreference = Bio::MAGE::BQS::BibliographicReference->new();
 
     # creating an already populated instance
-  my $bibliographicreference = Bio::MAGE::BQS::BibliographicReference->new(authors=>$authors_value,
+  my $bibliographicreference = Bio::MAGE::BQS::BibliographicReference->new(year=>$year_value,
 			URI=>$URI_value,
-			volume=>$volume_value,
-			issue=>$issue_value,
-			editor=>$editor_value,
-			title=>$title_value,
 			publication=>$publication_value,
 			publisher=>$publisher_value,
-			year=>$year_value,
 			pages=>$pages_value,
+			title=>$title_value,
+			editor=>$editor_value,
+			issue=>$issue_value,
+			volume=>$volume_value,
+			authors=>$authors_value,
 			parameters=>$parameters_value);
 
     # setting and retrieving object attributes
-  my $authors_val = $bibliographicreference->authors();
-  $bibliographicreference->authors($value);
+  my $year_val = $bibliographicreference->year();
+  $bibliographicreference->year($value);
 
   my $URI_val = $bibliographicreference->URI();
   $bibliographicreference->URI($value);
-
-  my $volume_val = $bibliographicreference->volume();
-  $bibliographicreference->volume($value);
-
-  my $issue_val = $bibliographicreference->issue();
-  $bibliographicreference->issue($value);
-
-  my $editor_val = $bibliographicreference->editor();
-  $bibliographicreference->editor($value);
-
-  my $title_val = $bibliographicreference->title();
-  $bibliographicreference->title($value);
 
   my $publication_val = $bibliographicreference->publication();
   $bibliographicreference->publication($value);
@@ -97,11 +85,23 @@ $VERSION = q[$Id: BibliographicReference.pm,v 1.2 2002/12/11 01:32:18 jason_e_st
   my $publisher_val = $bibliographicreference->publisher();
   $bibliographicreference->publisher($value);
 
-  my $year_val = $bibliographicreference->year();
-  $bibliographicreference->year($value);
-
   my $pages_val = $bibliographicreference->pages();
   $bibliographicreference->pages($value);
+
+  my $title_val = $bibliographicreference->title();
+  $bibliographicreference->title($value);
+
+  my $editor_val = $bibliographicreference->editor();
+  $bibliographicreference->editor($value);
+
+  my $issue_val = $bibliographicreference->issue();
+  $bibliographicreference->issue($value);
+
+  my $volume_val = $bibliographicreference->volume();
+  $bibliographicreference->volume($value);
+
+  my $authors_val = $bibliographicreference->authors();
+  $bibliographicreference->authors($value);
 
     # setting and retrieving object associations
   my $parameters_val = $bibliographicreference->parameters();
@@ -151,79 +151,114 @@ named-value style arguments:
 =over
 
 
-=item * authors
+=item * year
 
-Sets the value of the authors attribute (from C<Bio::MAGE::BQS::BibliographicReference>).
+Sets the value of the year attribute (this attribute was inherited
+from class C<Bio::MAGE::BQS::BibliographicReference>).
+
 
 
 =item * URI
 
-Sets the value of the URI attribute (from C<Bio::MAGE::BQS::BibliographicReference>).
+Sets the value of the URI attribute (this attribute was inherited
+from class C<Bio::MAGE::BQS::BibliographicReference>).
 
-
-=item * volume
-
-Sets the value of the volume attribute (from C<Bio::MAGE::BQS::BibliographicReference>).
-
-
-=item * issue
-
-Sets the value of the issue attribute (from C<Bio::MAGE::BQS::BibliographicReference>).
-
-
-=item * editor
-
-Sets the value of the editor attribute (from C<Bio::MAGE::BQS::BibliographicReference>).
-
-
-=item * title
-
-Sets the value of the title attribute (from C<Bio::MAGE::BQS::BibliographicReference>).
 
 
 =item * publication
 
-Sets the value of the publication attribute (from C<Bio::MAGE::BQS::BibliographicReference>).
+Sets the value of the publication attribute (this attribute was inherited
+from class C<Bio::MAGE::BQS::BibliographicReference>).
+
 
 
 =item * publisher
 
-Sets the value of the publisher attribute (from C<Bio::MAGE::BQS::BibliographicReference>).
+Sets the value of the publisher attribute (this attribute was inherited
+from class C<Bio::MAGE::BQS::BibliographicReference>).
 
-
-=item * year
-
-Sets the value of the year attribute (from C<Bio::MAGE::BQS::BibliographicReference>).
 
 
 =item * pages
 
-Sets the value of the pages attribute (from C<Bio::MAGE::BQS::BibliographicReference>).
+Sets the value of the pages attribute (this attribute was inherited
+from class C<Bio::MAGE::BQS::BibliographicReference>).
+
+
+
+=item * title
+
+Sets the value of the title attribute (this attribute was inherited
+from class C<Bio::MAGE::BQS::BibliographicReference>).
+
+
+
+=item * editor
+
+Sets the value of the editor attribute (this attribute was inherited
+from class C<Bio::MAGE::BQS::BibliographicReference>).
+
+
+
+=item * issue
+
+Sets the value of the issue attribute (this attribute was inherited
+from class C<Bio::MAGE::BQS::BibliographicReference>).
+
+
+
+=item * volume
+
+Sets the value of the volume attribute (this attribute was inherited
+from class C<Bio::MAGE::BQS::BibliographicReference>).
+
+
+
+=item * authors
+
+Sets the value of the authors attribute (this attribute was inherited
+from class C<Bio::MAGE::BQS::BibliographicReference>).
+
 
 
 =item * parameters
 
-Sets the value of the parameters association (from C<Bio::MAGE::BQS::BibliographicReference>).
+Sets the value of the parameters association (this association was inherited
+from class C<Bio::MAGE::BQS::BibliographicReference>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
+The value will be of type C<OntologyEntry>.
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -369,7 +404,16 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('authors', 'URI', 'volume', 'issue', 'editor', 'title', 'publication', 'publisher', 'year', 'pages');
+  my @list = ('year',
+'URI',
+'publication',
+'publisher',
+'pages',
+'title',
+'editor',
+'issue',
+'volume',
+'authors');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -432,20 +476,20 @@ Bio::MAGE::BQS::BibliographicReference: has the following attribute accessor met
 =over
 
 
-=item authors
+=item year
 
-Methods for the authors attribute.
+Methods for the year attribute.
 
 =over
 
 
-=item $val = $bibliographicreference->setAuthors($val)
+=item $val = $bibliographicreference->setYear($val)
 
-The restricted setter method for the authors attribute.
+The restricted setter method for the year attribute.
 
-Input parameters: the value to which the authors attribute will be set 
+Input parameters: the value to which the year attribute will be set 
 
-Return value: the current value of the authors attribute 
+Return value: the current value of the year attribute 
 
 Side effects: none
 
@@ -454,26 +498,26 @@ if too many input parameters are specified
 
 =cut
 
-sub setAuthors {
+sub setYear {
   my $self = shift;
-  croak(__PACKAGE__ . "::setAuthors: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setYear: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setAuthors: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setYear: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
   
-  return $self->{__AUTHORS} = $val;
+  return $self->{__YEAR} = $val;
 }
 
 
 
-=item $val = $bibliographicreference->getAuthors()
+=item $val = $bibliographicreference->getYear()
 
-The restricted getter method for the authors attribute.
+The restricted getter method for the year attribute.
 
 Input parameters: none
 
-Return value: the current value of the authors attribute 
+Return value: the current value of the year attribute 
 
 Side effects: none
 
@@ -481,11 +525,11 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getAuthors {
+sub getYear {
   my $self = shift;
-  croak(__PACKAGE__ . "::getAuthors: arguments passed to getter")
+  croak(__PACKAGE__ . "::getYear: arguments passed to getter")
     if @_;
-  return $self->{__AUTHORS};
+  return $self->{__YEAR};
 }
 
 
@@ -548,254 +592,6 @@ sub getURI {
   croak(__PACKAGE__ . "::getURI: arguments passed to getter")
     if @_;
   return $self->{__URI};
-}
-
-
-
-
-=back
-
-
-=item volume
-
-Methods for the volume attribute.
-
-=over
-
-
-=item $val = $bibliographicreference->setVolume($val)
-
-The restricted setter method for the volume attribute.
-
-Input parameters: the value to which the volume attribute will be set 
-
-Return value: the current value of the volume attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setVolume {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setVolume: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setVolume: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__VOLUME} = $val;
-}
-
-
-
-=item $val = $bibliographicreference->getVolume()
-
-The restricted getter method for the volume attribute.
-
-Input parameters: none
-
-Return value: the current value of the volume attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getVolume {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getVolume: arguments passed to getter")
-    if @_;
-  return $self->{__VOLUME};
-}
-
-
-
-
-=back
-
-
-=item issue
-
-Methods for the issue attribute.
-
-=over
-
-
-=item $val = $bibliographicreference->setIssue($val)
-
-The restricted setter method for the issue attribute.
-
-Input parameters: the value to which the issue attribute will be set 
-
-Return value: the current value of the issue attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setIssue {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setIssue: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setIssue: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__ISSUE} = $val;
-}
-
-
-
-=item $val = $bibliographicreference->getIssue()
-
-The restricted getter method for the issue attribute.
-
-Input parameters: none
-
-Return value: the current value of the issue attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getIssue {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getIssue: arguments passed to getter")
-    if @_;
-  return $self->{__ISSUE};
-}
-
-
-
-
-=back
-
-
-=item editor
-
-Methods for the editor attribute.
-
-=over
-
-
-=item $val = $bibliographicreference->setEditor($val)
-
-The restricted setter method for the editor attribute.
-
-Input parameters: the value to which the editor attribute will be set 
-
-Return value: the current value of the editor attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setEditor {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setEditor: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setEditor: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__EDITOR} = $val;
-}
-
-
-
-=item $val = $bibliographicreference->getEditor()
-
-The restricted getter method for the editor attribute.
-
-Input parameters: none
-
-Return value: the current value of the editor attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getEditor {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getEditor: arguments passed to getter")
-    if @_;
-  return $self->{__EDITOR};
-}
-
-
-
-
-=back
-
-
-=item title
-
-Methods for the title attribute.
-
-=over
-
-
-=item $val = $bibliographicreference->setTitle($val)
-
-The restricted setter method for the title attribute.
-
-Input parameters: the value to which the title attribute will be set 
-
-Return value: the current value of the title attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setTitle {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setTitle: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setTitle: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__TITLE} = $val;
-}
-
-
-
-=item $val = $bibliographicreference->getTitle()
-
-The restricted getter method for the title attribute.
-
-Input parameters: none
-
-Return value: the current value of the title attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getTitle {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getTitle: arguments passed to getter")
-    if @_;
-  return $self->{__TITLE};
 }
 
 
@@ -928,68 +724,6 @@ sub getPublisher {
 =back
 
 
-=item year
-
-Methods for the year attribute.
-
-=over
-
-
-=item $val = $bibliographicreference->setYear($val)
-
-The restricted setter method for the year attribute.
-
-Input parameters: the value to which the year attribute will be set 
-
-Return value: the current value of the year attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setYear {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setYear: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setYear: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__YEAR} = $val;
-}
-
-
-
-=item $val = $bibliographicreference->getYear()
-
-The restricted getter method for the year attribute.
-
-Input parameters: none
-
-Return value: the current value of the year attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getYear {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getYear: arguments passed to getter")
-    if @_;
-  return $self->{__YEAR};
-}
-
-
-
-
-=back
-
-
 =item pages
 
 Methods for the pages attribute.
@@ -1052,6 +786,316 @@ sub getPages {
 =back
 
 
+=item title
+
+Methods for the title attribute.
+
+=over
+
+
+=item $val = $bibliographicreference->setTitle($val)
+
+The restricted setter method for the title attribute.
+
+Input parameters: the value to which the title attribute will be set 
+
+Return value: the current value of the title attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setTitle {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setTitle: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setTitle: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__TITLE} = $val;
+}
+
+
+
+=item $val = $bibliographicreference->getTitle()
+
+The restricted getter method for the title attribute.
+
+Input parameters: none
+
+Return value: the current value of the title attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getTitle {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getTitle: arguments passed to getter")
+    if @_;
+  return $self->{__TITLE};
+}
+
+
+
+
+=back
+
+
+=item editor
+
+Methods for the editor attribute.
+
+=over
+
+
+=item $val = $bibliographicreference->setEditor($val)
+
+The restricted setter method for the editor attribute.
+
+Input parameters: the value to which the editor attribute will be set 
+
+Return value: the current value of the editor attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setEditor {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setEditor: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setEditor: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__EDITOR} = $val;
+}
+
+
+
+=item $val = $bibliographicreference->getEditor()
+
+The restricted getter method for the editor attribute.
+
+Input parameters: none
+
+Return value: the current value of the editor attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getEditor {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getEditor: arguments passed to getter")
+    if @_;
+  return $self->{__EDITOR};
+}
+
+
+
+
+=back
+
+
+=item issue
+
+Methods for the issue attribute.
+
+=over
+
+
+=item $val = $bibliographicreference->setIssue($val)
+
+The restricted setter method for the issue attribute.
+
+Input parameters: the value to which the issue attribute will be set 
+
+Return value: the current value of the issue attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setIssue {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setIssue: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setIssue: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__ISSUE} = $val;
+}
+
+
+
+=item $val = $bibliographicreference->getIssue()
+
+The restricted getter method for the issue attribute.
+
+Input parameters: none
+
+Return value: the current value of the issue attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getIssue {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getIssue: arguments passed to getter")
+    if @_;
+  return $self->{__ISSUE};
+}
+
+
+
+
+=back
+
+
+=item volume
+
+Methods for the volume attribute.
+
+=over
+
+
+=item $val = $bibliographicreference->setVolume($val)
+
+The restricted setter method for the volume attribute.
+
+Input parameters: the value to which the volume attribute will be set 
+
+Return value: the current value of the volume attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setVolume {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setVolume: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setVolume: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__VOLUME} = $val;
+}
+
+
+
+=item $val = $bibliographicreference->getVolume()
+
+The restricted getter method for the volume attribute.
+
+Input parameters: none
+
+Return value: the current value of the volume attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getVolume {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getVolume: arguments passed to getter")
+    if @_;
+  return $self->{__VOLUME};
+}
+
+
+
+
+=back
+
+
+=item authors
+
+Methods for the authors attribute.
+
+=over
+
+
+=item $val = $bibliographicreference->setAuthors($val)
+
+The restricted setter method for the authors attribute.
+
+Input parameters: the value to which the authors attribute will be set 
+
+Return value: the current value of the authors attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setAuthors {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setAuthors: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setAuthors: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__AUTHORS} = $val;
+}
+
+
+
+=item $val = $bibliographicreference->getAuthors()
+
+The restricted getter method for the authors attribute.
+
+Input parameters: none
+
+Return value: the current value of the authors attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getAuthors {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getAuthors: arguments passed to getter")
+    if @_;
+  return $self->{__AUTHORS};
+}
+
+
+
+
+=back
+
+
 
 =back
 
@@ -1064,24 +1108,24 @@ BEGIN {
   $__ASSOCIATIONS = [
           'parameters',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Criteria that can be used to look up the reference in a repository.',
-                                        '__CLASS_NAME' => 'BibliographicReference',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'parameters',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1..N',
                                          '__DOCUMENTATION' => 'Criteria that can be used to look up the reference in a repository.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'parameters',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Criteria that can be used to look up the reference in a repository.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BibliographicReference'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: ArrayManufacture.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -62,11 +62,11 @@ $VERSION = q[$Id: ArrayManufacture.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart 
     # creating an already populated instance
   my $arraymanufacture = Bio::MAGE::Array::ArrayManufacture->new(tolerance=>$tolerance_value,
 			manufacturingDate=>$manufacturingDate_value,
-			arrayManufacturers=>$arrayManufacturers_value,
-			protocolApplications=>$protocolApplications_value,
 			featureLIMSs=>$featureLIMSs_value,
 			arrays=>$arrays_value,
-			qualityControlStatistics=>$qualityControlStatistics_value);
+			qualityControlStatistics=>$qualityControlStatistics_value,
+			protocolApplications=>$protocolApplications_value,
+			arrayManufacturers=>$arrayManufacturers_value);
 
     # setting and retrieving object attributes
   my $tolerance_val = $arraymanufacture->tolerance();
@@ -76,12 +76,6 @@ $VERSION = q[$Id: ArrayManufacture.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart 
   $arraymanufacture->manufacturingDate($value);
 
     # setting and retrieving object associations
-  my $arrayManufacturers_val = $arraymanufacture->arrayManufacturers();
-  $arraymanufacture->arrayManufacturers($value);
-
-  my $protocolApplications_val = $arraymanufacture->protocolApplications();
-  $arraymanufacture->protocolApplications($value);
-
   my $featureLIMSs_val = $arraymanufacture->featureLIMSs();
   $arraymanufacture->featureLIMSs($value);
 
@@ -90,6 +84,12 @@ $VERSION = q[$Id: ArrayManufacture.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart 
 
   my $qualityControlStatistics_val = $arraymanufacture->qualityControlStatistics();
   $arraymanufacture->qualityControlStatistics($value);
+
+  my $protocolApplications_val = $arraymanufacture->protocolApplications();
+  $arraymanufacture->protocolApplications($value);
+
+  my $arrayManufacturers_val = $arraymanufacture->arrayManufacturers();
+  $arraymanufacture->arrayManufacturers($value);
 
 
 =head2 DESCRIPTION
@@ -136,67 +136,102 @@ named-value style arguments:
 
 =item * tolerance
 
-Sets the value of the tolerance attribute (from C<Bio::MAGE::Array::ArrayManufacture>).
+Sets the value of the tolerance attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::ArrayManufacture>).
+
 
 
 =item * manufacturingDate
 
-Sets the value of the manufacturingDate attribute (from C<Bio::MAGE::Array::ArrayManufacture>).
+Sets the value of the manufacturingDate attribute (this attribute was inherited
+from class C<Bio::MAGE::Array::ArrayManufacture>).
 
-
-=item * arrayManufacturers
-
-Sets the value of the arrayManufacturers association (from C<Bio::MAGE::Array::ArrayManufacture>).
-
-
-=item * protocolApplications
-
-Sets the value of the protocolApplications association (from C<Bio::MAGE::Array::ArrayManufacture>).
-
-
-=item * featureLIMSs
-
-Sets the value of the featureLIMSs association (from C<Bio::MAGE::Array::ArrayManufacture>).
 
 
 =item * arrays
 
-Sets the value of the arrays association (from C<Bio::MAGE::Array::ArrayManufacture>).
+Sets the value of the arrays association (this association was inherited
+from class C<Bio::MAGE::Array::ArrayManufacture>).
+
+The value will be of type C<Array>.
+
+
+=item * featureLIMSs
+
+Sets the value of the featureLIMSs association (this association was inherited
+from class C<Bio::MAGE::Array::ArrayManufacture>).
+
+The value will be of type C<ManufactureLIMS>.
+
+
+=item * protocolApplications
+
+Sets the value of the protocolApplications association (this association was inherited
+from class C<Bio::MAGE::Array::ArrayManufacture>).
+
+The value will be of type C<ProtocolApplication>.
 
 
 =item * qualityControlStatistics
 
-Sets the value of the qualityControlStatistics association (from C<Bio::MAGE::Array::ArrayManufacture>).
+Sets the value of the qualityControlStatistics association (this association was inherited
+from class C<Bio::MAGE::Array::ArrayManufacture>).
+
+The value will be of type C<NameValueType>.
+
+
+=item * arrayManufacturers
+
+Sets the value of the arrayManufacturers association (this association was inherited
+from class C<Bio::MAGE::Array::ArrayManufacture>).
+
+The value will be of type C<Contact>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -342,7 +377,8 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('tolerance', 'manufacturingDate');
+  my @list = ('tolerance',
+'manufacturingDate');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -359,7 +395,11 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('arrayManufacturers', 'protocolApplications', 'featureLIMSs', 'arrays', 'qualityControlStatistics');
+  my @list = ('featureLIMSs',
+'arrays',
+'qualityControlStatistics',
+'protocolApplications',
+'arrayManufacturers');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -643,108 +683,108 @@ BEGIN {
   $__ASSOCIATIONS = [
           'arrays',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'information',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Association between the manufactured array and the information on that manufacture.',
-                                        '__CLASS_NAME' => 'ArrayManufacture',
-                                        '__RANK' => '2',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'arrays',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1..N',
                                          '__DOCUMENTATION' => 'Association between the manufactured array and the information on that manufacture.',
-                                         '__CLASS_NAME' => 'Array',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'arrays',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Array'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '2',
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Association between the manufactured array and the information on that manufacture.',
+                                        '__NAME' => 'information',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'ArrayManufacture'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'arrayManufacturers',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The person or organization to contact for information concerning the ArrayManufacture.',
-                                        '__CLASS_NAME' => 'ArrayManufacture',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'arrayManufacturers',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The person or organization to contact for information concerning the ArrayManufacture.',
-                                         '__CLASS_NAME' => 'Contact',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'arrayManufacturers',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Contact'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The person or organization to contact for information concerning the ArrayManufacture.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ArrayManufacture'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'qualityControlStatistics',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Information on the quality of the ArrayManufacture.',
-                                        '__CLASS_NAME' => 'ArrayManufacture',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'qualityControlStatistics',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Information on the quality of the ArrayManufacture.',
-                                         '__CLASS_NAME' => 'NameValueType',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'qualityControlStatistics',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'NameValueType'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Information on the quality of the ArrayManufacture.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ArrayManufacture'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'featureLIMSs',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Information on the manufacture of the features.',
-                                        '__CLASS_NAME' => 'ArrayManufacture',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'featureLIMSs',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Information on the manufacture of the features.',
-                                         '__CLASS_NAME' => 'ManufactureLIMS',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'featureLIMSs',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ManufactureLIMS'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Information on the manufacture of the features.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ArrayManufacture'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'protocolApplications',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The protocols followed in the manufacturing of the arrays.',
-                                        '__CLASS_NAME' => 'ArrayManufacture',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'protocolApplications',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '5',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The protocols followed in the manufacturing of the arrays.',
-                                         '__CLASS_NAME' => 'ProtocolApplication',
-                                         '__RANK' => '5',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'protocolApplications',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ProtocolApplication'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The protocols followed in the manufacturing of the arrays.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ArrayManufacture'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -782,216 +822,6 @@ the association.
 Bio::MAGE::Array::ArrayManufacture: has the following association accessor methods:
 
 =over
-
-
-=item arrayManufacturers
-
-
-From the MAGE-OM documentation for the C<arrayManufacturers> association:
-
-The person or organization to contact for information concerning the ArrayManufacture.
-
-
-
-=over
-
-
-=item $array_ref = $arraymanufacture->setArrayManufacturers($array_ref)
-
-The restricted setter method for the arrayManufacturers association.
-
-Input parameters: the value to which the arrayManufacturers association will be set : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Contact>
-
-Return value: the current value of the arrayManufacturers association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Contact>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::AuditAndSecurity::Contact> instances
-
-=cut
-
-sub setArrayManufacturers {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setArrayManufacturers: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setArrayManufacturers: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-    croak(__PACKAGE__ . "::setArrayManufacturers: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setArrayManufacturers: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Contact")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Contact');
-  }
-
-  return $self->{__ARRAYMANUFACTURERS} = $val;
-}
-
-
-
-=item $array_ref = $arraymanufacture->getArrayManufacturers()
-
-The restricted getter method for the arrayManufacturers association.
-
-Input parameters: none
-
-Return value: the current value of the arrayManufacturers association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Contact>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getArrayManufacturers {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getArrayManufacturers: arguments passed to getter")
-    if @_;
-  return $self->{__ARRAYMANUFACTURERS};
-}
-
-
-
-=item $arraymanufacture->addArrayManufacturers(@vals)
-
-Because the arrayManufacturers association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the arrayManufacturers
-association.
-
-Input parameters: the list of values C<@vals> to add to the arrayManufacturers
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::AuditAndSecurity::Contact>
-
-=cut
-
-sub addArrayManufacturers {
-  my $self = shift;
-  croak(__PACKAGE__ . "::addArrayManufacturers: no arguments passed to setter")
-    unless @_;
-  my @vals = @_;
-    foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addArrayManufacturers: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Contact")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Contact');
-  }
-
-  push(@{$self->{__ARRAYMANUFACTURERS}},@vals);
-}
-
-
-
-=back
-
-
-=item protocolApplications
-
-
-From the MAGE-OM documentation for the C<protocolApplications> association:
-
-The protocols followed in the manufacturing of the arrays.
-
-
-
-=over
-
-
-=item $array_ref = $arraymanufacture->setProtocolApplications($array_ref)
-
-The restricted setter method for the protocolApplications association.
-
-Input parameters: the value to which the protocolApplications association will be set : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
-
-Return value: the current value of the protocolApplications association : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Protocol::ProtocolApplication> instances
-
-=cut
-
-sub setProtocolApplications {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setProtocolApplications: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setProtocolApplications: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-    croak(__PACKAGE__ . "::setProtocolApplications: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setProtocolApplications: wrong type: " . ref($val) . " expected Bio::MAGE::Protocol::ProtocolApplication")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::Protocol::ProtocolApplication');
-  }
-
-  return $self->{__PROTOCOLAPPLICATIONS} = $val;
-}
-
-
-
-=item $array_ref = $arraymanufacture->getProtocolApplications()
-
-The restricted getter method for the protocolApplications association.
-
-Input parameters: none
-
-Return value: the current value of the protocolApplications association : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getProtocolApplications {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getProtocolApplications: arguments passed to getter")
-    if @_;
-  return $self->{__PROTOCOLAPPLICATIONS};
-}
-
-
-
-=item $arraymanufacture->addProtocolApplications(@vals)
-
-Because the protocolApplications association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the protocolApplications
-association.
-
-Input parameters: the list of values C<@vals> to add to the protocolApplications
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Protocol::ProtocolApplication>
-
-=cut
-
-sub addProtocolApplications {
-  my $self = shift;
-  croak(__PACKAGE__ . "::addProtocolApplications: no arguments passed to setter")
-    unless @_;
-  my @vals = @_;
-    foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addProtocolApplications: wrong type: " . ref($val) . " expected Bio::MAGE::Protocol::ProtocolApplication")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::Protocol::ProtocolApplication');
-  }
-
-  push(@{$self->{__PROTOCOLAPPLICATIONS}},@vals);
-}
-
-
-
-=back
 
 
 =item featureLIMSs
@@ -1302,6 +1132,216 @@ sub addQualityControlStatistics {
   }
 
   push(@{$self->{__QUALITYCONTROLSTATISTICS}},@vals);
+}
+
+
+
+=back
+
+
+=item protocolApplications
+
+
+From the MAGE-OM documentation for the C<protocolApplications> association:
+
+The protocols followed in the manufacturing of the arrays.
+
+
+
+=over
+
+
+=item $array_ref = $arraymanufacture->setProtocolApplications($array_ref)
+
+The restricted setter method for the protocolApplications association.
+
+Input parameters: the value to which the protocolApplications association will be set : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
+
+Return value: the current value of the protocolApplications association : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Protocol::ProtocolApplication> instances
+
+=cut
+
+sub setProtocolApplications {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setProtocolApplications: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setProtocolApplications: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setProtocolApplications: expected array reference, got $self")
+    unless UNIVERSAL::isa($val,'ARRAY');
+  foreach my $val (@{$val}) {
+    croak(__PACKAGE__ . "::setProtocolApplications: wrong type: " . ref($val) . " expected Bio::MAGE::Protocol::ProtocolApplication")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Protocol::ProtocolApplication');
+  }
+
+  return $self->{__PROTOCOLAPPLICATIONS} = $val;
+}
+
+
+
+=item $array_ref = $arraymanufacture->getProtocolApplications()
+
+The restricted getter method for the protocolApplications association.
+
+Input parameters: none
+
+Return value: the current value of the protocolApplications association : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getProtocolApplications {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getProtocolApplications: arguments passed to getter")
+    if @_;
+  return $self->{__PROTOCOLAPPLICATIONS};
+}
+
+
+
+=item $arraymanufacture->addProtocolApplications(@vals)
+
+Because the protocolApplications association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the protocolApplications
+association.
+
+Input parameters: the list of values C<@vals> to add to the protocolApplications
+association. B<NOTE>: submitting a single value is permitted.
+
+Return value: none
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Protocol::ProtocolApplication>
+
+=cut
+
+sub addProtocolApplications {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addProtocolApplications: no arguments passed to setter")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addProtocolApplications: wrong type: " . ref($val) . " expected Bio::MAGE::Protocol::ProtocolApplication")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Protocol::ProtocolApplication');
+  }
+
+  push(@{$self->{__PROTOCOLAPPLICATIONS}},@vals);
+}
+
+
+
+=back
+
+
+=item arrayManufacturers
+
+
+From the MAGE-OM documentation for the C<arrayManufacturers> association:
+
+The person or organization to contact for information concerning the ArrayManufacture.
+
+
+
+=over
+
+
+=item $array_ref = $arraymanufacture->setArrayManufacturers($array_ref)
+
+The restricted setter method for the arrayManufacturers association.
+
+Input parameters: the value to which the arrayManufacturers association will be set : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Contact>
+
+Return value: the current value of the arrayManufacturers association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Contact>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::AuditAndSecurity::Contact> instances
+
+=cut
+
+sub setArrayManufacturers {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setArrayManufacturers: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setArrayManufacturers: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setArrayManufacturers: expected array reference, got $self")
+    unless UNIVERSAL::isa($val,'ARRAY');
+  foreach my $val (@{$val}) {
+    croak(__PACKAGE__ . "::setArrayManufacturers: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Contact")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Contact');
+  }
+
+  return $self->{__ARRAYMANUFACTURERS} = $val;
+}
+
+
+
+=item $array_ref = $arraymanufacture->getArrayManufacturers()
+
+The restricted getter method for the arrayManufacturers association.
+
+Input parameters: none
+
+Return value: the current value of the arrayManufacturers association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Contact>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getArrayManufacturers {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getArrayManufacturers: arguments passed to getter")
+    if @_;
+  return $self->{__ARRAYMANUFACTURERS};
+}
+
+
+
+=item $arraymanufacture->addArrayManufacturers(@vals)
+
+Because the arrayManufacturers association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the arrayManufacturers
+association.
+
+Input parameters: the list of values C<@vals> to add to the arrayManufacturers
+association. B<NOTE>: submitting a single value is permitted.
+
+Return value: none
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::AuditAndSecurity::Contact>
+
+=cut
+
+sub addArrayManufacturers {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addArrayManufacturers: no arguments passed to setter")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addArrayManufacturers: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Contact")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Contact');
+  }
+
+  push(@{$self->{__ARRAYMANUFACTURERS}},@vals);
 }
 
 

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::DesignElement::DesignElement Exporter);
-$VERSION = q[$Id: CompositeSequence.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -61,18 +61,18 @@ $VERSION = q[$Id: CompositeSequence.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart
 
     # creating an already populated instance
   my $compositesequence = Bio::MAGE::DesignElement::CompositeSequence->new(compositeCompositeMaps=>$compositeCompositeMaps_value,
-			biologicalCharacteristics=>$biologicalCharacteristics_value,
-			reporterCompositeMaps=>$reporterCompositeMaps_value);
+			reporterCompositeMaps=>$reporterCompositeMaps_value,
+			biologicalCharacteristics=>$biologicalCharacteristics_value);
 
     # setting and retrieving object associations
   my $compositeCompositeMaps_val = $compositesequence->compositeCompositeMaps();
   $compositesequence->compositeCompositeMaps($value);
 
-  my $biologicalCharacteristics_val = $compositesequence->biologicalCharacteristics();
-  $compositesequence->biologicalCharacteristics($value);
-
   my $reporterCompositeMaps_val = $compositesequence->reporterCompositeMaps();
   $compositesequence->reporterCompositeMaps($value);
+
+  my $biologicalCharacteristics_val = $compositesequence->biologicalCharacteristics();
+  $compositesequence->biologicalCharacteristics($value);
 
 
 =head2 DESCRIPTION
@@ -120,52 +120,80 @@ named-value style arguments:
 
 =item * compositeCompositeMaps
 
-Sets the value of the compositeCompositeMaps association (from C<Bio::MAGE::DesignElement::CompositeSequence>).
+Sets the value of the compositeCompositeMaps association (this association was inherited
+from class C<Bio::MAGE::DesignElement::CompositeSequence>).
 
-
-=item * biologicalCharacteristics
-
-Sets the value of the biologicalCharacteristics association (from C<Bio::MAGE::DesignElement::CompositeSequence>).
+The value will be of type C<CompositeCompositeMap>.
 
 
 =item * reporterCompositeMaps
 
-Sets the value of the reporterCompositeMaps association (from C<Bio::MAGE::DesignElement::CompositeSequence>).
+Sets the value of the reporterCompositeMaps association (this association was inherited
+from class C<Bio::MAGE::DesignElement::CompositeSequence>).
+
+The value will be of type C<ReporterCompositeMap>.
+
+
+=item * biologicalCharacteristics
+
+Sets the value of the biologicalCharacteristics association (this association was inherited
+from class C<Bio::MAGE::DesignElement::CompositeSequence>).
+
+The value will be of type C<BioSequence>.
 
 
 =item * controlType
 
-Sets the value of the controlType association (from C<Bio::MAGE::DesignElement::DesignElement>).
+Sets the value of the controlType association (this association was inherited
+from class C<Bio::MAGE::DesignElement::DesignElement>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -328,7 +356,9 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('compositeCompositeMaps', 'biologicalCharacteristics', 'reporterCompositeMaps');
+  my @list = ('compositeCompositeMaps',
+'reporterCompositeMaps',
+'biologicalCharacteristics');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -480,66 +510,66 @@ BEGIN {
   $__ASSOCIATIONS = [
           'biologicalCharacteristics',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The annotation on the BioSequence this CompositeSequence represents.  Typically the sequences will be a Genes, Exons, or SpliceVariants.',
-                                        '__CLASS_NAME' => 'CompositeSequence',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'biologicalCharacteristics',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The annotation on the BioSequence this CompositeSequence represents.  Typically the sequences will be a Genes, Exons, or SpliceVariants.',
-                                         '__CLASS_NAME' => 'BioSequence',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'biologicalCharacteristics',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioSequence'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The annotation on the BioSequence this CompositeSequence represents.  Typically the sequences will be a Genes, Exons, or SpliceVariants.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'CompositeSequence'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'compositeCompositeMaps',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'compositeSequence',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'A map to the compositeSequences that compose this CompositeSequence.',
-                                        '__CLASS_NAME' => 'CompositeSequence',
-                                        '__RANK' => '1',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'compositeCompositeMaps',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'A map to the compositeSequences that compose this CompositeSequence.',
-                                         '__CLASS_NAME' => 'CompositeCompositeMap',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'compositeCompositeMaps',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'CompositeCompositeMap'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '1',
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'A map to the compositeSequences that compose this CompositeSequence.',
+                                        '__NAME' => 'compositeSequence',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'CompositeSequence'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'reporterCompositeMaps',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'compositeSequence',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'A map to the reporters that compose this CompositeSequence.',
-                                        '__CLASS_NAME' => 'CompositeSequence',
-                                        '__RANK' => '1',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'reporterCompositeMaps',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'A map to the reporters that compose this CompositeSequence.',
-                                         '__CLASS_NAME' => 'ReporterCompositeMap',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'reporterCompositeMaps',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ReporterCompositeMap'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '1',
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'A map to the reporters that compose this CompositeSequence.',
+                                        '__NAME' => 'compositeSequence',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'CompositeSequence'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -684,111 +714,6 @@ sub addCompositeCompositeMaps {
 =back
 
 
-=item biologicalCharacteristics
-
-
-From the MAGE-OM documentation for the C<biologicalCharacteristics> association:
-
-The annotation on the BioSequence this CompositeSequence represents.  Typically the sequences will be a Genes, Exons, or SpliceVariants.
-
-
-
-=over
-
-
-=item $array_ref = $compositesequence->setBiologicalCharacteristics($array_ref)
-
-The restricted setter method for the biologicalCharacteristics association.
-
-Input parameters: the value to which the biologicalCharacteristics association will be set : a reference to an array of objects of type C<Bio::MAGE::BioSequence::BioSequence>
-
-Return value: the current value of the biologicalCharacteristics association : a reference to an array of objects of type C<Bio::MAGE::BioSequence::BioSequence>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::BioSequence::BioSequence> instances
-
-=cut
-
-sub setBiologicalCharacteristics {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setBiologicalCharacteristics: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setBiologicalCharacteristics: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-    croak(__PACKAGE__ . "::setBiologicalCharacteristics: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setBiologicalCharacteristics: wrong type: " . ref($val) . " expected Bio::MAGE::BioSequence::BioSequence")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::BioSequence::BioSequence');
-  }
-
-  return $self->{__BIOLOGICALCHARACTERISTICS} = $val;
-}
-
-
-
-=item $array_ref = $compositesequence->getBiologicalCharacteristics()
-
-The restricted getter method for the biologicalCharacteristics association.
-
-Input parameters: none
-
-Return value: the current value of the biologicalCharacteristics association : a reference to an array of objects of type C<Bio::MAGE::BioSequence::BioSequence>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getBiologicalCharacteristics {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getBiologicalCharacteristics: arguments passed to getter")
-    if @_;
-  return $self->{__BIOLOGICALCHARACTERISTICS};
-}
-
-
-
-=item $compositesequence->addBiologicalCharacteristics(@vals)
-
-Because the biologicalCharacteristics association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the biologicalCharacteristics
-association.
-
-Input parameters: the list of values C<@vals> to add to the biologicalCharacteristics
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::BioSequence::BioSequence>
-
-=cut
-
-sub addBiologicalCharacteristics {
-  my $self = shift;
-  croak(__PACKAGE__ . "::addBiologicalCharacteristics: no arguments passed to setter")
-    unless @_;
-  my @vals = @_;
-    foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addBiologicalCharacteristics: wrong type: " . ref($val) . " expected Bio::MAGE::BioSequence::BioSequence")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::BioSequence::BioSequence');
-  }
-
-  push(@{$self->{__BIOLOGICALCHARACTERISTICS}},@vals);
-}
-
-
-
-=back
-
-
 =item reporterCompositeMaps
 
 
@@ -887,6 +812,111 @@ sub addReporterCompositeMaps {
   }
 
   push(@{$self->{__REPORTERCOMPOSITEMAPS}},@vals);
+}
+
+
+
+=back
+
+
+=item biologicalCharacteristics
+
+
+From the MAGE-OM documentation for the C<biologicalCharacteristics> association:
+
+The annotation on the BioSequence this CompositeSequence represents.  Typically the sequences will be a Genes, Exons, or SpliceVariants.
+
+
+
+=over
+
+
+=item $array_ref = $compositesequence->setBiologicalCharacteristics($array_ref)
+
+The restricted setter method for the biologicalCharacteristics association.
+
+Input parameters: the value to which the biologicalCharacteristics association will be set : a reference to an array of objects of type C<Bio::MAGE::BioSequence::BioSequence>
+
+Return value: the current value of the biologicalCharacteristics association : a reference to an array of objects of type C<Bio::MAGE::BioSequence::BioSequence>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::BioSequence::BioSequence> instances
+
+=cut
+
+sub setBiologicalCharacteristics {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setBiologicalCharacteristics: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setBiologicalCharacteristics: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setBiologicalCharacteristics: expected array reference, got $self")
+    unless UNIVERSAL::isa($val,'ARRAY');
+  foreach my $val (@{$val}) {
+    croak(__PACKAGE__ . "::setBiologicalCharacteristics: wrong type: " . ref($val) . " expected Bio::MAGE::BioSequence::BioSequence")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::BioSequence::BioSequence');
+  }
+
+  return $self->{__BIOLOGICALCHARACTERISTICS} = $val;
+}
+
+
+
+=item $array_ref = $compositesequence->getBiologicalCharacteristics()
+
+The restricted getter method for the biologicalCharacteristics association.
+
+Input parameters: none
+
+Return value: the current value of the biologicalCharacteristics association : a reference to an array of objects of type C<Bio::MAGE::BioSequence::BioSequence>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getBiologicalCharacteristics {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getBiologicalCharacteristics: arguments passed to getter")
+    if @_;
+  return $self->{__BIOLOGICALCHARACTERISTICS};
+}
+
+
+
+=item $compositesequence->addBiologicalCharacteristics(@vals)
+
+Because the biologicalCharacteristics association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the biologicalCharacteristics
+association.
+
+Input parameters: the list of values C<@vals> to add to the biologicalCharacteristics
+association. B<NOTE>: submitting a single value is permitted.
+
+Return value: none
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::BioSequence::BioSequence>
+
+=cut
+
+sub addBiologicalCharacteristics {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addBiologicalCharacteristics: no arguments passed to setter")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addBiologicalCharacteristics: wrong type: " . ref($val) . " expected Bio::MAGE::BioSequence::BioSequence")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::BioSequence::BioSequence');
+  }
+
+  push(@{$self->{__BIOLOGICALCHARACTERISTICS}},@vals);
 }
 
 

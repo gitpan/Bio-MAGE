@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::BioAssayData::DesignElementMap Exporter);
-$VERSION = q[$Id: FeatureReporterMap.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -115,47 +115,72 @@ named-value style arguments:
 
 =item * featureInformationSources
 
-Sets the value of the featureInformationSources association (from C<Bio::MAGE::DesignElement::FeatureReporterMap>).
+Sets the value of the featureInformationSources association (this association was inherited
+from class C<Bio::MAGE::DesignElement::FeatureReporterMap>).
+
+The value will be of type C<FeatureInformation>.
 
 
 =item * reporter
 
-Sets the value of the reporter association (from C<Bio::MAGE::DesignElement::FeatureReporterMap>).
+Sets the value of the reporter association (this association was inherited
+from class C<Bio::MAGE::DesignElement::FeatureReporterMap>).
+
+The value will be of type C<Reporter>.
 
 
 =item * protocolApplications
 
-Sets the value of the protocolApplications association (from C<Bio::MAGE::BioEvent::BioEvent>).
+Sets the value of the protocolApplications association (this association was inherited
+from class C<Bio::MAGE::BioEvent::BioEvent>).
+
+The value will be of type C<ProtocolApplication>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -318,7 +343,8 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('featureInformationSources', 'reporter');
+  my @list = ('featureInformationSources',
+'reporter');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -470,45 +496,45 @@ BEGIN {
   $__ASSOCIATIONS = [
           'reporter',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'featureReporterMaps',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'Associates features with their reporter.',
-                                        '__CLASS_NAME' => 'FeatureReporterMap',
-                                        '__RANK' => '4',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'reporter',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'Associates features with their reporter.',
-                                         '__CLASS_NAME' => 'Reporter',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'reporter',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Reporter'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '4',
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'Associates features with their reporter.',
+                                        '__NAME' => 'featureReporterMaps',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'FeatureReporterMap'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'featureInformationSources',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Typically, the features on an array that are manufactured with this reporter\'s BioSequence.',
-                                        '__CLASS_NAME' => 'FeatureReporterMap',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'featureInformationSources',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '1..N',
                                          '__DOCUMENTATION' => 'Typically, the features on an array that are manufactured with this reporter\'s BioSequence.',
-                                         '__CLASS_NAME' => 'FeatureInformation',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'featureInformationSources',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'FeatureInformation'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Typically, the features on an array that are manufactured with this reporter\'s BioSequence.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'FeatureReporterMap'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

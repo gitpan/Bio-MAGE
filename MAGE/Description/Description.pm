@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Describable Exporter);
-$VERSION = q[$Id: Description.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,32 +60,32 @@ $VERSION = q[$Id: Description.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $
   my $description = Bio::MAGE::Description::Description->new();
 
     # creating an already populated instance
-  my $description = Bio::MAGE::Description::Description->new(URI=>$URI_value,
-			text=>$text_value,
-			databaseReferences=>$databaseReferences_value,
+  my $description = Bio::MAGE::Description::Description->new(text=>$text_value,
+			URI=>$URI_value,
 			externalReference=>$externalReference_value,
+			annotations=>$annotations_value,
 			bibliographicReferences=>$bibliographicReferences_value,
-			annotations=>$annotations_value);
+			databaseReferences=>$databaseReferences_value);
 
     # setting and retrieving object attributes
-  my $URI_val = $description->URI();
-  $description->URI($value);
-
   my $text_val = $description->text();
   $description->text($value);
 
-    # setting and retrieving object associations
-  my $databaseReferences_val = $description->databaseReferences();
-  $description->databaseReferences($value);
+  my $URI_val = $description->URI();
+  $description->URI($value);
 
+    # setting and retrieving object associations
   my $externalReference_val = $description->externalReference();
   $description->externalReference($value);
+
+  my $annotations_val = $description->annotations();
+  $description->annotations($value);
 
   my $bibliographicReferences_val = $description->bibliographicReferences();
   $description->bibliographicReferences($value);
 
-  my $annotations_val = $description->annotations();
-  $description->annotations($value);
+  my $databaseReferences_val = $description->databaseReferences();
+  $description->databaseReferences($value);
 
 
 =head2 DESCRIPTION
@@ -130,54 +130,82 @@ named-value style arguments:
 =over
 
 
-=item * URI
-
-Sets the value of the URI attribute (from C<Bio::MAGE::Description::Description>).
-
-
 =item * text
 
-Sets the value of the text attribute (from C<Bio::MAGE::Description::Description>).
+Sets the value of the text attribute (this attribute was inherited
+from class C<Bio::MAGE::Description::Description>).
 
 
-=item * databaseReferences
 
-Sets the value of the databaseReferences association (from C<Bio::MAGE::Description::Description>).
+=item * URI
+
+Sets the value of the URI attribute (this attribute was inherited
+from class C<Bio::MAGE::Description::Description>).
+
 
 
 =item * externalReference
 
-Sets the value of the externalReference association (from C<Bio::MAGE::Description::Description>).
+Sets the value of the externalReference association (this association was inherited
+from class C<Bio::MAGE::Description::Description>).
 
-
-=item * bibliographicReferences
-
-Sets the value of the bibliographicReferences association (from C<Bio::MAGE::Description::Description>).
+The value will be of type C<ExternalReference>.
 
 
 =item * annotations
 
-Sets the value of the annotations association (from C<Bio::MAGE::Description::Description>).
+Sets the value of the annotations association (this association was inherited
+from class C<Bio::MAGE::Description::Description>).
+
+The value will be of type C<OntologyEntry>.
 
 
-=item * security
+=item * databaseReferences
 
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
+Sets the value of the databaseReferences association (this association was inherited
+from class C<Bio::MAGE::Description::Description>).
+
+The value will be of type C<DatabaseEntry>.
 
 
-=item * auditTrail
+=item * bibliographicReferences
 
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
+Sets the value of the bibliographicReferences association (this association was inherited
+from class C<Bio::MAGE::Description::Description>).
+
+The value will be of type C<BibliographicReference>.
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -323,7 +351,8 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('URI', 'text');
+  my @list = ('text',
+'URI');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -340,7 +369,10 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('databaseReferences', 'externalReference', 'bibliographicReferences', 'annotations');
+  my @list = ('externalReference',
+'annotations',
+'bibliographicReferences',
+'databaseReferences');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -384,72 +416,6 @@ getter methods for each attribute.
 Bio::MAGE::Description::Description: has the following attribute accessor methods:
 
 =over
-
-
-=item URI
-
-From the MAGE-OM documentation for the C<URI> attribute:
-
-A reference to the location and type of an outside resource.
-
-
-
-=over
-
-
-=item $val = $description->setURI($val)
-
-The restricted setter method for the URI attribute.
-
-Input parameters: the value to which the URI attribute will be set 
-
-Return value: the current value of the URI attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setURI {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setURI: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setURI: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__URI} = $val;
-}
-
-
-
-=item $val = $description->getURI()
-
-The restricted getter method for the URI attribute.
-
-Input parameters: none
-
-Return value: the current value of the URI attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getURI {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getURI: arguments passed to getter")
-    if @_;
-  return $self->{__URI};
-}
-
-
-
-
-=back
 
 
 =item text
@@ -518,6 +484,72 @@ sub getText {
 =back
 
 
+=item URI
+
+From the MAGE-OM documentation for the C<URI> attribute:
+
+A reference to the location and type of an outside resource.
+
+
+
+=over
+
+
+=item $val = $description->setURI($val)
+
+The restricted setter method for the URI attribute.
+
+Input parameters: the value to which the URI attribute will be set 
+
+Return value: the current value of the URI attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setURI {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setURI: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setURI: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__URI} = $val;
+}
+
+
+
+=item $val = $description->getURI()
+
+The restricted getter method for the URI attribute.
+
+Input parameters: none
+
+Return value: the current value of the URI attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getURI {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getURI: arguments passed to getter")
+    if @_;
+  return $self->{__URI};
+}
+
+
+
+
+=back
+
+
 
 =back
 
@@ -530,87 +562,87 @@ BEGIN {
   $__ASSOCIATIONS = [
           'externalReference',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Specifies where the described instance was originally obtained from.',
-                                        '__CLASS_NAME' => 'Description',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'externalReference',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Specifies where the described instance was originally obtained from.',
-                                         '__CLASS_NAME' => 'ExternalReference',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'externalReference',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ExternalReference'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Specifies where the described instance was originally obtained from.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Description'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'annotations',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Allows specification of ontology entries related to the instance being described.',
-                                        '__CLASS_NAME' => 'Description',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'annotations',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Allows specification of ontology entries related to the instance being described.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'annotations',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Allows specification of ontology entries related to the instance being described.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Description'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'databaseReferences',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'References to entries in databases.',
-                                        '__CLASS_NAME' => 'Description',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'databaseReferences',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'References to entries in databases.',
-                                         '__CLASS_NAME' => 'DatabaseEntry',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'databaseReferences',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'DatabaseEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'References to entries in databases.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Description'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'bibliographicReferences',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'References to existing literature.',
-                                        '__CLASS_NAME' => 'Description',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'bibliographicReferences',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'References to existing literature.',
-                                         '__CLASS_NAME' => 'BibliographicReference',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'bibliographicReferences',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BibliographicReference'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'References to existing literature.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Description'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -648,111 +680,6 @@ the association.
 Bio::MAGE::Description::Description: has the following association accessor methods:
 
 =over
-
-
-=item databaseReferences
-
-
-From the MAGE-OM documentation for the C<databaseReferences> association:
-
-References to entries in databases.
-
-
-
-=over
-
-
-=item $array_ref = $description->setDatabaseReferences($array_ref)
-
-The restricted setter method for the databaseReferences association.
-
-Input parameters: the value to which the databaseReferences association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::DatabaseEntry>
-
-Return value: the current value of the databaseReferences association : a reference to an array of objects of type C<Bio::MAGE::Description::DatabaseEntry>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Description::DatabaseEntry> instances
-
-=cut
-
-sub setDatabaseReferences {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setDatabaseReferences: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setDatabaseReferences: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-    croak(__PACKAGE__ . "::setDatabaseReferences: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setDatabaseReferences: wrong type: " . ref($val) . " expected Bio::MAGE::Description::DatabaseEntry")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::DatabaseEntry');
-  }
-
-  return $self->{__DATABASEREFERENCES} = $val;
-}
-
-
-
-=item $array_ref = $description->getDatabaseReferences()
-
-The restricted getter method for the databaseReferences association.
-
-Input parameters: none
-
-Return value: the current value of the databaseReferences association : a reference to an array of objects of type C<Bio::MAGE::Description::DatabaseEntry>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getDatabaseReferences {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getDatabaseReferences: arguments passed to getter")
-    if @_;
-  return $self->{__DATABASEREFERENCES};
-}
-
-
-
-=item $description->addDatabaseReferences(@vals)
-
-Because the databaseReferences association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the databaseReferences
-association.
-
-Input parameters: the list of values C<@vals> to add to the databaseReferences
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::DatabaseEntry>
-
-=cut
-
-sub addDatabaseReferences {
-  my $self = shift;
-  croak(__PACKAGE__ . "::addDatabaseReferences: no arguments passed to setter")
-    unless @_;
-  my @vals = @_;
-    foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addDatabaseReferences: wrong type: " . ref($val) . " expected Bio::MAGE::Description::DatabaseEntry")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::DatabaseEntry');
-  }
-
-  push(@{$self->{__DATABASEREFERENCES}},@vals);
-}
-
-
-
-=back
 
 
 =item externalReference
@@ -816,6 +743,111 @@ sub getExternalReference {
   return $self->{__EXTERNALREFERENCE};
 }
 
+
+
+
+=back
+
+
+=item annotations
+
+
+From the MAGE-OM documentation for the C<annotations> association:
+
+Allows specification of ontology entries related to the instance being described.
+
+
+
+=over
+
+
+=item $array_ref = $description->setAnnotations($array_ref)
+
+The restricted setter method for the annotations association.
+
+Input parameters: the value to which the annotations association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
+
+Return value: the current value of the annotations association : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Description::OntologyEntry> instances
+
+=cut
+
+sub setAnnotations {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setAnnotations: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setAnnotations: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setAnnotations: expected array reference, got $self")
+    unless UNIVERSAL::isa($val,'ARRAY');
+  foreach my $val (@{$val}) {
+    croak(__PACKAGE__ . "::setAnnotations: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  }
+
+  return $self->{__ANNOTATIONS} = $val;
+}
+
+
+
+=item $array_ref = $description->getAnnotations()
+
+The restricted getter method for the annotations association.
+
+Input parameters: none
+
+Return value: the current value of the annotations association : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getAnnotations {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getAnnotations: arguments passed to getter")
+    if @_;
+  return $self->{__ANNOTATIONS};
+}
+
+
+
+=item $description->addAnnotations(@vals)
+
+Because the annotations association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the annotations
+association.
+
+Input parameters: the list of values C<@vals> to add to the annotations
+association. B<NOTE>: submitting a single value is permitted.
+
+Return value: none
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
+
+=cut
+
+sub addAnnotations {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addAnnotations: no arguments passed to setter")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addAnnotations: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  }
+
+  push(@{$self->{__ANNOTATIONS}},@vals);
+}
 
 
 
@@ -927,59 +959,59 @@ sub addBibliographicReferences {
 =back
 
 
-=item annotations
+=item databaseReferences
 
 
-From the MAGE-OM documentation for the C<annotations> association:
+From the MAGE-OM documentation for the C<databaseReferences> association:
 
-Allows specification of ontology entries related to the instance being described.
+References to entries in databases.
 
 
 
 =over
 
 
-=item $array_ref = $description->setAnnotations($array_ref)
+=item $array_ref = $description->setDatabaseReferences($array_ref)
 
-The restricted setter method for the annotations association.
+The restricted setter method for the databaseReferences association.
 
-Input parameters: the value to which the annotations association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
+Input parameters: the value to which the databaseReferences association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::DatabaseEntry>
 
-Return value: the current value of the annotations association : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
+Return value: the current value of the databaseReferences association : a reference to an array of objects of type C<Bio::MAGE::Description::DatabaseEntry>
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Description::OntologyEntry> instances
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Description::DatabaseEntry> instances
 
 =cut
 
-sub setAnnotations {
+sub setDatabaseReferences {
   my $self = shift;
-  croak(__PACKAGE__ . "::setAnnotations: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setDatabaseReferences: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setAnnotations: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setDatabaseReferences: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
-    croak(__PACKAGE__ . "::setAnnotations: expected array reference, got $self")
+    croak(__PACKAGE__ . "::setDatabaseReferences: expected array reference, got $self")
     unless UNIVERSAL::isa($val,'ARRAY');
   foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setAnnotations: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+    croak(__PACKAGE__ . "::setDatabaseReferences: wrong type: " . ref($val) . " expected Bio::MAGE::Description::DatabaseEntry")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::DatabaseEntry');
   }
 
-  return $self->{__ANNOTATIONS} = $val;
+  return $self->{__DATABASEREFERENCES} = $val;
 }
 
 
 
-=item $array_ref = $description->getAnnotations()
+=item $array_ref = $description->getDatabaseReferences()
 
-The restricted getter method for the annotations association.
+The restricted getter method for the databaseReferences association.
 
 Input parameters: none
 
-Return value: the current value of the annotations association : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
+Return value: the current value of the databaseReferences association : a reference to an array of objects of type C<Bio::MAGE::Description::DatabaseEntry>
 
 Side effects: none
 
@@ -987,22 +1019,22 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getAnnotations {
+sub getDatabaseReferences {
   my $self = shift;
-  croak(__PACKAGE__ . "::getAnnotations: arguments passed to getter")
+  croak(__PACKAGE__ . "::getDatabaseReferences: arguments passed to getter")
     if @_;
-  return $self->{__ANNOTATIONS};
+  return $self->{__DATABASEREFERENCES};
 }
 
 
 
-=item $description->addAnnotations(@vals)
+=item $description->addDatabaseReferences(@vals)
 
-Because the annotations association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the annotations
+Because the databaseReferences association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the databaseReferences
 association.
 
-Input parameters: the list of values C<@vals> to add to the annotations
+Input parameters: the list of values C<@vals> to add to the databaseReferences
 association. B<NOTE>: submitting a single value is permitted.
 
 Return value: none
@@ -1010,21 +1042,21 @@ Return value: none
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::DatabaseEntry>
 
 =cut
 
-sub addAnnotations {
+sub addDatabaseReferences {
   my $self = shift;
-  croak(__PACKAGE__ . "::addAnnotations: no arguments passed to setter")
+  croak(__PACKAGE__ . "::addDatabaseReferences: no arguments passed to setter")
     unless @_;
   my @vals = @_;
     foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addAnnotations: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+    croak(__PACKAGE__ . "::addDatabaseReferences: wrong type: " . ref($val) . " expected Bio::MAGE::Description::DatabaseEntry")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::DatabaseEntry');
   }
 
-  push(@{$self->{__ANNOTATIONS}},@vals);
+  push(@{$self->{__DATABASEREFERENCES}},@vals);
 }
 
 

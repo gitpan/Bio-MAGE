@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Protocol::Parameterizable Exporter);
-$VERSION = q[$Id: Hardware.pm,v 1.1 2002/12/10 06:25:50 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,28 +60,28 @@ $VERSION = q[$Id: Hardware.pm,v 1.1 2002/12/10 06:25:50 jason_e_stewart Exp $];
   my $hardware = Bio::MAGE::Protocol::Hardware->new();
 
     # creating an already populated instance
-  my $hardware = Bio::MAGE::Protocol::Hardware->new(make=>$make_value,
-			model=>$model_value,
-			hardwareManufacturers=>$hardwareManufacturers_value,
+  my $hardware = Bio::MAGE::Protocol::Hardware->new(model=>$model_value,
+			make=>$make_value,
 			softwares=>$softwares_value,
-			type=>$type_value);
+			type=>$type_value,
+			hardwareManufacturers=>$hardwareManufacturers_value);
 
     # setting and retrieving object attributes
-  my $make_val = $hardware->make();
-  $hardware->make($value);
-
   my $model_val = $hardware->model();
   $hardware->model($value);
 
-    # setting and retrieving object associations
-  my $hardwareManufacturers_val = $hardware->hardwareManufacturers();
-  $hardware->hardwareManufacturers($value);
+  my $make_val = $hardware->make();
+  $hardware->make($value);
 
+    # setting and retrieving object associations
   my $softwares_val = $hardware->softwares();
   $hardware->softwares($value);
 
   my $type_val = $hardware->type();
   $hardware->type($value);
+
+  my $hardwareManufacturers_val = $hardware->hardwareManufacturers();
+  $hardware->hardwareManufacturers($value);
 
 
 =head2 DESCRIPTION
@@ -126,69 +126,103 @@ named-value style arguments:
 =over
 
 
-=item * make
-
-Sets the value of the make attribute (from C<Bio::MAGE::Protocol::Hardware>).
-
-
 =item * model
 
-Sets the value of the model attribute (from C<Bio::MAGE::Protocol::Hardware>).
+Sets the value of the model attribute (this attribute was inherited
+from class C<Bio::MAGE::Protocol::Hardware>).
 
 
-=item * hardwareManufacturers
 
-Sets the value of the hardwareManufacturers association (from C<Bio::MAGE::Protocol::Hardware>).
+=item * make
+
+Sets the value of the make attribute (this attribute was inherited
+from class C<Bio::MAGE::Protocol::Hardware>).
+
 
 
 =item * softwares
 
-Sets the value of the softwares association (from C<Bio::MAGE::Protocol::Hardware>).
+Sets the value of the softwares association (this association was inherited
+from class C<Bio::MAGE::Protocol::Hardware>).
+
+The value will be of type C<Software>.
 
 
 =item * type
 
-Sets the value of the type association (from C<Bio::MAGE::Protocol::Hardware>).
+Sets the value of the type association (this association was inherited
+from class C<Bio::MAGE::Protocol::Hardware>).
+
+The value will be of type C<OntologyEntry>.
+
+
+=item * hardwareManufacturers
+
+Sets the value of the hardwareManufacturers association (this association was inherited
+from class C<Bio::MAGE::Protocol::Hardware>).
+
+The value will be of type C<Contact>.
 
 
 =item * URI
 
-Sets the value of the URI attribute (from C<Bio::MAGE::Protocol::Parameterizable>).
+Sets the value of the URI attribute (this attribute was inherited
+from class C<Bio::MAGE::Protocol::Parameterizable>).
+
 
 
 =item * parameterTypes
 
-Sets the value of the parameterTypes association (from C<Bio::MAGE::Protocol::Parameterizable>).
+Sets the value of the parameterTypes association (this association was inherited
+from class C<Bio::MAGE::Protocol::Parameterizable>).
+
+The value will be of type C<Parameter>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -334,7 +368,8 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('make', 'model');
+  my @list = ('model',
+'make');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -351,7 +386,9 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('hardwareManufacturers', 'softwares', 'type');
+  my @list = ('softwares',
+'type',
+'hardwareManufacturers');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -395,72 +432,6 @@ getter methods for each attribute.
 Bio::MAGE::Protocol::Hardware: has the following attribute accessor methods:
 
 =over
-
-
-=item make
-
-From the MAGE-OM documentation for the C<make> attribute:
-
-The make of the Hardware (its manufacturer).
-
-
-
-=over
-
-
-=item $val = $hardware->setMake($val)
-
-The restricted setter method for the make attribute.
-
-Input parameters: the value to which the make attribute will be set 
-
-Return value: the current value of the make attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setMake {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setMake: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setMake: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__MAKE} = $val;
-}
-
-
-
-=item $val = $hardware->getMake()
-
-The restricted getter method for the make attribute.
-
-Input parameters: none
-
-Return value: the current value of the make attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getMake {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getMake: arguments passed to getter")
-    if @_;
-  return $self->{__MAKE};
-}
-
-
-
-
-=back
 
 
 =item model
@@ -521,6 +492,72 @@ sub getModel {
   croak(__PACKAGE__ . "::getModel: arguments passed to getter")
     if @_;
   return $self->{__MODEL};
+}
+
+
+
+
+=back
+
+
+=item make
+
+From the MAGE-OM documentation for the C<make> attribute:
+
+The make of the Hardware (its manufacturer).
+
+
+
+=over
+
+
+=item $val = $hardware->setMake($val)
+
+The restricted setter method for the make attribute.
+
+Input parameters: the value to which the make attribute will be set 
+
+Return value: the current value of the make attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setMake {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setMake: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setMake: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__MAKE} = $val;
+}
+
+
+
+=item $val = $hardware->getMake()
+
+The restricted getter method for the make attribute.
+
+Input parameters: none
+
+Return value: the current value of the make attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getMake {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getMake: arguments passed to getter")
+    if @_;
+  return $self->{__MAKE};
 }
 
 
@@ -683,66 +720,66 @@ BEGIN {
   $__ASSOCIATIONS = [
           'type',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The type of a piece of Hardware.  Examples include: scanner, wash station...',
-                                        '__CLASS_NAME' => 'Hardware',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'type',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The type of a piece of Hardware.  Examples include: scanner, wash station...',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'type',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The type of a piece of Hardware.  Examples include: scanner, wash station...',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Hardware'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'softwares',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'hardware',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..1',
-                                        '__DOCUMENTATION' => 'Associates Hardware and Software together.',
-                                        '__CLASS_NAME' => 'Hardware',
-                                        '__RANK' => '2',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'softwares',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Associates Hardware and Software together.',
-                                         '__CLASS_NAME' => 'Software',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'softwares',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Software'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '2',
+                                        '__CARDINALITY' => '0..1',
+                                        '__DOCUMENTATION' => 'Associates Hardware and Software together.',
+                                        '__NAME' => 'hardware',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'Hardware'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'hardwareManufacturers',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'Contact for information on the Hardware.',
-                                        '__CLASS_NAME' => 'Hardware',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'hardwareManufacturers',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Contact for information on the Hardware.',
-                                         '__CLASS_NAME' => 'Contact',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'hardwareManufacturers',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Contact'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'Contact for information on the Hardware.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Hardware'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -780,111 +817,6 @@ the association.
 Bio::MAGE::Protocol::Hardware: has the following association accessor methods:
 
 =over
-
-
-=item hardwareManufacturers
-
-
-From the MAGE-OM documentation for the C<hardwareManufacturers> association:
-
-Contact for information on the Hardware.
-
-
-
-=over
-
-
-=item $array_ref = $hardware->setHardwareManufacturers($array_ref)
-
-The restricted setter method for the hardwareManufacturers association.
-
-Input parameters: the value to which the hardwareManufacturers association will be set : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Contact>
-
-Return value: the current value of the hardwareManufacturers association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Contact>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::AuditAndSecurity::Contact> instances
-
-=cut
-
-sub setHardwareManufacturers {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setHardwareManufacturers: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setHardwareManufacturers: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-    croak(__PACKAGE__ . "::setHardwareManufacturers: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setHardwareManufacturers: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Contact")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Contact');
-  }
-
-  return $self->{__HARDWAREMANUFACTURERS} = $val;
-}
-
-
-
-=item $array_ref = $hardware->getHardwareManufacturers()
-
-The restricted getter method for the hardwareManufacturers association.
-
-Input parameters: none
-
-Return value: the current value of the hardwareManufacturers association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Contact>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getHardwareManufacturers {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getHardwareManufacturers: arguments passed to getter")
-    if @_;
-  return $self->{__HARDWAREMANUFACTURERS};
-}
-
-
-
-=item $hardware->addHardwareManufacturers(@vals)
-
-Because the hardwareManufacturers association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the hardwareManufacturers
-association.
-
-Input parameters: the list of values C<@vals> to add to the hardwareManufacturers
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::AuditAndSecurity::Contact>
-
-=cut
-
-sub addHardwareManufacturers {
-  my $self = shift;
-  croak(__PACKAGE__ . "::addHardwareManufacturers: no arguments passed to setter")
-    unless @_;
-  my @vals = @_;
-    foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addHardwareManufacturers: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Contact")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Contact');
-  }
-
-  push(@{$self->{__HARDWAREMANUFACTURERS}},@vals);
-}
-
-
-
-=back
 
 
 =item softwares
@@ -1053,6 +985,111 @@ sub getType {
   return $self->{__TYPE};
 }
 
+
+
+
+=back
+
+
+=item hardwareManufacturers
+
+
+From the MAGE-OM documentation for the C<hardwareManufacturers> association:
+
+Contact for information on the Hardware.
+
+
+
+=over
+
+
+=item $array_ref = $hardware->setHardwareManufacturers($array_ref)
+
+The restricted setter method for the hardwareManufacturers association.
+
+Input parameters: the value to which the hardwareManufacturers association will be set : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Contact>
+
+Return value: the current value of the hardwareManufacturers association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Contact>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::AuditAndSecurity::Contact> instances
+
+=cut
+
+sub setHardwareManufacturers {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setHardwareManufacturers: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setHardwareManufacturers: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setHardwareManufacturers: expected array reference, got $self")
+    unless UNIVERSAL::isa($val,'ARRAY');
+  foreach my $val (@{$val}) {
+    croak(__PACKAGE__ . "::setHardwareManufacturers: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Contact")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Contact');
+  }
+
+  return $self->{__HARDWAREMANUFACTURERS} = $val;
+}
+
+
+
+=item $array_ref = $hardware->getHardwareManufacturers()
+
+The restricted getter method for the hardwareManufacturers association.
+
+Input parameters: none
+
+Return value: the current value of the hardwareManufacturers association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Contact>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getHardwareManufacturers {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getHardwareManufacturers: arguments passed to getter")
+    if @_;
+  return $self->{__HARDWAREMANUFACTURERS};
+}
+
+
+
+=item $hardware->addHardwareManufacturers(@vals)
+
+Because the hardwareManufacturers association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the hardwareManufacturers
+association.
+
+Input parameters: the list of values C<@vals> to add to the hardwareManufacturers
+association. B<NOTE>: submitting a single value is permitted.
+
+Return value: none
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::AuditAndSecurity::Contact>
+
+=cut
+
+sub addHardwareManufacturers {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addHardwareManufacturers: no arguments passed to setter")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addHardwareManufacturers: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Contact")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Contact');
+  }
+
+  push(@{$self->{__HARDWAREMANUFACTURERS}},@vals);
+}
 
 
 

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::BioSequence::SequencePosition Exporter);
-$VERSION = q[$Id: CompositePosition.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -115,27 +115,40 @@ named-value style arguments:
 
 =item * composite
 
-Sets the value of the composite association (from C<Bio::MAGE::DesignElement::CompositePosition>).
+Sets the value of the composite association (this association was inherited
+from class C<Bio::MAGE::DesignElement::CompositePosition>).
+
+The value will be of type C<CompositeSequence>.
 
 
 =item * mismatchInformation
 
-Sets the value of the mismatchInformation association (from C<Bio::MAGE::DesignElement::CompositePosition>).
+Sets the value of the mismatchInformation association (this association was inherited
+from class C<Bio::MAGE::DesignElement::CompositePosition>).
+
+The value will be of type C<MismatchInformation>.
 
 
 =item * start
 
-Sets the value of the start attribute (from C<Bio::MAGE::BioSequence::SequencePosition>).
+Sets the value of the start attribute (this attribute was inherited
+from class C<Bio::MAGE::BioSequence::SequencePosition>).
+
 
 
 =item * end
 
-Sets the value of the end attribute (from C<Bio::MAGE::BioSequence::SequencePosition>).
+Sets the value of the end attribute (this attribute was inherited
+from class C<Bio::MAGE::BioSequence::SequencePosition>).
+
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -298,7 +311,8 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('composite', 'mismatchInformation');
+  my @list = ('composite',
+'mismatchInformation');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -450,45 +464,45 @@ BEGIN {
   $__ASSOCIATIONS = [
           'composite',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'A source CompositeSequence that is part of a target CompositeSequence',
-                                        '__CLASS_NAME' => 'CompositePosition',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'composite',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'A source CompositeSequence that is part of a target CompositeSequence',
-                                         '__CLASS_NAME' => 'CompositeSequence',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'composite',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'CompositeSequence'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'A source CompositeSequence that is part of a target CompositeSequence',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'CompositePosition'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'mismatchInformation',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Differences in how the contained compositeSequence matches its target compositeSequence\'s sequence.',
-                                        '__CLASS_NAME' => 'CompositePosition',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'mismatchInformation',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Differences in how the contained compositeSequence matches its target compositeSequence\'s sequence.',
-                                         '__CLASS_NAME' => 'MismatchInformation',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'mismatchInformation',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'MismatchInformation'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Differences in how the contained compositeSequence matches its target compositeSequence\'s sequence.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'CompositePosition'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

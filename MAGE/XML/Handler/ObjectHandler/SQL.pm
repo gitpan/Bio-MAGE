@@ -1,4 +1,4 @@
-# $Id: SQL.pm,v 1.5 2002/12/11 01:27:59 allenday Exp $
+# $Id: SQL.pm,v 1.7 2003/04/20 22:15:21 allenday Exp $
 #
 # BioPerl module for Bio::MAGE::XML::Handler::ObjectHandler::SQL
 #
@@ -48,6 +48,8 @@ use vars qw(@ISA);
 use strict;
 use Carp;
 
+use Data::Dumper;
+
 @ISA = qw(Bio::MAGE::XML::Handler::ObjectHandlerI );
 
 use constant CARD_1 => '1';
@@ -63,7 +65,6 @@ use constant CARD_0_TO_N => '0..N';
  Returns : an instance of Bio::MAGE::XML::Handler::ObjectHandler::SQL
  Args    :
 
-
 =cut
 
 sub new {
@@ -74,6 +75,17 @@ sub new {
 
 sub fk {
   my $self = shift;
+}
+
+###############################################################################
+# fh: setter/getter for the file handle
+###############################################################################
+sub fh {
+  my $self = shift;
+  if (@_) {
+    $self->{__FH} = shift;
+  }
+  return $self->{__FH} || \*STDOUT;
 }
 
 sub handle {
@@ -92,13 +104,13 @@ sub handle {
   my $referring = $handler->object_stack->[-1];
   my $association = $handler->assn_stack->[-1];
   my $target_ID = $self->object_IDs($obj);
-  unless ($target_ID) {
+  unless (defined($target_ID)) {
     #print "+++ Yipe, the target object hasn't been written yet.\n";
     #print "    Try to write the object:\n";
     $self->obj2database($handler,$obj);
     $target_ID = $self->object_IDs($obj);
-    die "INTERNAL ERROR: Failed to INSERT needed object $obj\n"
-      unless ($target_ID);
+    die "INTERNAL ERROR POS1: Failed to INSERT needed object $obj\n"
+      unless (defined($target_ID));
   }
 
   #print "referring: ",join(" , ",@{$referring}),"\n";
@@ -108,13 +120,17 @@ sub handle {
   #print "class_name: ",$association->[0]->other->class_name(),"\n";
 
   #### If cardinality is 1 or 0..1
-
+#warn Dumper($handler->assn_stack);
   if ($association->other->cardinality eq CARD_0_OR_1 ||
 	  $association->other->cardinality eq CARD_1) {
     my $table_name = $referring->class_name();
     $table_name =~ s/.+:://;
     my $assn_name = $association->other->name();
     my %rowdata = ($assn_name.'_fk'=>$target_ID);
+
+
+    if($referring->isa('Bio::MAGE::Identifiable')){
+
     $self->update_or_insert_row(
       update=>1,
       table_name=>$table_name,
@@ -125,6 +141,8 @@ sub handle {
       testonly=>1,
     );
     print "\n";
+
+    }
 
   #### If cardinality is 0..n or 1..n
   } elsif ($association->other->cardinality() eq CARD_0_TO_N ||
@@ -258,6 +276,7 @@ sub obj2database {
       my $container_tag = ucfirst("$association$prefix");
       # container tags must not be empty
       #$self->write_start_tag("$container_tag",my $cont_empty=0);
+#warn "2 $assns_hash{$association}";
       push(@{$handler->assn_stack},[$assns_hash{$association}]);
 
       # now we fill in the container with the object(s)
@@ -364,13 +383,13 @@ sub obj2database_ref {
   my $referring = $handler->object_stack->[-1];
   my $association = $handler->assn_stack->[-1];
   my $target_ID = $self->object_IDs($obj);
-  unless ($target_ID) {
+  unless (defined($target_ID)) {
     #print "+++ Yipe, the target object hasn't been written yet.\n";
     #print "    Try to write the object:\n";
     $self->obj2database($handler,$obj);
     $target_ID = $self->object_IDs($obj);
-    die "INTERNAL ERROR: Failed to INSERT needed object $obj\n"
-      unless ($target_ID);
+    die "INTERNAL ERROR POS2: Failed to INSERT needed object $obj\n"
+      unless (defined($target_ID));
   }
 
 
@@ -427,6 +446,29 @@ sub obj2database_ref {
 
 }
 
+sub attr_indent {
+  my $self = shift;
+  if (@_) {
+    $self->{__ATTR_INDENT} = shift;
+  }
+  return $self->{__ATTR_INDENT};
+}
+
+sub attrs_on_one_line {
+  my $self = shift;
+  if (@_) {
+    $self->{__ATTRS_ON_ONE_LINE} = shift;
+  }
+  return $self->{__ATTRS_ON_ONE_LINE};
+}
+
+sub collapse_tag {
+  my $self = shift;
+  if (@_) {
+    $self->{__COLLAPSE_TAG} = shift;
+  }
+  return $self->{__COLLAPSE_TAG};   
+}
 
 sub flatten {
   my ($self,$list) = @_;
@@ -441,6 +483,14 @@ sub flatten {
   return join("\t",@list);
 }
 
+sub external_data {
+  my $self = shift;
+  if (@_) {
+    $self->{__EXTERNAL_DATA} = shift;
+  }
+  return $self->{__EXTERNAL_DATA};
+}
+
 sub external_file_id {
   my $self = shift;
   my $num = $self->external_data();
@@ -448,6 +498,74 @@ sub external_file_id {
   $self->external_data($num);
   return "external-data-$num.txt";
 }
+
+sub incr_indent {
+  my $self = shift;
+  $self->indent_level($self->indent_level + $self->indent_increment);
+}
+
+sub decr_indent { 
+  my $self = shift;
+  $self->indent_level($self->indent_level - $self->indent_increment);
+}
+
+sub indent_increment {
+  my $self = shift;
+  if (@_) {
+    $self->{__INDENT_INCREMENT} = shift;
+  }
+  return $self->{__INDENT_INCREMENT};
+}
+
+sub indent_level {
+  my $self = shift;
+  if (@_) {
+    $self->{__INDENT_LEVEL} = shift;
+  }
+  return $self->{__INDENT_LEVEL};
+}
+
+sub write_start_tag {
+  my ($self,$tag,$empty,%attrs) = @_;
+  my $indent = ' ' x $self->indent_level();
+  my $fh = $self->fh();
+  my (@attrs);
+  foreach my $attribute_name (keys %attrs) {
+    push(@attrs,qq[$attribute_name="$attrs{$attribute_name}"]);
+  }
+  my ($attrs,$attr_indent);
+  if ($self->attrs_on_one_line()) {
+    $attrs = join(' ',@attrs);
+  } else {
+    $attr_indent = $self->attr_indent();
+    $attr_indent = length($tag) + 2
+      unless defined $attr_indent;
+    $attr_indent = ' ' x $attr_indent . $indent;
+    $attrs = join("\n$attr_indent",@attrs);
+  }
+  if ($attrs) {   
+    print $fh "$indent<$tag $attrs";
+  } else {
+    # don't print the space after the tag because Eric said so
+    print $fh "$indent<$tag";
+  }
+  if ($empty) {
+    print $fh '/>';
+  } else {
+    print $fh '>';
+  }
+  print $fh "\n" unless $self->collapse_tag();
+  $self->incr_indent()
+    unless $empty;
+}
+  
+sub write_end_tag {
+  my ($self,$tag) = @_;  
+  $self->decr_indent();
+  my $indent = ' ' x $self->indent_level();
+  my $fh = $self->fh();
+  print $fh "$indent</$tag>\n";
+}     
 
 sub update_or_insert_row {
   my $self = shift || croak("parameter self not passed");
@@ -475,8 +593,8 @@ sub update_or_insert_row {
 
   #### If this is an UPDATE operation, make sure that we got the PK and value
   if ($update) {
-    unless ($PK and $PK_value) {
-      croak "ERROR: Need both PK and PK_value if operation is UPDATE\n\n";
+    unless (defined($PK) and defined($PK_value)) {
+      croak "ERROR: Need both PK and PK_value if operation is UPDATE.  PK: $PK ; PK_value: $PK_value\n\n";
     }
   }
 

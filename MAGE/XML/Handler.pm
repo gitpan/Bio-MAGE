@@ -5,6 +5,8 @@
 package Bio::MAGE::XML::Handler;
 use vars qw($COUNT @ISA);
 use strict;
+use Data::Dumper;
+use IO::File;
 
 use constant CARD_1 => '1';
 use constant CARD_0_OR_1 => '0..1';
@@ -261,7 +263,8 @@ sub get_design_element_dimension {
   my $bioassay = $self->object_stack->[-2];
   die "Expected BioAssayData but got: $bioassay"
     unless $bioassay->isa('Bio::MAGE::BioAssayData::BioAssayData');
-  return scalar @{$bioassay->getDesignElementDimension->getContainedFeatures()};
+#  return scalar @{$bioassay->getDesignElementDimension->getContainedFeatures()};
+  return scalar @{$bioassay->getDesignElementDimension->getCompositeSequences()};
 }
 
 
@@ -282,18 +285,22 @@ sub get_bioassay_dimension {
 ###############################################################################
 sub get_cube {
   my ($self,$order,$string) = @_;
+
   my %index;
   $index{B} = $self->get_bioassay_dimension();
   $index{Q} = $self->get_quantitation_type_dimension();
   $index{D} = $self->get_design_element_dimension();
+
   my ($a,$b,$c) = split('', $order);
   my ($i_lim,$j_lim,$k_lim);
   $i_lim = $index{$a};
   $j_lim = $index{$b};
   $k_lim = $index{$c};
+
   my @bad;
   $string =~ s/\n/\t/g;
   my @list = split("\t",$string);
+
   for (my $i=0;$i<$i_lim;$i++) {
     my $ded = [];
     for (my $j=0;$j<$j_lim;$j++) {
@@ -349,7 +356,10 @@ sub start_element {
 
   #### Dereference the attributes hash
   my %attrs = %{$attrs};
-  my $LOG = $self->reader->log_file();
+
+#  my $LOG = $self->reader->log_file();
+   my $LOG = new IO::File $self->reader->log_file(),"w";
+
   my $VERBOSE = $self->reader->verbose();
 
   #### Special handling for DataInternal or DataExternal (ie, nastiness)
@@ -370,7 +380,9 @@ sub start_element {
       my $bio_data_cube = $self->object_stack->[-1];
       die "Expected a Bio::MAGE::BioAssayData::BioDataCube but got $bio_data_cube"
 		unless $bio_data_cube->isa('Bio::MAGE::BioAssayData::BioDataCube');
-      $bio_data_cube->setCube($self->get_cube($attrs{order},$data));
+#      $bio_data_cube->setCube($self->get_cube($attrs{order},$data));
+      $bio_data_cube->setCube($self->get_cube($bio_data_cube->getOrder,$data));
+#warn Dumper($bio_data_cube->getCube);
     }
     return;
   } elsif (scalar @{$self->object_stack} and
@@ -499,22 +511,36 @@ sub start_element {
 	#_assnlist
 	#_assnref
 	#_assnreflist
-
 	my $assn;
 	my $assn_name = $localname;
 	$assn_name =~ s/_.*//;
 	$assn_name = lcfirst($assn_name);
 
-	if($self->object_stack->[-1]->can('associations')){
-	  my %associations = $self->object_stack->[-1]->associations;
-	  $assn = $associations{$assn_name};
-	} else {
+####
+#I'm not sure what I'm doing here, but it seems to have resolved a problem that there was a missing "End" object
+#when parsing a DataExternal_assn element.  Whether or not it does what it is supposed to, I don't know, but I no longer
+#get runtime exceptions.
+	my %associations = $self->object_stack->[-1]->can('associations') ? $self->object_stack->[-1]->associations : ();
+	$assn = $associations{$assn_name};
+
+	if(!defined($assn)){
 	  my $other = new Bio::MAGE::Association::End(name=>$assn_name,
 						      cardinality=>CARD_0_TO_N,
 												 );
 	  $assn = new Bio::MAGE::Association(other=>$other);
 	}
 
+####
+#	if($self->object_stack->[-1]->can('associations')){
+#	  my %associations = $self->object_stack->[-1]->associations;
+#	  $assn = $associations{$assn_name};
+#	} else {
+#	  my $other = new Bio::MAGE::Association::End(name=>$assn_name,
+#						      cardinality=>CARD_0_TO_N,
+#												 );
+#	  $assn = new Bio::MAGE::Association(other=>$other);
+#	}
+####
 	push(@{$self->assn_stack},$assn);
 
   #### If the tag is a "_ref" then we need to store the reference(s) in
@@ -597,17 +623,24 @@ sub end_element {
     return;
   }
 
-  my $LOG = $self->reader->log_file();
+#  my $LOG = $self->reader->log_file();
+  my $LOG = new IO::File $self->reader->log_file(),"w";
   my $VERBOSE = $self->reader->verbose();
 
   #### If finishing a _assn* element, pop it off the assn_stack
-  if ($localname =~ /_assn$/       or
-      $localname =~ /_assnlist$/   or
-      $localname =~ /_assnref$/    or
-      $localname =~ /_assnreflist$/ ) {
-
+  if (($localname =~ /_assn$/       or
+       $localname =~ /_assnlist$/   or
+       $localname =~ /_assnref$/    or
+       $localname =~ /_assnreflist$/ 
+      )
+#      and $localname !~ /DataExternal/  #is this reasonable??? -allen
+     ) {
+#warn $localname;
     #### Determine the association name
     my $assn = $self->assn_stack()->[-1];
+#warn $localname unless defined $assn;
+#warn Dumper($self->assn_stack()) unless defined $assn;
+#warn Dumper($self->assn_stack()->[-1]) unless defined $assn;
     my $assn_name = $assn->other->name;
     $assn_name =~ s/_assn[a-z]*$//;
 

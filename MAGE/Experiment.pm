@@ -45,7 +45,7 @@ use Bio::MAGE::Experiment::FactorValue;
 use vars qw(@ISA $VERSION @EXPORT_OK %EXPORT_TAGS $__MAGEML_LISTS);
 
 @ISA = qw(Bio::MAGE::Base Exporter);
-$VERSION = q[$Id: Experiment.pm,v 1.1 2002/12/10 06:20:46 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 sub initialize {
   my $self = shift;
@@ -108,7 +108,10 @@ This method returns a list of non-fully qualified class names
 =cut
 
 sub classes {
-  return ('Experiment', 'ExperimentDesign', 'ExperimentalFactor', 'FactorValue');
+  return ('Experiment',
+'ExperimentDesign',
+'ExperimentalFactor',
+'FactorValue');
 }
 
 =item $obj_ref = Bio::MAGE::Experiment->new(%parameters)

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::DesignElement::DesignElement Exporter);
-$VERSION = q[$Id: Feature.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,19 +60,19 @@ $VERSION = q[$Id: Feature.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp $];
   my $feature = Bio::MAGE::DesignElement::Feature->new();
 
     # creating an already populated instance
-  my $feature = Bio::MAGE::DesignElement::Feature->new(controlledFeatures=>$controlledFeatures_value,
-			zone=>$zone_value,
+  my $feature = Bio::MAGE::DesignElement::Feature->new(featureLocation=>$featureLocation_value,
+			controlFeatures=>$controlFeatures_value,
 			position=>$position_value,
 			featureGroup=>$featureGroup_value,
-			featureLocation=>$featureLocation_value,
-			controlFeatures=>$controlFeatures_value);
+			controlledFeatures=>$controlledFeatures_value,
+			zone=>$zone_value);
 
     # setting and retrieving object associations
-  my $controlledFeatures_val = $feature->controlledFeatures();
-  $feature->controlledFeatures($value);
+  my $featureLocation_val = $feature->featureLocation();
+  $feature->featureLocation($value);
 
-  my $zone_val = $feature->zone();
-  $feature->zone($value);
+  my $controlFeatures_val = $feature->controlFeatures();
+  $feature->controlFeatures($value);
 
   my $position_val = $feature->position();
   $feature->position($value);
@@ -80,11 +80,11 @@ $VERSION = q[$Id: Feature.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp $];
   my $featureGroup_val = $feature->featureGroup();
   $feature->featureGroup($value);
 
-  my $featureLocation_val = $feature->featureLocation();
-  $feature->featureLocation($value);
+  my $controlledFeatures_val = $feature->controlledFeatures();
+  $feature->controlledFeatures($value);
 
-  my $controlFeatures_val = $feature->controlFeatures();
-  $feature->controlFeatures($value);
+  my $zone_val = $feature->zone();
+  $feature->zone($value);
 
 
 =head2 DESCRIPTION
@@ -130,69 +130,106 @@ named-value style arguments:
 =over
 
 
-=item * controlledFeatures
-
-Sets the value of the controlledFeatures association (from C<Bio::MAGE::DesignElement::Feature>).
-
-
-=item * zone
-
-Sets the value of the zone association (from C<Bio::MAGE::DesignElement::Feature>).
-
-
-=item * position
-
-Sets the value of the position association (from C<Bio::MAGE::DesignElement::Feature>).
-
-
-=item * featureGroup
-
-Sets the value of the featureGroup association (from C<Bio::MAGE::DesignElement::Feature>).
-
-
 =item * featureLocation
 
-Sets the value of the featureLocation association (from C<Bio::MAGE::DesignElement::Feature>).
+Sets the value of the featureLocation association (this association was inherited
+from class C<Bio::MAGE::DesignElement::Feature>).
+
+The value will be of type C<FeatureLocation>.
 
 
 =item * controlFeatures
 
-Sets the value of the controlFeatures association (from C<Bio::MAGE::DesignElement::Feature>).
+Sets the value of the controlFeatures association (this association was inherited
+from class C<Bio::MAGE::DesignElement::Feature>).
+
+The value will be of type C<Feature>.
+
+
+=item * featureGroup
+
+Sets the value of the featureGroup association (this association was inherited
+from class C<Bio::MAGE::DesignElement::Feature>).
+
+The value will be of type C<FeatureGroup>.
+
+
+=item * position
+
+Sets the value of the position association (this association was inherited
+from class C<Bio::MAGE::DesignElement::Feature>).
+
+The value will be of type C<Position>.
+
+
+=item * zone
+
+Sets the value of the zone association (this association was inherited
+from class C<Bio::MAGE::DesignElement::Feature>).
+
+The value will be of type C<Zone>.
+
+
+=item * controlledFeatures
+
+Sets the value of the controlledFeatures association (this association was inherited
+from class C<Bio::MAGE::DesignElement::Feature>).
+
+The value will be of type C<Feature>.
 
 
 =item * controlType
 
-Sets the value of the controlType association (from C<Bio::MAGE::DesignElement::DesignElement>).
+Sets the value of the controlType association (this association was inherited
+from class C<Bio::MAGE::DesignElement::DesignElement>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -355,7 +392,12 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('controlledFeatures', 'zone', 'position', 'featureGroup', 'featureLocation', 'controlFeatures');
+  my @list = ('featureLocation',
+'controlFeatures',
+'position',
+'featureGroup',
+'controlledFeatures',
+'zone');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -507,129 +549,129 @@ BEGIN {
   $__ASSOCIATIONS = [
           'controlFeatures',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'controlledFeatures',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'Associates features with their control features.',
-                                        '__CLASS_NAME' => 'Feature',
-                                        '__RANK' => '2',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'controlFeatures',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Associates features with their control features.',
-                                         '__CLASS_NAME' => 'Feature',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'controlFeatures',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Feature'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '2',
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'Associates features with their control features.',
+                                        '__NAME' => 'controlledFeatures',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'Feature'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'controlledFeatures',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'controlFeatures',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'Associates features with their control features.',
-                                        '__CLASS_NAME' => 'Feature',
-                                        '__RANK' => '1',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'controlledFeatures',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Associates features with their control features.',
-                                         '__CLASS_NAME' => 'Feature',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'controlledFeatures',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Feature'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '1',
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'Associates features with their control features.',
+                                        '__NAME' => 'controlFeatures',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'Feature'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'position',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The position of the feature on the array, relative to the top, left corner.',
-                                        '__CLASS_NAME' => 'Feature',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'position',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The position of the feature on the array, relative to the top, left corner.',
-                                         '__CLASS_NAME' => 'Position',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'position',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Position'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The position of the feature on the array, relative to the top, left corner.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Feature'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'zone',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'A reference to the zone this feature is in.',
-                                        '__CLASS_NAME' => 'Feature',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'zone',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'A reference to the zone this feature is in.',
-                                         '__CLASS_NAME' => 'Zone',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'zone',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Zone'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'A reference to the zone this feature is in.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Feature'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'featureLocation',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Location of this feature relative to a grid.',
-                                        '__CLASS_NAME' => 'Feature',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'featureLocation',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '5',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Location of this feature relative to a grid.',
-                                         '__CLASS_NAME' => 'FeatureLocation',
-                                         '__RANK' => '5',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'featureLocation',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'FeatureLocation'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Location of this feature relative to a grid.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Feature'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'featureGroup',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'features',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '1..N',
-                                        '__DOCUMENTATION' => 'The features that belong to this group.',
-                                        '__CLASS_NAME' => 'Feature',
-                                        '__RANK' => '4',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'featureGroup',
                                          '__IS_REF' => 0,
+                                         '__RANK' => '6',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The features that belong to this group.',
-                                         '__CLASS_NAME' => 'FeatureGroup',
-                                         '__RANK' => '6',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'featureGroup',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'FeatureGroup'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '4',
+                                        '__CARDINALITY' => '1..N',
+                                        '__DOCUMENTATION' => 'The features that belong to this group.',
+                                        '__NAME' => 'features',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'Feature'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -667,312 +709,6 @@ the association.
 Bio::MAGE::DesignElement::Feature: has the following association accessor methods:
 
 =over
-
-
-=item controlledFeatures
-
-
-From the MAGE-OM documentation for the C<controlledFeatures> association:
-
-Associates features with their control features.
-
-
-
-=over
-
-
-=item $array_ref = $feature->setControlledFeatures($array_ref)
-
-The restricted setter method for the controlledFeatures association.
-
-Input parameters: the value to which the controlledFeatures association will be set : a reference to an array of objects of type C<Bio::MAGE::DesignElement::Feature>
-
-Return value: the current value of the controlledFeatures association : a reference to an array of objects of type C<Bio::MAGE::DesignElement::Feature>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::DesignElement::Feature> instances
-
-=cut
-
-sub setControlledFeatures {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setControlledFeatures: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setControlledFeatures: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-    croak(__PACKAGE__ . "::setControlledFeatures: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setControlledFeatures: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::Feature")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::Feature');
-  }
-
-  return $self->{__CONTROLLEDFEATURES} = $val;
-}
-
-
-
-=item $array_ref = $feature->getControlledFeatures()
-
-The restricted getter method for the controlledFeatures association.
-
-Input parameters: none
-
-Return value: the current value of the controlledFeatures association : a reference to an array of objects of type C<Bio::MAGE::DesignElement::Feature>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getControlledFeatures {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getControlledFeatures: arguments passed to getter")
-    if @_;
-  return $self->{__CONTROLLEDFEATURES};
-}
-
-
-
-=item $feature->addControlledFeatures(@vals)
-
-Because the controlledFeatures association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the controlledFeatures
-association.
-
-Input parameters: the list of values C<@vals> to add to the controlledFeatures
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::DesignElement::Feature>
-
-=cut
-
-sub addControlledFeatures {
-  my $self = shift;
-  croak(__PACKAGE__ . "::addControlledFeatures: no arguments passed to setter")
-    unless @_;
-  my @vals = @_;
-    foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addControlledFeatures: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::Feature")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::Feature');
-  }
-
-  push(@{$self->{__CONTROLLEDFEATURES}},@vals);
-}
-
-
-
-=back
-
-
-=item zone
-
-
-From the MAGE-OM documentation for the C<zone> association:
-
-A reference to the zone this feature is in.
-
-
-
-=over
-
-
-=item $val = $feature->setZone($val)
-
-The restricted setter method for the zone association.
-
-Input parameters: the value to which the zone association will be set : an instance of type C<Bio::MAGE::ArrayDesign::Zone>.
-
-Return value: the current value of the zone association : an instance of type C<Bio::MAGE::ArrayDesign::Zone>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::ArrayDesign::Zone>
-
-=cut
-
-sub setZone {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setZone: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setZone: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setZone: wrong type: " . ref($val) . " expected Bio::MAGE::ArrayDesign::Zone") unless UNIVERSAL::isa($val,'Bio::MAGE::ArrayDesign::Zone');
-  return $self->{__ZONE} = $val;
-}
-
-
-
-=item $val = $feature->getZone()
-
-The restricted getter method for the zone association.
-
-Input parameters: none
-
-Return value: the current value of the zone association : an instance of type C<Bio::MAGE::ArrayDesign::Zone>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getZone {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getZone: arguments passed to getter")
-    if @_;
-  return $self->{__ZONE};
-}
-
-
-
-
-=back
-
-
-=item position
-
-
-From the MAGE-OM documentation for the C<position> association:
-
-The position of the feature on the array, relative to the top, left corner.
-
-
-
-=over
-
-
-=item $val = $feature->setPosition($val)
-
-The restricted setter method for the position association.
-
-Input parameters: the value to which the position association will be set : an instance of type C<Bio::MAGE::DesignElement::Position>.
-
-Return value: the current value of the position association : an instance of type C<Bio::MAGE::DesignElement::Position>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::DesignElement::Position>
-
-=cut
-
-sub setPosition {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setPosition: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setPosition: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setPosition: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::Position") unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::Position');
-  return $self->{__POSITION} = $val;
-}
-
-
-
-=item $val = $feature->getPosition()
-
-The restricted getter method for the position association.
-
-Input parameters: none
-
-Return value: the current value of the position association : an instance of type C<Bio::MAGE::DesignElement::Position>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getPosition {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getPosition: arguments passed to getter")
-    if @_;
-  return $self->{__POSITION};
-}
-
-
-
-
-=back
-
-
-=item featureGroup
-
-
-From the MAGE-OM documentation for the C<featureGroup> association:
-
-The features that belong to this group.
-
-
-
-=over
-
-
-=item $val = $feature->setFeatureGroup($val)
-
-The restricted setter method for the featureGroup association.
-
-Input parameters: the value to which the featureGroup association will be set : an instance of type C<Bio::MAGE::ArrayDesign::FeatureGroup>.
-
-Return value: the current value of the featureGroup association : an instance of type C<Bio::MAGE::ArrayDesign::FeatureGroup>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::ArrayDesign::FeatureGroup>
-
-=cut
-
-sub setFeatureGroup {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setFeatureGroup: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setFeatureGroup: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setFeatureGroup: wrong type: " . ref($val) . " expected Bio::MAGE::ArrayDesign::FeatureGroup") unless UNIVERSAL::isa($val,'Bio::MAGE::ArrayDesign::FeatureGroup');
-  return $self->{__FEATUREGROUP} = $val;
-}
-
-
-
-=item $val = $feature->getFeatureGroup()
-
-The restricted getter method for the featureGroup association.
-
-Input parameters: none
-
-Return value: the current value of the featureGroup association : an instance of type C<Bio::MAGE::ArrayDesign::FeatureGroup>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getFeatureGroup {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getFeatureGroup: arguments passed to getter")
-    if @_;
-  return $self->{__FEATUREGROUP};
-}
-
-
-
-
-=back
 
 
 =item featureLocation
@@ -1141,6 +877,312 @@ sub addControlFeatures {
 
   push(@{$self->{__CONTROLFEATURES}},@vals);
 }
+
+
+
+=back
+
+
+=item position
+
+
+From the MAGE-OM documentation for the C<position> association:
+
+The position of the feature on the array, relative to the top, left corner.
+
+
+
+=over
+
+
+=item $val = $feature->setPosition($val)
+
+The restricted setter method for the position association.
+
+Input parameters: the value to which the position association will be set : an instance of type C<Bio::MAGE::DesignElement::Position>.
+
+Return value: the current value of the position association : an instance of type C<Bio::MAGE::DesignElement::Position>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::DesignElement::Position>
+
+=cut
+
+sub setPosition {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setPosition: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setPosition: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setPosition: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::Position") unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::Position');
+  return $self->{__POSITION} = $val;
+}
+
+
+
+=item $val = $feature->getPosition()
+
+The restricted getter method for the position association.
+
+Input parameters: none
+
+Return value: the current value of the position association : an instance of type C<Bio::MAGE::DesignElement::Position>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getPosition {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getPosition: arguments passed to getter")
+    if @_;
+  return $self->{__POSITION};
+}
+
+
+
+
+=back
+
+
+=item featureGroup
+
+
+From the MAGE-OM documentation for the C<featureGroup> association:
+
+The features that belong to this group.
+
+
+
+=over
+
+
+=item $val = $feature->setFeatureGroup($val)
+
+The restricted setter method for the featureGroup association.
+
+Input parameters: the value to which the featureGroup association will be set : an instance of type C<Bio::MAGE::ArrayDesign::FeatureGroup>.
+
+Return value: the current value of the featureGroup association : an instance of type C<Bio::MAGE::ArrayDesign::FeatureGroup>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::ArrayDesign::FeatureGroup>
+
+=cut
+
+sub setFeatureGroup {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setFeatureGroup: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setFeatureGroup: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setFeatureGroup: wrong type: " . ref($val) . " expected Bio::MAGE::ArrayDesign::FeatureGroup") unless UNIVERSAL::isa($val,'Bio::MAGE::ArrayDesign::FeatureGroup');
+  return $self->{__FEATUREGROUP} = $val;
+}
+
+
+
+=item $val = $feature->getFeatureGroup()
+
+The restricted getter method for the featureGroup association.
+
+Input parameters: none
+
+Return value: the current value of the featureGroup association : an instance of type C<Bio::MAGE::ArrayDesign::FeatureGroup>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getFeatureGroup {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getFeatureGroup: arguments passed to getter")
+    if @_;
+  return $self->{__FEATUREGROUP};
+}
+
+
+
+
+=back
+
+
+=item controlledFeatures
+
+
+From the MAGE-OM documentation for the C<controlledFeatures> association:
+
+Associates features with their control features.
+
+
+
+=over
+
+
+=item $array_ref = $feature->setControlledFeatures($array_ref)
+
+The restricted setter method for the controlledFeatures association.
+
+Input parameters: the value to which the controlledFeatures association will be set : a reference to an array of objects of type C<Bio::MAGE::DesignElement::Feature>
+
+Return value: the current value of the controlledFeatures association : a reference to an array of objects of type C<Bio::MAGE::DesignElement::Feature>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::DesignElement::Feature> instances
+
+=cut
+
+sub setControlledFeatures {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setControlledFeatures: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setControlledFeatures: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setControlledFeatures: expected array reference, got $self")
+    unless UNIVERSAL::isa($val,'ARRAY');
+  foreach my $val (@{$val}) {
+    croak(__PACKAGE__ . "::setControlledFeatures: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::Feature")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::Feature');
+  }
+
+  return $self->{__CONTROLLEDFEATURES} = $val;
+}
+
+
+
+=item $array_ref = $feature->getControlledFeatures()
+
+The restricted getter method for the controlledFeatures association.
+
+Input parameters: none
+
+Return value: the current value of the controlledFeatures association : a reference to an array of objects of type C<Bio::MAGE::DesignElement::Feature>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getControlledFeatures {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getControlledFeatures: arguments passed to getter")
+    if @_;
+  return $self->{__CONTROLLEDFEATURES};
+}
+
+
+
+=item $feature->addControlledFeatures(@vals)
+
+Because the controlledFeatures association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the controlledFeatures
+association.
+
+Input parameters: the list of values C<@vals> to add to the controlledFeatures
+association. B<NOTE>: submitting a single value is permitted.
+
+Return value: none
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::DesignElement::Feature>
+
+=cut
+
+sub addControlledFeatures {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addControlledFeatures: no arguments passed to setter")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addControlledFeatures: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::Feature")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::Feature');
+  }
+
+  push(@{$self->{__CONTROLLEDFEATURES}},@vals);
+}
+
+
+
+=back
+
+
+=item zone
+
+
+From the MAGE-OM documentation for the C<zone> association:
+
+A reference to the zone this feature is in.
+
+
+
+=over
+
+
+=item $val = $feature->setZone($val)
+
+The restricted setter method for the zone association.
+
+Input parameters: the value to which the zone association will be set : an instance of type C<Bio::MAGE::ArrayDesign::Zone>.
+
+Return value: the current value of the zone association : an instance of type C<Bio::MAGE::ArrayDesign::Zone>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::ArrayDesign::Zone>
+
+=cut
+
+sub setZone {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setZone: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setZone: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setZone: wrong type: " . ref($val) . " expected Bio::MAGE::ArrayDesign::Zone") unless UNIVERSAL::isa($val,'Bio::MAGE::ArrayDesign::Zone');
+  return $self->{__ZONE} = $val;
+}
+
+
+
+=item $val = $feature->getZone()
+
+The restricted getter method for the zone association.
+
+Input parameters: none
+
+Return value: the current value of the zone association : an instance of type C<Bio::MAGE::ArrayDesign::Zone>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getZone {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getZone: arguments passed to getter")
+    if @_;
+  return $self->{__ZONE};
+}
+
 
 
 

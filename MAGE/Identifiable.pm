@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Describable Exporter);
-$VERSION = q[$Id: Identifiable.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,11 +60,11 @@ $VERSION = q[$Id: Identifiable.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp 
     # instanciated. These examples indicate how subclass objects behave
 
     # setting and retrieving object attributes
-  my $identifier_val = $identifiable->identifier();
-  $identifiable->identifier($value);
-
   my $name_val = $identifiable->name();
   $identifiable->name($value);
+
+  my $identifier_val = $identifiable->identifier();
+  $identifiable->identifier($value);
 
 
 =head2 DESCRIPTION
@@ -213,34 +213,50 @@ named-value style arguments:
 =over
 
 
-=item * identifier
-
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
-
-
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
 
-=item * security
 
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
+=item * identifier
 
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -363,7 +379,35 @@ returns the list of subclasses for this class.
 =cut
 
 sub subclasses {
-  my @list = ('Bio::MAGE::BioMaterial::Compound', 'Bio::MAGE::BioEvent::BioEvent', 'Bio::MAGE::ArrayDesign::DesignElementGroup', 'Bio::MAGE::QuantitationType::QuantitationType', 'Bio::MAGE::ArrayDesign::Zone', 'Bio::MAGE::BioAssayData::BioAssayDimension', 'Bio::MAGE::BioAssayData::QuantitationTypeDimension', 'Bio::MAGE::ArrayDesign::ArrayDesign', 'Bio::MAGE::AuditAndSecurity::Contact', 'Bio::MAGE::Experiment::FactorValue', 'Bio::MAGE::BioAssayData::BioAssayData', 'Bio::MAGE::Array::ArrayManufacture', 'Bio::MAGE::DesignElement::DesignElement', 'Bio::MAGE::BioAssayData::DesignElementDimension', 'Bio::MAGE::Description::Database', 'Bio::MAGE::Experiment::Experiment', 'Bio::MAGE::Array::ArrayGroup', 'Bio::MAGE::AuditAndSecurity::Security', 'Bio::MAGE::BioAssay::Channel', 'Bio::MAGE::Protocol::Parameterizable', 'Bio::MAGE::AuditAndSecurity::SecurityGroup', 'Bio::MAGE::Array::Array', 'Bio::MAGE::BioAssay::Image', 'Bio::MAGE::Protocol::Parameter', 'Bio::MAGE::BioAssay::BioAssay', 'Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster', 'Bio::MAGE::Experiment::ExperimentalFactor', 'Bio::MAGE::BioSequence::BioSequence', 'Bio::MAGE::BioMaterial::BioMaterial');
+  my @list = ('Bio::MAGE::BioMaterial::Compound',
+'Bio::MAGE::BioEvent::BioEvent',
+'Bio::MAGE::ArrayDesign::DesignElementGroup',
+'Bio::MAGE::QuantitationType::QuantitationType',
+'Bio::MAGE::ArrayDesign::Zone',
+'Bio::MAGE::BioAssayData::BioAssayDimension',
+'Bio::MAGE::BioAssayData::QuantitationTypeDimension',
+'Bio::MAGE::ArrayDesign::ArrayDesign',
+'Bio::MAGE::AuditAndSecurity::Contact',
+'Bio::MAGE::Experiment::FactorValue',
+'Bio::MAGE::BioAssayData::BioAssayData',
+'Bio::MAGE::Array::ArrayManufacture',
+'Bio::MAGE::DesignElement::DesignElement',
+'Bio::MAGE::BioAssayData::DesignElementDimension',
+'Bio::MAGE::Description::Database',
+'Bio::MAGE::Experiment::Experiment',
+'Bio::MAGE::Array::ArrayGroup',
+'Bio::MAGE::AuditAndSecurity::Security',
+'Bio::MAGE::BioAssay::Channel',
+'Bio::MAGE::Protocol::Parameterizable',
+'Bio::MAGE::AuditAndSecurity::SecurityGroup',
+'Bio::MAGE::Array::Array',
+'Bio::MAGE::BioAssay::Image',
+'Bio::MAGE::Protocol::Parameter',
+'Bio::MAGE::BioAssay::BioAssay',
+'Bio::MAGE::HigherLevelAnalysis::BioAssayDataCluster',
+'Bio::MAGE::Experiment::ExperimentalFactor',
+'Bio::MAGE::BioSequence::BioSequence',
+'Bio::MAGE::BioMaterial::BioMaterial');
   return @list;
 }
 
@@ -386,7 +430,8 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('identifier', 'name');
+  my @list = ('name',
+'identifier');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -449,72 +494,6 @@ Bio::MAGE::Identifiable: has the following attribute accessor methods:
 =over
 
 
-=item identifier
-
-From the MAGE-OM documentation for the C<identifier> attribute:
-
-An identifier is an unambiguous string that is unique within the scope (i.e. a document, a set of related documents, or a repository) of its use.
-
-
-
-=over
-
-
-=item $val = $identifiable->setIdentifier($val)
-
-The restricted setter method for the identifier attribute.
-
-Input parameters: the value to which the identifier attribute will be set 
-
-Return value: the current value of the identifier attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setIdentifier {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setIdentifier: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setIdentifier: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__IDENTIFIER} = $val;
-}
-
-
-
-=item $val = $identifiable->getIdentifier()
-
-The restricted getter method for the identifier attribute.
-
-Input parameters: none
-
-Return value: the current value of the identifier attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getIdentifier {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getIdentifier: arguments passed to getter")
-    if @_;
-  return $self->{__IDENTIFIER};
-}
-
-
-
-
-=back
-
-
 =item name
 
 From the MAGE-OM documentation for the C<name> attribute:
@@ -573,6 +552,72 @@ sub getName {
   croak(__PACKAGE__ . "::getName: arguments passed to getter")
     if @_;
   return $self->{__NAME};
+}
+
+
+
+
+=back
+
+
+=item identifier
+
+From the MAGE-OM documentation for the C<identifier> attribute:
+
+An identifier is an unambiguous string that is unique within the scope (i.e. a document, a set of related documents, or a repository) of its use.
+
+
+
+=over
+
+
+=item $val = $identifiable->setIdentifier($val)
+
+The restricted setter method for the identifier attribute.
+
+Input parameters: the value to which the identifier attribute will be set 
+
+Return value: the current value of the identifier attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setIdentifier {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setIdentifier: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setIdentifier: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__IDENTIFIER} = $val;
+}
+
+
+
+=item $val = $identifiable->getIdentifier()
+
+The restricted getter method for the identifier attribute.
+
+Input parameters: none
+
+Return value: the current value of the identifier attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getIdentifier {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getIdentifier: arguments passed to getter")
+    if @_;
+  return $self->{__IDENTIFIER};
 }
 
 

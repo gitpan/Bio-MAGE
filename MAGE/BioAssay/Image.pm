@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: Image.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -61,19 +61,19 @@ $VERSION = q[$Id: Image.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp $];
 
     # creating an already populated instance
   my $image = Bio::MAGE::BioAssay::Image->new(URI=>$URI_value,
-			format=>$format_value,
-			channels=>$channels_value);
+			channels=>$channels_value,
+			format=>$format_value);
 
     # setting and retrieving object attributes
   my $URI_val = $image->URI();
   $image->URI($value);
 
     # setting and retrieving object associations
-  my $format_val = $image->format();
-  $image->format($value);
-
   my $channels_val = $image->channels();
   $image->channels($value);
+
+  my $format_val = $image->format();
+  $image->format($value);
 
 
 =head2 DESCRIPTION
@@ -121,47 +121,71 @@ named-value style arguments:
 
 =item * URI
 
-Sets the value of the URI attribute (from C<Bio::MAGE::BioAssay::Image>).
+Sets the value of the URI attribute (this attribute was inherited
+from class C<Bio::MAGE::BioAssay::Image>).
 
-
-=item * format
-
-Sets the value of the format association (from C<Bio::MAGE::BioAssay::Image>).
 
 
 =item * channels
 
-Sets the value of the channels association (from C<Bio::MAGE::BioAssay::Image>).
+Sets the value of the channels association (this association was inherited
+from class C<Bio::MAGE::BioAssay::Image>).
+
+The value will be of type C<Channel>.
+
+
+=item * format
+
+Sets the value of the format association (this association was inherited
+from class C<Bio::MAGE::BioAssay::Image>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -324,7 +348,8 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('format', 'channels');
+  my @list = ('channels',
+'format');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -542,45 +567,45 @@ BEGIN {
   $__ASSOCIATIONS = [
           'channels',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The channels captured in this image.',
-                                        '__CLASS_NAME' => 'Image',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'channels',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The channels captured in this image.',
-                                         '__CLASS_NAME' => 'Channel',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'channels',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Channel'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The channels captured in this image.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Image'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'format',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The file format of the image typically a TIF or a JPEG.',
-                                        '__CLASS_NAME' => 'Image',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'format',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The file format of the image typically a TIF or a JPEG.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'format',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The file format of the image typically a TIF or a JPEG.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Image'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -618,73 +643,6 @@ the association.
 Bio::MAGE::BioAssay::Image: has the following association accessor methods:
 
 =over
-
-
-=item format
-
-
-From the MAGE-OM documentation for the C<format> association:
-
-The file format of the image typically a TIF or a JPEG.
-
-
-
-=over
-
-
-=item $val = $image->setFormat($val)
-
-The restricted setter method for the format association.
-
-Input parameters: the value to which the format association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Return value: the current value of the format association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
-
-=cut
-
-sub setFormat {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setFormat: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setFormat: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setFormat: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
-  return $self->{__FORMAT} = $val;
-}
-
-
-
-=item $val = $image->getFormat()
-
-The restricted getter method for the format association.
-
-Input parameters: none
-
-Return value: the current value of the format association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getFormat {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getFormat: arguments passed to getter")
-    if @_;
-  return $self->{__FORMAT};
-}
-
-
-
-
-=back
 
 
 =item channels
@@ -786,6 +744,73 @@ sub addChannels {
 
   push(@{$self->{__CHANNELS}},@vals);
 }
+
+
+
+=back
+
+
+=item format
+
+
+From the MAGE-OM documentation for the C<format> association:
+
+The file format of the image typically a TIF or a JPEG.
+
+
+
+=over
+
+
+=item $val = $image->setFormat($val)
+
+The restricted setter method for the format association.
+
+Input parameters: the value to which the format association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Return value: the current value of the format association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
+
+=cut
+
+sub setFormat {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setFormat: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setFormat: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setFormat: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  return $self->{__FORMAT} = $val;
+}
+
+
+
+=item $val = $image->getFormat()
+
+The restricted getter method for the format association.
+
+Input parameters: none
+
+Return value: the current value of the format association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getFormat {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getFormat: arguments passed to getter")
+    if @_;
+  return $self->{__FORMAT};
+}
+
 
 
 

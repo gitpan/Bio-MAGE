@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Identifiable Exporter);
-$VERSION = q[$Id: FactorValue.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,19 +60,19 @@ $VERSION = q[$Id: FactorValue.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart Exp $
   my $factorvalue = Bio::MAGE::Experiment::FactorValue->new();
 
     # creating an already populated instance
-  my $factorvalue = Bio::MAGE::Experiment::FactorValue->new(experimentalFactor=>$experimentalFactor_value,
-			value=>$value_value,
-			measurement=>$measurement_value);
+  my $factorvalue = Bio::MAGE::Experiment::FactorValue->new(measurement=>$measurement_value,
+			experimentalFactor=>$experimentalFactor_value,
+			value=>$value_value);
 
     # setting and retrieving object associations
+  my $measurement_val = $factorvalue->measurement();
+  $factorvalue->measurement($value);
+
   my $experimentalFactor_val = $factorvalue->experimentalFactor();
   $factorvalue->experimentalFactor($value);
 
   my $value_val = $factorvalue->value();
   $factorvalue->value($value);
-
-  my $measurement_val = $factorvalue->measurement();
-  $factorvalue->measurement($value);
 
 
 =head2 DESCRIPTION
@@ -117,49 +117,74 @@ named-value style arguments:
 =over
 
 
+=item * measurement
+
+Sets the value of the measurement association (this association was inherited
+from class C<Bio::MAGE::Experiment::FactorValue>).
+
+The value will be of type C<Measurement>.
+
+
 =item * experimentalFactor
 
-Sets the value of the experimentalFactor association (from C<Bio::MAGE::Experiment::FactorValue>).
+Sets the value of the experimentalFactor association (this association was inherited
+from class C<Bio::MAGE::Experiment::FactorValue>).
+
+The value will be of type C<ExperimentalFactor>.
 
 
 =item * value
 
-Sets the value of the value association (from C<Bio::MAGE::Experiment::FactorValue>).
+Sets the value of the value association (this association was inherited
+from class C<Bio::MAGE::Experiment::FactorValue>).
 
-
-=item * measurement
-
-Sets the value of the measurement association (from C<Bio::MAGE::Experiment::FactorValue>).
+The value will be of type C<OntologyEntry>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -322,7 +347,9 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('experimentalFactor', 'value', 'measurement');
+  my @list = ('measurement',
+'experimentalFactor',
+'value');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -472,68 +499,68 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 BEGIN {
   $__ASSOCIATIONS = [
-          'experimentalFactor',
-          bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'factorValues',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The pairing of BioAssay FactorValues with the ExperimentDesign ExperimentFactor.',
-                                        '__CLASS_NAME' => 'FactorValue',
-                                        '__RANK' => '2',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
-                   '__OTHER' => bless( {
-                                         '__NAME' => 'experimentalFactor',
-                                         '__IS_REF' => 0,
-                                         '__CARDINALITY' => '1',
-                                         '__DOCUMENTATION' => 'The pairing of BioAssay FactorValues with the ExperimentDesign ExperimentFactor.',
-                                         '__CLASS_NAME' => 'ExperimentalFactor',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
-                 }, 'Bio::MAGE::Association' ),
           'measurement',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The measured value for this factor.',
-                                        '__CLASS_NAME' => 'FactorValue',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'measurement',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The measured value for this factor.',
-                                         '__CLASS_NAME' => 'Measurement',
+                                         '__NAME' => 'measurement',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Measurement'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The measured value for this factor.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'FactorValue'
+                                      }, 'Bio::MAGE::Association::End' )
+                 }, 'Bio::MAGE::Association' ),
+          'experimentalFactor',
+          bless( {
+                   '__OTHER' => bless( {
+                                         '__IS_REF' => 0,
                                          '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__CARDINALITY' => '1',
+                                         '__DOCUMENTATION' => 'The pairing of BioAssay FactorValues with the ExperimentDesign ExperimentFactor.',
+                                         '__NAME' => 'experimentalFactor',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ExperimentalFactor'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '2',
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The pairing of BioAssay FactorValues with the ExperimentDesign ExperimentFactor.',
+                                        '__NAME' => 'factorValues',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'FactorValue'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'value',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Allows a more complex value to be specified for a FactorValue than a simple Measurement.',
-                                        '__CLASS_NAME' => 'FactorValue',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'value',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Allows a more complex value to be specified for a FactorValue than a simple Measurement.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'value',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Allows a more complex value to be specified for a FactorValue than a simple Measurement.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'FactorValue'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -571,6 +598,73 @@ the association.
 Bio::MAGE::Experiment::FactorValue: has the following association accessor methods:
 
 =over
+
+
+=item measurement
+
+
+From the MAGE-OM documentation for the C<measurement> association:
+
+The measured value for this factor.
+
+
+
+=over
+
+
+=item $val = $factorvalue->setMeasurement($val)
+
+The restricted setter method for the measurement association.
+
+Input parameters: the value to which the measurement association will be set : an instance of type C<Bio::MAGE::Measurement::Measurement>.
+
+Return value: the current value of the measurement association : an instance of type C<Bio::MAGE::Measurement::Measurement>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Measurement::Measurement>
+
+=cut
+
+sub setMeasurement {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setMeasurement: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setMeasurement: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setMeasurement: wrong type: " . ref($val) . " expected Bio::MAGE::Measurement::Measurement") unless UNIVERSAL::isa($val,'Bio::MAGE::Measurement::Measurement');
+  return $self->{__MEASUREMENT} = $val;
+}
+
+
+
+=item $val = $factorvalue->getMeasurement()
+
+The restricted getter method for the measurement association.
+
+Input parameters: none
+
+Return value: the current value of the measurement association : an instance of type C<Bio::MAGE::Measurement::Measurement>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getMeasurement {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getMeasurement: arguments passed to getter")
+    if @_;
+  return $self->{__MEASUREMENT};
+}
+
+
+
+
+=back
 
 
 =item experimentalFactor
@@ -699,73 +793,6 @@ sub getValue {
   croak(__PACKAGE__ . "::getValue: arguments passed to getter")
     if @_;
   return $self->{__VALUE};
-}
-
-
-
-
-=back
-
-
-=item measurement
-
-
-From the MAGE-OM documentation for the C<measurement> association:
-
-The measured value for this factor.
-
-
-
-=over
-
-
-=item $val = $factorvalue->setMeasurement($val)
-
-The restricted setter method for the measurement association.
-
-Input parameters: the value to which the measurement association will be set : an instance of type C<Bio::MAGE::Measurement::Measurement>.
-
-Return value: the current value of the measurement association : an instance of type C<Bio::MAGE::Measurement::Measurement>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Measurement::Measurement>
-
-=cut
-
-sub setMeasurement {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setMeasurement: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setMeasurement: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setMeasurement: wrong type: " . ref($val) . " expected Bio::MAGE::Measurement::Measurement") unless UNIVERSAL::isa($val,'Bio::MAGE::Measurement::Measurement');
-  return $self->{__MEASUREMENT} = $val;
-}
-
-
-
-=item $val = $factorvalue->getMeasurement()
-
-The restricted getter method for the measurement association.
-
-Input parameters: none
-
-Return value: the current value of the measurement association : an instance of type C<Bio::MAGE::Measurement::Measurement>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getMeasurement {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getMeasurement: arguments passed to getter")
-    if @_;
-  return $self->{__MEASUREMENT};
 }
 
 

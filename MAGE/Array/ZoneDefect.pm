@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: ZoneDefect.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,16 +60,16 @@ $VERSION = q[$Id: ZoneDefect.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $]
   my $zonedefect = Bio::MAGE::Array::ZoneDefect->new();
 
     # creating an already populated instance
-  my $zonedefect = Bio::MAGE::Array::ZoneDefect->new(positionDelta=>$positionDelta_value,
-			defectType=>$defectType_value,
+  my $zonedefect = Bio::MAGE::Array::ZoneDefect->new(defectType=>$defectType_value,
+			positionDelta=>$positionDelta_value,
 			zone=>$zone_value);
 
     # setting and retrieving object associations
-  my $positionDelta_val = $zonedefect->positionDelta();
-  $zonedefect->positionDelta($value);
-
   my $defectType_val = $zonedefect->defectType();
   $zonedefect->defectType($value);
+
+  my $positionDelta_val = $zonedefect->positionDelta();
+  $zonedefect->positionDelta($value);
 
   my $zone_val = $zonedefect->zone();
   $zonedefect->zone($value);
@@ -117,24 +117,36 @@ named-value style arguments:
 =over
 
 
-=item * positionDelta
-
-Sets the value of the positionDelta association (from C<Bio::MAGE::Array::ZoneDefect>).
-
-
 =item * defectType
 
-Sets the value of the defectType association (from C<Bio::MAGE::Array::ZoneDefect>).
+Sets the value of the defectType association (this association was inherited
+from class C<Bio::MAGE::Array::ZoneDefect>).
+
+The value will be of type C<OntologyEntry>.
+
+
+=item * positionDelta
+
+Sets the value of the positionDelta association (this association was inherited
+from class C<Bio::MAGE::Array::ZoneDefect>).
+
+The value will be of type C<PositionDelta>.
 
 
 =item * zone
 
-Sets the value of the zone association (from C<Bio::MAGE::Array::ZoneDefect>).
+Sets the value of the zone association (this association was inherited
+from class C<Bio::MAGE::Array::ZoneDefect>).
+
+The value will be of type C<Zone>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -297,7 +309,9 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('positionDelta', 'defectType', 'zone');
+  my @list = ('defectType',
+'positionDelta',
+'zone');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -355,66 +369,66 @@ BEGIN {
   $__ASSOCIATIONS = [
           'defectType',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Indicates the type of defect (e.g. a missing zone or a moved zone).',
-                                        '__CLASS_NAME' => 'ZoneDefect',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'defectType',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'Indicates the type of defect (e.g. a missing zone or a moved zone).',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'defectType',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Indicates the type of defect (e.g. a missing zone or a moved zone).',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ZoneDefect'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'positionDelta',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'How the zone deviates in position from the ArrayDesign.',
-                                        '__CLASS_NAME' => 'ZoneDefect',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'positionDelta',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'How the zone deviates in position from the ArrayDesign.',
-                                         '__CLASS_NAME' => 'PositionDelta',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'positionDelta',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'PositionDelta'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'How the zone deviates in position from the ArrayDesign.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ZoneDefect'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'zone',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'Reference to the Zone that was misprinted.',
-                                        '__CLASS_NAME' => 'ZoneDefect',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'zone',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'Reference to the Zone that was misprinted.',
-                                         '__CLASS_NAME' => 'Zone',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'zone',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Zone'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'Reference to the Zone that was misprinted.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ZoneDefect'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -452,73 +466,6 @@ the association.
 Bio::MAGE::Array::ZoneDefect: has the following association accessor methods:
 
 =over
-
-
-=item positionDelta
-
-
-From the MAGE-OM documentation for the C<positionDelta> association:
-
-How the zone deviates in position from the ArrayDesign.
-
-
-
-=over
-
-
-=item $val = $zonedefect->setPositionDelta($val)
-
-The restricted setter method for the positionDelta association.
-
-Input parameters: the value to which the positionDelta association will be set : an instance of type C<Bio::MAGE::Array::PositionDelta>.
-
-Return value: the current value of the positionDelta association : an instance of type C<Bio::MAGE::Array::PositionDelta>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Array::PositionDelta>
-
-=cut
-
-sub setPositionDelta {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setPositionDelta: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setPositionDelta: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setPositionDelta: wrong type: " . ref($val) . " expected Bio::MAGE::Array::PositionDelta") unless UNIVERSAL::isa($val,'Bio::MAGE::Array::PositionDelta');
-  return $self->{__POSITIONDELTA} = $val;
-}
-
-
-
-=item $val = $zonedefect->getPositionDelta()
-
-The restricted getter method for the positionDelta association.
-
-Input parameters: none
-
-Return value: the current value of the positionDelta association : an instance of type C<Bio::MAGE::Array::PositionDelta>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getPositionDelta {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getPositionDelta: arguments passed to getter")
-    if @_;
-  return $self->{__POSITIONDELTA};
-}
-
-
-
-
-=back
 
 
 =item defectType
@@ -580,6 +527,73 @@ sub getDefectType {
   croak(__PACKAGE__ . "::getDefectType: arguments passed to getter")
     if @_;
   return $self->{__DEFECTTYPE};
+}
+
+
+
+
+=back
+
+
+=item positionDelta
+
+
+From the MAGE-OM documentation for the C<positionDelta> association:
+
+How the zone deviates in position from the ArrayDesign.
+
+
+
+=over
+
+
+=item $val = $zonedefect->setPositionDelta($val)
+
+The restricted setter method for the positionDelta association.
+
+Input parameters: the value to which the positionDelta association will be set : an instance of type C<Bio::MAGE::Array::PositionDelta>.
+
+Return value: the current value of the positionDelta association : an instance of type C<Bio::MAGE::Array::PositionDelta>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Array::PositionDelta>
+
+=cut
+
+sub setPositionDelta {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setPositionDelta: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setPositionDelta: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setPositionDelta: wrong type: " . ref($val) . " expected Bio::MAGE::Array::PositionDelta") unless UNIVERSAL::isa($val,'Bio::MAGE::Array::PositionDelta');
+  return $self->{__POSITIONDELTA} = $val;
+}
+
+
+
+=item $val = $zonedefect->getPositionDelta()
+
+The restricted getter method for the positionDelta association.
+
+Input parameters: none
+
+Return value: the current value of the positionDelta association : an instance of type C<Bio::MAGE::Array::PositionDelta>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getPositionDelta {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getPositionDelta: arguments passed to getter")
+    if @_;
+  return $self->{__POSITIONDELTA};
 }
 
 

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: ParameterValue.pm,v 1.1 2002/12/10 06:25:50 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -116,17 +116,25 @@ named-value style arguments:
 
 =item * value
 
-Sets the value of the value attribute (from C<Bio::MAGE::Protocol::ParameterValue>).
+Sets the value of the value attribute (this attribute was inherited
+from class C<Bio::MAGE::Protocol::ParameterValue>).
+
 
 
 =item * parameterType
 
-Sets the value of the parameterType association (from C<Bio::MAGE::Protocol::ParameterValue>).
+Sets the value of the parameterType association (this association was inherited
+from class C<Bio::MAGE::Protocol::ParameterValue>).
+
+The value will be of type C<Parameter>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -413,24 +421,24 @@ BEGIN {
   $__ASSOCIATIONS = [
           'parameterType',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The parameter this value is for.',
-                                        '__CLASS_NAME' => 'ParameterValue',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'parameterType',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The parameter this value is for.',
-                                         '__CLASS_NAME' => 'Parameter',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'parameterType',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Parameter'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The parameter this value is for.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ParameterValue'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::DesignElement::DesignElement Exporter);
-$VERSION = q[$Id: Reporter.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,12 +60,15 @@ $VERSION = q[$Id: Reporter.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp $];
   my $reporter = Bio::MAGE::DesignElement::Reporter->new();
 
     # creating an already populated instance
-  my $reporter = Bio::MAGE::DesignElement::Reporter->new(warningType=>$warningType_value,
+  my $reporter = Bio::MAGE::DesignElement::Reporter->new(featureReporterMaps=>$featureReporterMaps_value,
+			warningType=>$warningType_value,
 			failTypes=>$failTypes_value,
-			immobilizedCharacteristics=>$immobilizedCharacteristics_value,
-			featureReporterMaps=>$featureReporterMaps_value);
+			immobilizedCharacteristics=>$immobilizedCharacteristics_value);
 
     # setting and retrieving object associations
+  my $featureReporterMaps_val = $reporter->featureReporterMaps();
+  $reporter->featureReporterMaps($value);
+
   my $warningType_val = $reporter->warningType();
   $reporter->warningType($value);
 
@@ -74,9 +77,6 @@ $VERSION = q[$Id: Reporter.pm,v 1.2 2002/12/11 01:32:19 jason_e_stewart Exp $];
 
   my $immobilizedCharacteristics_val = $reporter->immobilizedCharacteristics();
   $reporter->immobilizedCharacteristics($value);
-
-  my $featureReporterMaps_val = $reporter->featureReporterMaps();
-  $reporter->featureReporterMaps($value);
 
 
 =head2 DESCRIPTION
@@ -123,59 +123,90 @@ named-value style arguments:
 =over
 
 
+=item * featureReporterMaps
+
+Sets the value of the featureReporterMaps association (this association was inherited
+from class C<Bio::MAGE::DesignElement::Reporter>).
+
+The value will be of type C<FeatureReporterMap>.
+
+
 =item * warningType
 
-Sets the value of the warningType association (from C<Bio::MAGE::DesignElement::Reporter>).
+Sets the value of the warningType association (this association was inherited
+from class C<Bio::MAGE::DesignElement::Reporter>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * failTypes
 
-Sets the value of the failTypes association (from C<Bio::MAGE::DesignElement::Reporter>).
+Sets the value of the failTypes association (this association was inherited
+from class C<Bio::MAGE::DesignElement::Reporter>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * immobilizedCharacteristics
 
-Sets the value of the immobilizedCharacteristics association (from C<Bio::MAGE::DesignElement::Reporter>).
+Sets the value of the immobilizedCharacteristics association (this association was inherited
+from class C<Bio::MAGE::DesignElement::Reporter>).
 
-
-=item * featureReporterMaps
-
-Sets the value of the featureReporterMaps association (from C<Bio::MAGE::DesignElement::Reporter>).
+The value will be of type C<BioSequence>.
 
 
 =item * controlType
 
-Sets the value of the controlType association (from C<Bio::MAGE::DesignElement::DesignElement>).
+Sets the value of the controlType association (this association was inherited
+from class C<Bio::MAGE::DesignElement::DesignElement>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -338,7 +369,10 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('warningType', 'failTypes', 'immobilizedCharacteristics', 'featureReporterMaps');
+  my @list = ('featureReporterMaps',
+'warningType',
+'failTypes',
+'immobilizedCharacteristics');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -490,87 +524,87 @@ BEGIN {
   $__ASSOCIATIONS = [
           'immobilizedCharacteristics',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The sequence annotation on the BioMaterial this reporter represents.  Typically the sequences will be an Oligo Sequence, Clone or PCR Primer.',
-                                        '__CLASS_NAME' => 'Reporter',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'immobilizedCharacteristics',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The sequence annotation on the BioMaterial this reporter represents.  Typically the sequences will be an Oligo Sequence, Clone or PCR Primer.',
-                                         '__CLASS_NAME' => 'BioSequence',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'immobilizedCharacteristics',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioSequence'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The sequence annotation on the BioMaterial this reporter represents.  Typically the sequences will be an Oligo Sequence, Clone or PCR Primer.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Reporter'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'warningType',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Similar to failType but indicates a warning rather than a failure.',
-                                        '__CLASS_NAME' => 'Reporter',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'warningType',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Similar to failType but indicates a warning rather than a failure.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'warningType',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Similar to failType but indicates a warning rather than a failure.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Reporter'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'failTypes',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'If at some time the reporter is determined to be failed this indicts the failure (doesn\'t report on what it was intended to report on, etc.)',
-                                        '__CLASS_NAME' => 'Reporter',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'failTypes',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'If at some time the reporter is determined to be failed this indicts the failure (doesn\'t report on what it was intended to report on, etc.)',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'failTypes',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'If at some time the reporter is determined to be failed this indicts the failure (doesn\'t report on what it was intended to report on, etc.)',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'Reporter'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'featureReporterMaps',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'reporter',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Associates features with their reporter.',
-                                        '__CLASS_NAME' => 'Reporter',
-                                        '__RANK' => '1',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'featureReporterMaps',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '4',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Associates features with their reporter.',
-                                         '__CLASS_NAME' => 'FeatureReporterMap',
-                                         '__RANK' => '4',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'featureReporterMaps',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'FeatureReporterMap'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '1',
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Associates features with their reporter.',
+                                        '__NAME' => 'reporter',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'Reporter'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -608,6 +642,111 @@ the association.
 Bio::MAGE::DesignElement::Reporter: has the following association accessor methods:
 
 =over
+
+
+=item featureReporterMaps
+
+
+From the MAGE-OM documentation for the C<featureReporterMaps> association:
+
+Associates features with their reporter.
+
+
+
+=over
+
+
+=item $array_ref = $reporter->setFeatureReporterMaps($array_ref)
+
+The restricted setter method for the featureReporterMaps association.
+
+Input parameters: the value to which the featureReporterMaps association will be set : a reference to an array of objects of type C<Bio::MAGE::DesignElement::FeatureReporterMap>
+
+Return value: the current value of the featureReporterMaps association : a reference to an array of objects of type C<Bio::MAGE::DesignElement::FeatureReporterMap>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::DesignElement::FeatureReporterMap> instances
+
+=cut
+
+sub setFeatureReporterMaps {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setFeatureReporterMaps: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setFeatureReporterMaps: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setFeatureReporterMaps: expected array reference, got $self")
+    unless UNIVERSAL::isa($val,'ARRAY');
+  foreach my $val (@{$val}) {
+    croak(__PACKAGE__ . "::setFeatureReporterMaps: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::FeatureReporterMap")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::FeatureReporterMap');
+  }
+
+  return $self->{__FEATUREREPORTERMAPS} = $val;
+}
+
+
+
+=item $array_ref = $reporter->getFeatureReporterMaps()
+
+The restricted getter method for the featureReporterMaps association.
+
+Input parameters: none
+
+Return value: the current value of the featureReporterMaps association : a reference to an array of objects of type C<Bio::MAGE::DesignElement::FeatureReporterMap>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getFeatureReporterMaps {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getFeatureReporterMaps: arguments passed to getter")
+    if @_;
+  return $self->{__FEATUREREPORTERMAPS};
+}
+
+
+
+=item $reporter->addFeatureReporterMaps(@vals)
+
+Because the featureReporterMaps association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the featureReporterMaps
+association.
+
+Input parameters: the list of values C<@vals> to add to the featureReporterMaps
+association. B<NOTE>: submitting a single value is permitted.
+
+Return value: none
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::DesignElement::FeatureReporterMap>
+
+=cut
+
+sub addFeatureReporterMaps {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addFeatureReporterMaps: no arguments passed to setter")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addFeatureReporterMaps: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::FeatureReporterMap")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::FeatureReporterMap');
+  }
+
+  push(@{$self->{__FEATUREREPORTERMAPS}},@vals);
+}
+
+
+
+=back
 
 
 =item warningType
@@ -880,111 +1019,6 @@ sub addImmobilizedCharacteristics {
   }
 
   push(@{$self->{__IMMOBILIZEDCHARACTERISTICS}},@vals);
-}
-
-
-
-=back
-
-
-=item featureReporterMaps
-
-
-From the MAGE-OM documentation for the C<featureReporterMaps> association:
-
-Associates features with their reporter.
-
-
-
-=over
-
-
-=item $array_ref = $reporter->setFeatureReporterMaps($array_ref)
-
-The restricted setter method for the featureReporterMaps association.
-
-Input parameters: the value to which the featureReporterMaps association will be set : a reference to an array of objects of type C<Bio::MAGE::DesignElement::FeatureReporterMap>
-
-Return value: the current value of the featureReporterMaps association : a reference to an array of objects of type C<Bio::MAGE::DesignElement::FeatureReporterMap>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::DesignElement::FeatureReporterMap> instances
-
-=cut
-
-sub setFeatureReporterMaps {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setFeatureReporterMaps: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setFeatureReporterMaps: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-    croak(__PACKAGE__ . "::setFeatureReporterMaps: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setFeatureReporterMaps: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::FeatureReporterMap")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::FeatureReporterMap');
-  }
-
-  return $self->{__FEATUREREPORTERMAPS} = $val;
-}
-
-
-
-=item $array_ref = $reporter->getFeatureReporterMaps()
-
-The restricted getter method for the featureReporterMaps association.
-
-Input parameters: none
-
-Return value: the current value of the featureReporterMaps association : a reference to an array of objects of type C<Bio::MAGE::DesignElement::FeatureReporterMap>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getFeatureReporterMaps {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getFeatureReporterMaps: arguments passed to getter")
-    if @_;
-  return $self->{__FEATUREREPORTERMAPS};
-}
-
-
-
-=item $reporter->addFeatureReporterMaps(@vals)
-
-Because the featureReporterMaps association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the featureReporterMaps
-association.
-
-Input parameters: the list of values C<@vals> to add to the featureReporterMaps
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::DesignElement::FeatureReporterMap>
-
-=cut
-
-sub addFeatureReporterMaps {
-  my $self = shift;
-  croak(__PACKAGE__ . "::addFeatureReporterMaps: no arguments passed to setter")
-    unless @_;
-  my @vals = @_;
-    foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addFeatureReporterMaps: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::FeatureReporterMap")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::FeatureReporterMap');
-  }
-
-  push(@{$self->{__FEATUREREPORTERMAPS}},@vals);
 }
 
 

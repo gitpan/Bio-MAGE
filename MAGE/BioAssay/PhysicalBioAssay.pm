@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::BioAssay::BioAssay Exporter);
-$VERSION = q[$Id: PhysicalBioAssay.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -61,18 +61,18 @@ $VERSION = q[$Id: PhysicalBioAssay.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart 
 
     # creating an already populated instance
   my $physicalbioassay = Bio::MAGE::BioAssay::PhysicalBioAssay->new(bioAssayTreatments=>$bioAssayTreatments_value,
-			bioAssayCreation=>$bioAssayCreation_value,
-			physicalBioAssayData=>$physicalBioAssayData_value);
+			physicalBioAssayData=>$physicalBioAssayData_value,
+			bioAssayCreation=>$bioAssayCreation_value);
 
     # setting and retrieving object associations
   my $bioAssayTreatments_val = $physicalbioassay->bioAssayTreatments();
   $physicalbioassay->bioAssayTreatments($value);
 
-  my $bioAssayCreation_val = $physicalbioassay->bioAssayCreation();
-  $physicalbioassay->bioAssayCreation($value);
-
   my $physicalBioAssayData_val = $physicalbioassay->physicalBioAssayData();
   $physicalbioassay->physicalBioAssayData($value);
+
+  my $bioAssayCreation_val = $physicalbioassay->bioAssayCreation();
+  $physicalbioassay->bioAssayCreation($value);
 
 
 =head2 DESCRIPTION
@@ -119,57 +119,88 @@ named-value style arguments:
 
 =item * bioAssayTreatments
 
-Sets the value of the bioAssayTreatments association (from C<Bio::MAGE::BioAssay::PhysicalBioAssay>).
+Sets the value of the bioAssayTreatments association (this association was inherited
+from class C<Bio::MAGE::BioAssay::PhysicalBioAssay>).
 
-
-=item * bioAssayCreation
-
-Sets the value of the bioAssayCreation association (from C<Bio::MAGE::BioAssay::PhysicalBioAssay>).
+The value will be of type C<BioAssayTreatment>.
 
 
 =item * physicalBioAssayData
 
-Sets the value of the physicalBioAssayData association (from C<Bio::MAGE::BioAssay::PhysicalBioAssay>).
+Sets the value of the physicalBioAssayData association (this association was inherited
+from class C<Bio::MAGE::BioAssay::PhysicalBioAssay>).
+
+The value will be of type C<Image>.
 
 
-=item * channels
+=item * bioAssayCreation
 
-Sets the value of the channels association (from C<Bio::MAGE::BioAssay::BioAssay>).
+Sets the value of the bioAssayCreation association (this association was inherited
+from class C<Bio::MAGE::BioAssay::PhysicalBioAssay>).
+
+The value will be of type C<BioAssayCreation>.
 
 
 =item * bioAssayFactorValues
 
-Sets the value of the bioAssayFactorValues association (from C<Bio::MAGE::BioAssay::BioAssay>).
+Sets the value of the bioAssayFactorValues association (this association was inherited
+from class C<Bio::MAGE::BioAssay::BioAssay>).
+
+The value will be of type C<FactorValue>.
+
+
+=item * channels
+
+Sets the value of the channels association (this association was inherited
+from class C<Bio::MAGE::BioAssay::BioAssay>).
+
+The value will be of type C<Channel>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -332,7 +363,9 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('bioAssayTreatments', 'bioAssayCreation', 'physicalBioAssayData');
+  my @list = ('bioAssayTreatments',
+'physicalBioAssayData',
+'bioAssayCreation');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -484,66 +517,66 @@ BEGIN {
   $__ASSOCIATIONS = [
           'physicalBioAssayData',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The Images associated with this PhysicalBioAssay by ImageAcquisition.',
-                                        '__CLASS_NAME' => 'PhysicalBioAssay',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'physicalBioAssayData',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The Images associated with this PhysicalBioAssay by ImageAcquisition.',
-                                         '__CLASS_NAME' => 'Image',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'physicalBioAssayData',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Image'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The Images associated with this PhysicalBioAssay by ImageAcquisition.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'PhysicalBioAssay'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'bioAssayCreation',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'physicalBioAssayTarget',
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The association between the BioAssayCreation event (typically Hybridization) and the PhysicalBioAssay and its annotation of this event.',
-                                        '__CLASS_NAME' => 'PhysicalBioAssay',
-                                        '__RANK' => '3',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'bioAssayCreation',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The association between the BioAssayCreation event (typically Hybridization) and the PhysicalBioAssay and its annotation of this event.',
-                                         '__CLASS_NAME' => 'BioAssayCreation',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'bioAssayCreation',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioAssayCreation'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => '3',
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The association between the BioAssayCreation event (typically Hybridization) and the PhysicalBioAssay and its annotation of this event.',
+                                        '__NAME' => 'physicalBioAssayTarget',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'PhysicalBioAssay'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'bioAssayTreatments',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'physicalBioAssay',
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The set of treatments undergone by this PhysicalBioAssay.',
-                                        '__CLASS_NAME' => 'PhysicalBioAssay',
-                                        '__RANK' => '1',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'bioAssayTreatments',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The set of treatments undergone by this PhysicalBioAssay.',
-                                         '__CLASS_NAME' => 'BioAssayTreatment',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 1
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'bioAssayTreatments',
+                                         '__ORDERED' => 1,
+                                         '__CLASS_NAME' => 'BioAssayTreatment'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => '1',
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The set of treatments undergone by this PhysicalBioAssay.',
+                                        '__NAME' => 'physicalBioAssay',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'PhysicalBioAssay'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -688,73 +721,6 @@ sub addBioAssayTreatments {
 =back
 
 
-=item bioAssayCreation
-
-
-From the MAGE-OM documentation for the C<bioAssayCreation> association:
-
-The association between the BioAssayCreation event (typically Hybridization) and the PhysicalBioAssay and its annotation of this event.
-
-
-
-=over
-
-
-=item $val = $physicalbioassay->setBioAssayCreation($val)
-
-The restricted setter method for the bioAssayCreation association.
-
-Input parameters: the value to which the bioAssayCreation association will be set : an instance of type C<Bio::MAGE::BioAssay::BioAssayCreation>.
-
-Return value: the current value of the bioAssayCreation association : an instance of type C<Bio::MAGE::BioAssay::BioAssayCreation>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssay::BioAssayCreation>
-
-=cut
-
-sub setBioAssayCreation {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setBioAssayCreation: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setBioAssayCreation: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  croak(__PACKAGE__ . "::setBioAssayCreation: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssay::BioAssayCreation") unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssay::BioAssayCreation');
-  return $self->{__BIOASSAYCREATION} = $val;
-}
-
-
-
-=item $val = $physicalbioassay->getBioAssayCreation()
-
-The restricted getter method for the bioAssayCreation association.
-
-Input parameters: none
-
-Return value: the current value of the bioAssayCreation association : an instance of type C<Bio::MAGE::BioAssay::BioAssayCreation>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getBioAssayCreation {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getBioAssayCreation: arguments passed to getter")
-    if @_;
-  return $self->{__BIOASSAYCREATION};
-}
-
-
-
-
-=back
-
-
 =item physicalBioAssayData
 
 
@@ -854,6 +820,73 @@ sub addPhysicalBioAssayData {
 
   push(@{$self->{__PHYSICALBIOASSAYDATA}},@vals);
 }
+
+
+
+=back
+
+
+=item bioAssayCreation
+
+
+From the MAGE-OM documentation for the C<bioAssayCreation> association:
+
+The association between the BioAssayCreation event (typically Hybridization) and the PhysicalBioAssay and its annotation of this event.
+
+
+
+=over
+
+
+=item $val = $physicalbioassay->setBioAssayCreation($val)
+
+The restricted setter method for the bioAssayCreation association.
+
+Input parameters: the value to which the bioAssayCreation association will be set : an instance of type C<Bio::MAGE::BioAssay::BioAssayCreation>.
+
+Return value: the current value of the bioAssayCreation association : an instance of type C<Bio::MAGE::BioAssay::BioAssayCreation>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssay::BioAssayCreation>
+
+=cut
+
+sub setBioAssayCreation {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setBioAssayCreation: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setBioAssayCreation: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setBioAssayCreation: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssay::BioAssayCreation") unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssay::BioAssayCreation');
+  return $self->{__BIOASSAYCREATION} = $val;
+}
+
+
+
+=item $val = $physicalbioassay->getBioAssayCreation()
+
+The restricted getter method for the bioAssayCreation association.
+
+Input parameters: none
+
+Return value: the current value of the bioAssayCreation association : an instance of type C<Bio::MAGE::BioAssay::BioAssayCreation>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getBioAssayCreation {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getBioAssayCreation: arguments passed to getter")
+    if @_;
+  return $self->{__BIOASSAYCREATION};
+}
+
 
 
 

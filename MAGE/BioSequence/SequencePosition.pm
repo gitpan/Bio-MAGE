@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: SequencePosition.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -129,17 +129,24 @@ named-value style arguments:
 
 =item * end
 
-Sets the value of the end attribute (from C<Bio::MAGE::BioSequence::SequencePosition>).
+Sets the value of the end attribute (this attribute was inherited
+from class C<Bio::MAGE::BioSequence::SequencePosition>).
+
 
 
 =item * start
 
-Sets the value of the start attribute (from C<Bio::MAGE::BioSequence::SequencePosition>).
+Sets the value of the start attribute (this attribute was inherited
+from class C<Bio::MAGE::BioSequence::SequencePosition>).
+
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -262,7 +269,8 @@ returns the list of subclasses for this class.
 =cut
 
 sub subclasses {
-  my @list = ('Bio::MAGE::DesignElement::CompositePosition', 'Bio::MAGE::DesignElement::ReporterPosition');
+  my @list = ('Bio::MAGE::DesignElement::CompositePosition',
+'Bio::MAGE::DesignElement::ReporterPosition');
   return @list;
 }
 
@@ -285,7 +293,8 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('end', 'start');
+  my @list = ('end',
+'start');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::ArrayDesign::DesignElementGroup Exporter);
-$VERSION = q[$Id: ReporterGroup.pm,v 1.2 2002/12/11 01:32:18 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -112,47 +112,72 @@ named-value style arguments:
 
 =item * reporters
 
-Sets the value of the reporters association (from C<Bio::MAGE::ArrayDesign::ReporterGroup>).
+Sets the value of the reporters association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::ReporterGroup>).
 
-
-=item * species
-
-Sets the value of the species association (from C<Bio::MAGE::ArrayDesign::DesignElementGroup>).
+The value will be of type C<Reporter>.
 
 
 =item * types
 
-Sets the value of the types association (from C<Bio::MAGE::ArrayDesign::DesignElementGroup>).
+Sets the value of the types association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::DesignElementGroup>).
+
+The value will be of type C<OntologyEntry>.
+
+
+=item * species
+
+Sets the value of the species association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::DesignElementGroup>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -467,24 +492,24 @@ BEGIN {
   $__ASSOCIATIONS = [
           'reporters',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The reporters that belong to this group.',
-                                        '__CLASS_NAME' => 'ReporterGroup',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'reporters',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1..N',
                                          '__DOCUMENTATION' => 'The reporters that belong to this group.',
-                                         '__CLASS_NAME' => 'Reporter',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'reporters',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Reporter'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The reporters that belong to this group.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ReporterGroup'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

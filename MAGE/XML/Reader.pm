@@ -270,7 +270,10 @@ sub read {
   my $HANDLER = $self->handler();
   $HANDLER->count($self->count)
     if defined $self->count();
-  my $LOG = $self->log_file();
+
+#  my $LOG = $self->log_file();
+  my $LOG = new IO::File $self->log_file() , "w";
+
   my $VERBOSE = $self->verbose();
 
   #### Actually do the file parsing and loading
@@ -382,26 +385,25 @@ LOG
     #### Loop over the various items in the HANDLER hash
     #### and print $LOG out details about them
     while (($key,$value) = each %{$HANDLER}) {
-      print $LOG "HANDLER->{$key}:\n";
+	print $LOG "HANDLER->{$key}\n";
 
-      if ($key eq "__ID" or $key eq "__UNHANDLED") {
-	while (($key2,$value2) = each %{$HANDLER->{$key}}) {
-	  print $LOG "  $key2 = $value2\n";
+	if ($key eq "__ID" or $key eq "__UNHANDLED") {
+	    while (($key2,$value2) = each %{$HANDLER->{$key}}) {
+		print $LOG "  $key2 = $value2\n";
+	    }
+	} elsif ($key eq "__OBJ_STACK" or $key eq "__ASSN_STACK") {
+	    foreach $key2 (@{$HANDLER->{$key}}) {
+		print $LOG "  $key2\n";
+	    }
+	} elsif ($key eq '__MAGE' || $key eq '__CLASS2FULLCLASS' || $key eq '__DIR' || $key eq '__READER') {
+	    #### Skip those ones
+	    #### __DIR and __READER must be an array reference but they are not (__DIR : scalar ; __READER : HASH ref)
+	} else {
+	    foreach $key2 (@{$HANDLER->{$key}}) {
+		print $LOG "  $key2\n";
+	    }
 	}
-      } elsif ($key eq "__OBJ_STACK" or $key eq "__ASSN_STACK") {
-	foreach $key2 (@{$HANDLER->{$key}}) {
-	  print $LOG "  $key2\n";
-	}
-      } elsif ($key eq "__MAGE" || $key eq '__CLASS2FULLCLASS') {
-	#### Skip this one
-      } else {
-	foreach $key2 (@{$HANDLER->{$key}}) {
-	  print $LOG "  $key2\n";
-	}
-      }
-
-    }
-
+     }
   }
 
 

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: ZoneGroup.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -61,16 +61,19 @@ $VERSION = q[$Id: ZoneGroup.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
 
     # creating an already populated instance
   my $zonegroup = Bio::MAGE::ArrayDesign::ZoneGroup->new(zonesPerY=>$zonesPerY_value,
+			spacingsBetweenZonesY=>$spacingsBetweenZonesY_value,
 			zonesPerX=>$zonesPerX_value,
 			spacingsBetweenZonesX=>$spacingsBetweenZonesX_value,
-			spacingsBetweenZonesY=>$spacingsBetweenZonesY_value,
+			zoneLocations=>$zoneLocations_value,
 			zoneLayout=>$zoneLayout_value,
-			distanceUnit=>$distanceUnit_value,
-			zoneLocations=>$zoneLocations_value);
+			distanceUnit=>$distanceUnit_value);
 
     # setting and retrieving object attributes
   my $zonesPerY_val = $zonegroup->zonesPerY();
   $zonegroup->zonesPerY($value);
+
+  my $spacingsBetweenZonesY_val = $zonegroup->spacingsBetweenZonesY();
+  $zonegroup->spacingsBetweenZonesY($value);
 
   my $zonesPerX_val = $zonegroup->zonesPerX();
   $zonegroup->zonesPerX($value);
@@ -78,18 +81,15 @@ $VERSION = q[$Id: ZoneGroup.pm,v 1.1 2002/12/10 06:25:47 jason_e_stewart Exp $];
   my $spacingsBetweenZonesX_val = $zonegroup->spacingsBetweenZonesX();
   $zonegroup->spacingsBetweenZonesX($value);
 
-  my $spacingsBetweenZonesY_val = $zonegroup->spacingsBetweenZonesY();
-  $zonegroup->spacingsBetweenZonesY($value);
-
     # setting and retrieving object associations
+  my $zoneLocations_val = $zonegroup->zoneLocations();
+  $zonegroup->zoneLocations($value);
+
   my $zoneLayout_val = $zonegroup->zoneLayout();
   $zonegroup->zoneLayout($value);
 
   my $distanceUnit_val = $zonegroup->distanceUnit();
   $zonegroup->distanceUnit($value);
-
-  my $zoneLocations_val = $zonegroup->zoneLocations();
-  $zonegroup->zoneLocations($value);
 
 
 =head2 DESCRIPTION
@@ -136,42 +136,62 @@ named-value style arguments:
 
 =item * zonesPerY
 
-Sets the value of the zonesPerY attribute (from C<Bio::MAGE::ArrayDesign::ZoneGroup>).
+Sets the value of the zonesPerY attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::ZoneGroup>).
 
-
-=item * zonesPerX
-
-Sets the value of the zonesPerX attribute (from C<Bio::MAGE::ArrayDesign::ZoneGroup>).
-
-
-=item * spacingsBetweenZonesX
-
-Sets the value of the spacingsBetweenZonesX attribute (from C<Bio::MAGE::ArrayDesign::ZoneGroup>).
 
 
 =item * spacingsBetweenZonesY
 
-Sets the value of the spacingsBetweenZonesY attribute (from C<Bio::MAGE::ArrayDesign::ZoneGroup>).
+Sets the value of the spacingsBetweenZonesY attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::ZoneGroup>).
+
+
+
+=item * zonesPerX
+
+Sets the value of the zonesPerX attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::ZoneGroup>).
+
+
+
+=item * spacingsBetweenZonesX
+
+Sets the value of the spacingsBetweenZonesX attribute (this attribute was inherited
+from class C<Bio::MAGE::ArrayDesign::ZoneGroup>).
+
 
 
 =item * zoneLayout
 
-Sets the value of the zoneLayout association (from C<Bio::MAGE::ArrayDesign::ZoneGroup>).
+Sets the value of the zoneLayout association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::ZoneGroup>).
 
-
-=item * distanceUnit
-
-Sets the value of the distanceUnit association (from C<Bio::MAGE::ArrayDesign::ZoneGroup>).
+The value will be of type C<ZoneLayout>.
 
 
 =item * zoneLocations
 
-Sets the value of the zoneLocations association (from C<Bio::MAGE::ArrayDesign::ZoneGroup>).
+Sets the value of the zoneLocations association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::ZoneGroup>).
+
+The value will be of type C<Zone>.
+
+
+=item * distanceUnit
+
+Sets the value of the distanceUnit association (this association was inherited
+from class C<Bio::MAGE::ArrayDesign::ZoneGroup>).
+
+The value will be of type C<DistanceUnit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -317,7 +337,10 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('zonesPerY', 'zonesPerX', 'spacingsBetweenZonesX', 'spacingsBetweenZonesY');
+  my @list = ('zonesPerY',
+'spacingsBetweenZonesY',
+'zonesPerX',
+'spacingsBetweenZonesX');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -334,7 +357,9 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('zoneLayout', 'distanceUnit', 'zoneLocations');
+  my @list = ('zoneLocations',
+'zoneLayout',
+'distanceUnit');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -438,6 +463,72 @@ sub getZonesPerY {
   croak(__PACKAGE__ . "::getZonesPerY: arguments passed to getter")
     if @_;
   return $self->{__ZONESPERY};
+}
+
+
+
+
+=back
+
+
+=item spacingsBetweenZonesY
+
+From the MAGE-OM documentation for the C<spacingsBetweenZonesY> attribute:
+
+Spacing between zones, if applicable.
+
+
+
+=over
+
+
+=item $val = $zonegroup->setSpacingsBetweenZonesY($val)
+
+The restricted setter method for the spacingsBetweenZonesY attribute.
+
+Input parameters: the value to which the spacingsBetweenZonesY attribute will be set 
+
+Return value: the current value of the spacingsBetweenZonesY attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setSpacingsBetweenZonesY {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setSpacingsBetweenZonesY: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setSpacingsBetweenZonesY: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__SPACINGSBETWEENZONESY} = $val;
+}
+
+
+
+=item $val = $zonegroup->getSpacingsBetweenZonesY()
+
+The restricted getter method for the spacingsBetweenZonesY attribute.
+
+Input parameters: none
+
+Return value: the current value of the spacingsBetweenZonesY attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getSpacingsBetweenZonesY {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getSpacingsBetweenZonesY: arguments passed to getter")
+    if @_;
+  return $self->{__SPACINGSBETWEENZONESY};
 }
 
 
@@ -578,72 +669,6 @@ sub getSpacingsBetweenZonesX {
 =back
 
 
-=item spacingsBetweenZonesY
-
-From the MAGE-OM documentation for the C<spacingsBetweenZonesY> attribute:
-
-Spacing between zones, if applicable.
-
-
-
-=over
-
-
-=item $val = $zonegroup->setSpacingsBetweenZonesY($val)
-
-The restricted setter method for the spacingsBetweenZonesY attribute.
-
-Input parameters: the value to which the spacingsBetweenZonesY attribute will be set 
-
-Return value: the current value of the spacingsBetweenZonesY attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setSpacingsBetweenZonesY {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setSpacingsBetweenZonesY: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setSpacingsBetweenZonesY: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__SPACINGSBETWEENZONESY} = $val;
-}
-
-
-
-=item $val = $zonegroup->getSpacingsBetweenZonesY()
-
-The restricted getter method for the spacingsBetweenZonesY attribute.
-
-Input parameters: none
-
-Return value: the current value of the spacingsBetweenZonesY attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getSpacingsBetweenZonesY {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getSpacingsBetweenZonesY: arguments passed to getter")
-    if @_;
-  return $self->{__SPACINGSBETWEENZONESY};
-}
-
-
-
-
-=back
-
-
 
 =back
 
@@ -656,66 +681,66 @@ BEGIN {
   $__ASSOCIATIONS = [
           'distanceUnit',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Unit for the ZoneGroup attributes.',
-                                        '__CLASS_NAME' => 'ZoneGroup',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'distanceUnit',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Unit for the ZoneGroup attributes.',
-                                         '__CLASS_NAME' => 'DistanceUnit',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'distanceUnit',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'DistanceUnit'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Unit for the ZoneGroup attributes.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ZoneGroup'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'zoneLayout',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Describes the rectangular layout of features in the array design. ',
-                                        '__CLASS_NAME' => 'ZoneGroup',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'zoneLayout',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'Describes the rectangular layout of features in the array design. ',
-                                         '__CLASS_NAME' => 'ZoneLayout',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'zoneLayout',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'ZoneLayout'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Describes the rectangular layout of features in the array design. ',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ZoneGroup'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'zoneLocations',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Describes the location of different zones within the array design.',
-                                        '__CLASS_NAME' => 'ZoneGroup',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'zoneLocations',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'Describes the location of different zones within the array design.',
-                                         '__CLASS_NAME' => 'Zone',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'zoneLocations',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Zone'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Describes the location of different zones within the array design.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'ZoneGroup'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 
@@ -753,6 +778,111 @@ the association.
 Bio::MAGE::ArrayDesign::ZoneGroup: has the following association accessor methods:
 
 =over
+
+
+=item zoneLocations
+
+
+From the MAGE-OM documentation for the C<zoneLocations> association:
+
+Describes the location of different zones within the array design.
+
+
+
+=over
+
+
+=item $array_ref = $zonegroup->setZoneLocations($array_ref)
+
+The restricted setter method for the zoneLocations association.
+
+Input parameters: the value to which the zoneLocations association will be set : a reference to an array of objects of type C<Bio::MAGE::ArrayDesign::Zone>
+
+Return value: the current value of the zoneLocations association : a reference to an array of objects of type C<Bio::MAGE::ArrayDesign::Zone>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::ArrayDesign::Zone> instances
+
+=cut
+
+sub setZoneLocations {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setZoneLocations: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setZoneLocations: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setZoneLocations: expected array reference, got $self")
+    unless UNIVERSAL::isa($val,'ARRAY');
+  foreach my $val (@{$val}) {
+    croak(__PACKAGE__ . "::setZoneLocations: wrong type: " . ref($val) . " expected Bio::MAGE::ArrayDesign::Zone")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::ArrayDesign::Zone');
+  }
+
+  return $self->{__ZONELOCATIONS} = $val;
+}
+
+
+
+=item $array_ref = $zonegroup->getZoneLocations()
+
+The restricted getter method for the zoneLocations association.
+
+Input parameters: none
+
+Return value: the current value of the zoneLocations association : a reference to an array of objects of type C<Bio::MAGE::ArrayDesign::Zone>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getZoneLocations {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getZoneLocations: arguments passed to getter")
+    if @_;
+  return $self->{__ZONELOCATIONS};
+}
+
+
+
+=item $zonegroup->addZoneLocations(@vals)
+
+Because the zoneLocations association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the zoneLocations
+association.
+
+Input parameters: the list of values C<@vals> to add to the zoneLocations
+association. B<NOTE>: submitting a single value is permitted.
+
+Return value: none
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified
+, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::ArrayDesign::Zone>
+
+=cut
+
+sub addZoneLocations {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addZoneLocations: no arguments passed to setter")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addZoneLocations: wrong type: " . ref($val) . " expected Bio::MAGE::ArrayDesign::Zone")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::ArrayDesign::Zone');
+  }
+
+  push(@{$self->{__ZONELOCATIONS}},@vals);
+}
+
+
+
+=back
 
 
 =item zoneLayout
@@ -883,111 +1013,6 @@ sub getDistanceUnit {
   return $self->{__DISTANCEUNIT};
 }
 
-
-
-
-=back
-
-
-=item zoneLocations
-
-
-From the MAGE-OM documentation for the C<zoneLocations> association:
-
-Describes the location of different zones within the array design.
-
-
-
-=over
-
-
-=item $array_ref = $zonegroup->setZoneLocations($array_ref)
-
-The restricted setter method for the zoneLocations association.
-
-Input parameters: the value to which the zoneLocations association will be set : a reference to an array of objects of type C<Bio::MAGE::ArrayDesign::Zone>
-
-Return value: the current value of the zoneLocations association : a reference to an array of objects of type C<Bio::MAGE::ArrayDesign::Zone>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::ArrayDesign::Zone> instances
-
-=cut
-
-sub setZoneLocations {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setZoneLocations: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setZoneLocations: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-    croak(__PACKAGE__ . "::setZoneLocations: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setZoneLocations: wrong type: " . ref($val) . " expected Bio::MAGE::ArrayDesign::Zone")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::ArrayDesign::Zone');
-  }
-
-  return $self->{__ZONELOCATIONS} = $val;
-}
-
-
-
-=item $array_ref = $zonegroup->getZoneLocations()
-
-The restricted getter method for the zoneLocations association.
-
-Input parameters: none
-
-Return value: the current value of the zoneLocations association : a reference to an array of objects of type C<Bio::MAGE::ArrayDesign::Zone>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getZoneLocations {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getZoneLocations: arguments passed to getter")
-    if @_;
-  return $self->{__ZONELOCATIONS};
-}
-
-
-
-=item $zonegroup->addZoneLocations(@vals)
-
-Because the zoneLocations association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the zoneLocations
-association.
-
-Input parameters: the list of values C<@vals> to add to the zoneLocations
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::ArrayDesign::Zone>
-
-=cut
-
-sub addZoneLocations {
-  my $self = shift;
-  croak(__PACKAGE__ . "::addZoneLocations: no arguments passed to setter")
-    unless @_;
-  my @vals = @_;
-    foreach my $val (@vals) {
-    croak(__PACKAGE__ . "::addZoneLocations: wrong type: " . ref($val) . " expected Bio::MAGE::ArrayDesign::Zone")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::ArrayDesign::Zone');
-  }
-
-  push(@{$self->{__ZONELOCATIONS}},@vals);
-}
 
 
 

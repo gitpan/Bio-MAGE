@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: NodeValue.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,18 +60,18 @@ $VERSION = q[$Id: NodeValue.pm,v 1.1 2002/12/10 06:25:49 jason_e_stewart Exp $];
   my $nodevalue = Bio::MAGE::HigherLevelAnalysis::NodeValue->new();
 
     # creating an already populated instance
-  my $nodevalue = Bio::MAGE::HigherLevelAnalysis::NodeValue->new(value=>$value_value,
-			name=>$name_value,
+  my $nodevalue = Bio::MAGE::HigherLevelAnalysis::NodeValue->new(name=>$name_value,
+			value=>$value_value,
 			dataType=>$dataType_value,
 			scale=>$scale_value,
 			type=>$type_value);
 
     # setting and retrieving object attributes
-  my $value_val = $nodevalue->value();
-  $nodevalue->value($value);
-
   my $name_val = $nodevalue->name();
   $nodevalue->name($value);
+
+  my $value_val = $nodevalue->value();
+  $nodevalue->value($value);
 
     # setting and retrieving object associations
   my $dataType_val = $nodevalue->dataType();
@@ -126,34 +126,50 @@ named-value style arguments:
 =over
 
 
-=item * value
-
-Sets the value of the value attribute (from C<Bio::MAGE::HigherLevelAnalysis::NodeValue>).
-
-
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::HigherLevelAnalysis::NodeValue>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::HigherLevelAnalysis::NodeValue>).
+
+
+
+=item * value
+
+Sets the value of the value attribute (this attribute was inherited
+from class C<Bio::MAGE::HigherLevelAnalysis::NodeValue>).
+
 
 
 =item * dataType
 
-Sets the value of the dataType association (from C<Bio::MAGE::HigherLevelAnalysis::NodeValue>).
+Sets the value of the dataType association (this association was inherited
+from class C<Bio::MAGE::HigherLevelAnalysis::NodeValue>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * scale
 
-Sets the value of the scale association (from C<Bio::MAGE::HigherLevelAnalysis::NodeValue>).
+Sets the value of the scale association (this association was inherited
+from class C<Bio::MAGE::HigherLevelAnalysis::NodeValue>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * type
 
-Sets the value of the type association (from C<Bio::MAGE::HigherLevelAnalysis::NodeValue>).
+Sets the value of the type association (this association was inherited
+from class C<Bio::MAGE::HigherLevelAnalysis::NodeValue>).
+
+The value will be of type C<OntologyEntry>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -299,7 +315,8 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('value', 'name');
+  my @list = ('name',
+'value');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -316,7 +333,9 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('dataType', 'scale', 'type');
+  my @list = ('dataType',
+'scale',
+'type');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -360,72 +379,6 @@ getter methods for each attribute.
 Bio::MAGE::HigherLevelAnalysis::NodeValue: has the following attribute accessor methods:
 
 =over
-
-
-=item value
-
-From the MAGE-OM documentation for the C<value> attribute:
-
-The value for this NodeValue.
-
-
-
-=over
-
-
-=item $val = $nodevalue->setValue($val)
-
-The restricted setter method for the value attribute.
-
-Input parameters: the value to which the value attribute will be set 
-
-Return value: the current value of the value attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setValue {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setValue: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setValue: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__VALUE} = $val;
-}
-
-
-
-=item $val = $nodevalue->getValue()
-
-The restricted getter method for the value attribute.
-
-Input parameters: none
-
-Return value: the current value of the value attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getValue {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getValue: arguments passed to getter")
-    if @_;
-  return $self->{__VALUE};
-}
-
-
-
-
-=back
 
 
 =item name
@@ -494,6 +447,72 @@ sub getName {
 =back
 
 
+=item value
+
+From the MAGE-OM documentation for the C<value> attribute:
+
+The value for this NodeValue.
+
+
+
+=over
+
+
+=item $val = $nodevalue->setValue($val)
+
+The restricted setter method for the value attribute.
+
+Input parameters: the value to which the value attribute will be set 
+
+Return value: the current value of the value attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setValue {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setValue: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setValue: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__VALUE} = $val;
+}
+
+
+
+=item $val = $nodevalue->getValue()
+
+The restricted getter method for the value attribute.
+
+Input parameters: none
+
+Return value: the current value of the value attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getValue {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getValue: arguments passed to getter")
+    if @_;
+  return $self->{__VALUE};
+}
+
+
+
+
+=back
+
+
 
 =back
 
@@ -506,66 +525,66 @@ BEGIN {
   $__ASSOCIATIONS = [
           'type',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The type of value, distance, etc.',
-                                        '__CLASS_NAME' => 'NodeValue',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'type',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The type of value, distance, etc.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'type',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The type of value, distance, etc.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'NodeValue'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'scale',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The scale (linear, log10, ln, etc.) of the value.',
-                                        '__CLASS_NAME' => 'NodeValue',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'scale',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The scale (linear, log10, ln, etc.) of the value.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'scale',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The scale (linear, log10, ln, etc.) of the value.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'NodeValue'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'dataType',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The data type of the any element.',
-                                        '__CLASS_NAME' => 'NodeValue',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'dataType',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '3',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The data type of the any element.',
-                                         '__CLASS_NAME' => 'OntologyEntry',
-                                         '__RANK' => '3',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'dataType',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'OntologyEntry'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The data type of the any element.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'NodeValue'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

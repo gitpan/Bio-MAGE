@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::BioEvent::Map Exporter);
-$VERSION = q[$Id: BioAssayMap.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -115,47 +115,72 @@ named-value style arguments:
 
 =item * sourceBioAssays
 
-Sets the value of the sourceBioAssays association (from C<Bio::MAGE::BioAssayData::BioAssayMap>).
+Sets the value of the sourceBioAssays association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::BioAssayMap>).
+
+The value will be of type C<BioAssay>.
 
 
 =item * bioAssayMapTarget
 
-Sets the value of the bioAssayMapTarget association (from C<Bio::MAGE::BioAssayData::BioAssayMap>).
+Sets the value of the bioAssayMapTarget association (this association was inherited
+from class C<Bio::MAGE::BioAssayData::BioAssayMap>).
+
+The value will be of type C<DerivedBioAssay>.
 
 
 =item * protocolApplications
 
-Sets the value of the protocolApplications association (from C<Bio::MAGE::BioEvent::BioEvent>).
+Sets the value of the protocolApplications association (this association was inherited
+from class C<Bio::MAGE::BioEvent::BioEvent>).
+
+The value will be of type C<ProtocolApplication>.
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the identifier attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
+
 
 
 =item * name
 
-Sets the value of the name attribute (from C<Bio::MAGE::Identifiable>).
+Sets the value of the name attribute (this attribute was inherited
+from class C<Bio::MAGE::Identifiable>).
 
-
-=item * security
-
-Sets the value of the security association (from C<Bio::MAGE::Describable>).
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (from C<Bio::MAGE::Describable>).
 
 
 =item * descriptions
 
-Sets the value of the descriptions association (from C<Bio::MAGE::Describable>).
+Sets the value of the descriptions association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Description>.
+
+
+=item * security
+
+Sets the value of the security association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Security>.
+
+
+=item * auditTrail
+
+Sets the value of the auditTrail association (this association was inherited
+from class C<Bio::MAGE::Describable>).
+
+The value will be of type C<Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -318,7 +343,8 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('sourceBioAssays', 'bioAssayMapTarget');
+  my @list = ('sourceBioAssays',
+'bioAssayMapTarget');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -470,45 +496,45 @@ BEGIN {
   $__ASSOCIATIONS = [
           'bioAssayMapTarget',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => 'derivedBioAssayMap',
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The DerivedBioAssay that is produced by the sources of the BioAssayMap.',
-                                        '__CLASS_NAME' => 'BioAssayMap',
-                                        '__RANK' => '3',
-                                        '__ORDERED' => 0
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'bioAssayMapTarget',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'The DerivedBioAssay that is produced by the sources of the BioAssayMap.',
-                                         '__CLASS_NAME' => 'DerivedBioAssay',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'bioAssayMapTarget',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'DerivedBioAssay'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => '3',
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The DerivedBioAssay that is produced by the sources of the BioAssayMap.',
+                                        '__NAME' => 'derivedBioAssayMap',
+                                        '__ORDERED' => 0,
+                                        '__CLASS_NAME' => 'BioAssayMap'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'sourceBioAssays',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The sources of the BioAssayMap that are used to produce a target DerivedBioAssay.',
-                                        '__CLASS_NAME' => 'BioAssayMap',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'sourceBioAssays',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..N',
                                          '__DOCUMENTATION' => 'The sources of the BioAssayMap that are used to produce a target DerivedBioAssay.',
-                                         '__CLASS_NAME' => 'BioAssay',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'sourceBioAssays',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioAssay'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The sources of the BioAssayMap that are used to produce a target DerivedBioAssay.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioAssayMap'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::Extendable Exporter);
-$VERSION = q[$Id: BioMaterialMeasurement.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -115,17 +115,26 @@ named-value style arguments:
 
 =item * measurement
 
-Sets the value of the measurement association (from C<Bio::MAGE::BioMaterial::BioMaterialMeasurement>).
+Sets the value of the measurement association (this association was inherited
+from class C<Bio::MAGE::BioMaterial::BioMaterialMeasurement>).
+
+The value will be of type C<Measurement>.
 
 
 =item * bioMaterial
 
-Sets the value of the bioMaterial association (from C<Bio::MAGE::BioMaterial::BioMaterialMeasurement>).
+Sets the value of the bioMaterial association (this association was inherited
+from class C<Bio::MAGE::BioMaterial::BioMaterialMeasurement>).
+
+The value will be of type C<BioMaterial>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -288,7 +297,8 @@ returns the list of association accessor methods for this class.
 
 sub association_methods {
   my $class = shift;
-  my @list = ('measurement', 'bioMaterial');
+  my @list = ('measurement',
+'bioMaterial');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->association_methods());
@@ -346,45 +356,45 @@ BEGIN {
   $__ASSOCIATIONS = [
           'bioMaterial',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 1,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'A source BioMaterial for a treatment.',
-                                        '__CLASS_NAME' => 'BioMaterialMeasurement',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'bioMaterial',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '1',
                                          '__CARDINALITY' => '1',
                                          '__DOCUMENTATION' => 'A source BioMaterial for a treatment.',
-                                         '__CLASS_NAME' => 'BioMaterial',
-                                         '__RANK' => '1',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'bioMaterial',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'BioMaterial'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 1,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'A source BioMaterial for a treatment.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioMaterialMeasurement'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' ),
           'measurement',
           bless( {
-                   '__SELF' => bless( {
-                                        '__NAME' => undef,
-                                        '__IS_REF' => 0,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The amount of the BioMaterial.',
-                                        '__CLASS_NAME' => 'BioMaterialMeasurement',
-                                        '__RANK' => undef,
-                                        '__ORDERED' => undef
-                                      }, 'Bio::MAGE::Association::End' ),
                    '__OTHER' => bless( {
-                                         '__NAME' => 'measurement',
                                          '__IS_REF' => 1,
+                                         '__RANK' => '2',
                                          '__CARDINALITY' => '0..1',
                                          '__DOCUMENTATION' => 'The amount of the BioMaterial.',
-                                         '__CLASS_NAME' => 'Measurement',
-                                         '__RANK' => '2',
-                                         '__ORDERED' => 0
-                                       }, 'Bio::MAGE::Association::End' )
+                                         '__NAME' => 'measurement',
+                                         '__ORDERED' => 0,
+                                         '__CLASS_NAME' => 'Measurement'
+                                       }, 'Bio::MAGE::Association::End' ),
+                   '__SELF' => bless( {
+                                        '__IS_REF' => 0,
+                                        '__RANK' => undef,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The amount of the BioMaterial.',
+                                        '__NAME' => undef,
+                                        '__ORDERED' => undef,
+                                        '__CLASS_NAME' => 'BioMaterialMeasurement'
+                                      }, 'Bio::MAGE::Association::End' )
                  }, 'Bio::MAGE::Association' )
         ]
 

@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
 require Exporter;
 
 @ISA = qw(Bio::MAGE::Base Bio::MAGE::BioAssayData::BioDataValues Exporter);
-$VERSION = q[$Id: BioDataCube.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 # Items to export into callers namespace by default. Note: do not export
 # names by default without a very good reason. Use EXPORT_OK instead.
@@ -60,15 +60,15 @@ $VERSION = q[$Id: BioDataCube.pm,v 1.1 2002/12/10 06:25:48 jason_e_stewart Exp $
   my $biodatacube = Bio::MAGE::BioAssayData::BioDataCube->new();
 
     # creating an already populated instance
-  my $biodatacube = Bio::MAGE::BioAssayData::BioDataCube->new(cube=>$cube_value,
-			order=>$order_value);
+  my $biodatacube = Bio::MAGE::BioAssayData::BioDataCube->new(order=>$order_value,
+			cube=>$cube_value);
 
     # setting and retrieving object attributes
-  my $cube_val = $biodatacube->cube();
-  $biodatacube->cube($value);
-
   my $order_val = $biodatacube->order();
   $biodatacube->order($value);
+
+  my $cube_val = $biodatacube->cube();
+  $biodatacube->cube($value);
 
 
 =head2 DESCRIPTION
@@ -113,19 +113,26 @@ named-value style arguments:
 =over
 
 
-=item * cube
-
-Sets the value of the cube attribute (from C<Bio::MAGE::BioAssayData::BioDataCube>).
-
-
 =item * order
 
-Sets the value of the order attribute (from C<Bio::MAGE::BioAssayData::BioDataCube>).
+Sets the value of the order attribute (this attribute was inherited
+from class C<Bio::MAGE::BioAssayData::BioDataCube>).
+
+
+
+=item * cube
+
+Sets the value of the cube attribute (this attribute was inherited
+from class C<Bio::MAGE::BioAssayData::BioDataCube>).
+
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (from C<Bio::MAGE::Extendable>).
+Sets the value of the propertySets association (this association was inherited
+from class C<Bio::MAGE::Extendable>).
+
+The value will be of type C<NameValueType>.
 
 
 =back
@@ -271,7 +278,8 @@ returns the list of attribute accessor methods for this class.
 
 sub attribute_methods {
   my $class = shift;
-  my @list = ('cube', 'order');
+  my @list = ('order',
+'cube');
   if ($class->superclasses()) {
     foreach ($class->superclasses()) {
       push(@list,$_->attribute_methods());
@@ -334,72 +342,6 @@ Bio::MAGE::BioAssayData::BioDataCube: has the following attribute accessor metho
 =over
 
 
-=item cube
-
-From the MAGE-OM documentation for the C<cube> attribute:
-
-Three dimension array, indexed by the three dimensions to provide the data for the BioAssayData.
-
-
-
-=over
-
-
-=item $val = $biodatacube->setCube($val)
-
-The restricted setter method for the cube attribute.
-
-Input parameters: the value to which the cube attribute will be set 
-
-Return value: the current value of the cube attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setCube {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setCube: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setCube: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__CUBE} = $val;
-}
-
-
-
-=item $val = $biodatacube->getCube()
-
-The restricted getter method for the cube attribute.
-
-Input parameters: none
-
-Return value: the current value of the cube attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getCube {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getCube: arguments passed to getter")
-    if @_;
-  return $self->{__CUBE};
-}
-
-
-
-
-=back
-
-
 =item order
 
 From the MAGE-OM documentation for the C<order> attribute:
@@ -458,6 +400,72 @@ sub getOrder {
   croak(__PACKAGE__ . "::getOrder: arguments passed to getter")
     if @_;
   return $self->{__ORDER};
+}
+
+
+
+
+=back
+
+
+=item cube
+
+From the MAGE-OM documentation for the C<cube> attribute:
+
+Three dimension array, indexed by the three dimensions to provide the data for the BioAssayData.
+
+
+
+=over
+
+
+=item $val = $biodatacube->setCube($val)
+
+The restricted setter method for the cube attribute.
+
+Input parameters: the value to which the cube attribute will be set 
+
+Return value: the current value of the cube attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified 
+
+=cut
+
+sub setCube {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setCube: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setCube: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__CUBE} = $val;
+}
+
+
+
+=item $val = $biodatacube->getCube()
+
+The restricted getter method for the cube attribute.
+
+Input parameters: none
+
+Return value: the current value of the cube attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+sub getCube {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getCube: arguments passed to getter")
+    if @_;
+  return $self->{__CUBE};
 }
 
 

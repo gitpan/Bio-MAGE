@@ -50,7 +50,7 @@ use Bio::MAGE::Measurement::ConcentrationUnit;
 use vars qw(@ISA $VERSION @EXPORT_OK %EXPORT_TAGS $__MAGEML_LISTS);
 
 @ISA = qw(Bio::MAGE::Base Exporter);
-$VERSION = q[$Id: Measurement.pm,v 1.1 2002/12/10 06:20:46 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 sub initialize {
   my $self = shift;
@@ -127,7 +127,15 @@ This method returns a list of non-fully qualified class names
 =cut
 
 sub classes {
-  return ('Measurement', 'Unit', 'TimeUnit', 'DistanceUnit', 'TemperatureUnit', 'QuantityUnit', 'MassUnit', 'VolumeUnit', 'ConcentrationUnit');
+  return ('Measurement',
+'Unit',
+'TimeUnit',
+'DistanceUnit',
+'TemperatureUnit',
+'QuantityUnit',
+'MassUnit',
+'VolumeUnit',
+'ConcentrationUnit');
 }
 
 =item $obj_ref = Bio::MAGE::Measurement->new(%parameters)

@@ -50,7 +50,7 @@ use Bio::MAGE::ArrayDesign::CompositeGroup;
 use vars qw(@ISA $VERSION @EXPORT_OK %EXPORT_TAGS $__MAGEML_LISTS);
 
 @ISA = qw(Bio::MAGE::Base Exporter);
-$VERSION = q[$Id: ArrayDesign.pm,v 1.1 2002/12/10 06:20:46 jason_e_stewart Exp $];
+$VERSION = 20020902.6;
 
 sub initialize {
   my $self = shift;
@@ -132,7 +132,15 @@ This method returns a list of non-fully qualified class names
 =cut
 
 sub classes {
-  return ('ArrayDesign', 'PhysicalArrayDesign', 'ZoneLayout', 'ZoneGroup', 'Zone', 'ReporterGroup', 'FeatureGroup', 'DesignElementGroup', 'CompositeGroup');
+  return ('ArrayDesign',
+'PhysicalArrayDesign',
+'ZoneLayout',
+'ZoneGroup',
+'Zone',
+'ReporterGroup',
+'FeatureGroup',
+'DesignElementGroup',
+'CompositeGroup');
 }
 
 =item $obj_ref = Bio::MAGE::ArrayDesign->new(%parameters)
