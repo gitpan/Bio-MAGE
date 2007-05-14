@@ -3,44 +3,79 @@
 # Bio::MAGE::Base
 #
 ##############################
+# C O P Y R I G H T   N O T I C E
+#  Copyright (c) 2001-2006 by:
+#    * The MicroArray Gene Expression Database Society (MGED)
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation files
+# (the "Software"), to deal in the Software without restriction,
+# including without limitation the rights to use, copy, modify, merge,
+# publish, distribute, sublicense, and/or sell copies of the Software,
+# and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+# BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+# ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+
+
 package Bio::MAGE::Base;
 
 use strict;
 use Carp;
 
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
+=head1 NAME
 
-require Exporter;
+Bio::MAGE::Base - generic base class
 
-@ISA = qw(Exporter);
-$VERSION = q[$Id: Base.pm,v 1.1 2002/12/10 06:20:46 jason_e_stewart Exp $];
-
-# Items to export into callers namespace by default. Note: do not export
-# names by default without a very good reason. Use EXPORT_OK instead.
-# Do not simply export all your public functions/methods/constants.
-@EXPORT_OK = qw();
-
-
-=head1 Bio::MAGE::Base
-
-=head2 SYNOPSIS
+=head1 SYNOPSIS
 
   use Bio::MAGE::Base;
 
-    # creating an empty instance
-  my $array = Bio::MAGE::Base->new();
+  # create an empty instance
+  my $obj = Bio::MAGE::Base->new();
 
-=head2 DESCRIPTION
+  # create an instance and populate with data
+  my $obj = Bio::MAGE::Base->new(attr1=>$val1, attr2=>$val2);
 
-The base-class for all other Bio::MAGE classes
+  # copy an existing instance
+  my $obj_copy = $obj->new();
 
-=head2 CLASS METHODS
+=head1 DESCRIPTION
+
+The base class for all other Bio::MAGE classes
+
+=head1 CLASS METHODS
 
 The following methods can all be called without first having an
-instance of the class via the Bio::MAGE::Base->methodname() syntax.
+instance of the class via the Namespace::Class->methodname()
+syntax, i.e. the class name B<must> be given as an argument to the
+method.
 
+=over
 
-=item new()
+=item $obj = class->new(%params)
+
+The C<new()> method is the class constructor.
+
+B<Parameters>: if given a list of name/value parameters the
+corresponding slots, attributes, or associations will have their
+initial values set by the constructor.
+
+B<Return value>: It returns a reference to an object of the class.
+
+B<Side effects>: It invokes the C<initialize()> method if it is defined
+by the class.
 
 =cut
 
@@ -65,6 +100,216 @@ sub new {
   return $self;
 }
 
+sub __get_superclass {
+  my $class = shift;
+
+  {
+    no strict 'refs';
+    my $var = $class . '::ISA';
+    my @isa = @$var;
+    if (scalar @isa) {
+      return $isa[0];
+    } else {
+      return undef;
+    }
+  }
+}
+
+sub __get_slot_array {
+  my $class = shift;
+  my $slot_name = shift;
+
+  # allow the $obj->method() syntax
+  $class = ref($class) if ref($class);
+  {
+    no strict 'refs';
+    my $var = $class . '::' . $slot_name;
+    my $val = $$var;
+    while (not defined $val) {
+      $class = $class->__get_superclass($class);
+      last unless defined $class;
+      $var = $class . '::' . $slot_name;
+      $val = $$var;
+    }
+
+    if (defined $val) {
+      return @{$val};
+    } else {
+      return ();
+    }
+  }
+}
+
+sub __get_slot_val {
+  my $class = shift;
+  my $slot_name = shift;
+
+  # allow the $obj->method() syntax
+  $class = ref($class) if ref($class);
+  {
+    no strict 'refs';
+    my $var = $class . '::' . $slot_name;
+    my $val = $$var;
+    while (not defined $val) {
+      $class = $class->__get_superclass($class);
+      last unless defined $class;
+      $var = $class . '::' . $slot_name;
+      $val = $$var;
+    }
+
+    return $val;
+  }
+}
+
+=back
+
+The following methods can all be called with either the
+Namespace::Class->methodname() and $obj->methodname() syntaxes.
+
+=over
+
+=item @names = get_slot_names()
+
+The C<get_slot_names()> method is used to retrieve the name of all
+slots defined for a given object.
+
+B<NOTE>: the list of names does not include attribute or association
+names.
+
+B<Return value>: A list of the names of all slots defined for this class.
+
+B<Side effects>: none
+
+=cut
+
+sub get_slot_names {
+  my $class = shift;
+  return $class->__get_slot_array('__SLOT_NAMES');
+}
+
+
+=item @name_list = get_attribute_names()
+
+returns the list of attribute data members for this class.
+
+=cut
+
+sub get_attribute_names {
+  my $class = shift;
+  return $class->__get_slot_array('__ATTRIBUTE_NAMES');
+}
+
+=item @name_list = get_association_names()
+
+returns the list of association data members for this class.
+
+=cut
+
+sub get_association_names {
+  my $class = shift;
+  return $class->__get_slot_array('__ASSOCIATION_NAMES');
+}
+
+=item @class_list = get_superclasses()
+
+returns the list of superclasses for this class.
+
+=cut
+
+sub get_superclasses {
+  my $class = shift;
+  return $class->__get_slot_array('__SUPERCLASSES');
+}
+
+=item @class_list = get_subclasses()
+
+returns the list of subclasses for this class.
+
+=cut
+
+sub get_subclasses {
+  my $class = shift;
+  return $class->__get_slot_array('__SUBCLASSES');
+}
+
+=item $name = class_name()
+
+Returns the full class name for this class.
+
+=cut
+
+sub class_name {
+  my $class = shift;
+  return $class->__get_slot_val('__CLASS_NAME');
+}
+
+=item $package_name = package_name()
+
+Returns the base package name (i.e. no 'namespace::') of the package
+that contains this class.
+
+=cut
+
+sub package_name {
+  my $class = shift;
+  return $class->__get_slot_val('__PACKAGE_NAME');
+}
+
+=item %assns = associations()
+
+returns the association meta-information in a hash where the keys are
+the association names and the values are C<Association> objects that
+provide the meta-information for the association.
+
+=cut
+
+sub associations {
+  my $class = shift;
+
+  # allow the $obj->method() syntax
+  $class = ref($class) if ref($class);
+  my @list = ();
+
+  # superclasses first
+  my @superclasses = $class->get_superclasses();
+  foreach my $super (@superclasses) {
+    push(@list, $super->associations());
+  }
+
+  # then associations from this class
+  push(@list, $class->__get_slot_array('__ASSOCIATIONS'));
+
+  return @list;
+}
+
+=back
+
+=head1 INSTANCE METHODS
+
+These methods must be invoked with the direct object syntax using an
+existing instance, i.e. $object->method_name().
+
+=over
+
+=item $obj_copy = $obj->new()
+
+When invoked with an existing object reference and not a class name,
+the C<new()> method acts as a copy constructor - with the new object's
+initial values set to be those of the existing object.
+
+B<Parameters>: No input parameters  are used in the copy  constructor,
+the initial values are taken directly from the object to be copied.
+
+B<Return value>: It returns a reference to an object of the class.
+
+B<Side effects>: It invokes the C<initialize()> method if it is defined
+by the class.
+
+=cut
+
+#
+# see above in new()
+#
 
 =item $obj->set_slots(%parameters)
 
@@ -178,29 +423,11 @@ sub get_slot {
 }
 
 
-=item @names = $obj->get_slot_names()
-
-The C<get_slot_names()> method is used to retrieve the name of all
-slots defined for a given object.
-
-B<Return value>: a single slot value, or undef if the slot has not been
-initialized.
-
-B<Side effects>: none
-
-=cut
-
-sub get_slot_names {
-  my ($self) = @_;
-  return $self->{__SLOT_NAMES};
-}
-
-
 sub initialize {
   return 1;
 }
 
-=head2 throw
+=item throw
 
  Title   : throw
  Usage   :
@@ -218,7 +445,7 @@ sub throw {
    die(caller().': '.$msg);
 }
 
-=head2 throw_not_implemented
+=item throw_not_implemented
 
  Title   : throw_not_implemented
  Usage   :
@@ -236,18 +463,15 @@ sub throw_not_implemented {
    die("Abstract method ".caller()." implementing class did not provide method");
 }
 
-
-=head1 IMPLEMENTATION DETAILS
-
-This class is hand-written
+=back
 
 =head1 BUGS
 
-Please send bug reports to mged-mage@lists.sf.net
+Please send bug reports to the project mailing list: ()
 
 =head1 AUTHOR
 
-Jason E. Stewart (jason@openinformatics.com)
+
 
 =head1 SEE ALSO
 
@@ -255,8 +479,6 @@ perl(1).
 
 =cut
 
-#
-# End the module by returning a true value
-#
+# all perl modules must be true...
 1;
 

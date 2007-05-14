@@ -1,10 +1,15 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl ./t//HigherLevelAnalysis_package.t'
+##############################
+#
+# HigherLevelAnalysis_package.t
+#
 
+# Before `make install' is performed this script should be runnable with
+# `make test'. After `make install' it should work as `perl HigherLevelAnalysis_package.t`
+
+##############################
 # C O P Y R I G H T   N O T I C E
-#  Copyright (c) 2001-2002 by:
+#  Copyright (c) 2001-2006 by:
 #    * The MicroArray Gene Expression Database Society (MGED)
-#    * Rosetta Inpharmatics
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -26,27 +31,18 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-######################### We start with some black magic to print on failure.
 
-BEGIN { $| = 1; print "1..12\n"; }
-END {print "not ok 1\n" unless $loaded;}
+
 use Carp;
-use lib 't';
+# use blib;
+use Test::More tests => 15;
 use strict;
-use TestMAGE qw(result is_object);
-use vars qw($i $loaded);
-use Bio::MAGE;
-use Bio::MAGE::HigherLevelAnalysis;
 
-$loaded = 1;
-$i = 1;
-result($i);
-
-######################### End of black magic.
+BEGIN { use_ok('Bio::MAGE::HigherLevelAnalysis') };
 
 # we test the classes() method
 my @classes = Bio::MAGE::HigherLevelAnalysis->classes();
-result(scalar @classes eq 4);
+is((scalar @classes), 4, 'number of subclasses');
 
 my %classes;
 {
@@ -55,34 +51,37 @@ my %classes;
   foreach my $class_name (@classes) {
     my $class = "Bio::MAGE::HigherLevelAnalysis::$class_name";
     $classes{$class_name} = $class->new();
-    result(is_object($classes{$class_name}) and $classes{$class_name}->isa($class));
+    isa_ok($classes{$class_name}, $class);
   }
 }
+# test isa
 my $higherlevelanalysis = Bio::MAGE::HigherLevelAnalysis->new();
-result(is_object($higherlevelanalysis) 
-       and $higherlevelanalysis->isa("Bio::MAGE::HigherLevelAnalysis"));
+isa_ok($higherlevelanalysis, "Bio::MAGE::HigherLevelAnalysis");
 
 # test the tagname method
-result(defined $higherlevelanalysis->tagname);
+ok(defined $higherlevelanalysis->tagname, 'tagname');
 
-# test the mageml_lists method
-result(defined $higherlevelanalysis->mageml_lists);
+
+# test the xml_lists method
+ok(defined $higherlevelanalysis->xml_lists,
+  'xml_lists');
 
 
 # test the bioassaydatacluster_list method
 $higherlevelanalysis->bioassaydatacluster_list([]);
-result(UNIVERSAL::isa($higherlevelanalysis->bioassaydatacluster_list,'ARRAY') &&
-       not scalar @{$higherlevelanalysis->bioassaydatacluster_list}
-      );
+isa_ok($higherlevelanalysis->bioassaydatacluster_list,'ARRAY');
+is(scalar @{$higherlevelanalysis->bioassaydatacluster_list}, 0,
+   'bioassaydatacluster_list empty');
 
 # test the getBioAssayDataCluster_list method
-result(UNIVERSAL::isa($higherlevelanalysis->getBioAssayDataCluster_list,'ARRAY') &&
-       not scalar @{$higherlevelanalysis->getBioAssayDataCluster_list}
-      );
+isa_ok($higherlevelanalysis->getBioAssayDataCluster_list,'ARRAY');
+is(scalar @{$higherlevelanalysis->getBioAssayDataCluster_list}, 0,
+   'getBioAssayDataCluster_list empty');
 
 # test the addBioAssayDataCluster() method
 $higherlevelanalysis->addBioAssayDataCluster($classes{BioAssayDataCluster});
-result(UNIVERSAL::isa($higherlevelanalysis->getBioAssayDataCluster_list,'ARRAY') &&
-       scalar @{$higherlevelanalysis->getBioAssayDataCluster_list}
-      );
+isa_ok($higherlevelanalysis->getBioAssayDataCluster_list,'ARRAY');
+ok(scalar @{$higherlevelanalysis->getBioAssayDataCluster_list},
+   'getBioAssayDataCluster_list not empty');
+
 

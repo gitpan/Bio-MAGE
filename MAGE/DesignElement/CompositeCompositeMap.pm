@@ -4,9 +4,8 @@
 #
 ##############################
 # C O P Y R I G H T   N O T I C E
-#  Copyright (c) 2001-2002 by:
+#  Copyright (c) 2001-2006 by:
 #    * The MicroArray Gene Expression Database Society (MGED)
-#    * Rosetta Inpharmatics
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -28,50 +27,91 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-package Bio::MAGE::DesignElement::CompositeCompositeMap;
 
+
+package Bio::MAGE::DesignElement::CompositeCompositeMap;
 use strict;
 use Carp;
-use Bio::MAGE::Base;
+
+use base qw(Bio::MAGE::BioAssayData::DesignElementMap);
+
 use Bio::MAGE::Association;
-use Bio::MAGE::BioAssayData::DesignElementMap;
+
+use vars qw($__ASSOCIATIONS
+	    $__CLASS_NAME
+	    $__PACKAGE_NAME
+	    $__SUBCLASSES
+	    $__SUPERCLASSES
+	    $__ATTRIBUTE_NAMES
+	    $__ASSOCIATION_NAMES
+	   );
 
 
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
+=head1 NAME
 
-require Exporter;
+Bio::MAGE::DesignElement::CompositeCompositeMap - Class for the MAGE-OM API
 
-@ISA = qw(Bio::MAGE::Base Bio::MAGE::BioAssayData::DesignElementMap Exporter);
-$VERSION = 20020902.6;
+=head1 SYNOPSIS
 
-# Items to export into callers namespace by default. Note: do not export
-# names by default without a very good reason. Use EXPORT_OK instead.
-# Do not simply export all your public functions/methods/constants.
-@EXPORT_OK = qw();
+  use Bio::MAGE::DesignElement::CompositeCompositeMap
 
-
-=head1 Bio::MAGE::DesignElement::CompositeCompositeMap
-
-=head2 SYNOPSIS
-
-  use Bio::MAGE::DesignElement::CompositeCompositeMap;
-
-    # creating an empty instance
+  # creating an empty instance
   my $compositecompositemap = Bio::MAGE::DesignElement::CompositeCompositeMap->new();
 
-    # creating an already populated instance
-  my $compositecompositemap = Bio::MAGE::DesignElement::CompositeCompositeMap->new(compositeSequence=>$compositeSequence_value,
-			compositePositionSources=>$compositePositionSources_value);
+  # creating an instance with existing data
+  my $compositecompositemap = Bio::MAGE::DesignElement::CompositeCompositeMap->new(
+        name=>$name_val,
+        identifier=>$identifier_val,
+        auditTrail=>\@audit_list,
+        propertySets=>\@namevaluetype_list,
+        protocolApplications=>\@protocolapplication_list,
+        descriptions=>\@description_list,
+        security=>$security_ref,
+        compositeSequence=>$compositesequence_ref,
+        compositePositionSources=>\@compositeposition_list,
+  );
 
-    # setting and retrieving object associations
-  my $compositeSequence_val = $compositecompositemap->compositeSequence();
-  $compositecompositemap->compositeSequence($value);
 
-  my $compositePositionSources_val = $compositecompositemap->compositePositionSources();
-  $compositecompositemap->compositePositionSources($value);
+  # 'name' attribute
+  my $name_val = $compositecompositemap->name(); # getter
+  $compositecompositemap->name($value); # setter
+
+  # 'identifier' attribute
+  my $identifier_val = $compositecompositemap->identifier(); # getter
+  $compositecompositemap->identifier($value); # setter
 
 
-=head2 DESCRIPTION
+  # 'auditTrail' association
+  my $audit_array_ref = $compositecompositemap->auditTrail(); # getter
+  $compositecompositemap->auditTrail(\@audit_list); # setter
+
+  # 'propertySets' association
+  my $namevaluetype_array_ref = $compositecompositemap->propertySets(); # getter
+  $compositecompositemap->propertySets(\@namevaluetype_list); # setter
+
+  # 'protocolApplications' association
+  my $protocolapplication_array_ref = $compositecompositemap->protocolApplications(); # getter
+  $compositecompositemap->protocolApplications(\@protocolapplication_list); # setter
+
+  # 'descriptions' association
+  my $description_array_ref = $compositecompositemap->descriptions(); # getter
+  $compositecompositemap->descriptions(\@description_list); # setter
+
+  # 'security' association
+  my $security_ref = $compositecompositemap->security(); # getter
+  $compositecompositemap->security($security_ref); # setter
+
+  # 'compositeSequence' association
+  my $compositesequence_ref = $compositecompositemap->compositeSequence(); # getter
+  $compositecompositemap->compositeSequence($compositesequence_ref); # setter
+
+  # 'compositePositionSources' association
+  my $compositeposition_array_ref = $compositecompositemap->compositePositionSources(); # getter
+  $compositecompositemap->compositePositionSources(\@compositeposition_list); # setter
+
+
+
+=head1 DESCRIPTION
 
 From the MAGE-OM documentation for the C<CompositeCompositeMap> class:
 
@@ -81,13 +121,12 @@ A CompositeCompositeMap is the description of how source CompositeSequences are 
 
 =cut
 
+=head1 INHERITANCE
 
-=head2 INHERITANCE
 
+Bio::MAGE::DesignElement::CompositeCompositeMap has the following superclasses:
 
-Bio::MAGE::DesignElement::CompositeCompositeMap has the following super classes
-
-=over 
+=over
 
 
 =item * Bio::MAGE::BioAssayData::DesignElementMap
@@ -96,11 +135,69 @@ Bio::MAGE::DesignElement::CompositeCompositeMap has the following super classes
 =back
 
 
-=head2 CLASS METHODS
+
+=cut
+
+BEGIN {
+  $__CLASS_NAME        = q[Bio::MAGE::DesignElement::CompositeCompositeMap];
+  $__PACKAGE_NAME      = q[DesignElement];
+  $__SUBCLASSES        = [];
+  $__SUPERCLASSES      = ['Bio::MAGE::BioAssayData::DesignElementMap'];
+  $__ATTRIBUTE_NAMES   = ['name', 'identifier'];
+  $__ASSOCIATION_NAMES = ['auditTrail', 'propertySets', 'protocolApplications', 'descriptions', 'security', 'compositeSequence', 'compositePositionSources'];
+  $__ASSOCIATIONS      = [
+          'compositeSequence',
+          bless( {
+                   '__SELF' => bless( {
+                                        '__NAME' => 'compositeCompositeMaps',
+                                        '__IS_REF' => 1,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'A map to the compositeSequences that compose this CompositeSequence.',
+                                        '__CLASS_NAME' => 'CompositeCompositeMap',
+                                        '__RANK' => '2',
+                                        '__ORDERED' => 0
+                                      }, 'Bio::MAGE::Association::End' ),
+                   '__OTHER' => bless( {
+                                         '__NAME' => 'compositeSequence',
+                                         '__IS_REF' => 1,
+                                         '__CARDINALITY' => '1',
+                                         '__DOCUMENTATION' => 'A map to the compositeSequences that compose this CompositeSequence.',
+                                         '__CLASS_NAME' => 'CompositeSequence',
+                                         '__RANK' => '1',
+                                         '__ORDERED' => 0
+                                       }, 'Bio::MAGE::Association::End' )
+                 }, 'Bio::MAGE::Association' ),
+          'compositePositionSources',
+          bless( {
+                   '__SELF' => bless( {
+                                        '__NAME' => undef,
+                                        '__IS_REF' => 0,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Association to the CompositeSequences that compose this CompositeSequence and where those CompositeSequences occur.',
+                                        '__CLASS_NAME' => 'CompositeCompositeMap',
+                                        '__RANK' => undef,
+                                        '__ORDERED' => undef
+                                      }, 'Bio::MAGE::Association::End' ),
+                   '__OTHER' => bless( {
+                                         '__NAME' => 'compositePositionSources',
+                                         '__IS_REF' => 1,
+                                         '__CARDINALITY' => '1..N',
+                                         '__DOCUMENTATION' => 'Association to the CompositeSequences that compose this CompositeSequence and where those CompositeSequences occur.',
+                                         '__CLASS_NAME' => 'CompositePosition',
+                                         '__RANK' => '2',
+                                         '__ORDERED' => 0
+                                       }, 'Bio::MAGE::Association::End' )
+                 }, 'Bio::MAGE::Association' )
+        ]
+
+}
+
+=head1 CLASS METHODS
 
 The following methods can all be called without first having an
 instance of the class via the Bio::MAGE::DesignElement::CompositeCompositeMap->methodname() syntax.
 
+=over
 
 =item new()
 
@@ -112,80 +209,202 @@ named-value style arguments:
 
 =over
 
+=item * name
 
-=item * compositeSequence
-
-Sets the value of the compositeSequence association (this association was inherited
-from class C<Bio::MAGE::DesignElement::CompositeCompositeMap>).
-
-The value will be of type C<CompositeSequence>.
-
-
-=item * compositePositionSources
-
-Sets the value of the compositePositionSources association (this association was inherited
-from class C<Bio::MAGE::DesignElement::CompositeCompositeMap>).
-
-The value will be of type C<CompositePosition>.
-
-
-=item * protocolApplications
-
-Sets the value of the protocolApplications association (this association was inherited
-from class C<Bio::MAGE::BioEvent::BioEvent>).
-
-The value will be of type C<ProtocolApplication>.
+Sets the value of the C<name> attribute (this attribute was inherited from class C<Bio::MAGE::Identifiable>).
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (this attribute was inherited
-from class C<Bio::MAGE::Identifiable>).
+Sets the value of the C<identifier> attribute (this attribute was inherited from class C<Bio::MAGE::Identifiable>).
 
-
-
-=item * name
-
-Sets the value of the name attribute (this attribute was inherited
-from class C<Bio::MAGE::Identifiable>).
-
-
-
-=item * descriptions
-
-Sets the value of the descriptions association (this association was inherited
-from class C<Bio::MAGE::Describable>).
-
-The value will be of type C<Description>.
-
-
-=item * security
-
-Sets the value of the security association (this association was inherited
-from class C<Bio::MAGE::Describable>).
-
-The value will be of type C<Security>.
 
 
 =item * auditTrail
 
-Sets the value of the auditTrail association (this association was inherited
-from class C<Bio::MAGE::Describable>).
+Sets the value of the C<auditTrail> association (this association was inherited from class C<Bio::MAGE::Describable>).
 
-The value will be of type C<Audit>.
+
+The value must be of type: array of C<Bio::MAGE::AuditAndSecurity::Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (this association was inherited
-from class C<Bio::MAGE::Extendable>).
+Sets the value of the C<propertySets> association (this association was inherited from class C<Bio::MAGE::Extendable>).
 
-The value will be of type C<NameValueType>.
+
+The value must be of type: array of C<Bio::MAGE::NameValueType>.
+
+
+=item * protocolApplications
+
+Sets the value of the C<protocolApplications> association (this association was inherited from class C<Bio::MAGE::BioEvent::BioEvent>).
+
+
+The value must be of type: array of C<Bio::MAGE::Protocol::ProtocolApplication>.
+
+
+=item * descriptions
+
+Sets the value of the C<descriptions> association (this association was inherited from class C<Bio::MAGE::Describable>).
+
+
+The value must be of type: array of C<Bio::MAGE::Description::Description>.
+
+
+=item * security
+
+Sets the value of the C<security> association (this association was inherited from class C<Bio::MAGE::Describable>).
+
+
+The value must be of type: instance of C<Bio::MAGE::AuditAndSecurity::Security>.
+
+
+=item * compositeSequence
+
+Sets the value of the C<compositeSequence> association
+
+The value must be of type: instance of C<Bio::MAGE::DesignElement::CompositeSequence>.
+
+
+=item * compositePositionSources
+
+Sets the value of the C<compositePositionSources> association
+
+The value must be of type: array of C<Bio::MAGE::DesignElement::CompositePosition>.
 
 
 =back
 
+=item $obj = class->new(%parameters)
 
+The C<new()> method is the class constructor.
+
+B<Parameters>: if given a list of name/value parameters the
+corresponding slots, attributes, or associations will have their
+initial values set by the constructor.
+
+B<Return value>: It returns a reference to an object of the class.
+
+B<Side effects>: It invokes the C<initialize()> method if it is defined
+by the class.
+
+=cut
+
+#
+# code for new() inherited from Base.pm
+#
+
+=item @names = class->get_slot_names()
+
+The C<get_slot_names()> method is used to retrieve the name of all
+slots defined in a given class.
+
+B<NOTE>: the list of names does not include attribute or association
+names.
+
+B<Return value>: A list of the names of all slots defined for this class.
+
+B<Side effects>: none
+
+=cut
+
+#
+# code for get_slot_names() inherited from Base.pm
+#
+
+=item @name_list = get_attribute_names()
+
+returns the list of attribute data members for this class.
+
+=cut
+
+#
+# code for get_attribute_names() inherited from Base.pm
+#
+
+=item @name_list = get_association_names()
+
+returns the list of association data members for this class.
+
+=cut
+
+#
+# code for get_association_names() inherited from Base.pm
+#
+
+=item @class_list = get_superclasses()
+
+returns the list of superclasses for this class.
+
+=cut
+
+#
+# code for get_superclasses() inherited from Base.pm
+#
+
+=item @class_list = get_subclasses()
+
+returns the list of subclasses for this class.
+
+=cut
+
+#
+# code for get_subclasses() inherited from Base.pm
+#
+
+=item $name = class_name()
+
+Returns the full class name for this class.
+
+=cut
+
+#
+# code for class_name() inherited from Base.pm
+#
+
+=item $package_name = package_name()
+
+Returns the base package name (i.e. no 'namespace::') of the package
+that contains this class.
+
+=cut
+
+#
+# code for package_name() inherited from Base.pm
+#
+
+=item %assns = associations()
+
+returns the association meta-information in a hash where the keys are
+the association names and the values are C<Association> objects that
+provide the meta-information for the association.
+
+=cut
+
+#
+# code for associations() inherited from Base.pm
+#
+
+
+
+=back
+
+=head1 INSTANCE METHODS
+
+=item $obj_copy = $obj->new()
+
+When invoked with an existing object reference and not a class name,
+the C<new()> method acts as a copy constructor - with the new object's
+initial values set to be those of the existing object.
+
+B<Parameters>: No input parameters  are used in the copy  constructor,
+the initial values are taken directly from the object to be copied.
+
+B<Return value>: It returns a reference to an object of the class.
+
+B<Side effects>: It invokes the C<initialize()> method if it is defined
+by the class.
 
 =cut
 
@@ -212,7 +431,7 @@ does not define.
 # code for set_slots() inherited from Base.pm
 #
 
-=item $obj->get_slots(@name_list)
+=item @obj_list = $obj->get_slots(@name_list)
 
 The C<get_slots()> method is used to get the values of a number of
 slots at the same time.
@@ -257,126 +476,6 @@ B<Side effects>: none
 # code for get_slot() inherited from Base.pm
 #
 
-=item @names = $obj->get_slot_names()
-
-The C<get_slot_names()> method is used to retrieve the name of all
-slots defined for a given object.
-
-B<Return value>: a single slot value, or undef if the slot has not been
-initialized.
-
-B<Side effects>: none
-
-=cut
-
-#
-# code for get_slot_names() inherited from Base.pm
-#
-
-
-
-=item $name = class_name()
-
-Returns the full class name for this class, Bio::MAGE::DesignElement::CompositeCompositeMap.
-
-=cut
-
-sub class_name {
-  return q[Bio::MAGE::DesignElement::CompositeCompositeMap];
-}
-
-=item $package_name = package()
-
-Returns the unresolved package name (i.e. no 'Bio::MAGE::') of the
-package that contains class, Bio::MAGE::DesignElement::CompositeCompositeMap.
-
-=cut
-
-sub package {
-  return q[DesignElement];
-}
-
-=item @classes = subclasses()
-
-returns the list of subclasses for this class.
-
-=cut
-
-sub subclasses {
-  my @list = ();
-  return @list;
-}
-
-=item @classes = superclasses()
-
-returns the list of superclasses for this class.
-
-=cut
-
-sub superclasses {
-  my @list = ('Bio::MAGE::BioAssayData::DesignElementMap');
-  return @list;
-}
-
-=item @methods = attribute_methods()
-
-returns the list of attribute accessor methods for this class.
-
-=cut
-
-sub attribute_methods {
-  my $class = shift;
-  my @list = ();
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->attribute_methods());
-    }
-  }
-  return @list;
-}
-
-=item @methods = association_methods()
-
-returns the list of association accessor methods for this class.
-
-=cut
-
-sub association_methods {
-  my $class = shift;
-  my @list = ('compositeSequence',
-'compositePositionSources');
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->association_methods());
-    }
-  }
-  return @list;
-}
-
-=item %assns = associations()
-
-returns the association meta-information in a hash where the keys are
-the association names and the values are C<Bio::MAGE::Association>
-objects that provide the meta-information for the association.
-
-=cut
-
-sub associations {
-  my $class = shift;
-  my @list = ();
-  # superclasses first
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->associations());
-    }
-  }
-  # then associations from this class
-  if (defined $__ASSOCIATIONS) {
-    push(@list,@{$__ASSOCIATIONS})
-  }
-  return @list;
-}
-
 
 =head2 ATTRIBUTES
 
@@ -385,93 +484,60 @@ class. In the Perl implementation of the MAGE-OM classes, the
 interface to attributes is implemented using separate setter and
 getter methods for each attribute.
 
-Bio::MAGE::DesignElement::CompositeCompositeMap: has the following attribute accessor methods:
+C<Bio::MAGE::DesignElement::CompositeCompositeMap> has the following attribute accessor methods:
 
 =over
-
-Attributes Inherited from Bio::MAGE::Identifiable
-
-
-=item identifier
-
-From the MAGE-OM documentation for the C<identifier> attribute:
-
-An identifier is an unambiguous string that is unique within the scope (i.e. a document, a set of related documents, or a repository) of its use.
-
-
-
-=over
-
-
-=item $val = $identifiable->setIdentifier($val)
-
-The restricted setter method for the identifier attribute.
-
-Input parameters: the value to which the identifier attribute will be set 
-
-Return value: the current value of the identifier attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-
-=item $val = $identifiable->getIdentifier()
-
-The restricted getter method for the identifier attribute.
-
-Input parameters: none
-
-Return value: the current value of the identifier attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-
-=back
 
 
 =item name
 
-From the MAGE-OM documentation for the C<name> attribute:
+Methods for the C<name> attribute.
+
+
+From the MAGE-OM documentation:
 
 The potentially ambiguous common identifier.
-
 
 
 =over
 
 
-=item $val = $identifiable->setName($val)
+=item $val = $compositecompositemap->setName($val)
 
-The restricted setter method for the name attribute.
+The restricted setter method for the C<name> attribute.
 
-Input parameters: the value to which the name attribute will be set 
 
-Return value: the current value of the name attribute 
+Input parameters: the value to which the C<name> attribute will be set 
+
+Return value: the current value of the C<name> attribute 
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
+if too many input parameters are specified
 
 =cut
 
 
-=item $val = $identifiable->getName()
+sub setName {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setName: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setName: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__NAME} = $val;
+}
 
-The restricted getter method for the name attribute.
+
+=item $val = $compositecompositemap->getName()
+
+The restricted getter method for the C<name> attribute.
 
 Input parameters: none
 
-Return value: the current value of the name attribute 
+Return value: the current value of the C<name> attribute 
 
 Side effects: none
 
@@ -480,107 +546,659 @@ Exceptions: will call C<croak()> if any input parameters are specified
 =cut
 
 
+sub getName {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getName: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__NAME};
+}
+
+
+
+
 
 =back
 
 
+=item identifier
 
-=back
+Methods for the C<identifier> attribute.
 
+
+From the MAGE-OM documentation:
+
+An identifier is an unambiguous string that is unique within the scope (i.e. a document, a set of related documents, or a repository) of its use.
+
+
+=over
+
+
+=item $val = $compositecompositemap->setIdentifier($val)
+
+The restricted setter method for the C<identifier> attribute.
+
+
+Input parameters: the value to which the C<identifier> attribute will be set 
+
+Return value: the current value of the C<identifier> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified
 
 =cut
 
 
-
-BEGIN {
-  $__ASSOCIATIONS = [
-          'compositeSequence',
-          bless( {
-                   '__OTHER' => bless( {
-                                         '__IS_REF' => 1,
-                                         '__RANK' => '1',
-                                         '__CARDINALITY' => '1',
-                                         '__DOCUMENTATION' => 'A map to the compositeSequences that compose this CompositeSequence.',
-                                         '__NAME' => 'compositeSequence',
-                                         '__ORDERED' => 0,
-                                         '__CLASS_NAME' => 'CompositeSequence'
-                                       }, 'Bio::MAGE::Association::End' ),
-                   '__SELF' => bless( {
-                                        '__IS_REF' => 1,
-                                        '__RANK' => '2',
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'A map to the compositeSequences that compose this CompositeSequence.',
-                                        '__NAME' => 'compositeCompositeMaps',
-                                        '__ORDERED' => 0,
-                                        '__CLASS_NAME' => 'CompositeCompositeMap'
-                                      }, 'Bio::MAGE::Association::End' )
-                 }, 'Bio::MAGE::Association' ),
-          'compositePositionSources',
-          bless( {
-                   '__OTHER' => bless( {
-                                         '__IS_REF' => 1,
-                                         '__RANK' => '2',
-                                         '__CARDINALITY' => '1..N',
-                                         '__DOCUMENTATION' => 'Association to the CompositeSequences that compose this CompositeSequence and where those CompositeSequences occur.',
-                                         '__NAME' => 'compositePositionSources',
-                                         '__ORDERED' => 0,
-                                         '__CLASS_NAME' => 'CompositePosition'
-                                       }, 'Bio::MAGE::Association::End' ),
-                   '__SELF' => bless( {
-                                        '__IS_REF' => 0,
-                                        '__RANK' => undef,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Association to the CompositeSequences that compose this CompositeSequence and where those CompositeSequences occur.',
-                                        '__NAME' => undef,
-                                        '__ORDERED' => undef,
-                                        '__CLASS_NAME' => 'CompositeCompositeMap'
-                                      }, 'Bio::MAGE::Association::End' )
-                 }, 'Bio::MAGE::Association' )
-        ]
-
+sub setIdentifier {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setIdentifier: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setIdentifier: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__IDENTIFIER} = $val;
 }
 
-=head2 ASSOCIATIONS
 
-Associations are references to other class objects which can be shared
-by multiple class instances at the same time. In the Perl
-implementation of MAGE-OM classes, associations are implemented using
-three separate methods:
+=item $val = $compositecompositemap->getIdentifier()
 
-=over
+The restricted getter method for the C<identifier> attribute.
 
-=item get*
+Input parameters: none
 
-Retrieves the current value. If the association has list cardinality,
-an array reference is returned.
+Return value: the current value of the C<identifier> attribute 
 
-=item set*
+Side effects: none
 
-Sets the current value B<replacing> any existing value. If the
-association has list cardinality, the argument must be an array
-reference. Unless you know what you are doing, you probably should be
-using the add* methods.
+Exceptions: will call C<croak()> if any input parameters are specified
 
-=item add*
+=cut
 
-This method exists only for associations with list cardinality. It
-appends a list of objects to any values that may already be stored in
-the association.
+
+sub getIdentifier {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getIdentifier: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__IDENTIFIER};
+}
+
+
+
+
 
 =back
 
-Bio::MAGE::DesignElement::CompositeCompositeMap: has the following association accessor methods:
+
+=back
+
+
+=head2 ASSOCIATIONS
+
+Associations are references to other classes. Associations in MAGE-OM have a cardinality that determines the minimum and
+maximum number of instances of the 'other' class that maybe included
+in the association:
 
 =over
+
+=item 1
+
+There B<must> be exactly one item in the association, i.e. this is a
+mandatory data field.
+
+=item 0..1
+
+There B<may> be one item in the association, i.e. this is an optional
+data field.
+
+=item 1..N
+
+There B<must> be one or more items in the association, i.e. this is a
+mandatory data field, with list cardinality.
+
+=item 0..N
+
+There B<may> be one or more items in the association, i.e. this is an
+optional data field, with list cardinality.
+
+=back
+
+Bio::MAGE::DesignElement::CompositeCompositeMap has the following association accessor methods:
+
+=over
+
+
+=item auditTrail
+
+Methods for the C<auditTrail> association.
+
+
+From the MAGE-OM documentation:
+
+A list of Audit instances that track changes to the instance of Describable.
+
+
+=over
+
+
+=item $array_ref = $compositecompositemap->setAuditTrail($array_ref)
+
+The restricted setter method for the C<auditTrail> association.
+
+
+Input parameters: the value to which the C<auditTrail> association will be set : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
+
+Return value: the current value of the C<auditTrail> association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::AuditAndSecurity::Audit> instances
+
+=cut
+
+
+sub setAuditTrail {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setAuditTrail: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setAuditTrail: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setAuditTrail: expected array reference, got $self")
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setAuditTrail: wrong type: " . ref($val_ent) . " expected Bio::MAGE::AuditAndSecurity::Audit")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::AuditAndSecurity::Audit');
+    }
+  }
+
+  return $self->{__AUDITTRAIL} = $val;
+}
+
+
+=item $array_ref = $compositecompositemap->getAuditTrail()
+
+The restricted getter method for the C<auditTrail> association.
+
+Input parameters: none
+
+Return value: the current value of the C<auditTrail> association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getAuditTrail {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getAuditTrail: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__AUDITTRAIL};
+}
+
+
+
+
+=item $val = $compositecompositemap->addAuditTrail(@vals)
+
+Because the auditTrail association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the auditTrail association.
+
+Input parameters: the list of values C<@vals> to add to the auditTrail association. B<NOTE>: submitting a single value is permitted.
+
+Return value: the number of items stored in the slot B<after> adding C<@vals>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::AuditAndSecurity::Audit>
+
+=cut
+
+
+sub addAuditTrail {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addAuditTrail: no arguments passed to adder")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addAuditTrail: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Audit")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Audit');
+  }
+
+  return push(@{$self->{__AUDITTRAIL}},@vals);
+}
+
+
+
+
+
+=back
+
+
+=item propertySets
+
+Methods for the C<propertySets> association.
+
+
+From the MAGE-OM documentation:
+
+Allows specification of name/value pairs.  Meant to primarily help in-house, pipeline processing of instances by providing a place for values that aren't part of the specification proper.
+
+
+=over
+
+
+=item $array_ref = $compositecompositemap->setPropertySets($array_ref)
+
+The restricted setter method for the C<propertySets> association.
+
+
+Input parameters: the value to which the C<propertySets> association will be set : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Return value: the current value of the C<propertySets> association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::NameValueType> instances
+
+=cut
+
+
+sub setPropertySets {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setPropertySets: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setPropertySets: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setPropertySets: expected array reference, got $self")
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setPropertySets: wrong type: " . ref($val_ent) . " expected Bio::MAGE::NameValueType")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::NameValueType');
+    }
+  }
+
+  return $self->{__PROPERTYSETS} = $val;
+}
+
+
+=item $array_ref = $compositecompositemap->getPropertySets()
+
+The restricted getter method for the C<propertySets> association.
+
+Input parameters: none
+
+Return value: the current value of the C<propertySets> association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getPropertySets {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getPropertySets: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__PROPERTYSETS};
+}
+
+
+
+
+=item $val = $compositecompositemap->addPropertySets(@vals)
+
+Because the propertySets association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the propertySets association.
+
+Input parameters: the list of values C<@vals> to add to the propertySets association. B<NOTE>: submitting a single value is permitted.
+
+Return value: the number of items stored in the slot B<after> adding C<@vals>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::NameValueType>
+
+=cut
+
+
+sub addPropertySets {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addPropertySets: no arguments passed to adder")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addPropertySets: wrong type: " . ref($val) . " expected Bio::MAGE::NameValueType")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::NameValueType');
+  }
+
+  return push(@{$self->{__PROPERTYSETS}},@vals);
+}
+
+
+
+
+
+=back
+
+
+=item protocolApplications
+
+Methods for the C<protocolApplications> association.
+
+
+From the MAGE-OM documentation:
+
+The applied protocols to the BioEvent.
+
+
+=over
+
+
+=item $array_ref = $compositecompositemap->setProtocolApplications($array_ref)
+
+The restricted setter method for the C<protocolApplications> association.
+
+
+Input parameters: the value to which the C<protocolApplications> association will be set : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
+
+Return value: the current value of the C<protocolApplications> association : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::Protocol::ProtocolApplication> instances
+
+=cut
+
+
+sub setProtocolApplications {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setProtocolApplications: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setProtocolApplications: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setProtocolApplications: expected array reference, got $self")
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setProtocolApplications: wrong type: " . ref($val_ent) . " expected Bio::MAGE::Protocol::ProtocolApplication")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::Protocol::ProtocolApplication');
+    }
+  }
+
+  return $self->{__PROTOCOLAPPLICATIONS} = $val;
+}
+
+
+=item $array_ref = $compositecompositemap->getProtocolApplications()
+
+The restricted getter method for the C<protocolApplications> association.
+
+Input parameters: none
+
+Return value: the current value of the C<protocolApplications> association : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getProtocolApplications {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getProtocolApplications: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__PROTOCOLAPPLICATIONS};
+}
+
+
+
+
+=item $val = $compositecompositemap->addProtocolApplications(@vals)
+
+Because the protocolApplications association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the protocolApplications association.
+
+Input parameters: the list of values C<@vals> to add to the protocolApplications association. B<NOTE>: submitting a single value is permitted.
+
+Return value: the number of items stored in the slot B<after> adding C<@vals>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Protocol::ProtocolApplication>
+
+=cut
+
+
+sub addProtocolApplications {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addProtocolApplications: no arguments passed to adder")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addProtocolApplications: wrong type: " . ref($val) . " expected Bio::MAGE::Protocol::ProtocolApplication")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Protocol::ProtocolApplication');
+  }
+
+  return push(@{$self->{__PROTOCOLAPPLICATIONS}},@vals);
+}
+
+
+
+
+
+=back
+
+
+=item descriptions
+
+Methods for the C<descriptions> association.
+
+
+From the MAGE-OM documentation:
+
+Free hand text descriptions.  Makes available the associations of Description to an instance of Describable.
+
+
+=over
+
+
+=item $array_ref = $compositecompositemap->setDescriptions($array_ref)
+
+The restricted setter method for the C<descriptions> association.
+
+
+Input parameters: the value to which the C<descriptions> association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
+
+Return value: the current value of the C<descriptions> association : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::Description::Description> instances
+
+=cut
+
+
+sub setDescriptions {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setDescriptions: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setDescriptions: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setDescriptions: expected array reference, got $self")
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setDescriptions: wrong type: " . ref($val_ent) . " expected Bio::MAGE::Description::Description")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::Description::Description');
+    }
+  }
+
+  return $self->{__DESCRIPTIONS} = $val;
+}
+
+
+=item $array_ref = $compositecompositemap->getDescriptions()
+
+The restricted getter method for the C<descriptions> association.
+
+Input parameters: none
+
+Return value: the current value of the C<descriptions> association : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getDescriptions {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getDescriptions: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__DESCRIPTIONS};
+}
+
+
+
+
+=item $val = $compositecompositemap->addDescriptions(@vals)
+
+Because the descriptions association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the descriptions association.
+
+Input parameters: the list of values C<@vals> to add to the descriptions association. B<NOTE>: submitting a single value is permitted.
+
+Return value: the number of items stored in the slot B<after> adding C<@vals>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::Description>
+
+=cut
+
+
+sub addDescriptions {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addDescriptions: no arguments passed to adder")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addDescriptions: wrong type: " . ref($val) . " expected Bio::MAGE::Description::Description")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::Description');
+  }
+
+  return push(@{$self->{__DESCRIPTIONS}},@vals);
+}
+
+
+
+
+
+=back
+
+
+=item security
+
+Methods for the C<security> association.
+
+
+From the MAGE-OM documentation:
+
+Information on the security for the instance of the class.
+
+
+=over
+
+
+=item $val = $compositecompositemap->setSecurity($val)
+
+The restricted setter method for the C<security> association.
+
+
+Input parameters: the value to which the C<security> association will be set : one of the accepted enumerated values.
+
+Return value: the current value of the C<security> association : one of the accepted enumerated values.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$val> is not an instance of class C<Bio::MAGE::AuditAndSecurity::Security>
+
+=cut
+
+
+sub setSecurity {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setSecurity: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setSecurity: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setSecurity: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Security") unless (not defined $val) or UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Security');
+  return $self->{__SECURITY} = $val;
+}
+
+
+=item $val = $compositecompositemap->getSecurity()
+
+The restricted getter method for the C<security> association.
+
+Input parameters: none
+
+Return value: the current value of the C<security> association : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getSecurity {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getSecurity: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__SECURITY};
+}
+
+
+
+
+
+=back
 
 
 =item compositeSequence
 
+Methods for the C<compositeSequence> association.
 
-From the MAGE-OM documentation for the C<compositeSequence> association:
+
+From the MAGE-OM documentation:
 
 A map to the compositeSequences that compose this CompositeSequence.
-
 
 
 =over
@@ -588,18 +1206,20 @@ A map to the compositeSequences that compose this CompositeSequence.
 
 =item $val = $compositecompositemap->setCompositeSequence($val)
 
-The restricted setter method for the compositeSequence association.
+The restricted setter method for the C<compositeSequence> association.
 
-Input parameters: the value to which the compositeSequence association will be set : an instance of type C<Bio::MAGE::DesignElement::CompositeSequence>.
 
-Return value: the current value of the compositeSequence association : an instance of type C<Bio::MAGE::DesignElement::CompositeSequence>.
+Input parameters: the value to which the C<compositeSequence> association will be set : one of the accepted enumerated values.
+
+Return value: the current value of the C<compositeSequence> association : one of the accepted enumerated values.
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::DesignElement::CompositeSequence>
+if too many input parameters are specified, or if C<$val> is not an instance of class C<Bio::MAGE::DesignElement::CompositeSequence>
 
 =cut
+
 
 sub setCompositeSequence {
   my $self = shift;
@@ -608,19 +1228,18 @@ sub setCompositeSequence {
   croak(__PACKAGE__ . "::setCompositeSequence: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
-  croak(__PACKAGE__ . "::setCompositeSequence: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::CompositeSequence") unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::CompositeSequence');
+  croak(__PACKAGE__ . "::setCompositeSequence: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::CompositeSequence") unless (not defined $val) or UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::CompositeSequence');
   return $self->{__COMPOSITESEQUENCE} = $val;
 }
 
 
-
 =item $val = $compositecompositemap->getCompositeSequence()
 
-The restricted getter method for the compositeSequence association.
+The restricted getter method for the C<compositeSequence> association.
 
 Input parameters: none
 
-Return value: the current value of the compositeSequence association : an instance of type C<Bio::MAGE::DesignElement::CompositeSequence>.
+Return value: the current value of the C<compositeSequence> association : an instance of type C<Bio::MAGE::DesignElement::CompositeSequence>.
 
 Side effects: none
 
@@ -628,12 +1247,15 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
+
 sub getCompositeSequence {
   my $self = shift;
   croak(__PACKAGE__ . "::getCompositeSequence: arguments passed to getter")
     if @_;
+  my $val = shift;
   return $self->{__COMPOSITESEQUENCE};
 }
+
 
 
 
@@ -643,11 +1265,12 @@ sub getCompositeSequence {
 
 =item compositePositionSources
 
+Methods for the C<compositePositionSources> association.
 
-From the MAGE-OM documentation for the C<compositePositionSources> association:
+
+From the MAGE-OM documentation:
 
 Association to the CompositeSequences that compose this CompositeSequence and where those CompositeSequences occur.
-
 
 
 =over
@@ -655,18 +1278,20 @@ Association to the CompositeSequences that compose this CompositeSequence and wh
 
 =item $array_ref = $compositecompositemap->setCompositePositionSources($array_ref)
 
-The restricted setter method for the compositePositionSources association.
+The restricted setter method for the C<compositePositionSources> association.
 
-Input parameters: the value to which the compositePositionSources association will be set : a reference to an array of objects of type C<Bio::MAGE::DesignElement::CompositePosition>
 
-Return value: the current value of the compositePositionSources association : a reference to an array of objects of type C<Bio::MAGE::DesignElement::CompositePosition>
+Input parameters: the value to which the C<compositePositionSources> association will be set : a reference to an array of objects of type C<Bio::MAGE::DesignElement::CompositePosition>
+
+Return value: the current value of the C<compositePositionSources> association : a reference to an array of objects of type C<Bio::MAGE::DesignElement::CompositePosition>
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::DesignElement::CompositePosition> instances
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::DesignElement::CompositePosition> instances
 
 =cut
+
 
 sub setCompositePositionSources {
   my $self = shift;
@@ -676,24 +1301,25 @@ sub setCompositePositionSources {
     if @_ > 1;
   my $val = shift;
     croak(__PACKAGE__ . "::setCompositePositionSources: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setCompositePositionSources: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::CompositePosition")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::CompositePosition');
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setCompositePositionSources: wrong type: " . ref($val_ent) . " expected Bio::MAGE::DesignElement::CompositePosition")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::DesignElement::CompositePosition');
+    }
   }
 
   return $self->{__COMPOSITEPOSITIONSOURCES} = $val;
 }
 
 
-
 =item $array_ref = $compositecompositemap->getCompositePositionSources()
 
-The restricted getter method for the compositePositionSources association.
+The restricted getter method for the C<compositePositionSources> association.
 
 Input parameters: none
 
-Return value: the current value of the compositePositionSources association : a reference to an array of objects of type C<Bio::MAGE::DesignElement::CompositePosition>
+Return value: the current value of the C<compositePositionSources> association : a reference to an array of objects of type C<Bio::MAGE::DesignElement::CompositePosition>
 
 Side effects: none
 
@@ -701,36 +1327,37 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
+
 sub getCompositePositionSources {
   my $self = shift;
   croak(__PACKAGE__ . "::getCompositePositionSources: arguments passed to getter")
     if @_;
+  my $val = shift;
   return $self->{__COMPOSITEPOSITIONSOURCES};
 }
 
 
 
-=item $compositecompositemap->addCompositePositionSources(@vals)
+
+=item $val = $compositecompositemap->addCompositePositionSources(@vals)
 
 Because the compositePositionSources association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the compositePositionSources
-association.
+than one value. This method adds the current list of objects in the compositePositionSources association.
 
-Input parameters: the list of values C<@vals> to add to the compositePositionSources
-association. B<NOTE>: submitting a single value is permitted.
+Input parameters: the list of values C<@vals> to add to the compositePositionSources association. B<NOTE>: submitting a single value is permitted.
 
-Return value: none
+Return value: the number of items stored in the slot B<after> adding C<@vals>
 
 Side effects: none
 
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::DesignElement::CompositePosition>
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::DesignElement::CompositePosition>
 
 =cut
 
+
 sub addCompositePositionSources {
   my $self = shift;
-  croak(__PACKAGE__ . "::addCompositePositionSources: no arguments passed to setter")
+  croak(__PACKAGE__ . "::addCompositePositionSources: no arguments passed to adder")
     unless @_;
   my @vals = @_;
     foreach my $val (@vals) {
@@ -738,353 +1365,142 @@ sub addCompositePositionSources {
       unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::CompositePosition');
   }
 
-  push(@{$self->{__COMPOSITEPOSITIONSOURCES}},@vals);
+  return push(@{$self->{__COMPOSITEPOSITIONSOURCES}},@vals);
 }
 
 
 
-=back
-
-Associations Inherited from Bio::MAGE::BioEvent::BioEvent
-
-
-=item protocolApplications
-
-
-From the MAGE-OM documentation for the C<protocolApplications> association:
-
-The applied protocols to the BioEvent.
-
-
-
-=over
-
-
-=item $array_ref = $bioevent->setProtocolApplications($array_ref)
-
-The restricted setter method for the protocolApplications association.
-
-Input parameters: the value to which the protocolApplications association will be set : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
-
-Return value: the current value of the protocolApplications association : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Protocol::ProtocolApplication> instances
-
-=cut
-
-
-=item $array_ref = $bioevent->getProtocolApplications()
-
-The restricted getter method for the protocolApplications association.
-
-Input parameters: none
-
-Return value: the current value of the protocolApplications association : a reference to an array of objects of type C<Bio::MAGE::Protocol::ProtocolApplication>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-=item $bioevent->addProtocolApplications(@vals)
-
-Because the protocolApplications association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the protocolApplications
-association.
-
-Input parameters: the list of values C<@vals> to add to the protocolApplications
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Protocol::ProtocolApplication>
-
-=cut
-
 
 
 =back
-
-Associations Inherited from Bio::MAGE::Describable
-
-
-=item security
-
-
-From the MAGE-OM documentation for the C<security> association:
-
-Information on the security for the instance of the class.
-
-
-
-=over
-
-
-=item $val = $describable->setSecurity($val)
-
-The restricted setter method for the security association.
-
-Input parameters: the value to which the security association will be set : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
-
-Return value: the current value of the security association : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::AuditAndSecurity::Security>
-
-=cut
-
-
-=item $val = $describable->getSecurity()
-
-The restricted getter method for the security association.
-
-Input parameters: none
-
-Return value: the current value of the security association : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-
-=back
-
-
-=item auditTrail
-
-
-From the MAGE-OM documentation for the C<auditTrail> association:
-
-A list of Audit instances that track changes to the instance of Describable.
-
-
-
-=over
-
-
-=item $array_ref = $describable->setAuditTrail($array_ref)
-
-The restricted setter method for the auditTrail association.
-
-Input parameters: the value to which the auditTrail association will be set : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
-
-Return value: the current value of the auditTrail association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::AuditAndSecurity::Audit> instances
-
-=cut
-
-
-=item $array_ref = $describable->getAuditTrail()
-
-The restricted getter method for the auditTrail association.
-
-Input parameters: none
-
-Return value: the current value of the auditTrail association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-=item $describable->addAuditTrail(@vals)
-
-Because the auditTrail association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the auditTrail
-association.
-
-Input parameters: the list of values C<@vals> to add to the auditTrail
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::AuditAndSecurity::Audit>
-
-=cut
-
-
-
-=back
-
-
-=item descriptions
-
-
-From the MAGE-OM documentation for the C<descriptions> association:
-
-Free hand text descriptions.  Makes available the associations of Description to an instance of Describable.
-
-
-
-=over
-
-
-=item $array_ref = $describable->setDescriptions($array_ref)
-
-The restricted setter method for the descriptions association.
-
-Input parameters: the value to which the descriptions association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
-
-Return value: the current value of the descriptions association : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Description::Description> instances
-
-=cut
-
-
-=item $array_ref = $describable->getDescriptions()
-
-The restricted getter method for the descriptions association.
-
-Input parameters: none
-
-Return value: the current value of the descriptions association : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-=item $describable->addDescriptions(@vals)
-
-Because the descriptions association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the descriptions
-association.
-
-Input parameters: the list of values C<@vals> to add to the descriptions
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::Description>
-
-=cut
-
-
-
-=back
-
-Associations Inherited from Bio::MAGE::Extendable
-
-
-=item propertySets
-
-
-From the MAGE-OM documentation for the C<propertySets> association:
-
-Allows specification of name/value pairs.  Meant to primarily help in-house, pipeline processing of instances by providing a place for values that aren't part of the specification proper.
-
-
-
-=over
-
-
-=item $array_ref = $extendable->setPropertySets($array_ref)
-
-The restricted setter method for the propertySets association.
-
-Input parameters: the value to which the propertySets association will be set : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
-
-Return value: the current value of the propertySets association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::NameValueType> instances
-
-=cut
-
-
-=item $array_ref = $extendable->getPropertySets()
-
-The restricted getter method for the propertySets association.
-
-Input parameters: none
-
-Return value: the current value of the propertySets association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-=item $extendable->addPropertySets(@vals)
-
-Because the propertySets association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the propertySets
-association.
-
-Input parameters: the list of values C<@vals> to add to the propertySets
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::NameValueType>
-
-=cut
-
-
-
-=back
-
-
-
-=back
-
-
-=cut
-
 
 
 sub initialize {
+
+
   my $self = shift;
   return 1;
+
+
 }
 
+=back
+
+
+=cut
+
+
+=head1 SLOTS, ATTRIBUTES, AND ASSOCIATIONS
+
+In the Perl implementation of MAGE-OM classes, there are
+three types of class data members: C<slots>, C<attributes>, and
+C<associations>.
+
+=head2 SLOTS
+
+This API uses the term C<slot> to indicate a data member of the class
+that was not present in the UML model and is used for mainly internal
+purposes - use only if you understand the inner workings of the
+API. Most often slots are used by generic methods such as those in the
+XML writing and reading classes.
+
+Slots are implemented using unified getter/setter methods:
+
+=over
+
+=item $var = $obj->slot_name();
+
+Retrieves the current value of the slot.
+
+=item $new_var = $obj->slot_name($new_var);
+
+Store $new_var in the slot - the return value is also $new_var.
+
+=item @names = $obj->get_slot_names()
+
+Returns the list of all slots in the class.
+
+=back
+
+B<DATA CHECKING>: No data type checking is made for these methods.
+
+=head2 ATTRIBUTES AND ASSOCIATIONS
+
+The terms C<attribute> and C<association> indicate data members of the
+class that were specified directly from the UML model.
+
+In the Perl implementation of MAGE-OM classes,
+association and attribute accessors are implemented using three
+separate methods:
+
+=over
+
+=item get*
+
+Retrieves the current value.
+
+B<NOTE>: For associations, if the association has list cardinality, an
+array reference is returned.
+
+B<DATA CHECKING>: Ensure that no argument is provided.
+
+=item set*
+
+Sets the current value, B<replacing> any existing value.
+
+B<NOTE>: For associations, if the association has list cardinality,
+the argument must be an array reference. Because of this, you probably
+should be using the add* methods.
+
+B<DATA CHECKING>: For attributes, ensure that a single value is
+provided as the argument. For associations, if the association has
+list cardinality, ensure that the argument is a reference to an array
+of instances of the correct MAGE-OM class, otherwise
+ensure that there is a single argument of the correct MAGE-OM class.
+
+=item add*
+
+B<NOTE>: Only present in associations with list cardinality. 
+
+Appends a list of objects to any values that may already be stored
+in the association.
+
+B<DATA CHECKING>: Ensure that all arguments are of the correct MAGE-OM class.
+
+=back
+
+=head2 GENERIC METHODS
+
+The unified base class of all MAGE-OM classes, C<Bio::MAGE::Base>, provides a set of generic methods that
+will operate on slots, attributes, and associations:
+
+=over
+
+=item $val = $obj->get_slot($name)
+
+=item \@list_ref = $obj->get_slots(@name_list);
+
+=item $val = $obj->set_slot($name,$val)
+
+=item $obj->set_slots(%parameters)
+
+=item $obj->set_slots(\@name_list, \@value_list)
+
+See elsewhere in this page for a detailed description of these
+methods.
+
+=back
+
+=cut
 
 
 =head1 BUGS
 
-Please send bug reports to mged-mage@lists.sf.net
+Please send bug reports to the project mailing list: (mged-mage 'at' lists 'dot' sf 'dot' net)
 
 =head1 AUTHOR
 
-Jason E. Stewart (www.openinformatics.com)
+Jason E. Stewart (jasons 'at' cpan 'dot' org)
 
 =head1 SEE ALSO
 
@@ -1092,8 +1508,6 @@ perl(1).
 
 =cut
 
-#
-# End the module by returning a true value
-#
+# all perl modules must be true...
 1;
 

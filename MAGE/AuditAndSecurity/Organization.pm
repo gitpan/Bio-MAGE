@@ -4,9 +4,8 @@
 #
 ##############################
 # C O P Y R I G H T   N O T I C E
-#  Copyright (c) 2001-2002 by:
+#  Copyright (c) 2001-2006 by:
 #    * The MicroArray Gene Expression Database Society (MGED)
-#    * Rosetta Inpharmatics
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -28,46 +27,116 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-package Bio::MAGE::AuditAndSecurity::Organization;
 
+
+package Bio::MAGE::AuditAndSecurity::Organization;
 use strict;
 use Carp;
-use Bio::MAGE::Base;
+
+use base qw(Bio::MAGE::AuditAndSecurity::Contact);
+
 use Bio::MAGE::Association;
-use Bio::MAGE::AuditAndSecurity::Contact;
+
+use vars qw($__ASSOCIATIONS
+	    $__CLASS_NAME
+	    $__PACKAGE_NAME
+	    $__SUBCLASSES
+	    $__SUPERCLASSES
+	    $__ATTRIBUTE_NAMES
+	    $__ASSOCIATION_NAMES
+	   );
 
 
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
+=head1 NAME
 
-require Exporter;
+Bio::MAGE::AuditAndSecurity::Organization - Class for the MAGE-OM API
 
-@ISA = qw(Bio::MAGE::Base Bio::MAGE::AuditAndSecurity::Contact Exporter);
-$VERSION = 20020902.6;
+=head1 SYNOPSIS
 
-# Items to export into callers namespace by default. Note: do not export
-# names by default without a very good reason. Use EXPORT_OK instead.
-# Do not simply export all your public functions/methods/constants.
-@EXPORT_OK = qw();
+  use Bio::MAGE::AuditAndSecurity::Organization
 
-
-=head1 Bio::MAGE::AuditAndSecurity::Organization
-
-=head2 SYNOPSIS
-
-  use Bio::MAGE::AuditAndSecurity::Organization;
-
-    # creating an empty instance
+  # creating an empty instance
   my $organization = Bio::MAGE::AuditAndSecurity::Organization->new();
 
-    # creating an already populated instance
-  my $organization = Bio::MAGE::AuditAndSecurity::Organization->new(parent=>$parent_value);
+  # creating an instance with existing data
+  my $organization = Bio::MAGE::AuditAndSecurity::Organization->new(
+        URI=>$uri_val,
+        name=>$name_val,
+        phone=>$phone_val,
+        email=>$email_val,
+        identifier=>$identifier_val,
+        tollFreePhone=>$tollfreephone_val,
+        fax=>$fax_val,
+        address=>$address_val,
+        roles=>\@ontologyentry_list,
+        parent=>$organization_ref,
+        auditTrail=>\@audit_list,
+        propertySets=>\@namevaluetype_list,
+        descriptions=>\@description_list,
+        security=>$security_ref,
+  );
 
-    # setting and retrieving object associations
-  my $parent_val = $organization->parent();
-  $organization->parent($value);
+
+  # 'URI' attribute
+  my $URI_val = $organization->URI(); # getter
+  $organization->URI($value); # setter
+
+  # 'name' attribute
+  my $name_val = $organization->name(); # getter
+  $organization->name($value); # setter
+
+  # 'phone' attribute
+  my $phone_val = $organization->phone(); # getter
+  $organization->phone($value); # setter
+
+  # 'email' attribute
+  my $email_val = $organization->email(); # getter
+  $organization->email($value); # setter
+
+  # 'identifier' attribute
+  my $identifier_val = $organization->identifier(); # getter
+  $organization->identifier($value); # setter
+
+  # 'tollFreePhone' attribute
+  my $tollFreePhone_val = $organization->tollFreePhone(); # getter
+  $organization->tollFreePhone($value); # setter
+
+  # 'fax' attribute
+  my $fax_val = $organization->fax(); # getter
+  $organization->fax($value); # setter
+
+  # 'address' attribute
+  my $address_val = $organization->address(); # getter
+  $organization->address($value); # setter
 
 
-=head2 DESCRIPTION
+  # 'roles' association
+  my $ontologyentry_array_ref = $organization->roles(); # getter
+  $organization->roles(\@ontologyentry_list); # setter
+
+  # 'parent' association
+  my $organization_ref = $organization->parent(); # getter
+  $organization->parent($organization_ref); # setter
+
+  # 'auditTrail' association
+  my $audit_array_ref = $organization->auditTrail(); # getter
+  $organization->auditTrail(\@audit_list); # setter
+
+  # 'propertySets' association
+  my $namevaluetype_array_ref = $organization->propertySets(); # getter
+  $organization->propertySets(\@namevaluetype_list); # setter
+
+  # 'descriptions' association
+  my $description_array_ref = $organization->descriptions(); # getter
+  $organization->descriptions(\@description_list); # setter
+
+  # 'security' association
+  my $security_ref = $organization->security(); # getter
+  $organization->security($security_ref); # setter
+
+
+
+=head1 DESCRIPTION
 
 From the MAGE-OM documentation for the C<Organization> class:
 
@@ -77,13 +146,12 @@ Organizations are entities like companies, universities, government agencies for
 
 =cut
 
+=head1 INHERITANCE
 
-=head2 INHERITANCE
 
+Bio::MAGE::AuditAndSecurity::Organization has the following superclasses:
 
-Bio::MAGE::AuditAndSecurity::Organization has the following super classes
-
-=over 
+=over
 
 
 =item * Bio::MAGE::AuditAndSecurity::Contact
@@ -92,11 +160,48 @@ Bio::MAGE::AuditAndSecurity::Organization has the following super classes
 =back
 
 
-=head2 CLASS METHODS
+
+=cut
+
+BEGIN {
+  $__CLASS_NAME        = q[Bio::MAGE::AuditAndSecurity::Organization];
+  $__PACKAGE_NAME      = q[AuditAndSecurity];
+  $__SUBCLASSES        = [];
+  $__SUPERCLASSES      = ['Bio::MAGE::AuditAndSecurity::Contact'];
+  $__ATTRIBUTE_NAMES   = ['URI', 'name', 'phone', 'email', 'identifier', 'tollFreePhone', 'fax', 'address'];
+  $__ASSOCIATION_NAMES = ['roles', 'parent', 'auditTrail', 'propertySets', 'descriptions', 'security'];
+  $__ASSOCIATIONS      = [
+          'parent',
+          bless( {
+                   '__SELF' => bless( {
+                                        '__NAME' => undef,
+                                        '__IS_REF' => 1,
+                                        '__CARDINALITY' => '0..N',
+                                        '__DOCUMENTATION' => 'The containing organization (the university or business which a lab belongs to, etc.)',
+                                        '__CLASS_NAME' => 'Organization',
+                                        '__RANK' => undef,
+                                        '__ORDERED' => undef
+                                      }, 'Bio::MAGE::Association::End' ),
+                   '__OTHER' => bless( {
+                                         '__NAME' => 'parent',
+                                         '__IS_REF' => 1,
+                                         '__CARDINALITY' => '0..1',
+                                         '__DOCUMENTATION' => 'The containing organization (the university or business which a lab belongs to, etc.)',
+                                         '__CLASS_NAME' => 'Organization',
+                                         '__RANK' => '1',
+                                         '__ORDERED' => 0
+                                       }, 'Bio::MAGE::Association::End' )
+                 }, 'Bio::MAGE::Association' )
+        ]
+
+}
+
+=head1 CLASS METHODS
 
 The following methods can all be called without first having an
 instance of the class via the Bio::MAGE::AuditAndSecurity::Organization->methodname() syntax.
 
+=over
 
 =item new()
 
@@ -108,114 +213,225 @@ named-value style arguments:
 
 =over
 
-
-=item * parent
-
-Sets the value of the parent association (this association was inherited
-from class C<Bio::MAGE::AuditAndSecurity::Organization>).
-
-The value will be of type C<Organization>.
-
-
 =item * URI
 
-Sets the value of the URI attribute (this attribute was inherited
-from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+Sets the value of the C<URI> attribute (this attribute was inherited from class C<Bio::MAGE::AuditAndSecurity::Contact>).
 
 
+=item * name
 
-=item * address
-
-Sets the value of the address attribute (this attribute was inherited
-from class C<Bio::MAGE::AuditAndSecurity::Contact>).
-
+Sets the value of the C<name> attribute (this attribute was inherited from class C<Bio::MAGE::Identifiable>).
 
 
 =item * phone
 
-Sets the value of the phone attribute (this attribute was inherited
-from class C<Bio::MAGE::AuditAndSecurity::Contact>).
-
-
-
-=item * tollFreePhone
-
-Sets the value of the tollFreePhone attribute (this attribute was inherited
-from class C<Bio::MAGE::AuditAndSecurity::Contact>).
-
+Sets the value of the C<phone> attribute (this attribute was inherited from class C<Bio::MAGE::AuditAndSecurity::Contact>).
 
 
 =item * email
 
-Sets the value of the email attribute (this attribute was inherited
-from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+Sets the value of the C<email> attribute (this attribute was inherited from class C<Bio::MAGE::AuditAndSecurity::Contact>).
 
+
+=item * identifier
+
+Sets the value of the C<identifier> attribute (this attribute was inherited from class C<Bio::MAGE::Identifiable>).
+
+
+=item * tollFreePhone
+
+Sets the value of the C<tollFreePhone> attribute (this attribute was inherited from class C<Bio::MAGE::AuditAndSecurity::Contact>).
 
 
 =item * fax
 
-Sets the value of the fax attribute (this attribute was inherited
-from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+Sets the value of the C<fax> attribute (this attribute was inherited from class C<Bio::MAGE::AuditAndSecurity::Contact>).
+
+
+=item * address
+
+Sets the value of the C<address> attribute (this attribute was inherited from class C<Bio::MAGE::AuditAndSecurity::Contact>).
 
 
 
 =item * roles
 
-Sets the value of the roles association (this association was inherited
-from class C<Bio::MAGE::AuditAndSecurity::Contact>).
-
-The value will be of type C<OntologyEntry>.
+Sets the value of the C<roles> association (this association was inherited from class C<Bio::MAGE::AuditAndSecurity::Contact>).
 
 
-=item * identifier
-
-Sets the value of the identifier attribute (this attribute was inherited
-from class C<Bio::MAGE::Identifiable>).
+The value must be of type: array of C<Bio::MAGE::Description::OntologyEntry>.
 
 
+=item * parent
 
-=item * name
+Sets the value of the C<parent> association
 
-Sets the value of the name attribute (this attribute was inherited
-from class C<Bio::MAGE::Identifiable>).
-
-
-
-=item * descriptions
-
-Sets the value of the descriptions association (this association was inherited
-from class C<Bio::MAGE::Describable>).
-
-The value will be of type C<Description>.
-
-
-=item * security
-
-Sets the value of the security association (this association was inherited
-from class C<Bio::MAGE::Describable>).
-
-The value will be of type C<Security>.
+The value must be of type: instance of C<Bio::MAGE::AuditAndSecurity::Organization>.
 
 
 =item * auditTrail
 
-Sets the value of the auditTrail association (this association was inherited
-from class C<Bio::MAGE::Describable>).
+Sets the value of the C<auditTrail> association (this association was inherited from class C<Bio::MAGE::Describable>).
 
-The value will be of type C<Audit>.
+
+The value must be of type: array of C<Bio::MAGE::AuditAndSecurity::Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (this association was inherited
-from class C<Bio::MAGE::Extendable>).
+Sets the value of the C<propertySets> association (this association was inherited from class C<Bio::MAGE::Extendable>).
 
-The value will be of type C<NameValueType>.
+
+The value must be of type: array of C<Bio::MAGE::NameValueType>.
+
+
+=item * descriptions
+
+Sets the value of the C<descriptions> association (this association was inherited from class C<Bio::MAGE::Describable>).
+
+
+The value must be of type: array of C<Bio::MAGE::Description::Description>.
+
+
+=item * security
+
+Sets the value of the C<security> association (this association was inherited from class C<Bio::MAGE::Describable>).
+
+
+The value must be of type: instance of C<Bio::MAGE::AuditAndSecurity::Security>.
 
 
 =back
 
+=item $obj = class->new(%parameters)
 
+The C<new()> method is the class constructor.
+
+B<Parameters>: if given a list of name/value parameters the
+corresponding slots, attributes, or associations will have their
+initial values set by the constructor.
+
+B<Return value>: It returns a reference to an object of the class.
+
+B<Side effects>: It invokes the C<initialize()> method if it is defined
+by the class.
+
+=cut
+
+#
+# code for new() inherited from Base.pm
+#
+
+=item @names = class->get_slot_names()
+
+The C<get_slot_names()> method is used to retrieve the name of all
+slots defined in a given class.
+
+B<NOTE>: the list of names does not include attribute or association
+names.
+
+B<Return value>: A list of the names of all slots defined for this class.
+
+B<Side effects>: none
+
+=cut
+
+#
+# code for get_slot_names() inherited from Base.pm
+#
+
+=item @name_list = get_attribute_names()
+
+returns the list of attribute data members for this class.
+
+=cut
+
+#
+# code for get_attribute_names() inherited from Base.pm
+#
+
+=item @name_list = get_association_names()
+
+returns the list of association data members for this class.
+
+=cut
+
+#
+# code for get_association_names() inherited from Base.pm
+#
+
+=item @class_list = get_superclasses()
+
+returns the list of superclasses for this class.
+
+=cut
+
+#
+# code for get_superclasses() inherited from Base.pm
+#
+
+=item @class_list = get_subclasses()
+
+returns the list of subclasses for this class.
+
+=cut
+
+#
+# code for get_subclasses() inherited from Base.pm
+#
+
+=item $name = class_name()
+
+Returns the full class name for this class.
+
+=cut
+
+#
+# code for class_name() inherited from Base.pm
+#
+
+=item $package_name = package_name()
+
+Returns the base package name (i.e. no 'namespace::') of the package
+that contains this class.
+
+=cut
+
+#
+# code for package_name() inherited from Base.pm
+#
+
+=item %assns = associations()
+
+returns the association meta-information in a hash where the keys are
+the association names and the values are C<Association> objects that
+provide the meta-information for the association.
+
+=cut
+
+#
+# code for associations() inherited from Base.pm
+#
+
+
+
+=back
+
+=head1 INSTANCE METHODS
+
+=item $obj_copy = $obj->new()
+
+When invoked with an existing object reference and not a class name,
+the C<new()> method acts as a copy constructor - with the new object's
+initial values set to be those of the existing object.
+
+B<Parameters>: No input parameters  are used in the copy  constructor,
+the initial values are taken directly from the object to be copied.
+
+B<Return value>: It returns a reference to an object of the class.
+
+B<Side effects>: It invokes the C<initialize()> method if it is defined
+by the class.
 
 =cut
 
@@ -242,7 +458,7 @@ does not define.
 # code for set_slots() inherited from Base.pm
 #
 
-=item $obj->get_slots(@name_list)
+=item @obj_list = $obj->get_slots(@name_list)
 
 The C<get_slots()> method is used to get the values of a number of
 slots at the same time.
@@ -287,125 +503,6 @@ B<Side effects>: none
 # code for get_slot() inherited from Base.pm
 #
 
-=item @names = $obj->get_slot_names()
-
-The C<get_slot_names()> method is used to retrieve the name of all
-slots defined for a given object.
-
-B<Return value>: a single slot value, or undef if the slot has not been
-initialized.
-
-B<Side effects>: none
-
-=cut
-
-#
-# code for get_slot_names() inherited from Base.pm
-#
-
-
-
-=item $name = class_name()
-
-Returns the full class name for this class, Bio::MAGE::AuditAndSecurity::Organization.
-
-=cut
-
-sub class_name {
-  return q[Bio::MAGE::AuditAndSecurity::Organization];
-}
-
-=item $package_name = package()
-
-Returns the unresolved package name (i.e. no 'Bio::MAGE::') of the
-package that contains class, Bio::MAGE::AuditAndSecurity::Organization.
-
-=cut
-
-sub package {
-  return q[AuditAndSecurity];
-}
-
-=item @classes = subclasses()
-
-returns the list of subclasses for this class.
-
-=cut
-
-sub subclasses {
-  my @list = ();
-  return @list;
-}
-
-=item @classes = superclasses()
-
-returns the list of superclasses for this class.
-
-=cut
-
-sub superclasses {
-  my @list = ('Bio::MAGE::AuditAndSecurity::Contact');
-  return @list;
-}
-
-=item @methods = attribute_methods()
-
-returns the list of attribute accessor methods for this class.
-
-=cut
-
-sub attribute_methods {
-  my $class = shift;
-  my @list = ();
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->attribute_methods());
-    }
-  }
-  return @list;
-}
-
-=item @methods = association_methods()
-
-returns the list of association accessor methods for this class.
-
-=cut
-
-sub association_methods {
-  my $class = shift;
-  my @list = ('parent');
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->association_methods());
-    }
-  }
-  return @list;
-}
-
-=item %assns = associations()
-
-returns the association meta-information in a hash where the keys are
-the association names and the values are C<Bio::MAGE::Association>
-objects that provide the meta-information for the association.
-
-=cut
-
-sub associations {
-  my $class = shift;
-  my @list = ();
-  # superclasses first
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->associations());
-    }
-  }
-  # then associations from this class
-  if (defined $__ASSOCIATIONS) {
-    push(@list,@{$__ASSOCIATIONS})
-  }
-  return @list;
-}
-
 
 =head2 ATTRIBUTES
 
@@ -414,43 +511,60 @@ class. In the Perl implementation of the MAGE-OM classes, the
 interface to attributes is implemented using separate setter and
 getter methods for each attribute.
 
-Bio::MAGE::AuditAndSecurity::Organization: has the following attribute accessor methods:
+C<Bio::MAGE::AuditAndSecurity::Organization> has the following attribute accessor methods:
 
 =over
-
-Attributes Inherited from Bio::MAGE::AuditAndSecurity::Contact
 
 
 =item URI
 
-Methods for the URI attribute.
+Methods for the C<URI> attribute.
+
+
+From the MAGE-OM documentation:
+
+
+
 
 =over
 
 
-=item $val = $contact->setURI($val)
+=item $val = $organization->setURI($val)
 
-The restricted setter method for the URI attribute.
+The restricted setter method for the C<URI> attribute.
 
-Input parameters: the value to which the URI attribute will be set 
 
-Return value: the current value of the URI attribute 
+Input parameters: the value to which the C<URI> attribute will be set 
+
+Return value: the current value of the C<URI> attribute 
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
+if too many input parameters are specified
 
 =cut
 
 
-=item $val = $contact->getURI()
+sub setURI {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setURI: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setURI: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__URI} = $val;
+}
 
-The restricted getter method for the URI attribute.
+
+=item $val = $organization->getURI()
+
+The restricted getter method for the C<URI> attribute.
 
 Input parameters: none
 
-Return value: the current value of the URI attribute 
+Return value: the current value of the C<URI> attribute 
 
 Side effects: none
 
@@ -459,262 +573,15 @@ Exceptions: will call C<croak()> if any input parameters are specified
 =cut
 
 
+sub getURI {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getURI: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__URI};
+}
 
-=back
 
-
-=item address
-
-Methods for the address attribute.
-
-=over
-
-
-=item $val = $contact->setAddress($val)
-
-The restricted setter method for the address attribute.
-
-Input parameters: the value to which the address attribute will be set 
-
-Return value: the current value of the address attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-
-=item $val = $contact->getAddress()
-
-The restricted getter method for the address attribute.
-
-Input parameters: none
-
-Return value: the current value of the address attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-
-=back
-
-
-=item phone
-
-Methods for the phone attribute.
-
-=over
-
-
-=item $val = $contact->setPhone($val)
-
-The restricted setter method for the phone attribute.
-
-Input parameters: the value to which the phone attribute will be set 
-
-Return value: the current value of the phone attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-
-=item $val = $contact->getPhone()
-
-The restricted getter method for the phone attribute.
-
-Input parameters: none
-
-Return value: the current value of the phone attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-
-=back
-
-
-=item tollFreePhone
-
-Methods for the tollFreePhone attribute.
-
-=over
-
-
-=item $val = $contact->setTollFreePhone($val)
-
-The restricted setter method for the tollFreePhone attribute.
-
-Input parameters: the value to which the tollFreePhone attribute will be set 
-
-Return value: the current value of the tollFreePhone attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-
-=item $val = $contact->getTollFreePhone()
-
-The restricted getter method for the tollFreePhone attribute.
-
-Input parameters: none
-
-Return value: the current value of the tollFreePhone attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-
-=back
-
-
-=item email
-
-Methods for the email attribute.
-
-=over
-
-
-=item $val = $contact->setEmail($val)
-
-The restricted setter method for the email attribute.
-
-Input parameters: the value to which the email attribute will be set 
-
-Return value: the current value of the email attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-
-=item $val = $contact->getEmail()
-
-The restricted getter method for the email attribute.
-
-Input parameters: none
-
-Return value: the current value of the email attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-
-=back
-
-
-=item fax
-
-Methods for the fax attribute.
-
-=over
-
-
-=item $val = $contact->setFax($val)
-
-The restricted setter method for the fax attribute.
-
-Input parameters: the value to which the fax attribute will be set 
-
-Return value: the current value of the fax attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-
-=item $val = $contact->getFax()
-
-The restricted getter method for the fax attribute.
-
-Input parameters: none
-
-Return value: the current value of the fax attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-
-=back
-
-Attributes Inherited from Bio::MAGE::Identifiable
-
-
-=item identifier
-
-From the MAGE-OM documentation for the C<identifier> attribute:
-
-An identifier is an unambiguous string that is unique within the scope (i.e. a document, a set of related documents, or a repository) of its use.
-
-
-
-=over
-
-
-=item $val = $identifiable->setIdentifier($val)
-
-The restricted setter method for the identifier attribute.
-
-Input parameters: the value to which the identifier attribute will be set 
-
-Return value: the current value of the identifier attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-
-=item $val = $identifiable->getIdentifier()
-
-The restricted getter method for the identifier attribute.
-
-Input parameters: none
-
-Return value: the current value of the identifier attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
 
 
 
@@ -723,38 +590,53 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =item name
 
-From the MAGE-OM documentation for the C<name> attribute:
+Methods for the C<name> attribute.
+
+
+From the MAGE-OM documentation:
 
 The potentially ambiguous common identifier.
-
 
 
 =over
 
 
-=item $val = $identifiable->setName($val)
+=item $val = $organization->setName($val)
 
-The restricted setter method for the name attribute.
+The restricted setter method for the C<name> attribute.
 
-Input parameters: the value to which the name attribute will be set 
 
-Return value: the current value of the name attribute 
+Input parameters: the value to which the C<name> attribute will be set 
+
+Return value: the current value of the C<name> attribute 
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
+if too many input parameters are specified
 
 =cut
 
 
-=item $val = $identifiable->getName()
+sub setName {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setName: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setName: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__NAME} = $val;
+}
 
-The restricted getter method for the name attribute.
+
+=item $val = $organization->getName()
+
+The restricted getter method for the C<name> attribute.
 
 Input parameters: none
 
-Return value: the current value of the name attribute 
+Return value: the current value of the C<name> attribute 
 
 Side effects: none
 
@@ -763,86 +645,611 @@ Exceptions: will call C<croak()> if any input parameters are specified
 =cut
 
 
+sub getName {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getName: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__NAME};
+}
+
+
+
+
 
 =back
 
 
+=item phone
 
-=back
+Methods for the C<phone> attribute.
 
+
+From the MAGE-OM documentation:
+
+
+
+
+=over
+
+
+=item $val = $organization->setPhone($val)
+
+The restricted setter method for the C<phone> attribute.
+
+
+Input parameters: the value to which the C<phone> attribute will be set 
+
+Return value: the current value of the C<phone> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified
 
 =cut
 
 
-
-BEGIN {
-  $__ASSOCIATIONS = [
-          'parent',
-          bless( {
-                   '__OTHER' => bless( {
-                                         '__IS_REF' => 1,
-                                         '__RANK' => '1',
-                                         '__CARDINALITY' => '0..1',
-                                         '__DOCUMENTATION' => 'The containing organization (the university or business which a lab belongs to, etc.)',
-                                         '__NAME' => 'parent',
-                                         '__ORDERED' => 0,
-                                         '__CLASS_NAME' => 'Organization'
-                                       }, 'Bio::MAGE::Association::End' ),
-                   '__SELF' => bless( {
-                                        '__IS_REF' => 1,
-                                        '__RANK' => undef,
-                                        '__CARDINALITY' => '0..N',
-                                        '__DOCUMENTATION' => 'The containing organization (the university or business which a lab belongs to, etc.)',
-                                        '__NAME' => undef,
-                                        '__ORDERED' => undef,
-                                        '__CLASS_NAME' => 'Organization'
-                                      }, 'Bio::MAGE::Association::End' )
-                 }, 'Bio::MAGE::Association' )
-        ]
-
+sub setPhone {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setPhone: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setPhone: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__PHONE} = $val;
 }
 
-=head2 ASSOCIATIONS
 
-Associations are references to other class objects which can be shared
-by multiple class instances at the same time. In the Perl
-implementation of MAGE-OM classes, associations are implemented using
-three separate methods:
+=item $val = $organization->getPhone()
 
-=over
+The restricted getter method for the C<phone> attribute.
 
-=item get*
+Input parameters: none
 
-Retrieves the current value. If the association has list cardinality,
-an array reference is returned.
+Return value: the current value of the C<phone> attribute 
 
-=item set*
+Side effects: none
 
-Sets the current value B<replacing> any existing value. If the
-association has list cardinality, the argument must be an array
-reference. Unless you know what you are doing, you probably should be
-using the add* methods.
+Exceptions: will call C<croak()> if any input parameters are specified
 
-=item add*
+=cut
 
-This method exists only for associations with list cardinality. It
-appends a list of objects to any values that may already be stored in
-the association.
+
+sub getPhone {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getPhone: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__PHONE};
+}
+
+
+
+
 
 =back
 
-Bio::MAGE::AuditAndSecurity::Organization: has the following association accessor methods:
+
+=item email
+
+Methods for the C<email> attribute.
+
+
+From the MAGE-OM documentation:
+
+
+
 
 =over
+
+
+=item $val = $organization->setEmail($val)
+
+The restricted setter method for the C<email> attribute.
+
+
+Input parameters: the value to which the C<email> attribute will be set 
+
+Return value: the current value of the C<email> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified
+
+=cut
+
+
+sub setEmail {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setEmail: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setEmail: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__EMAIL} = $val;
+}
+
+
+=item $val = $organization->getEmail()
+
+The restricted getter method for the C<email> attribute.
+
+Input parameters: none
+
+Return value: the current value of the C<email> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getEmail {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getEmail: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__EMAIL};
+}
+
+
+
+
+
+=back
+
+
+=item identifier
+
+Methods for the C<identifier> attribute.
+
+
+From the MAGE-OM documentation:
+
+An identifier is an unambiguous string that is unique within the scope (i.e. a document, a set of related documents, or a repository) of its use.
+
+
+=over
+
+
+=item $val = $organization->setIdentifier($val)
+
+The restricted setter method for the C<identifier> attribute.
+
+
+Input parameters: the value to which the C<identifier> attribute will be set 
+
+Return value: the current value of the C<identifier> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified
+
+=cut
+
+
+sub setIdentifier {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setIdentifier: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setIdentifier: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__IDENTIFIER} = $val;
+}
+
+
+=item $val = $organization->getIdentifier()
+
+The restricted getter method for the C<identifier> attribute.
+
+Input parameters: none
+
+Return value: the current value of the C<identifier> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getIdentifier {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getIdentifier: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__IDENTIFIER};
+}
+
+
+
+
+
+=back
+
+
+=item tollFreePhone
+
+Methods for the C<tollFreePhone> attribute.
+
+
+From the MAGE-OM documentation:
+
+
+
+
+=over
+
+
+=item $val = $organization->setTollFreePhone($val)
+
+The restricted setter method for the C<tollFreePhone> attribute.
+
+
+Input parameters: the value to which the C<tollFreePhone> attribute will be set 
+
+Return value: the current value of the C<tollFreePhone> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified
+
+=cut
+
+
+sub setTollFreePhone {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setTollFreePhone: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setTollFreePhone: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__TOLLFREEPHONE} = $val;
+}
+
+
+=item $val = $organization->getTollFreePhone()
+
+The restricted getter method for the C<tollFreePhone> attribute.
+
+Input parameters: none
+
+Return value: the current value of the C<tollFreePhone> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getTollFreePhone {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getTollFreePhone: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__TOLLFREEPHONE};
+}
+
+
+
+
+
+=back
+
+
+=item fax
+
+Methods for the C<fax> attribute.
+
+
+From the MAGE-OM documentation:
+
+
+
+
+=over
+
+
+=item $val = $organization->setFax($val)
+
+The restricted setter method for the C<fax> attribute.
+
+
+Input parameters: the value to which the C<fax> attribute will be set 
+
+Return value: the current value of the C<fax> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified
+
+=cut
+
+
+sub setFax {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setFax: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setFax: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__FAX} = $val;
+}
+
+
+=item $val = $organization->getFax()
+
+The restricted getter method for the C<fax> attribute.
+
+Input parameters: none
+
+Return value: the current value of the C<fax> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getFax {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getFax: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__FAX};
+}
+
+
+
+
+
+=back
+
+
+=item address
+
+Methods for the C<address> attribute.
+
+
+From the MAGE-OM documentation:
+
+
+
+
+=over
+
+
+=item $val = $organization->setAddress($val)
+
+The restricted setter method for the C<address> attribute.
+
+
+Input parameters: the value to which the C<address> attribute will be set 
+
+Return value: the current value of the C<address> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified
+
+=cut
+
+
+sub setAddress {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setAddress: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setAddress: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__ADDRESS} = $val;
+}
+
+
+=item $val = $organization->getAddress()
+
+The restricted getter method for the C<address> attribute.
+
+Input parameters: none
+
+Return value: the current value of the C<address> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getAddress {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getAddress: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__ADDRESS};
+}
+
+
+
+
+
+=back
+
+
+=back
+
+
+=head2 ASSOCIATIONS
+
+Associations are references to other classes. Associations in MAGE-OM have a cardinality that determines the minimum and
+maximum number of instances of the 'other' class that maybe included
+in the association:
+
+=over
+
+=item 1
+
+There B<must> be exactly one item in the association, i.e. this is a
+mandatory data field.
+
+=item 0..1
+
+There B<may> be one item in the association, i.e. this is an optional
+data field.
+
+=item 1..N
+
+There B<must> be one or more items in the association, i.e. this is a
+mandatory data field, with list cardinality.
+
+=item 0..N
+
+There B<may> be one or more items in the association, i.e. this is an
+optional data field, with list cardinality.
+
+=back
+
+Bio::MAGE::AuditAndSecurity::Organization has the following association accessor methods:
+
+=over
+
+
+=item roles
+
+Methods for the C<roles> association.
+
+
+From the MAGE-OM documentation:
+
+The roles (lab equipment sales, contractor, etc.) the contact fills.
+
+
+=over
+
+
+=item $array_ref = $organization->setRoles($array_ref)
+
+The restricted setter method for the C<roles> association.
+
+
+Input parameters: the value to which the C<roles> association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
+
+Return value: the current value of the C<roles> association : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::Description::OntologyEntry> instances
+
+=cut
+
+
+sub setRoles {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setRoles: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setRoles: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setRoles: expected array reference, got $self")
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setRoles: wrong type: " . ref($val_ent) . " expected Bio::MAGE::Description::OntologyEntry")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::Description::OntologyEntry');
+    }
+  }
+
+  return $self->{__ROLES} = $val;
+}
+
+
+=item $array_ref = $organization->getRoles()
+
+The restricted getter method for the C<roles> association.
+
+Input parameters: none
+
+Return value: the current value of the C<roles> association : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getRoles {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getRoles: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__ROLES};
+}
+
+
+
+
+=item $val = $organization->addRoles(@vals)
+
+Because the roles association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the roles association.
+
+Input parameters: the list of values C<@vals> to add to the roles association. B<NOTE>: submitting a single value is permitted.
+
+Return value: the number of items stored in the slot B<after> adding C<@vals>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
+
+=cut
+
+
+sub addRoles {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addRoles: no arguments passed to adder")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addRoles: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  }
+
+  return push(@{$self->{__ROLES}},@vals);
+}
+
+
+
+
+
+=back
 
 
 =item parent
 
+Methods for the C<parent> association.
 
-From the MAGE-OM documentation for the C<parent> association:
+
+From the MAGE-OM documentation:
 
 The containing organization (the university or business which a lab belongs to, etc.)
-
 
 
 =over
@@ -850,18 +1257,20 @@ The containing organization (the university or business which a lab belongs to, 
 
 =item $val = $organization->setParent($val)
 
-The restricted setter method for the parent association.
+The restricted setter method for the C<parent> association.
 
-Input parameters: the value to which the parent association will be set : an instance of type C<Bio::MAGE::AuditAndSecurity::Organization>.
 
-Return value: the current value of the parent association : an instance of type C<Bio::MAGE::AuditAndSecurity::Organization>.
+Input parameters: the value to which the C<parent> association will be set : one of the accepted enumerated values.
+
+Return value: the current value of the C<parent> association : one of the accepted enumerated values.
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::AuditAndSecurity::Organization>
+if too many input parameters are specified, or if C<$val> is not an instance of class C<Bio::MAGE::AuditAndSecurity::Organization>
 
 =cut
+
 
 sub setParent {
   my $self = shift;
@@ -870,150 +1279,35 @@ sub setParent {
   croak(__PACKAGE__ . "::setParent: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
-  croak(__PACKAGE__ . "::setParent: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Organization") unless UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Organization');
+  croak(__PACKAGE__ . "::setParent: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Organization") unless (not defined $val) or UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Organization');
   return $self->{__PARENT} = $val;
 }
 
 
-
 =item $val = $organization->getParent()
 
-The restricted getter method for the parent association.
+The restricted getter method for the C<parent> association.
 
 Input parameters: none
 
-Return value: the current value of the parent association : an instance of type C<Bio::MAGE::AuditAndSecurity::Organization>.
+Return value: the current value of the C<parent> association : an instance of type C<Bio::MAGE::AuditAndSecurity::Organization>.
 
 Side effects: none
 
 Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
+
 
 sub getParent {
   my $self = shift;
   croak(__PACKAGE__ . "::getParent: arguments passed to getter")
     if @_;
+  my $val = shift;
   return $self->{__PARENT};
 }
 
 
-
-
-=back
-
-Associations Inherited from Bio::MAGE::AuditAndSecurity::Contact
-
-
-=item roles
-
-
-From the MAGE-OM documentation for the C<roles> association:
-
-The roles (lab equipment sales, contractor, etc.) the contact fills.
-
-
-
-=over
-
-
-=item $array_ref = $contact->setRoles($array_ref)
-
-The restricted setter method for the roles association.
-
-Input parameters: the value to which the roles association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
-
-Return value: the current value of the roles association : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Description::OntologyEntry> instances
-
-=cut
-
-
-=item $array_ref = $contact->getRoles()
-
-The restricted getter method for the roles association.
-
-Input parameters: none
-
-Return value: the current value of the roles association : a reference to an array of objects of type C<Bio::MAGE::Description::OntologyEntry>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-=item $contact->addRoles(@vals)
-
-Because the roles association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the roles
-association.
-
-Input parameters: the list of values C<@vals> to add to the roles
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
-
-=cut
-
-
-
-=back
-
-Associations Inherited from Bio::MAGE::Describable
-
-
-=item security
-
-
-From the MAGE-OM documentation for the C<security> association:
-
-Information on the security for the instance of the class.
-
-
-
-=over
-
-
-=item $val = $describable->setSecurity($val)
-
-The restricted setter method for the security association.
-
-Input parameters: the value to which the security association will be set : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
-
-Return value: the current value of the security association : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::AuditAndSecurity::Security>
-
-=cut
-
-
-=item $val = $describable->getSecurity()
-
-The restricted getter method for the security association.
-
-Input parameters: none
-
-Return value: the current value of the security association : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
 
 
 
@@ -1022,39 +1316,61 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =item auditTrail
 
+Methods for the C<auditTrail> association.
 
-From the MAGE-OM documentation for the C<auditTrail> association:
+
+From the MAGE-OM documentation:
 
 A list of Audit instances that track changes to the instance of Describable.
-
 
 
 =over
 
 
-=item $array_ref = $describable->setAuditTrail($array_ref)
+=item $array_ref = $organization->setAuditTrail($array_ref)
 
-The restricted setter method for the auditTrail association.
+The restricted setter method for the C<auditTrail> association.
 
-Input parameters: the value to which the auditTrail association will be set : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
 
-Return value: the current value of the auditTrail association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
+Input parameters: the value to which the C<auditTrail> association will be set : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
+
+Return value: the current value of the C<auditTrail> association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::AuditAndSecurity::Audit> instances
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::AuditAndSecurity::Audit> instances
 
 =cut
 
 
-=item $array_ref = $describable->getAuditTrail()
+sub setAuditTrail {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setAuditTrail: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setAuditTrail: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setAuditTrail: expected array reference, got $self")
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setAuditTrail: wrong type: " . ref($val_ent) . " expected Bio::MAGE::AuditAndSecurity::Audit")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::AuditAndSecurity::Audit');
+    }
+  }
 
-The restricted getter method for the auditTrail association.
+  return $self->{__AUDITTRAIL} = $val;
+}
+
+
+=item $array_ref = $organization->getAuditTrail()
+
+The restricted getter method for the C<auditTrail> association.
 
 Input parameters: none
 
-Return value: the current value of the auditTrail association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
+Return value: the current value of the C<auditTrail> association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
 
 Side effects: none
 
@@ -1063,23 +1379,159 @@ Exceptions: will call C<croak()> if any input parameters are specified
 =cut
 
 
-=item $describable->addAuditTrail(@vals)
+sub getAuditTrail {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getAuditTrail: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__AUDITTRAIL};
+}
+
+
+
+
+=item $val = $organization->addAuditTrail(@vals)
 
 Because the auditTrail association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the auditTrail
-association.
+than one value. This method adds the current list of objects in the auditTrail association.
 
-Input parameters: the list of values C<@vals> to add to the auditTrail
-association. B<NOTE>: submitting a single value is permitted.
+Input parameters: the list of values C<@vals> to add to the auditTrail association. B<NOTE>: submitting a single value is permitted.
 
-Return value: none
+Return value: the number of items stored in the slot B<after> adding C<@vals>
 
 Side effects: none
 
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::AuditAndSecurity::Audit>
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::AuditAndSecurity::Audit>
 
 =cut
+
+
+sub addAuditTrail {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addAuditTrail: no arguments passed to adder")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addAuditTrail: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Audit")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Audit');
+  }
+
+  return push(@{$self->{__AUDITTRAIL}},@vals);
+}
+
+
+
+
+
+=back
+
+
+=item propertySets
+
+Methods for the C<propertySets> association.
+
+
+From the MAGE-OM documentation:
+
+Allows specification of name/value pairs.  Meant to primarily help in-house, pipeline processing of instances by providing a place for values that aren't part of the specification proper.
+
+
+=over
+
+
+=item $array_ref = $organization->setPropertySets($array_ref)
+
+The restricted setter method for the C<propertySets> association.
+
+
+Input parameters: the value to which the C<propertySets> association will be set : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Return value: the current value of the C<propertySets> association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::NameValueType> instances
+
+=cut
+
+
+sub setPropertySets {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setPropertySets: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setPropertySets: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setPropertySets: expected array reference, got $self")
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setPropertySets: wrong type: " . ref($val_ent) . " expected Bio::MAGE::NameValueType")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::NameValueType');
+    }
+  }
+
+  return $self->{__PROPERTYSETS} = $val;
+}
+
+
+=item $array_ref = $organization->getPropertySets()
+
+The restricted getter method for the C<propertySets> association.
+
+Input parameters: none
+
+Return value: the current value of the C<propertySets> association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getPropertySets {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getPropertySets: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__PROPERTYSETS};
+}
+
+
+
+
+=item $val = $organization->addPropertySets(@vals)
+
+Because the propertySets association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the propertySets association.
+
+Input parameters: the list of values C<@vals> to add to the propertySets association. B<NOTE>: submitting a single value is permitted.
+
+Return value: the number of items stored in the slot B<after> adding C<@vals>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::NameValueType>
+
+=cut
+
+
+sub addPropertySets {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addPropertySets: no arguments passed to adder")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addPropertySets: wrong type: " . ref($val) . " expected Bio::MAGE::NameValueType")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::NameValueType');
+  }
+
+  return push(@{$self->{__PROPERTYSETS}},@vals);
+}
+
+
 
 
 
@@ -1088,160 +1540,314 @@ Exceptions: will call C<croak()> if no input parameters are specified
 
 =item descriptions
 
+Methods for the C<descriptions> association.
 
-From the MAGE-OM documentation for the C<descriptions> association:
+
+From the MAGE-OM documentation:
 
 Free hand text descriptions.  Makes available the associations of Description to an instance of Describable.
 
 
-
 =over
 
 
-=item $array_ref = $describable->setDescriptions($array_ref)
+=item $array_ref = $organization->setDescriptions($array_ref)
 
-The restricted setter method for the descriptions association.
+The restricted setter method for the C<descriptions> association.
 
-Input parameters: the value to which the descriptions association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
 
-Return value: the current value of the descriptions association : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
+Input parameters: the value to which the C<descriptions> association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
+
+Return value: the current value of the C<descriptions> association : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Description::Description> instances
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::Description::Description> instances
 
 =cut
 
 
-=item $array_ref = $describable->getDescriptions()
-
-The restricted getter method for the descriptions association.
-
-Input parameters: none
-
-Return value: the current value of the descriptions association : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-=item $describable->addDescriptions(@vals)
-
-Because the descriptions association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the descriptions
-association.
-
-Input parameters: the list of values C<@vals> to add to the descriptions
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::Description>
-
-=cut
-
-
-
-=back
-
-Associations Inherited from Bio::MAGE::Extendable
-
-
-=item propertySets
-
-
-From the MAGE-OM documentation for the C<propertySets> association:
-
-Allows specification of name/value pairs.  Meant to primarily help in-house, pipeline processing of instances by providing a place for values that aren't part of the specification proper.
-
-
-
-=over
-
-
-=item $array_ref = $extendable->setPropertySets($array_ref)
-
-The restricted setter method for the propertySets association.
-
-Input parameters: the value to which the propertySets association will be set : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
-
-Return value: the current value of the propertySets association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::NameValueType> instances
-
-=cut
-
-
-=item $array_ref = $extendable->getPropertySets()
-
-The restricted getter method for the propertySets association.
-
-Input parameters: none
-
-Return value: the current value of the propertySets association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-=item $extendable->addPropertySets(@vals)
-
-Because the propertySets association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the propertySets
-association.
-
-Input parameters: the list of values C<@vals> to add to the propertySets
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::NameValueType>
-
-=cut
-
-
-
-=back
-
-
-
-=back
-
-
-=cut
-
-
-
-sub initialize {
+sub setDescriptions {
   my $self = shift;
-  return 1;
+  croak(__PACKAGE__ . "::setDescriptions: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setDescriptions: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setDescriptions: expected array reference, got $self")
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setDescriptions: wrong type: " . ref($val_ent) . " expected Bio::MAGE::Description::Description")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::Description::Description');
+    }
+  }
+
+  return $self->{__DESCRIPTIONS} = $val;
+}
+
+
+=item $array_ref = $organization->getDescriptions()
+
+The restricted getter method for the C<descriptions> association.
+
+Input parameters: none
+
+Return value: the current value of the C<descriptions> association : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getDescriptions {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getDescriptions: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__DESCRIPTIONS};
 }
 
 
 
+
+=item $val = $organization->addDescriptions(@vals)
+
+Because the descriptions association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the descriptions association.
+
+Input parameters: the list of values C<@vals> to add to the descriptions association. B<NOTE>: submitting a single value is permitted.
+
+Return value: the number of items stored in the slot B<after> adding C<@vals>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::Description>
+
+=cut
+
+
+sub addDescriptions {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addDescriptions: no arguments passed to adder")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addDescriptions: wrong type: " . ref($val) . " expected Bio::MAGE::Description::Description")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::Description');
+  }
+
+  return push(@{$self->{__DESCRIPTIONS}},@vals);
+}
+
+
+
+
+
+=back
+
+
+=item security
+
+Methods for the C<security> association.
+
+
+From the MAGE-OM documentation:
+
+Information on the security for the instance of the class.
+
+
+=over
+
+
+=item $val = $organization->setSecurity($val)
+
+The restricted setter method for the C<security> association.
+
+
+Input parameters: the value to which the C<security> association will be set : one of the accepted enumerated values.
+
+Return value: the current value of the C<security> association : one of the accepted enumerated values.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$val> is not an instance of class C<Bio::MAGE::AuditAndSecurity::Security>
+
+=cut
+
+
+sub setSecurity {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setSecurity: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setSecurity: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setSecurity: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Security") unless (not defined $val) or UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Security');
+  return $self->{__SECURITY} = $val;
+}
+
+
+=item $val = $organization->getSecurity()
+
+The restricted getter method for the C<security> association.
+
+Input parameters: none
+
+Return value: the current value of the C<security> association : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getSecurity {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getSecurity: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__SECURITY};
+}
+
+
+
+
+
+=back
+
+
+sub initialize {
+
+
+  my $self = shift;
+  return 1;
+
+
+}
+
+=back
+
+
+=cut
+
+
+=head1 SLOTS, ATTRIBUTES, AND ASSOCIATIONS
+
+In the Perl implementation of MAGE-OM classes, there are
+three types of class data members: C<slots>, C<attributes>, and
+C<associations>.
+
+=head2 SLOTS
+
+This API uses the term C<slot> to indicate a data member of the class
+that was not present in the UML model and is used for mainly internal
+purposes - use only if you understand the inner workings of the
+API. Most often slots are used by generic methods such as those in the
+XML writing and reading classes.
+
+Slots are implemented using unified getter/setter methods:
+
+=over
+
+=item $var = $obj->slot_name();
+
+Retrieves the current value of the slot.
+
+=item $new_var = $obj->slot_name($new_var);
+
+Store $new_var in the slot - the return value is also $new_var.
+
+=item @names = $obj->get_slot_names()
+
+Returns the list of all slots in the class.
+
+=back
+
+B<DATA CHECKING>: No data type checking is made for these methods.
+
+=head2 ATTRIBUTES AND ASSOCIATIONS
+
+The terms C<attribute> and C<association> indicate data members of the
+class that were specified directly from the UML model.
+
+In the Perl implementation of MAGE-OM classes,
+association and attribute accessors are implemented using three
+separate methods:
+
+=over
+
+=item get*
+
+Retrieves the current value.
+
+B<NOTE>: For associations, if the association has list cardinality, an
+array reference is returned.
+
+B<DATA CHECKING>: Ensure that no argument is provided.
+
+=item set*
+
+Sets the current value, B<replacing> any existing value.
+
+B<NOTE>: For associations, if the association has list cardinality,
+the argument must be an array reference. Because of this, you probably
+should be using the add* methods.
+
+B<DATA CHECKING>: For attributes, ensure that a single value is
+provided as the argument. For associations, if the association has
+list cardinality, ensure that the argument is a reference to an array
+of instances of the correct MAGE-OM class, otherwise
+ensure that there is a single argument of the correct MAGE-OM class.
+
+=item add*
+
+B<NOTE>: Only present in associations with list cardinality. 
+
+Appends a list of objects to any values that may already be stored
+in the association.
+
+B<DATA CHECKING>: Ensure that all arguments are of the correct MAGE-OM class.
+
+=back
+
+=head2 GENERIC METHODS
+
+The unified base class of all MAGE-OM classes, C<Bio::MAGE::Base>, provides a set of generic methods that
+will operate on slots, attributes, and associations:
+
+=over
+
+=item $val = $obj->get_slot($name)
+
+=item \@list_ref = $obj->get_slots(@name_list);
+
+=item $val = $obj->set_slot($name,$val)
+
+=item $obj->set_slots(%parameters)
+
+=item $obj->set_slots(\@name_list, \@value_list)
+
+See elsewhere in this page for a detailed description of these
+methods.
+
+=back
+
+=cut
+
+
 =head1 BUGS
 
-Please send bug reports to mged-mage@lists.sf.net
+Please send bug reports to the project mailing list: (mged-mage 'at' lists 'dot' sf 'dot' net)
 
 =head1 AUTHOR
 
-Jason E. Stewart (www.openinformatics.com)
+Jason E. Stewart (jasons 'at' cpan 'dot' org)
 
 =head1 SEE ALSO
 
@@ -1249,8 +1855,6 @@ perl(1).
 
 =cut
 
-#
-# End the module by returning a true value
-#
+# all perl modules must be true...
 1;
 

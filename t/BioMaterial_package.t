@@ -1,10 +1,15 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl ./t//BioMaterial_package.t'
+##############################
+#
+# BioMaterial_package.t
+#
 
+# Before `make install' is performed this script should be runnable with
+# `make test'. After `make install' it should work as `perl BioMaterial_package.t`
+
+##############################
 # C O P Y R I G H T   N O T I C E
-#  Copyright (c) 2001-2002 by:
+#  Copyright (c) 2001-2006 by:
 #    * The MicroArray Gene Expression Database Society (MGED)
-#    * Rosetta Inpharmatics
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -26,27 +31,18 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-######################### We start with some black magic to print on failure.
 
-BEGIN { $| = 1; print "1..19\n"; }
-END {print "not ok 1\n" unless $loaded;}
+
 use Carp;
-use lib 't';
+# use blib;
+use Test::More tests => 25;
 use strict;
-use TestMAGE qw(result is_object);
-use vars qw($i $loaded);
-use Bio::MAGE;
-use Bio::MAGE::BioMaterial;
 
-$loaded = 1;
-$i = 1;
-result($i);
-
-######################### End of black magic.
+BEGIN { use_ok('Bio::MAGE::BioMaterial') };
 
 # we test the classes() method
 my @classes = Bio::MAGE::BioMaterial->classes();
-result(scalar @classes eq 8);
+is((scalar @classes), 8, 'number of subclasses');
 
 my %classes;
 {
@@ -55,51 +51,55 @@ my %classes;
   foreach my $class_name (@classes) {
     my $class = "Bio::MAGE::BioMaterial::$class_name";
     $classes{$class_name} = $class->new();
-    result(is_object($classes{$class_name}) and $classes{$class_name}->isa($class));
+    isa_ok($classes{$class_name}, $class);
   }
 }
+# test isa
 my $biomaterial = Bio::MAGE::BioMaterial->new();
-result(is_object($biomaterial) 
-       and $biomaterial->isa("Bio::MAGE::BioMaterial"));
+isa_ok($biomaterial, "Bio::MAGE::BioMaterial");
 
 # test the tagname method
-result(defined $biomaterial->tagname);
+ok(defined $biomaterial->tagname, 'tagname');
 
-# test the mageml_lists method
-result(defined $biomaterial->mageml_lists);
+
+# test the xml_lists method
+ok(defined $biomaterial->xml_lists,
+  'xml_lists');
 
 
 # test the compound_list method
 $biomaterial->compound_list([]);
-result(UNIVERSAL::isa($biomaterial->compound_list,'ARRAY') &&
-       not scalar @{$biomaterial->compound_list}
-      );
+isa_ok($biomaterial->compound_list,'ARRAY');
+is(scalar @{$biomaterial->compound_list}, 0,
+   'compound_list empty');
 
 # test the getCompound_list method
-result(UNIVERSAL::isa($biomaterial->getCompound_list,'ARRAY') &&
-       not scalar @{$biomaterial->getCompound_list}
-      );
+isa_ok($biomaterial->getCompound_list,'ARRAY');
+is(scalar @{$biomaterial->getCompound_list}, 0,
+   'getCompound_list empty');
 
 # test the addCompound() method
 $biomaterial->addCompound($classes{Compound});
-result(UNIVERSAL::isa($biomaterial->getCompound_list,'ARRAY') &&
-       scalar @{$biomaterial->getCompound_list}
-      );
+isa_ok($biomaterial->getCompound_list,'ARRAY');
+ok(scalar @{$biomaterial->getCompound_list},
+   'getCompound_list not empty');
+
 
 # test the biomaterial_list method
 $biomaterial->biomaterial_list([]);
-result(UNIVERSAL::isa($biomaterial->biomaterial_list,'ARRAY') &&
-       not scalar @{$biomaterial->biomaterial_list}
-      );
+isa_ok($biomaterial->biomaterial_list,'ARRAY');
+is(scalar @{$biomaterial->biomaterial_list}, 0,
+   'biomaterial_list empty');
 
 # test the getBioMaterial_list method
-result(UNIVERSAL::isa($biomaterial->getBioMaterial_list,'ARRAY') &&
-       not scalar @{$biomaterial->getBioMaterial_list}
-      );
+isa_ok($biomaterial->getBioMaterial_list,'ARRAY');
+is(scalar @{$biomaterial->getBioMaterial_list}, 0,
+   'getBioMaterial_list empty');
 
 # test the addBioMaterial() method
 $biomaterial->addBioMaterial($classes{BioMaterial});
-result(UNIVERSAL::isa($biomaterial->getBioMaterial_list,'ARRAY') &&
-       scalar @{$biomaterial->getBioMaterial_list}
-      );
+isa_ok($biomaterial->getBioMaterial_list,'ARRAY');
+ok(scalar @{$biomaterial->getBioMaterial_list},
+   'getBioMaterial_list not empty');
+
 

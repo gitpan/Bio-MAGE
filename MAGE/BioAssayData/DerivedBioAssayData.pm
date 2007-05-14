@@ -4,9 +4,8 @@
 #
 ##############################
 # C O P Y R I G H T   N O T I C E
-#  Copyright (c) 2001-2002 by:
+#  Copyright (c) 2001-2006 by:
 #    * The MicroArray Gene Expression Database Society (MGED)
-#    * Rosetta Inpharmatics
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -28,46 +27,106 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-package Bio::MAGE::BioAssayData::DerivedBioAssayData;
 
+
+package Bio::MAGE::BioAssayData::DerivedBioAssayData;
 use strict;
 use Carp;
-use Bio::MAGE::Base;
+
+use base qw(Bio::MAGE::BioAssayData::BioAssayData);
+
 use Bio::MAGE::Association;
-use Bio::MAGE::BioAssayData::BioAssayData;
+
+use vars qw($__ASSOCIATIONS
+	    $__CLASS_NAME
+	    $__PACKAGE_NAME
+	    $__SUBCLASSES
+	    $__SUPERCLASSES
+	    $__ATTRIBUTE_NAMES
+	    $__ASSOCIATION_NAMES
+	   );
 
 
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
+=head1 NAME
 
-require Exporter;
+Bio::MAGE::BioAssayData::DerivedBioAssayData - Class for the MAGE-OM API
 
-@ISA = qw(Bio::MAGE::Base Bio::MAGE::BioAssayData::BioAssayData Exporter);
-$VERSION = 20020902.6;
+=head1 SYNOPSIS
 
-# Items to export into callers namespace by default. Note: do not export
-# names by default without a very good reason. Use EXPORT_OK instead.
-# Do not simply export all your public functions/methods/constants.
-@EXPORT_OK = qw();
+  use Bio::MAGE::BioAssayData::DerivedBioAssayData
 
-
-=head1 Bio::MAGE::BioAssayData::DerivedBioAssayData
-
-=head2 SYNOPSIS
-
-  use Bio::MAGE::BioAssayData::DerivedBioAssayData;
-
-    # creating an empty instance
+  # creating an empty instance
   my $derivedbioassaydata = Bio::MAGE::BioAssayData::DerivedBioAssayData->new();
 
-    # creating an already populated instance
-  my $derivedbioassaydata = Bio::MAGE::BioAssayData::DerivedBioAssayData->new(producerTransformation=>$producerTransformation_value);
+  # creating an instance with existing data
+  my $derivedbioassaydata = Bio::MAGE::BioAssayData::DerivedBioAssayData->new(
+        name=>$name_val,
+        identifier=>$identifier_val,
+        producerTransformation=>$transformation_ref,
+        bioAssayDimension=>$bioassaydimension_ref,
+        auditTrail=>\@audit_list,
+        propertySets=>\@namevaluetype_list,
+        summaryStatistics=>\@namevaluetype_list,
+        descriptions=>\@description_list,
+        designElementDimension=>$designelementdimension_ref,
+        quantitationTypeDimension=>$quantitationtypedimension_ref,
+        security=>$security_ref,
+        bioDataValues=>$biodatavalues_ref,
+  );
 
-    # setting and retrieving object associations
-  my $producerTransformation_val = $derivedbioassaydata->producerTransformation();
-  $derivedbioassaydata->producerTransformation($value);
+
+  # 'name' attribute
+  my $name_val = $derivedbioassaydata->name(); # getter
+  $derivedbioassaydata->name($value); # setter
+
+  # 'identifier' attribute
+  my $identifier_val = $derivedbioassaydata->identifier(); # getter
+  $derivedbioassaydata->identifier($value); # setter
 
 
-=head2 DESCRIPTION
+  # 'producerTransformation' association
+  my $transformation_ref = $derivedbioassaydata->producerTransformation(); # getter
+  $derivedbioassaydata->producerTransformation($transformation_ref); # setter
+
+  # 'bioAssayDimension' association
+  my $bioassaydimension_ref = $derivedbioassaydata->bioAssayDimension(); # getter
+  $derivedbioassaydata->bioAssayDimension($bioassaydimension_ref); # setter
+
+  # 'auditTrail' association
+  my $audit_array_ref = $derivedbioassaydata->auditTrail(); # getter
+  $derivedbioassaydata->auditTrail(\@audit_list); # setter
+
+  # 'propertySets' association
+  my $namevaluetype_array_ref = $derivedbioassaydata->propertySets(); # getter
+  $derivedbioassaydata->propertySets(\@namevaluetype_list); # setter
+
+  # 'summaryStatistics' association
+  my $namevaluetype_array_ref = $derivedbioassaydata->summaryStatistics(); # getter
+  $derivedbioassaydata->summaryStatistics(\@namevaluetype_list); # setter
+
+  # 'descriptions' association
+  my $description_array_ref = $derivedbioassaydata->descriptions(); # getter
+  $derivedbioassaydata->descriptions(\@description_list); # setter
+
+  # 'designElementDimension' association
+  my $designelementdimension_ref = $derivedbioassaydata->designElementDimension(); # getter
+  $derivedbioassaydata->designElementDimension($designelementdimension_ref); # setter
+
+  # 'quantitationTypeDimension' association
+  my $quantitationtypedimension_ref = $derivedbioassaydata->quantitationTypeDimension(); # getter
+  $derivedbioassaydata->quantitationTypeDimension($quantitationtypedimension_ref); # setter
+
+  # 'security' association
+  my $security_ref = $derivedbioassaydata->security(); # getter
+  $derivedbioassaydata->security($security_ref); # setter
+
+  # 'bioDataValues' association
+  my $biodatavalues_ref = $derivedbioassaydata->bioDataValues(); # getter
+  $derivedbioassaydata->bioDataValues($biodatavalues_ref); # setter
+
+
+
+=head1 DESCRIPTION
 
 From the MAGE-OM documentation for the C<DerivedBioAssayData> class:
 
@@ -77,13 +136,12 @@ The output of a transformation event.
 
 =cut
 
+=head1 INHERITANCE
 
-=head2 INHERITANCE
 
+Bio::MAGE::BioAssayData::DerivedBioAssayData has the following superclasses:
 
-Bio::MAGE::BioAssayData::DerivedBioAssayData has the following super classes
-
-=over 
+=over
 
 
 =item * Bio::MAGE::BioAssayData::BioAssayData
@@ -92,11 +150,48 @@ Bio::MAGE::BioAssayData::DerivedBioAssayData has the following super classes
 =back
 
 
-=head2 CLASS METHODS
+
+=cut
+
+BEGIN {
+  $__CLASS_NAME        = q[Bio::MAGE::BioAssayData::DerivedBioAssayData];
+  $__PACKAGE_NAME      = q[BioAssayData];
+  $__SUBCLASSES        = [];
+  $__SUPERCLASSES      = ['Bio::MAGE::BioAssayData::BioAssayData'];
+  $__ATTRIBUTE_NAMES   = ['name', 'identifier'];
+  $__ASSOCIATION_NAMES = ['producerTransformation', 'bioAssayDimension', 'auditTrail', 'propertySets', 'summaryStatistics', 'designElementDimension', 'descriptions', 'bioDataValues', 'security', 'quantitationTypeDimension'];
+  $__ASSOCIATIONS      = [
+          'producerTransformation',
+          bless( {
+                   '__SELF' => bless( {
+                                        '__NAME' => 'derivedBioAssayDataTarget',
+                                        '__IS_REF' => 0,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The association between the DerivedBioAssayData and the Transformation event that produced it.',
+                                        '__CLASS_NAME' => 'DerivedBioAssayData',
+                                        '__RANK' => '2',
+                                        '__ORDERED' => 0
+                                      }, 'Bio::MAGE::Association::End' ),
+                   '__OTHER' => bless( {
+                                         '__NAME' => 'producerTransformation',
+                                         '__IS_REF' => 1,
+                                         '__CARDINALITY' => '0..1',
+                                         '__DOCUMENTATION' => 'The association between the DerivedBioAssayData and the Transformation event that produced it.',
+                                         '__CLASS_NAME' => 'Transformation',
+                                         '__RANK' => '1',
+                                         '__ORDERED' => 0
+                                       }, 'Bio::MAGE::Association::End' )
+                 }, 'Bio::MAGE::Association' )
+        ]
+
+}
+
+=head1 CLASS METHODS
 
 The following methods can all be called without first having an
 instance of the class via the Bio::MAGE::BioAssayData::DerivedBioAssayData->methodname() syntax.
 
+=over
 
 =item new()
 
@@ -108,104 +203,227 @@ named-value style arguments:
 
 =over
 
+=item * name
 
-=item * producerTransformation
-
-Sets the value of the producerTransformation association (this association was inherited
-from class C<Bio::MAGE::BioAssayData::DerivedBioAssayData>).
-
-The value will be of type C<Transformation>.
-
-
-=item * designElementDimension
-
-Sets the value of the designElementDimension association (this association was inherited
-from class C<Bio::MAGE::BioAssayData::BioAssayData>).
-
-The value will be of type C<DesignElementDimension>.
-
-
-=item * quantitationTypeDimension
-
-Sets the value of the quantitationTypeDimension association (this association was inherited
-from class C<Bio::MAGE::BioAssayData::BioAssayData>).
-
-The value will be of type C<QuantitationTypeDimension>.
-
-
-=item * bioAssayDimension
-
-Sets the value of the bioAssayDimension association (this association was inherited
-from class C<Bio::MAGE::BioAssayData::BioAssayData>).
-
-The value will be of type C<BioAssayDimension>.
-
-
-=item * summaryStatistics
-
-Sets the value of the summaryStatistics association (this association was inherited
-from class C<Bio::MAGE::BioAssayData::BioAssayData>).
-
-The value will be of type C<NameValueType>.
-
-
-=item * bioDataValues
-
-Sets the value of the bioDataValues association (this association was inherited
-from class C<Bio::MAGE::BioAssayData::BioAssayData>).
-
-The value will be of type C<BioDataValues>.
+Sets the value of the C<name> attribute (this attribute was inherited from class C<Bio::MAGE::Identifiable>).
 
 
 =item * identifier
 
-Sets the value of the identifier attribute (this attribute was inherited
-from class C<Bio::MAGE::Identifiable>).
+Sets the value of the C<identifier> attribute (this attribute was inherited from class C<Bio::MAGE::Identifiable>).
 
 
 
-=item * name
+=item * producerTransformation
 
-Sets the value of the name attribute (this attribute was inherited
-from class C<Bio::MAGE::Identifiable>).
+Sets the value of the C<producerTransformation> association
 
-
-
-=item * descriptions
-
-Sets the value of the descriptions association (this association was inherited
-from class C<Bio::MAGE::Describable>).
-
-The value will be of type C<Description>.
+The value must be of type: instance of C<Bio::MAGE::BioAssayData::Transformation>.
 
 
-=item * security
+=item * bioAssayDimension
 
-Sets the value of the security association (this association was inherited
-from class C<Bio::MAGE::Describable>).
+Sets the value of the C<bioAssayDimension> association (this association was inherited from class C<Bio::MAGE::BioAssayData::BioAssayData>).
 
-The value will be of type C<Security>.
+
+The value must be of type: instance of C<Bio::MAGE::BioAssayData::BioAssayDimension>.
 
 
 =item * auditTrail
 
-Sets the value of the auditTrail association (this association was inherited
-from class C<Bio::MAGE::Describable>).
+Sets the value of the C<auditTrail> association (this association was inherited from class C<Bio::MAGE::Describable>).
 
-The value will be of type C<Audit>.
+
+The value must be of type: array of C<Bio::MAGE::AuditAndSecurity::Audit>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (this association was inherited
-from class C<Bio::MAGE::Extendable>).
+Sets the value of the C<propertySets> association (this association was inherited from class C<Bio::MAGE::Extendable>).
 
-The value will be of type C<NameValueType>.
+
+The value must be of type: array of C<Bio::MAGE::NameValueType>.
+
+
+=item * summaryStatistics
+
+Sets the value of the C<summaryStatistics> association (this association was inherited from class C<Bio::MAGE::BioAssayData::BioAssayData>).
+
+
+The value must be of type: array of C<Bio::MAGE::NameValueType>.
+
+
+=item * designElementDimension
+
+Sets the value of the C<designElementDimension> association (this association was inherited from class C<Bio::MAGE::BioAssayData::BioAssayData>).
+
+
+The value must be of type: instance of C<Bio::MAGE::BioAssayData::DesignElementDimension>.
+
+
+=item * descriptions
+
+Sets the value of the C<descriptions> association (this association was inherited from class C<Bio::MAGE::Describable>).
+
+
+The value must be of type: array of C<Bio::MAGE::Description::Description>.
+
+
+=item * bioDataValues
+
+Sets the value of the C<bioDataValues> association (this association was inherited from class C<Bio::MAGE::BioAssayData::BioAssayData>).
+
+
+The value must be of type: instance of C<Bio::MAGE::BioAssayData::BioDataValues>.
+
+
+=item * security
+
+Sets the value of the C<security> association (this association was inherited from class C<Bio::MAGE::Describable>).
+
+
+The value must be of type: instance of C<Bio::MAGE::AuditAndSecurity::Security>.
+
+
+=item * quantitationTypeDimension
+
+Sets the value of the C<quantitationTypeDimension> association (this association was inherited from class C<Bio::MAGE::BioAssayData::BioAssayData>).
+
+
+The value must be of type: instance of C<Bio::MAGE::BioAssayData::QuantitationTypeDimension>.
 
 
 =back
 
+=item $obj = class->new(%parameters)
 
+The C<new()> method is the class constructor.
+
+B<Parameters>: if given a list of name/value parameters the
+corresponding slots, attributes, or associations will have their
+initial values set by the constructor.
+
+B<Return value>: It returns a reference to an object of the class.
+
+B<Side effects>: It invokes the C<initialize()> method if it is defined
+by the class.
+
+=cut
+
+#
+# code for new() inherited from Base.pm
+#
+
+=item @names = class->get_slot_names()
+
+The C<get_slot_names()> method is used to retrieve the name of all
+slots defined in a given class.
+
+B<NOTE>: the list of names does not include attribute or association
+names.
+
+B<Return value>: A list of the names of all slots defined for this class.
+
+B<Side effects>: none
+
+=cut
+
+#
+# code for get_slot_names() inherited from Base.pm
+#
+
+=item @name_list = get_attribute_names()
+
+returns the list of attribute data members for this class.
+
+=cut
+
+#
+# code for get_attribute_names() inherited from Base.pm
+#
+
+=item @name_list = get_association_names()
+
+returns the list of association data members for this class.
+
+=cut
+
+#
+# code for get_association_names() inherited from Base.pm
+#
+
+=item @class_list = get_superclasses()
+
+returns the list of superclasses for this class.
+
+=cut
+
+#
+# code for get_superclasses() inherited from Base.pm
+#
+
+=item @class_list = get_subclasses()
+
+returns the list of subclasses for this class.
+
+=cut
+
+#
+# code for get_subclasses() inherited from Base.pm
+#
+
+=item $name = class_name()
+
+Returns the full class name for this class.
+
+=cut
+
+#
+# code for class_name() inherited from Base.pm
+#
+
+=item $package_name = package_name()
+
+Returns the base package name (i.e. no 'namespace::') of the package
+that contains this class.
+
+=cut
+
+#
+# code for package_name() inherited from Base.pm
+#
+
+=item %assns = associations()
+
+returns the association meta-information in a hash where the keys are
+the association names and the values are C<Association> objects that
+provide the meta-information for the association.
+
+=cut
+
+#
+# code for associations() inherited from Base.pm
+#
+
+
+
+=back
+
+=head1 INSTANCE METHODS
+
+=item $obj_copy = $obj->new()
+
+When invoked with an existing object reference and not a class name,
+the C<new()> method acts as a copy constructor - with the new object's
+initial values set to be those of the existing object.
+
+B<Parameters>: No input parameters  are used in the copy  constructor,
+the initial values are taken directly from the object to be copied.
+
+B<Return value>: It returns a reference to an object of the class.
+
+B<Side effects>: It invokes the C<initialize()> method if it is defined
+by the class.
 
 =cut
 
@@ -232,7 +450,7 @@ does not define.
 # code for set_slots() inherited from Base.pm
 #
 
-=item $obj->get_slots(@name_list)
+=item @obj_list = $obj->get_slots(@name_list)
 
 The C<get_slots()> method is used to get the values of a number of
 slots at the same time.
@@ -277,125 +495,6 @@ B<Side effects>: none
 # code for get_slot() inherited from Base.pm
 #
 
-=item @names = $obj->get_slot_names()
-
-The C<get_slot_names()> method is used to retrieve the name of all
-slots defined for a given object.
-
-B<Return value>: a single slot value, or undef if the slot has not been
-initialized.
-
-B<Side effects>: none
-
-=cut
-
-#
-# code for get_slot_names() inherited from Base.pm
-#
-
-
-
-=item $name = class_name()
-
-Returns the full class name for this class, Bio::MAGE::BioAssayData::DerivedBioAssayData.
-
-=cut
-
-sub class_name {
-  return q[Bio::MAGE::BioAssayData::DerivedBioAssayData];
-}
-
-=item $package_name = package()
-
-Returns the unresolved package name (i.e. no 'Bio::MAGE::') of the
-package that contains class, Bio::MAGE::BioAssayData::DerivedBioAssayData.
-
-=cut
-
-sub package {
-  return q[BioAssayData];
-}
-
-=item @classes = subclasses()
-
-returns the list of subclasses for this class.
-
-=cut
-
-sub subclasses {
-  my @list = ();
-  return @list;
-}
-
-=item @classes = superclasses()
-
-returns the list of superclasses for this class.
-
-=cut
-
-sub superclasses {
-  my @list = ('Bio::MAGE::BioAssayData::BioAssayData');
-  return @list;
-}
-
-=item @methods = attribute_methods()
-
-returns the list of attribute accessor methods for this class.
-
-=cut
-
-sub attribute_methods {
-  my $class = shift;
-  my @list = ();
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->attribute_methods());
-    }
-  }
-  return @list;
-}
-
-=item @methods = association_methods()
-
-returns the list of association accessor methods for this class.
-
-=cut
-
-sub association_methods {
-  my $class = shift;
-  my @list = ('producerTransformation');
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->association_methods());
-    }
-  }
-  return @list;
-}
-
-=item %assns = associations()
-
-returns the association meta-information in a hash where the keys are
-the association names and the values are C<Bio::MAGE::Association>
-objects that provide the meta-information for the association.
-
-=cut
-
-sub associations {
-  my $class = shift;
-  my @list = ();
-  # superclasses first
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->associations());
-    }
-  }
-  # then associations from this class
-  if (defined $__ASSOCIATIONS) {
-    push(@list,@{$__ASSOCIATIONS})
-  }
-  return @list;
-}
-
 
 =head2 ATTRIBUTES
 
@@ -404,93 +503,60 @@ class. In the Perl implementation of the MAGE-OM classes, the
 interface to attributes is implemented using separate setter and
 getter methods for each attribute.
 
-Bio::MAGE::BioAssayData::DerivedBioAssayData: has the following attribute accessor methods:
+C<Bio::MAGE::BioAssayData::DerivedBioAssayData> has the following attribute accessor methods:
 
 =over
-
-Attributes Inherited from Bio::MAGE::Identifiable
-
-
-=item identifier
-
-From the MAGE-OM documentation for the C<identifier> attribute:
-
-An identifier is an unambiguous string that is unique within the scope (i.e. a document, a set of related documents, or a repository) of its use.
-
-
-
-=over
-
-
-=item $val = $identifiable->setIdentifier($val)
-
-The restricted setter method for the identifier attribute.
-
-Input parameters: the value to which the identifier attribute will be set 
-
-Return value: the current value of the identifier attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-
-=item $val = $identifiable->getIdentifier()
-
-The restricted getter method for the identifier attribute.
-
-Input parameters: none
-
-Return value: the current value of the identifier attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-
-=back
 
 
 =item name
 
-From the MAGE-OM documentation for the C<name> attribute:
+Methods for the C<name> attribute.
+
+
+From the MAGE-OM documentation:
 
 The potentially ambiguous common identifier.
-
 
 
 =over
 
 
-=item $val = $identifiable->setName($val)
+=item $val = $derivedbioassaydata->setName($val)
 
-The restricted setter method for the name attribute.
+The restricted setter method for the C<name> attribute.
 
-Input parameters: the value to which the name attribute will be set 
 
-Return value: the current value of the name attribute 
+Input parameters: the value to which the C<name> attribute will be set 
+
+Return value: the current value of the C<name> attribute 
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
+if too many input parameters are specified
 
 =cut
 
 
-=item $val = $identifiable->getName()
+sub setName {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setName: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setName: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__NAME} = $val;
+}
 
-The restricted getter method for the name attribute.
+
+=item $val = $derivedbioassaydata->getName()
+
+The restricted getter method for the C<name> attribute.
 
 Input parameters: none
 
-Return value: the current value of the name attribute 
+Return value: the current value of the C<name> attribute 
 
 Side effects: none
 
@@ -499,86 +565,139 @@ Exceptions: will call C<croak()> if any input parameters are specified
 =cut
 
 
+sub getName {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getName: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__NAME};
+}
+
+
+
+
 
 =back
 
 
+=item identifier
 
-=back
+Methods for the C<identifier> attribute.
 
+
+From the MAGE-OM documentation:
+
+An identifier is an unambiguous string that is unique within the scope (i.e. a document, a set of related documents, or a repository) of its use.
+
+
+=over
+
+
+=item $val = $derivedbioassaydata->setIdentifier($val)
+
+The restricted setter method for the C<identifier> attribute.
+
+
+Input parameters: the value to which the C<identifier> attribute will be set 
+
+Return value: the current value of the C<identifier> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified
 
 =cut
 
 
-
-BEGIN {
-  $__ASSOCIATIONS = [
-          'producerTransformation',
-          bless( {
-                   '__OTHER' => bless( {
-                                         '__IS_REF' => 1,
-                                         '__RANK' => '1',
-                                         '__CARDINALITY' => '0..1',
-                                         '__DOCUMENTATION' => 'The association between the DerivedBioAssayData and the Transformation event that produced it.',
-                                         '__NAME' => 'producerTransformation',
-                                         '__ORDERED' => 0,
-                                         '__CLASS_NAME' => 'Transformation'
-                                       }, 'Bio::MAGE::Association::End' ),
-                   '__SELF' => bless( {
-                                        '__IS_REF' => 0,
-                                        '__RANK' => '2',
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The association between the DerivedBioAssayData and the Transformation event that produced it.',
-                                        '__NAME' => 'derivedBioAssayDataTarget',
-                                        '__ORDERED' => 0,
-                                        '__CLASS_NAME' => 'DerivedBioAssayData'
-                                      }, 'Bio::MAGE::Association::End' )
-                 }, 'Bio::MAGE::Association' )
-        ]
-
+sub setIdentifier {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setIdentifier: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setIdentifier: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__IDENTIFIER} = $val;
 }
 
-=head2 ASSOCIATIONS
 
-Associations are references to other class objects which can be shared
-by multiple class instances at the same time. In the Perl
-implementation of MAGE-OM classes, associations are implemented using
-three separate methods:
+=item $val = $derivedbioassaydata->getIdentifier()
 
-=over
+The restricted getter method for the C<identifier> attribute.
 
-=item get*
+Input parameters: none
 
-Retrieves the current value. If the association has list cardinality,
-an array reference is returned.
+Return value: the current value of the C<identifier> attribute 
 
-=item set*
+Side effects: none
 
-Sets the current value B<replacing> any existing value. If the
-association has list cardinality, the argument must be an array
-reference. Unless you know what you are doing, you probably should be
-using the add* methods.
+Exceptions: will call C<croak()> if any input parameters are specified
 
-=item add*
+=cut
 
-This method exists only for associations with list cardinality. It
-appends a list of objects to any values that may already be stored in
-the association.
+
+sub getIdentifier {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getIdentifier: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__IDENTIFIER};
+}
+
+
+
+
 
 =back
 
-Bio::MAGE::BioAssayData::DerivedBioAssayData: has the following association accessor methods:
+
+=back
+
+
+=head2 ASSOCIATIONS
+
+Associations are references to other classes. Associations in MAGE-OM have a cardinality that determines the minimum and
+maximum number of instances of the 'other' class that maybe included
+in the association:
+
+=over
+
+=item 1
+
+There B<must> be exactly one item in the association, i.e. this is a
+mandatory data field.
+
+=item 0..1
+
+There B<may> be one item in the association, i.e. this is an optional
+data field.
+
+=item 1..N
+
+There B<must> be one or more items in the association, i.e. this is a
+mandatory data field, with list cardinality.
+
+=item 0..N
+
+There B<may> be one or more items in the association, i.e. this is an
+optional data field, with list cardinality.
+
+=back
+
+Bio::MAGE::BioAssayData::DerivedBioAssayData has the following association accessor methods:
 
 =over
 
 
 =item producerTransformation
 
+Methods for the C<producerTransformation> association.
 
-From the MAGE-OM documentation for the C<producerTransformation> association:
+
+From the MAGE-OM documentation:
 
 The association between the DerivedBioAssayData and the Transformation event that produced it.
-
 
 
 =over
@@ -586,18 +705,20 @@ The association between the DerivedBioAssayData and the Transformation event tha
 
 =item $val = $derivedbioassaydata->setProducerTransformation($val)
 
-The restricted setter method for the producerTransformation association.
+The restricted setter method for the C<producerTransformation> association.
 
-Input parameters: the value to which the producerTransformation association will be set : an instance of type C<Bio::MAGE::BioAssayData::Transformation>.
 
-Return value: the current value of the producerTransformation association : an instance of type C<Bio::MAGE::BioAssayData::Transformation>.
+Input parameters: the value to which the C<producerTransformation> association will be set : one of the accepted enumerated values.
+
+Return value: the current value of the C<producerTransformation> association : one of the accepted enumerated values.
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssayData::Transformation>
+if too many input parameters are specified, or if C<$val> is not an instance of class C<Bio::MAGE::BioAssayData::Transformation>
 
 =cut
+
 
 sub setProducerTransformation {
   my $self = shift;
@@ -606,19 +727,18 @@ sub setProducerTransformation {
   croak(__PACKAGE__ . "::setProducerTransformation: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
-  croak(__PACKAGE__ . "::setProducerTransformation: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::Transformation") unless UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::Transformation');
+  croak(__PACKAGE__ . "::setProducerTransformation: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::Transformation") unless (not defined $val) or UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::Transformation');
   return $self->{__PRODUCERTRANSFORMATION} = $val;
 }
 
 
-
 =item $val = $derivedbioassaydata->getProducerTransformation()
 
-The restricted getter method for the producerTransformation association.
+The restricted getter method for the C<producerTransformation> association.
 
 Input parameters: none
 
-Return value: the current value of the producerTransformation association : an instance of type C<Bio::MAGE::BioAssayData::Transformation>.
+Return value: the current value of the C<producerTransformation> association : an instance of type C<Bio::MAGE::BioAssayData::Transformation>.
 
 Side effects: none
 
@@ -626,56 +746,71 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
+
 sub getProducerTransformation {
   my $self = shift;
   croak(__PACKAGE__ . "::getProducerTransformation: arguments passed to getter")
     if @_;
+  my $val = shift;
   return $self->{__PRODUCERTRANSFORMATION};
 }
 
 
 
 
-=back
 
-Associations Inherited from Bio::MAGE::BioAssayData::BioAssayData
+=back
 
 
 =item bioAssayDimension
 
+Methods for the C<bioAssayDimension> association.
 
-From the MAGE-OM documentation for the C<bioAssayDimension> association:
+
+From the MAGE-OM documentation:
 
 The BioAssays of the BioAssayData.
 
 
-
 =over
 
 
-=item $val = $bioassaydata->setBioAssayDimension($val)
+=item $val = $derivedbioassaydata->setBioAssayDimension($val)
 
-The restricted setter method for the bioAssayDimension association.
+The restricted setter method for the C<bioAssayDimension> association.
 
-Input parameters: the value to which the bioAssayDimension association will be set : an instance of type C<Bio::MAGE::BioAssayData::BioAssayDimension>.
 
-Return value: the current value of the bioAssayDimension association : an instance of type C<Bio::MAGE::BioAssayData::BioAssayDimension>.
+Input parameters: the value to which the C<bioAssayDimension> association will be set : one of the accepted enumerated values.
+
+Return value: the current value of the C<bioAssayDimension> association : one of the accepted enumerated values.
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssayData::BioAssayDimension>
+if too many input parameters are specified, or if C<$val> is not an instance of class C<Bio::MAGE::BioAssayData::BioAssayDimension>
 
 =cut
 
 
-=item $val = $bioassaydata->getBioAssayDimension()
+sub setBioAssayDimension {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setBioAssayDimension: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setBioAssayDimension: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setBioAssayDimension: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::BioAssayDimension") unless (not defined $val) or UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::BioAssayDimension');
+  return $self->{__BIOASSAYDIMENSION} = $val;
+}
 
-The restricted getter method for the bioAssayDimension association.
+
+=item $val = $derivedbioassaydata->getBioAssayDimension()
+
+The restricted getter method for the C<bioAssayDimension> association.
 
 Input parameters: none
 
-Return value: the current value of the bioAssayDimension association : an instance of type C<Bio::MAGE::BioAssayData::BioAssayDimension>.
+Return value: the current value of the C<bioAssayDimension> association : an instance of type C<Bio::MAGE::BioAssayData::BioAssayDimension>.
 
 Side effects: none
 
@@ -684,260 +819,15 @@ Exceptions: will call C<croak()> if any input parameters are specified
 =cut
 
 
+sub getBioAssayDimension {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getBioAssayDimension: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__BIOASSAYDIMENSION};
+}
 
-=back
 
-
-=item designElementDimension
-
-
-From the MAGE-OM documentation for the C<designElementDimension> association:
-
-The DesignElements of the BioAssayData.
-
-
-
-=over
-
-
-=item $val = $bioassaydata->setDesignElementDimension($val)
-
-The restricted setter method for the designElementDimension association.
-
-Input parameters: the value to which the designElementDimension association will be set : an instance of type C<Bio::MAGE::BioAssayData::DesignElementDimension>.
-
-Return value: the current value of the designElementDimension association : an instance of type C<Bio::MAGE::BioAssayData::DesignElementDimension>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssayData::DesignElementDimension>
-
-=cut
-
-
-=item $val = $bioassaydata->getDesignElementDimension()
-
-The restricted getter method for the designElementDimension association.
-
-Input parameters: none
-
-Return value: the current value of the designElementDimension association : an instance of type C<Bio::MAGE::BioAssayData::DesignElementDimension>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-
-=back
-
-
-=item quantitationTypeDimension
-
-
-From the MAGE-OM documentation for the C<quantitationTypeDimension> association:
-
-The QuantitationTypes of the BioAssayData.
-
-
-
-=over
-
-
-=item $val = $bioassaydata->setQuantitationTypeDimension($val)
-
-The restricted setter method for the quantitationTypeDimension association.
-
-Input parameters: the value to which the quantitationTypeDimension association will be set : an instance of type C<Bio::MAGE::BioAssayData::QuantitationTypeDimension>.
-
-Return value: the current value of the quantitationTypeDimension association : an instance of type C<Bio::MAGE::BioAssayData::QuantitationTypeDimension>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssayData::QuantitationTypeDimension>
-
-=cut
-
-
-=item $val = $bioassaydata->getQuantitationTypeDimension()
-
-The restricted getter method for the quantitationTypeDimension association.
-
-Input parameters: none
-
-Return value: the current value of the quantitationTypeDimension association : an instance of type C<Bio::MAGE::BioAssayData::QuantitationTypeDimension>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-
-=back
-
-
-=item summaryStatistics
-
-
-From the MAGE-OM documentation for the C<summaryStatistics> association:
-
-Statistics on the Quality of the BioAssayData.
-
-
-
-=over
-
-
-=item $array_ref = $bioassaydata->setSummaryStatistics($array_ref)
-
-The restricted setter method for the summaryStatistics association.
-
-Input parameters: the value to which the summaryStatistics association will be set : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
-
-Return value: the current value of the summaryStatistics association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::NameValueType> instances
-
-=cut
-
-
-=item $array_ref = $bioassaydata->getSummaryStatistics()
-
-The restricted getter method for the summaryStatistics association.
-
-Input parameters: none
-
-Return value: the current value of the summaryStatistics association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-=item $bioassaydata->addSummaryStatistics(@vals)
-
-Because the summaryStatistics association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the summaryStatistics
-association.
-
-Input parameters: the list of values C<@vals> to add to the summaryStatistics
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::NameValueType>
-
-=cut
-
-
-
-=back
-
-
-=item bioDataValues
-
-
-From the MAGE-OM documentation for the C<bioDataValues> association:
-
-The data values of the BioAssayData.
-
-
-
-=over
-
-
-=item $val = $bioassaydata->setBioDataValues($val)
-
-The restricted setter method for the bioDataValues association.
-
-Input parameters: the value to which the bioDataValues association will be set : an instance of type C<Bio::MAGE::BioAssayData::BioDataValues>.
-
-Return value: the current value of the bioDataValues association : an instance of type C<Bio::MAGE::BioAssayData::BioDataValues>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::BioAssayData::BioDataValues>
-
-=cut
-
-
-=item $val = $bioassaydata->getBioDataValues()
-
-The restricted getter method for the bioDataValues association.
-
-Input parameters: none
-
-Return value: the current value of the bioDataValues association : an instance of type C<Bio::MAGE::BioAssayData::BioDataValues>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-
-=back
-
-Associations Inherited from Bio::MAGE::Describable
-
-
-=item security
-
-
-From the MAGE-OM documentation for the C<security> association:
-
-Information on the security for the instance of the class.
-
-
-
-=over
-
-
-=item $val = $describable->setSecurity($val)
-
-The restricted setter method for the security association.
-
-Input parameters: the value to which the security association will be set : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
-
-Return value: the current value of the security association : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::AuditAndSecurity::Security>
-
-=cut
-
-
-=item $val = $describable->getSecurity()
-
-The restricted getter method for the security association.
-
-Input parameters: none
-
-Return value: the current value of the security association : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
 
 
 
@@ -946,39 +836,61 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =item auditTrail
 
+Methods for the C<auditTrail> association.
 
-From the MAGE-OM documentation for the C<auditTrail> association:
+
+From the MAGE-OM documentation:
 
 A list of Audit instances that track changes to the instance of Describable.
-
 
 
 =over
 
 
-=item $array_ref = $describable->setAuditTrail($array_ref)
+=item $array_ref = $derivedbioassaydata->setAuditTrail($array_ref)
 
-The restricted setter method for the auditTrail association.
+The restricted setter method for the C<auditTrail> association.
 
-Input parameters: the value to which the auditTrail association will be set : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
 
-Return value: the current value of the auditTrail association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
+Input parameters: the value to which the C<auditTrail> association will be set : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
+
+Return value: the current value of the C<auditTrail> association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::AuditAndSecurity::Audit> instances
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::AuditAndSecurity::Audit> instances
 
 =cut
 
 
-=item $array_ref = $describable->getAuditTrail()
+sub setAuditTrail {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setAuditTrail: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setAuditTrail: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setAuditTrail: expected array reference, got $self")
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setAuditTrail: wrong type: " . ref($val_ent) . " expected Bio::MAGE::AuditAndSecurity::Audit")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::AuditAndSecurity::Audit');
+    }
+  }
 
-The restricted getter method for the auditTrail association.
+  return $self->{__AUDITTRAIL} = $val;
+}
+
+
+=item $array_ref = $derivedbioassaydata->getAuditTrail()
+
+The restricted getter method for the C<auditTrail> association.
 
 Input parameters: none
 
-Return value: the current value of the auditTrail association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
+Return value: the current value of the C<auditTrail> association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
 
 Side effects: none
 
@@ -987,23 +899,343 @@ Exceptions: will call C<croak()> if any input parameters are specified
 =cut
 
 
-=item $describable->addAuditTrail(@vals)
+sub getAuditTrail {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getAuditTrail: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__AUDITTRAIL};
+}
+
+
+
+
+=item $val = $derivedbioassaydata->addAuditTrail(@vals)
 
 Because the auditTrail association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the auditTrail
-association.
+than one value. This method adds the current list of objects in the auditTrail association.
 
-Input parameters: the list of values C<@vals> to add to the auditTrail
-association. B<NOTE>: submitting a single value is permitted.
+Input parameters: the list of values C<@vals> to add to the auditTrail association. B<NOTE>: submitting a single value is permitted.
 
-Return value: none
+Return value: the number of items stored in the slot B<after> adding C<@vals>
 
 Side effects: none
 
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::AuditAndSecurity::Audit>
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::AuditAndSecurity::Audit>
 
 =cut
+
+
+sub addAuditTrail {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addAuditTrail: no arguments passed to adder")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addAuditTrail: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Audit")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Audit');
+  }
+
+  return push(@{$self->{__AUDITTRAIL}},@vals);
+}
+
+
+
+
+
+=back
+
+
+=item propertySets
+
+Methods for the C<propertySets> association.
+
+
+From the MAGE-OM documentation:
+
+Allows specification of name/value pairs.  Meant to primarily help in-house, pipeline processing of instances by providing a place for values that aren't part of the specification proper.
+
+
+=over
+
+
+=item $array_ref = $derivedbioassaydata->setPropertySets($array_ref)
+
+The restricted setter method for the C<propertySets> association.
+
+
+Input parameters: the value to which the C<propertySets> association will be set : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Return value: the current value of the C<propertySets> association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::NameValueType> instances
+
+=cut
+
+
+sub setPropertySets {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setPropertySets: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setPropertySets: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setPropertySets: expected array reference, got $self")
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setPropertySets: wrong type: " . ref($val_ent) . " expected Bio::MAGE::NameValueType")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::NameValueType');
+    }
+  }
+
+  return $self->{__PROPERTYSETS} = $val;
+}
+
+
+=item $array_ref = $derivedbioassaydata->getPropertySets()
+
+The restricted getter method for the C<propertySets> association.
+
+Input parameters: none
+
+Return value: the current value of the C<propertySets> association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getPropertySets {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getPropertySets: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__PROPERTYSETS};
+}
+
+
+
+
+=item $val = $derivedbioassaydata->addPropertySets(@vals)
+
+Because the propertySets association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the propertySets association.
+
+Input parameters: the list of values C<@vals> to add to the propertySets association. B<NOTE>: submitting a single value is permitted.
+
+Return value: the number of items stored in the slot B<after> adding C<@vals>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::NameValueType>
+
+=cut
+
+
+sub addPropertySets {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addPropertySets: no arguments passed to adder")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addPropertySets: wrong type: " . ref($val) . " expected Bio::MAGE::NameValueType")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::NameValueType');
+  }
+
+  return push(@{$self->{__PROPERTYSETS}},@vals);
+}
+
+
+
+
+
+=back
+
+
+=item summaryStatistics
+
+Methods for the C<summaryStatistics> association.
+
+
+From the MAGE-OM documentation:
+
+Statistics on the Quality of the BioAssayData.
+
+
+=over
+
+
+=item $array_ref = $derivedbioassaydata->setSummaryStatistics($array_ref)
+
+The restricted setter method for the C<summaryStatistics> association.
+
+
+Input parameters: the value to which the C<summaryStatistics> association will be set : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Return value: the current value of the C<summaryStatistics> association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::NameValueType> instances
+
+=cut
+
+
+sub setSummaryStatistics {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setSummaryStatistics: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setSummaryStatistics: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setSummaryStatistics: expected array reference, got $self")
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setSummaryStatistics: wrong type: " . ref($val_ent) . " expected Bio::MAGE::NameValueType")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::NameValueType');
+    }
+  }
+
+  return $self->{__SUMMARYSTATISTICS} = $val;
+}
+
+
+=item $array_ref = $derivedbioassaydata->getSummaryStatistics()
+
+The restricted getter method for the C<summaryStatistics> association.
+
+Input parameters: none
+
+Return value: the current value of the C<summaryStatistics> association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getSummaryStatistics {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getSummaryStatistics: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__SUMMARYSTATISTICS};
+}
+
+
+
+
+=item $val = $derivedbioassaydata->addSummaryStatistics(@vals)
+
+Because the summaryStatistics association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the summaryStatistics association.
+
+Input parameters: the list of values C<@vals> to add to the summaryStatistics association. B<NOTE>: submitting a single value is permitted.
+
+Return value: the number of items stored in the slot B<after> adding C<@vals>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::NameValueType>
+
+=cut
+
+
+sub addSummaryStatistics {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addSummaryStatistics: no arguments passed to adder")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addSummaryStatistics: wrong type: " . ref($val) . " expected Bio::MAGE::NameValueType")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::NameValueType');
+  }
+
+  return push(@{$self->{__SUMMARYSTATISTICS}},@vals);
+}
+
+
+
+
+
+=back
+
+
+=item designElementDimension
+
+Methods for the C<designElementDimension> association.
+
+
+From the MAGE-OM documentation:
+
+The DesignElements of the BioAssayData.
+
+
+=over
+
+
+=item $val = $derivedbioassaydata->setDesignElementDimension($val)
+
+The restricted setter method for the C<designElementDimension> association.
+
+
+Input parameters: the value to which the C<designElementDimension> association will be set : one of the accepted enumerated values.
+
+Return value: the current value of the C<designElementDimension> association : one of the accepted enumerated values.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$val> is not an instance of class C<Bio::MAGE::BioAssayData::DesignElementDimension>
+
+=cut
+
+
+sub setDesignElementDimension {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setDesignElementDimension: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setDesignElementDimension: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setDesignElementDimension: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::DesignElementDimension") unless (not defined $val) or UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::DesignElementDimension');
+  return $self->{__DESIGNELEMENTDIMENSION} = $val;
+}
+
+
+=item $val = $derivedbioassaydata->getDesignElementDimension()
+
+The restricted getter method for the C<designElementDimension> association.
+
+Input parameters: none
+
+Return value: the current value of the C<designElementDimension> association : an instance of type C<Bio::MAGE::BioAssayData::DesignElementDimension>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getDesignElementDimension {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getDesignElementDimension: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__DESIGNELEMENTDIMENSION};
+}
+
+
 
 
 
@@ -1012,160 +1244,458 @@ Exceptions: will call C<croak()> if no input parameters are specified
 
 =item descriptions
 
+Methods for the C<descriptions> association.
 
-From the MAGE-OM documentation for the C<descriptions> association:
+
+From the MAGE-OM documentation:
 
 Free hand text descriptions.  Makes available the associations of Description to an instance of Describable.
 
 
-
 =over
 
 
-=item $array_ref = $describable->setDescriptions($array_ref)
+=item $array_ref = $derivedbioassaydata->setDescriptions($array_ref)
 
-The restricted setter method for the descriptions association.
+The restricted setter method for the C<descriptions> association.
 
-Input parameters: the value to which the descriptions association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
 
-Return value: the current value of the descriptions association : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
+Input parameters: the value to which the C<descriptions> association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
+
+Return value: the current value of the C<descriptions> association : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Description::Description> instances
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::Description::Description> instances
 
 =cut
 
 
-=item $array_ref = $describable->getDescriptions()
-
-The restricted getter method for the descriptions association.
-
-Input parameters: none
-
-Return value: the current value of the descriptions association : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-=item $describable->addDescriptions(@vals)
-
-Because the descriptions association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the descriptions
-association.
-
-Input parameters: the list of values C<@vals> to add to the descriptions
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::Description>
-
-=cut
-
-
-
-=back
-
-Associations Inherited from Bio::MAGE::Extendable
-
-
-=item propertySets
-
-
-From the MAGE-OM documentation for the C<propertySets> association:
-
-Allows specification of name/value pairs.  Meant to primarily help in-house, pipeline processing of instances by providing a place for values that aren't part of the specification proper.
-
-
-
-=over
-
-
-=item $array_ref = $extendable->setPropertySets($array_ref)
-
-The restricted setter method for the propertySets association.
-
-Input parameters: the value to which the propertySets association will be set : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
-
-Return value: the current value of the propertySets association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::NameValueType> instances
-
-=cut
-
-
-=item $array_ref = $extendable->getPropertySets()
-
-The restricted getter method for the propertySets association.
-
-Input parameters: none
-
-Return value: the current value of the propertySets association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-=item $extendable->addPropertySets(@vals)
-
-Because the propertySets association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the propertySets
-association.
-
-Input parameters: the list of values C<@vals> to add to the propertySets
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::NameValueType>
-
-=cut
-
-
-
-=back
-
-
-
-=back
-
-
-=cut
-
-
-
-sub initialize {
+sub setDescriptions {
   my $self = shift;
-  return 1;
+  croak(__PACKAGE__ . "::setDescriptions: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setDescriptions: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setDescriptions: expected array reference, got $self")
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setDescriptions: wrong type: " . ref($val_ent) . " expected Bio::MAGE::Description::Description")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::Description::Description');
+    }
+  }
+
+  return $self->{__DESCRIPTIONS} = $val;
+}
+
+
+=item $array_ref = $derivedbioassaydata->getDescriptions()
+
+The restricted getter method for the C<descriptions> association.
+
+Input parameters: none
+
+Return value: the current value of the C<descriptions> association : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getDescriptions {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getDescriptions: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__DESCRIPTIONS};
 }
 
 
 
+
+=item $val = $derivedbioassaydata->addDescriptions(@vals)
+
+Because the descriptions association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the descriptions association.
+
+Input parameters: the list of values C<@vals> to add to the descriptions association. B<NOTE>: submitting a single value is permitted.
+
+Return value: the number of items stored in the slot B<after> adding C<@vals>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::Description>
+
+=cut
+
+
+sub addDescriptions {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addDescriptions: no arguments passed to adder")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addDescriptions: wrong type: " . ref($val) . " expected Bio::MAGE::Description::Description")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::Description');
+  }
+
+  return push(@{$self->{__DESCRIPTIONS}},@vals);
+}
+
+
+
+
+
+=back
+
+
+=item bioDataValues
+
+Methods for the C<bioDataValues> association.
+
+
+From the MAGE-OM documentation:
+
+The data values of the BioAssayData.
+
+
+=over
+
+
+=item $val = $derivedbioassaydata->setBioDataValues($val)
+
+The restricted setter method for the C<bioDataValues> association.
+
+
+Input parameters: the value to which the C<bioDataValues> association will be set : one of the accepted enumerated values.
+
+Return value: the current value of the C<bioDataValues> association : one of the accepted enumerated values.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$val> is not an instance of class C<Bio::MAGE::BioAssayData::BioDataValues>
+
+=cut
+
+
+sub setBioDataValues {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setBioDataValues: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setBioDataValues: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setBioDataValues: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::BioDataValues") unless (not defined $val) or UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::BioDataValues');
+  return $self->{__BIODATAVALUES} = $val;
+}
+
+
+=item $val = $derivedbioassaydata->getBioDataValues()
+
+The restricted getter method for the C<bioDataValues> association.
+
+Input parameters: none
+
+Return value: the current value of the C<bioDataValues> association : an instance of type C<Bio::MAGE::BioAssayData::BioDataValues>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getBioDataValues {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getBioDataValues: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__BIODATAVALUES};
+}
+
+
+
+
+
+=back
+
+
+=item security
+
+Methods for the C<security> association.
+
+
+From the MAGE-OM documentation:
+
+Information on the security for the instance of the class.
+
+
+=over
+
+
+=item $val = $derivedbioassaydata->setSecurity($val)
+
+The restricted setter method for the C<security> association.
+
+
+Input parameters: the value to which the C<security> association will be set : one of the accepted enumerated values.
+
+Return value: the current value of the C<security> association : one of the accepted enumerated values.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$val> is not an instance of class C<Bio::MAGE::AuditAndSecurity::Security>
+
+=cut
+
+
+sub setSecurity {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setSecurity: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setSecurity: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setSecurity: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Security") unless (not defined $val) or UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Security');
+  return $self->{__SECURITY} = $val;
+}
+
+
+=item $val = $derivedbioassaydata->getSecurity()
+
+The restricted getter method for the C<security> association.
+
+Input parameters: none
+
+Return value: the current value of the C<security> association : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getSecurity {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getSecurity: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__SECURITY};
+}
+
+
+
+
+
+=back
+
+
+=item quantitationTypeDimension
+
+Methods for the C<quantitationTypeDimension> association.
+
+
+From the MAGE-OM documentation:
+
+The QuantitationTypes of the BioAssayData.
+
+
+=over
+
+
+=item $val = $derivedbioassaydata->setQuantitationTypeDimension($val)
+
+The restricted setter method for the C<quantitationTypeDimension> association.
+
+
+Input parameters: the value to which the C<quantitationTypeDimension> association will be set : one of the accepted enumerated values.
+
+Return value: the current value of the C<quantitationTypeDimension> association : one of the accepted enumerated values.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$val> is not an instance of class C<Bio::MAGE::BioAssayData::QuantitationTypeDimension>
+
+=cut
+
+
+sub setQuantitationTypeDimension {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setQuantitationTypeDimension: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setQuantitationTypeDimension: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setQuantitationTypeDimension: wrong type: " . ref($val) . " expected Bio::MAGE::BioAssayData::QuantitationTypeDimension") unless (not defined $val) or UNIVERSAL::isa($val,'Bio::MAGE::BioAssayData::QuantitationTypeDimension');
+  return $self->{__QUANTITATIONTYPEDIMENSION} = $val;
+}
+
+
+=item $val = $derivedbioassaydata->getQuantitationTypeDimension()
+
+The restricted getter method for the C<quantitationTypeDimension> association.
+
+Input parameters: none
+
+Return value: the current value of the C<quantitationTypeDimension> association : an instance of type C<Bio::MAGE::BioAssayData::QuantitationTypeDimension>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getQuantitationTypeDimension {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getQuantitationTypeDimension: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__QUANTITATIONTYPEDIMENSION};
+}
+
+
+
+
+
+=back
+
+
+sub initialize {
+
+
+  my $self = shift;
+  return 1;
+
+
+}
+
+=back
+
+
+=cut
+
+
+=head1 SLOTS, ATTRIBUTES, AND ASSOCIATIONS
+
+In the Perl implementation of MAGE-OM classes, there are
+three types of class data members: C<slots>, C<attributes>, and
+C<associations>.
+
+=head2 SLOTS
+
+This API uses the term C<slot> to indicate a data member of the class
+that was not present in the UML model and is used for mainly internal
+purposes - use only if you understand the inner workings of the
+API. Most often slots are used by generic methods such as those in the
+XML writing and reading classes.
+
+Slots are implemented using unified getter/setter methods:
+
+=over
+
+=item $var = $obj->slot_name();
+
+Retrieves the current value of the slot.
+
+=item $new_var = $obj->slot_name($new_var);
+
+Store $new_var in the slot - the return value is also $new_var.
+
+=item @names = $obj->get_slot_names()
+
+Returns the list of all slots in the class.
+
+=back
+
+B<DATA CHECKING>: No data type checking is made for these methods.
+
+=head2 ATTRIBUTES AND ASSOCIATIONS
+
+The terms C<attribute> and C<association> indicate data members of the
+class that were specified directly from the UML model.
+
+In the Perl implementation of MAGE-OM classes,
+association and attribute accessors are implemented using three
+separate methods:
+
+=over
+
+=item get*
+
+Retrieves the current value.
+
+B<NOTE>: For associations, if the association has list cardinality, an
+array reference is returned.
+
+B<DATA CHECKING>: Ensure that no argument is provided.
+
+=item set*
+
+Sets the current value, B<replacing> any existing value.
+
+B<NOTE>: For associations, if the association has list cardinality,
+the argument must be an array reference. Because of this, you probably
+should be using the add* methods.
+
+B<DATA CHECKING>: For attributes, ensure that a single value is
+provided as the argument. For associations, if the association has
+list cardinality, ensure that the argument is a reference to an array
+of instances of the correct MAGE-OM class, otherwise
+ensure that there is a single argument of the correct MAGE-OM class.
+
+=item add*
+
+B<NOTE>: Only present in associations with list cardinality. 
+
+Appends a list of objects to any values that may already be stored
+in the association.
+
+B<DATA CHECKING>: Ensure that all arguments are of the correct MAGE-OM class.
+
+=back
+
+=head2 GENERIC METHODS
+
+The unified base class of all MAGE-OM classes, C<Bio::MAGE::Base>, provides a set of generic methods that
+will operate on slots, attributes, and associations:
+
+=over
+
+=item $val = $obj->get_slot($name)
+
+=item \@list_ref = $obj->get_slots(@name_list);
+
+=item $val = $obj->set_slot($name,$val)
+
+=item $obj->set_slots(%parameters)
+
+=item $obj->set_slots(\@name_list, \@value_list)
+
+See elsewhere in this page for a detailed description of these
+methods.
+
+=back
+
+=cut
+
+
 =head1 BUGS
 
-Please send bug reports to mged-mage@lists.sf.net
+Please send bug reports to the project mailing list: (mged-mage 'at' lists 'dot' sf 'dot' net)
 
 =head1 AUTHOR
 
-Jason E. Stewart (www.openinformatics.com)
+Jason E. Stewart (jasons 'at' cpan 'dot' org)
 
 =head1 SEE ALSO
 
@@ -1173,8 +1703,6 @@ perl(1).
 
 =cut
 
-#
-# End the module by returning a true value
-#
+# all perl modules must be true...
 1;
 

@@ -4,9 +4,8 @@
 #
 ##############################
 # C O P Y R I G H T   N O T I C E
-#  Copyright (c) 2001-2002 by:
+#  Copyright (c) 2001-2006 by:
 #    * The MicroArray Gene Expression Database Society (MGED)
-#    * Rosetta Inpharmatics
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -28,54 +27,81 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-package Bio::MAGE::Array::Fiducial;
 
+
+package Bio::MAGE::Array::Fiducial;
 use strict;
 use Carp;
-use Bio::MAGE::Base;
+
+use base qw(Bio::MAGE::Describable);
+
 use Bio::MAGE::Association;
-use Bio::MAGE::Describable;
+
+use vars qw($__ASSOCIATIONS
+	    $__CLASS_NAME
+	    $__PACKAGE_NAME
+	    $__SUBCLASSES
+	    $__SUPERCLASSES
+	    $__ATTRIBUTE_NAMES
+	    $__ASSOCIATION_NAMES
+	   );
 
 
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
+=head1 NAME
 
-require Exporter;
+Bio::MAGE::Array::Fiducial - Class for the MAGE-OM API
 
-@ISA = qw(Bio::MAGE::Base Bio::MAGE::Describable Exporter);
-$VERSION = 20020902.6;
+=head1 SYNOPSIS
 
-# Items to export into callers namespace by default. Note: do not export
-# names by default without a very good reason. Use EXPORT_OK instead.
-# Do not simply export all your public functions/methods/constants.
-@EXPORT_OK = qw();
+  use Bio::MAGE::Array::Fiducial
 
-
-=head1 Bio::MAGE::Array::Fiducial
-
-=head2 SYNOPSIS
-
-  use Bio::MAGE::Array::Fiducial;
-
-    # creating an empty instance
+  # creating an empty instance
   my $fiducial = Bio::MAGE::Array::Fiducial->new();
 
-    # creating an already populated instance
-  my $fiducial = Bio::MAGE::Array::Fiducial->new(fiducialType=>$fiducialType_value,
-			distanceUnit=>$distanceUnit_value,
-			position=>$position_value);
-
-    # setting and retrieving object associations
-  my $fiducialType_val = $fiducial->fiducialType();
-  $fiducial->fiducialType($value);
-
-  my $distanceUnit_val = $fiducial->distanceUnit();
-  $fiducial->distanceUnit($value);
-
-  my $position_val = $fiducial->position();
-  $fiducial->position($value);
+  # creating an instance with existing data
+  my $fiducial = Bio::MAGE::Array::Fiducial->new(
+        position=>$position_ref,
+        auditTrail=>\@audit_list,
+        propertySets=>\@namevaluetype_list,
+        distanceUnit=>$distanceunit_ref,
+        descriptions=>\@description_list,
+        security=>$security_ref,
+        fiducialType=>$ontologyentry_ref,
+  );
 
 
-=head2 DESCRIPTION
+
+  # 'position' association
+  my $position_ref = $fiducial->position(); # getter
+  $fiducial->position($position_ref); # setter
+
+  # 'auditTrail' association
+  my $audit_array_ref = $fiducial->auditTrail(); # getter
+  $fiducial->auditTrail(\@audit_list); # setter
+
+  # 'propertySets' association
+  my $namevaluetype_array_ref = $fiducial->propertySets(); # getter
+  $fiducial->propertySets(\@namevaluetype_list); # setter
+
+  # 'distanceUnit' association
+  my $distanceunit_ref = $fiducial->distanceUnit(); # getter
+  $fiducial->distanceUnit($distanceunit_ref); # setter
+
+  # 'descriptions' association
+  my $description_array_ref = $fiducial->descriptions(); # getter
+  $fiducial->descriptions(\@description_list); # setter
+
+  # 'security' association
+  my $security_ref = $fiducial->security(); # getter
+  $fiducial->security($security_ref); # setter
+
+  # 'fiducialType' association
+  my $ontologyentry_ref = $fiducial->fiducialType(); # getter
+  $fiducial->fiducialType($ontologyentry_ref); # setter
+
+
+
+=head1 DESCRIPTION
 
 From the MAGE-OM documentation for the C<Fiducial> class:
 
@@ -85,13 +111,12 @@ A marking on the surface of the array that can be used to identify the array's o
 
 =cut
 
+=head1 INHERITANCE
 
-=head2 INHERITANCE
 
+Bio::MAGE::Array::Fiducial has the following superclasses:
 
-Bio::MAGE::Array::Fiducial has the following super classes
-
-=over 
+=over
 
 
 =item * Bio::MAGE::Describable
@@ -100,11 +125,90 @@ Bio::MAGE::Array::Fiducial has the following super classes
 =back
 
 
-=head2 CLASS METHODS
+
+=cut
+
+BEGIN {
+  $__CLASS_NAME        = q[Bio::MAGE::Array::Fiducial];
+  $__PACKAGE_NAME      = q[Array];
+  $__SUBCLASSES        = [];
+  $__SUPERCLASSES      = ['Bio::MAGE::Describable'];
+  $__ATTRIBUTE_NAMES   = [''];
+  $__ASSOCIATION_NAMES = ['auditTrail', 'position', 'propertySets', 'descriptions', 'distanceUnit', 'security', 'fiducialType'];
+  $__ASSOCIATIONS      = [
+          'fiducialType',
+          bless( {
+                   '__SELF' => bless( {
+                                        '__NAME' => undef,
+                                        '__IS_REF' => 0,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'A descriptive string that indicates the type of a fiducial (e.g. the chrome border on an Affymetrix array, a laser ablation mark).',
+                                        '__CLASS_NAME' => 'Fiducial',
+                                        '__RANK' => undef,
+                                        '__ORDERED' => undef
+                                      }, 'Bio::MAGE::Association::End' ),
+                   '__OTHER' => bless( {
+                                         '__NAME' => 'fiducialType',
+                                         '__IS_REF' => 1,
+                                         '__CARDINALITY' => '0..1',
+                                         '__DOCUMENTATION' => 'A descriptive string that indicates the type of a fiducial (e.g. the chrome border on an Affymetrix array, a laser ablation mark).',
+                                         '__CLASS_NAME' => 'OntologyEntry',
+                                         '__RANK' => '1',
+                                         '__ORDERED' => 0
+                                       }, 'Bio::MAGE::Association::End' )
+                 }, 'Bio::MAGE::Association' ),
+          'distanceUnit',
+          bless( {
+                   '__SELF' => bless( {
+                                        '__NAME' => undef,
+                                        '__IS_REF' => 0,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The units the fiducial is measured in.',
+                                        '__CLASS_NAME' => 'Fiducial',
+                                        '__RANK' => undef,
+                                        '__ORDERED' => undef
+                                      }, 'Bio::MAGE::Association::End' ),
+                   '__OTHER' => bless( {
+                                         '__NAME' => 'distanceUnit',
+                                         '__IS_REF' => 1,
+                                         '__CARDINALITY' => '0..1',
+                                         '__DOCUMENTATION' => 'The units the fiducial is measured in.',
+                                         '__CLASS_NAME' => 'DistanceUnit',
+                                         '__RANK' => '2',
+                                         '__ORDERED' => 0
+                                       }, 'Bio::MAGE::Association::End' )
+                 }, 'Bio::MAGE::Association' ),
+          'position',
+          bless( {
+                   '__SELF' => bless( {
+                                        '__NAME' => undef,
+                                        '__IS_REF' => 0,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'The position, relative to the upper left corner, of the fiducial',
+                                        '__CLASS_NAME' => 'Fiducial',
+                                        '__RANK' => undef,
+                                        '__ORDERED' => undef
+                                      }, 'Bio::MAGE::Association::End' ),
+                   '__OTHER' => bless( {
+                                         '__NAME' => 'position',
+                                         '__IS_REF' => 1,
+                                         '__CARDINALITY' => '1',
+                                         '__DOCUMENTATION' => 'The position, relative to the upper left corner, of the fiducial',
+                                         '__CLASS_NAME' => 'Position',
+                                         '__RANK' => '3',
+                                         '__ORDERED' => 0
+                                       }, 'Bio::MAGE::Association::End' )
+                 }, 'Bio::MAGE::Association' )
+        ]
+
+}
+
+=head1 CLASS METHODS
 
 The following methods can all be called without first having an
 instance of the class via the Bio::MAGE::Array::Fiducial->methodname() syntax.
 
+=over
 
 =item new()
 
@@ -117,65 +221,190 @@ named-value style arguments:
 =over
 
 
-=item * fiducialType
+=item * auditTrail
 
-Sets the value of the fiducialType association (this association was inherited
-from class C<Bio::MAGE::Array::Fiducial>).
-
-The value will be of type C<OntologyEntry>.
+Sets the value of the C<auditTrail> association (this association was inherited from class C<Bio::MAGE::Describable>).
 
 
-=item * distanceUnit
-
-Sets the value of the distanceUnit association (this association was inherited
-from class C<Bio::MAGE::Array::Fiducial>).
-
-The value will be of type C<DistanceUnit>.
+The value must be of type: array of C<Bio::MAGE::AuditAndSecurity::Audit>.
 
 
 =item * position
 
-Sets the value of the position association (this association was inherited
-from class C<Bio::MAGE::Array::Fiducial>).
+Sets the value of the C<position> association
 
-The value will be of type C<Position>.
-
-
-=item * descriptions
-
-Sets the value of the descriptions association (this association was inherited
-from class C<Bio::MAGE::Describable>).
-
-The value will be of type C<Description>.
-
-
-=item * security
-
-Sets the value of the security association (this association was inherited
-from class C<Bio::MAGE::Describable>).
-
-The value will be of type C<Security>.
-
-
-=item * auditTrail
-
-Sets the value of the auditTrail association (this association was inherited
-from class C<Bio::MAGE::Describable>).
-
-The value will be of type C<Audit>.
+The value must be of type: instance of C<Bio::MAGE::DesignElement::Position>.
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (this association was inherited
-from class C<Bio::MAGE::Extendable>).
+Sets the value of the C<propertySets> association (this association was inherited from class C<Bio::MAGE::Extendable>).
 
-The value will be of type C<NameValueType>.
+
+The value must be of type: array of C<Bio::MAGE::NameValueType>.
+
+
+=item * descriptions
+
+Sets the value of the C<descriptions> association (this association was inherited from class C<Bio::MAGE::Describable>).
+
+
+The value must be of type: array of C<Bio::MAGE::Description::Description>.
+
+
+=item * distanceUnit
+
+Sets the value of the C<distanceUnit> association
+
+The value must be of type: instance of C<Bio::MAGE::Measurement::DistanceUnit>.
+
+
+=item * security
+
+Sets the value of the C<security> association (this association was inherited from class C<Bio::MAGE::Describable>).
+
+
+The value must be of type: instance of C<Bio::MAGE::AuditAndSecurity::Security>.
+
+
+=item * fiducialType
+
+Sets the value of the C<fiducialType> association
+
+The value must be of type: instance of C<Bio::MAGE::Description::OntologyEntry>.
 
 
 =back
 
+=item $obj = class->new(%parameters)
 
+The C<new()> method is the class constructor.
+
+B<Parameters>: if given a list of name/value parameters the
+corresponding slots, attributes, or associations will have their
+initial values set by the constructor.
+
+B<Return value>: It returns a reference to an object of the class.
+
+B<Side effects>: It invokes the C<initialize()> method if it is defined
+by the class.
+
+=cut
+
+#
+# code for new() inherited from Base.pm
+#
+
+=item @names = class->get_slot_names()
+
+The C<get_slot_names()> method is used to retrieve the name of all
+slots defined in a given class.
+
+B<NOTE>: the list of names does not include attribute or association
+names.
+
+B<Return value>: A list of the names of all slots defined for this class.
+
+B<Side effects>: none
+
+=cut
+
+#
+# code for get_slot_names() inherited from Base.pm
+#
+
+=item @name_list = get_attribute_names()
+
+returns the list of attribute data members for this class.
+
+=cut
+
+#
+# code for get_attribute_names() inherited from Base.pm
+#
+
+=item @name_list = get_association_names()
+
+returns the list of association data members for this class.
+
+=cut
+
+#
+# code for get_association_names() inherited from Base.pm
+#
+
+=item @class_list = get_superclasses()
+
+returns the list of superclasses for this class.
+
+=cut
+
+#
+# code for get_superclasses() inherited from Base.pm
+#
+
+=item @class_list = get_subclasses()
+
+returns the list of subclasses for this class.
+
+=cut
+
+#
+# code for get_subclasses() inherited from Base.pm
+#
+
+=item $name = class_name()
+
+Returns the full class name for this class.
+
+=cut
+
+#
+# code for class_name() inherited from Base.pm
+#
+
+=item $package_name = package_name()
+
+Returns the base package name (i.e. no 'namespace::') of the package
+that contains this class.
+
+=cut
+
+#
+# code for package_name() inherited from Base.pm
+#
+
+=item %assns = associations()
+
+returns the association meta-information in a hash where the keys are
+the association names and the values are C<Association> objects that
+provide the meta-information for the association.
+
+=cut
+
+#
+# code for associations() inherited from Base.pm
+#
+
+
+
+=back
+
+=head1 INSTANCE METHODS
+
+=item $obj_copy = $obj->new()
+
+When invoked with an existing object reference and not a class name,
+the C<new()> method acts as a copy constructor - with the new object's
+initial values set to be those of the existing object.
+
+B<Parameters>: No input parameters  are used in the copy  constructor,
+the initial values are taken directly from the object to be copied.
+
+B<Return value>: It returns a reference to an object of the class.
+
+B<Side effects>: It invokes the C<initialize()> method if it is defined
+by the class.
 
 =cut
 
@@ -202,7 +431,7 @@ does not define.
 # code for set_slots() inherited from Base.pm
 #
 
-=item $obj->get_slots(@name_list)
+=item @obj_list = $obj->get_slots(@name_list)
 
 The C<get_slots()> method is used to get the values of a number of
 slots at the same time.
@@ -247,127 +476,6 @@ B<Side effects>: none
 # code for get_slot() inherited from Base.pm
 #
 
-=item @names = $obj->get_slot_names()
-
-The C<get_slot_names()> method is used to retrieve the name of all
-slots defined for a given object.
-
-B<Return value>: a single slot value, or undef if the slot has not been
-initialized.
-
-B<Side effects>: none
-
-=cut
-
-#
-# code for get_slot_names() inherited from Base.pm
-#
-
-
-
-=item $name = class_name()
-
-Returns the full class name for this class, Bio::MAGE::Array::Fiducial.
-
-=cut
-
-sub class_name {
-  return q[Bio::MAGE::Array::Fiducial];
-}
-
-=item $package_name = package()
-
-Returns the unresolved package name (i.e. no 'Bio::MAGE::') of the
-package that contains class, Bio::MAGE::Array::Fiducial.
-
-=cut
-
-sub package {
-  return q[Array];
-}
-
-=item @classes = subclasses()
-
-returns the list of subclasses for this class.
-
-=cut
-
-sub subclasses {
-  my @list = ();
-  return @list;
-}
-
-=item @classes = superclasses()
-
-returns the list of superclasses for this class.
-
-=cut
-
-sub superclasses {
-  my @list = ('Bio::MAGE::Describable');
-  return @list;
-}
-
-=item @methods = attribute_methods()
-
-returns the list of attribute accessor methods for this class.
-
-=cut
-
-sub attribute_methods {
-  my $class = shift;
-  my @list = ();
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->attribute_methods());
-    }
-  }
-  return @list;
-}
-
-=item @methods = association_methods()
-
-returns the list of association accessor methods for this class.
-
-=cut
-
-sub association_methods {
-  my $class = shift;
-  my @list = ('fiducialType',
-'distanceUnit',
-'position');
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->association_methods());
-    }
-  }
-  return @list;
-}
-
-=item %assns = associations()
-
-returns the association meta-information in a hash where the keys are
-the association names and the values are C<Bio::MAGE::Association>
-objects that provide the meta-information for the association.
-
-=cut
-
-sub associations {
-  my $class = shift;
-  my @list = ();
-  # superclasses first
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->associations());
-    }
-  }
-  # then associations from this class
-  if (defined $__ASSOCIATIONS) {
-    push(@list,@{$__ASSOCIATIONS})
-  }
-  return @list;
-}
-
 
 =head2 ATTRIBUTES
 
@@ -376,169 +484,106 @@ class. In the Perl implementation of the MAGE-OM classes, the
 interface to attributes is implemented using separate setter and
 getter methods for each attribute.
 
-Bio::MAGE::Array::Fiducial: has the following attribute accessor methods:
+C<Bio::MAGE::Array::Fiducial> has the following attribute accessor methods:
 
 =over
 
 
-
 =back
 
-
-=cut
-
-
-
-BEGIN {
-  $__ASSOCIATIONS = [
-          'fiducialType',
-          bless( {
-                   '__OTHER' => bless( {
-                                         '__IS_REF' => 1,
-                                         '__RANK' => '1',
-                                         '__CARDINALITY' => '0..1',
-                                         '__DOCUMENTATION' => 'A descriptive string that indicates the type of a fiducial (e.g. the chrome border on an Affymetrix array, a laser ablation mark).',
-                                         '__NAME' => 'fiducialType',
-                                         '__ORDERED' => 0,
-                                         '__CLASS_NAME' => 'OntologyEntry'
-                                       }, 'Bio::MAGE::Association::End' ),
-                   '__SELF' => bless( {
-                                        '__IS_REF' => 0,
-                                        '__RANK' => undef,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'A descriptive string that indicates the type of a fiducial (e.g. the chrome border on an Affymetrix array, a laser ablation mark).',
-                                        '__NAME' => undef,
-                                        '__ORDERED' => undef,
-                                        '__CLASS_NAME' => 'Fiducial'
-                                      }, 'Bio::MAGE::Association::End' )
-                 }, 'Bio::MAGE::Association' ),
-          'distanceUnit',
-          bless( {
-                   '__OTHER' => bless( {
-                                         '__IS_REF' => 1,
-                                         '__RANK' => '2',
-                                         '__CARDINALITY' => '0..1',
-                                         '__DOCUMENTATION' => 'The units the fiducial is measured in.',
-                                         '__NAME' => 'distanceUnit',
-                                         '__ORDERED' => 0,
-                                         '__CLASS_NAME' => 'DistanceUnit'
-                                       }, 'Bio::MAGE::Association::End' ),
-                   '__SELF' => bless( {
-                                        '__IS_REF' => 0,
-                                        '__RANK' => undef,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The units the fiducial is measured in.',
-                                        '__NAME' => undef,
-                                        '__ORDERED' => undef,
-                                        '__CLASS_NAME' => 'Fiducial'
-                                      }, 'Bio::MAGE::Association::End' )
-                 }, 'Bio::MAGE::Association' ),
-          'position',
-          bless( {
-                   '__OTHER' => bless( {
-                                         '__IS_REF' => 1,
-                                         '__RANK' => '3',
-                                         '__CARDINALITY' => '1',
-                                         '__DOCUMENTATION' => 'The position, relative to the upper left corner, of the fiducial',
-                                         '__NAME' => 'position',
-                                         '__ORDERED' => 0,
-                                         '__CLASS_NAME' => 'Position'
-                                       }, 'Bio::MAGE::Association::End' ),
-                   '__SELF' => bless( {
-                                        '__IS_REF' => 0,
-                                        '__RANK' => undef,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'The position, relative to the upper left corner, of the fiducial',
-                                        '__NAME' => undef,
-                                        '__ORDERED' => undef,
-                                        '__CLASS_NAME' => 'Fiducial'
-                                      }, 'Bio::MAGE::Association::End' )
-                 }, 'Bio::MAGE::Association' )
-        ]
-
-}
 
 =head2 ASSOCIATIONS
 
-Associations are references to other class objects which can be shared
-by multiple class instances at the same time. In the Perl
-implementation of MAGE-OM classes, associations are implemented using
-three separate methods:
+Associations are references to other classes. Associations in MAGE-OM have a cardinality that determines the minimum and
+maximum number of instances of the 'other' class that maybe included
+in the association:
 
 =over
 
-=item get*
+=item 1
 
-Retrieves the current value. If the association has list cardinality,
-an array reference is returned.
+There B<must> be exactly one item in the association, i.e. this is a
+mandatory data field.
 
-=item set*
+=item 0..1
 
-Sets the current value B<replacing> any existing value. If the
-association has list cardinality, the argument must be an array
-reference. Unless you know what you are doing, you probably should be
-using the add* methods.
+There B<may> be one item in the association, i.e. this is an optional
+data field.
 
-=item add*
+=item 1..N
 
-This method exists only for associations with list cardinality. It
-appends a list of objects to any values that may already be stored in
-the association.
+There B<must> be one or more items in the association, i.e. this is a
+mandatory data field, with list cardinality.
+
+=item 0..N
+
+There B<may> be one or more items in the association, i.e. this is an
+optional data field, with list cardinality.
 
 =back
 
-Bio::MAGE::Array::Fiducial: has the following association accessor methods:
+Bio::MAGE::Array::Fiducial has the following association accessor methods:
 
 =over
 
 
-=item fiducialType
+=item auditTrail
+
+Methods for the C<auditTrail> association.
 
 
-From the MAGE-OM documentation for the C<fiducialType> association:
+From the MAGE-OM documentation:
 
-A descriptive string that indicates the type of a fiducial (e.g. the chrome border on an Affymetrix array, a laser ablation mark).
-
+A list of Audit instances that track changes to the instance of Describable.
 
 
 =over
 
 
-=item $val = $fiducial->setFiducialType($val)
+=item $array_ref = $fiducial->setAuditTrail($array_ref)
 
-The restricted setter method for the fiducialType association.
+The restricted setter method for the C<auditTrail> association.
 
-Input parameters: the value to which the fiducialType association will be set : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
 
-Return value: the current value of the fiducialType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+Input parameters: the value to which the C<auditTrail> association will be set : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
+
+Return value: the current value of the C<auditTrail> association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::AuditAndSecurity::Audit> instances
 
 =cut
 
-sub setFiducialType {
+
+sub setAuditTrail {
   my $self = shift;
-  croak(__PACKAGE__ . "::setFiducialType: no arguments passed to setter")
+  croak(__PACKAGE__ . "::setAuditTrail: no arguments passed to setter")
     unless @_;
-  croak(__PACKAGE__ . "::setFiducialType: too many arguments passed to setter")
+  croak(__PACKAGE__ . "::setAuditTrail: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
-  croak(__PACKAGE__ . "::setFiducialType: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
-  return $self->{__FIDUCIALTYPE} = $val;
+    croak(__PACKAGE__ . "::setAuditTrail: expected array reference, got $self")
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setAuditTrail: wrong type: " . ref($val_ent) . " expected Bio::MAGE::AuditAndSecurity::Audit")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::AuditAndSecurity::Audit');
+    }
+  }
+
+  return $self->{__AUDITTRAIL} = $val;
 }
 
 
+=item $array_ref = $fiducial->getAuditTrail()
 
-=item $val = $fiducial->getFiducialType()
-
-The restricted getter method for the fiducialType association.
+The restricted getter method for the C<auditTrail> association.
 
 Input parameters: none
 
-Return value: the current value of the fiducialType association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+Return value: the current value of the C<auditTrail> association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
 
 Side effects: none
 
@@ -546,79 +591,47 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
-sub getFiducialType {
+
+sub getAuditTrail {
   my $self = shift;
-  croak(__PACKAGE__ . "::getFiducialType: arguments passed to getter")
+  croak(__PACKAGE__ . "::getAuditTrail: arguments passed to getter")
     if @_;
-  return $self->{__FIDUCIALTYPE};
-}
-
-
-
-
-=back
-
-
-=item distanceUnit
-
-
-From the MAGE-OM documentation for the C<distanceUnit> association:
-
-The units the fiducial is measured in.
-
-
-
-=over
-
-
-=item $val = $fiducial->setDistanceUnit($val)
-
-The restricted setter method for the distanceUnit association.
-
-Input parameters: the value to which the distanceUnit association will be set : an instance of type C<Bio::MAGE::Measurement::DistanceUnit>.
-
-Return value: the current value of the distanceUnit association : an instance of type C<Bio::MAGE::Measurement::DistanceUnit>.
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::Measurement::DistanceUnit>
-
-=cut
-
-sub setDistanceUnit {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setDistanceUnit: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setDistanceUnit: too many arguments passed to setter")
-    if @_ > 1;
   my $val = shift;
-  croak(__PACKAGE__ . "::setDistanceUnit: wrong type: " . ref($val) . " expected Bio::MAGE::Measurement::DistanceUnit") unless UNIVERSAL::isa($val,'Bio::MAGE::Measurement::DistanceUnit');
-  return $self->{__DISTANCEUNIT} = $val;
+  return $self->{__AUDITTRAIL};
 }
 
 
 
-=item $val = $fiducial->getDistanceUnit()
 
-The restricted getter method for the distanceUnit association.
+=item $val = $fiducial->addAuditTrail(@vals)
 
-Input parameters: none
+Because the auditTrail association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the auditTrail association.
 
-Return value: the current value of the distanceUnit association : an instance of type C<Bio::MAGE::Measurement::DistanceUnit>.
+Input parameters: the list of values C<@vals> to add to the auditTrail association. B<NOTE>: submitting a single value is permitted.
+
+Return value: the number of items stored in the slot B<after> adding C<@vals>
 
 Side effects: none
 
-Exceptions: will call C<croak()> if any input parameters are specified
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::AuditAndSecurity::Audit>
 
 =cut
 
-sub getDistanceUnit {
+
+sub addAuditTrail {
   my $self = shift;
-  croak(__PACKAGE__ . "::getDistanceUnit: arguments passed to getter")
-    if @_;
-  return $self->{__DISTANCEUNIT};
+  croak(__PACKAGE__ . "::addAuditTrail: no arguments passed to adder")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addAuditTrail: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Audit")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Audit');
+  }
+
+  return push(@{$self->{__AUDITTRAIL}},@vals);
 }
+
 
 
 
@@ -628,11 +641,12 @@ sub getDistanceUnit {
 
 =item position
 
+Methods for the C<position> association.
 
-From the MAGE-OM documentation for the C<position> association:
+
+From the MAGE-OM documentation:
 
 The position, relative to the upper left corner, of the fiducial
-
 
 
 =over
@@ -640,18 +654,20 @@ The position, relative to the upper left corner, of the fiducial
 
 =item $val = $fiducial->setPosition($val)
 
-The restricted setter method for the position association.
+The restricted setter method for the C<position> association.
 
-Input parameters: the value to which the position association will be set : an instance of type C<Bio::MAGE::DesignElement::Position>.
 
-Return value: the current value of the position association : an instance of type C<Bio::MAGE::DesignElement::Position>.
+Input parameters: the value to which the C<position> association will be set : one of the accepted enumerated values.
+
+Return value: the current value of the C<position> association : one of the accepted enumerated values.
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::DesignElement::Position>
+if too many input parameters are specified, or if C<$val> is not an instance of class C<Bio::MAGE::DesignElement::Position>
 
 =cut
+
 
 sub setPosition {
   my $self = shift;
@@ -660,19 +676,18 @@ sub setPosition {
   croak(__PACKAGE__ . "::setPosition: too many arguments passed to setter")
     if @_ > 1;
   my $val = shift;
-  croak(__PACKAGE__ . "::setPosition: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::Position") unless UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::Position');
+  croak(__PACKAGE__ . "::setPosition: wrong type: " . ref($val) . " expected Bio::MAGE::DesignElement::Position") unless (not defined $val) or UNIVERSAL::isa($val,'Bio::MAGE::DesignElement::Position');
   return $self->{__POSITION} = $val;
 }
 
 
-
 =item $val = $fiducial->getPosition()
 
-The restricted getter method for the position association.
+The restricted getter method for the C<position> association.
 
 Input parameters: none
 
-Return value: the current value of the position association : an instance of type C<Bio::MAGE::DesignElement::Position>.
+Return value: the current value of the C<position> association : an instance of type C<Bio::MAGE::DesignElement::Position>.
 
 Side effects: none
 
@@ -680,56 +695,79 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
+
 sub getPosition {
   my $self = shift;
   croak(__PACKAGE__ . "::getPosition: arguments passed to getter")
     if @_;
+  my $val = shift;
   return $self->{__POSITION};
 }
 
 
 
 
+
 =back
 
-Associations Inherited from Bio::MAGE::Describable
+
+=item propertySets
+
+Methods for the C<propertySets> association.
 
 
-=item security
+From the MAGE-OM documentation:
 
-
-From the MAGE-OM documentation for the C<security> association:
-
-Information on the security for the instance of the class.
-
+Allows specification of name/value pairs.  Meant to primarily help in-house, pipeline processing of instances by providing a place for values that aren't part of the specification proper.
 
 
 =over
 
 
-=item $val = $describable->setSecurity($val)
+=item $array_ref = $fiducial->setPropertySets($array_ref)
 
-The restricted setter method for the security association.
+The restricted setter method for the C<propertySets> association.
 
-Input parameters: the value to which the security association will be set : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
 
-Return value: the current value of the security association : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
+Input parameters: the value to which the C<propertySets> association will be set : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Return value: the current value of the C<propertySets> association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $val is not an instance of class C<Bio::MAGE::AuditAndSecurity::Security>
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::NameValueType> instances
 
 =cut
 
 
-=item $val = $describable->getSecurity()
+sub setPropertySets {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setPropertySets: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setPropertySets: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setPropertySets: expected array reference, got $self")
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setPropertySets: wrong type: " . ref($val_ent) . " expected Bio::MAGE::NameValueType")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::NameValueType');
+    }
+  }
 
-The restricted getter method for the security association.
+  return $self->{__PROPERTYSETS} = $val;
+}
+
+
+=item $array_ref = $fiducial->getPropertySets()
+
+The restricted getter method for the C<propertySets> association.
 
 Input parameters: none
 
-Return value: the current value of the security association : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
+Return value: the current value of the C<propertySets> association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
 
 Side effects: none
 
@@ -738,70 +776,47 @@ Exceptions: will call C<croak()> if any input parameters are specified
 =cut
 
 
-
-=back
-
-
-=item auditTrail
-
-
-From the MAGE-OM documentation for the C<auditTrail> association:
-
-A list of Audit instances that track changes to the instance of Describable.
+sub getPropertySets {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getPropertySets: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__PROPERTYSETS};
+}
 
 
 
-=over
 
+=item $val = $fiducial->addPropertySets(@vals)
 
-=item $array_ref = $describable->setAuditTrail($array_ref)
+Because the propertySets association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the propertySets association.
 
-The restricted setter method for the auditTrail association.
+Input parameters: the list of values C<@vals> to add to the propertySets association. B<NOTE>: submitting a single value is permitted.
 
-Input parameters: the value to which the auditTrail association will be set : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
-
-Return value: the current value of the auditTrail association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
+Return value: the number of items stored in the slot B<after> adding C<@vals>
 
 Side effects: none
 
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::AuditAndSecurity::Audit> instances
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::NameValueType>
 
 =cut
 
 
-=item $array_ref = $describable->getAuditTrail()
+sub addPropertySets {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addPropertySets: no arguments passed to adder")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addPropertySets: wrong type: " . ref($val) . " expected Bio::MAGE::NameValueType")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::NameValueType');
+  }
 
-The restricted getter method for the auditTrail association.
-
-Input parameters: none
-
-Return value: the current value of the auditTrail association : a reference to an array of objects of type C<Bio::MAGE::AuditAndSecurity::Audit>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
+  return push(@{$self->{__PROPERTYSETS}},@vals);
+}
 
 
-=item $describable->addAuditTrail(@vals)
-
-Because the auditTrail association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the auditTrail
-association.
-
-Input parameters: the list of values C<@vals> to add to the auditTrail
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::AuditAndSecurity::Audit>
-
-=cut
 
 
 
@@ -810,160 +825,458 @@ Exceptions: will call C<croak()> if no input parameters are specified
 
 =item descriptions
 
+Methods for the C<descriptions> association.
 
-From the MAGE-OM documentation for the C<descriptions> association:
+
+From the MAGE-OM documentation:
 
 Free hand text descriptions.  Makes available the associations of Description to an instance of Describable.
 
 
-
 =over
 
 
-=item $array_ref = $describable->setDescriptions($array_ref)
+=item $array_ref = $fiducial->setDescriptions($array_ref)
 
-The restricted setter method for the descriptions association.
+The restricted setter method for the C<descriptions> association.
 
-Input parameters: the value to which the descriptions association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
 
-Return value: the current value of the descriptions association : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
+Input parameters: the value to which the C<descriptions> association will be set : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
+
+Return value: the current value of the C<descriptions> association : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::Description::Description> instances
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::Description::Description> instances
 
 =cut
 
 
-=item $array_ref = $describable->getDescriptions()
-
-The restricted getter method for the descriptions association.
-
-Input parameters: none
-
-Return value: the current value of the descriptions association : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-=item $describable->addDescriptions(@vals)
-
-Because the descriptions association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the descriptions
-association.
-
-Input parameters: the list of values C<@vals> to add to the descriptions
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::Description>
-
-=cut
-
-
-
-=back
-
-Associations Inherited from Bio::MAGE::Extendable
-
-
-=item propertySets
-
-
-From the MAGE-OM documentation for the C<propertySets> association:
-
-Allows specification of name/value pairs.  Meant to primarily help in-house, pipeline processing of instances by providing a place for values that aren't part of the specification proper.
-
-
-
-=over
-
-
-=item $array_ref = $extendable->setPropertySets($array_ref)
-
-The restricted setter method for the propertySets association.
-
-Input parameters: the value to which the propertySets association will be set : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
-
-Return value: the current value of the propertySets association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::NameValueType> instances
-
-=cut
-
-
-=item $array_ref = $extendable->getPropertySets()
-
-The restricted getter method for the propertySets association.
-
-Input parameters: none
-
-Return value: the current value of the propertySets association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-
-=item $extendable->addPropertySets(@vals)
-
-Because the propertySets association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the propertySets
-association.
-
-Input parameters: the list of values C<@vals> to add to the propertySets
-association. B<NOTE>: submitting a single value is permitted.
-
-Return value: none
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::NameValueType>
-
-=cut
-
-
-
-=back
-
-
-
-=back
-
-
-=cut
-
-
-
-sub initialize {
+sub setDescriptions {
   my $self = shift;
-  return 1;
+  croak(__PACKAGE__ . "::setDescriptions: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setDescriptions: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setDescriptions: expected array reference, got $self")
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setDescriptions: wrong type: " . ref($val_ent) . " expected Bio::MAGE::Description::Description")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::Description::Description');
+    }
+  }
+
+  return $self->{__DESCRIPTIONS} = $val;
+}
+
+
+=item $array_ref = $fiducial->getDescriptions()
+
+The restricted getter method for the C<descriptions> association.
+
+Input parameters: none
+
+Return value: the current value of the C<descriptions> association : a reference to an array of objects of type C<Bio::MAGE::Description::Description>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getDescriptions {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getDescriptions: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__DESCRIPTIONS};
 }
 
 
 
+
+=item $val = $fiducial->addDescriptions(@vals)
+
+Because the descriptions association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the descriptions association.
+
+Input parameters: the list of values C<@vals> to add to the descriptions association. B<NOTE>: submitting a single value is permitted.
+
+Return value: the number of items stored in the slot B<after> adding C<@vals>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::Description::Description>
+
+=cut
+
+
+sub addDescriptions {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addDescriptions: no arguments passed to adder")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addDescriptions: wrong type: " . ref($val) . " expected Bio::MAGE::Description::Description")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::Description::Description');
+  }
+
+  return push(@{$self->{__DESCRIPTIONS}},@vals);
+}
+
+
+
+
+
+=back
+
+
+=item distanceUnit
+
+Methods for the C<distanceUnit> association.
+
+
+From the MAGE-OM documentation:
+
+The units the fiducial is measured in.
+
+
+=over
+
+
+=item $val = $fiducial->setDistanceUnit($val)
+
+The restricted setter method for the C<distanceUnit> association.
+
+
+Input parameters: the value to which the C<distanceUnit> association will be set : one of the accepted enumerated values.
+
+Return value: the current value of the C<distanceUnit> association : one of the accepted enumerated values.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$val> is not an instance of class C<Bio::MAGE::Measurement::DistanceUnit>
+
+=cut
+
+
+sub setDistanceUnit {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setDistanceUnit: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setDistanceUnit: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setDistanceUnit: wrong type: " . ref($val) . " expected Bio::MAGE::Measurement::DistanceUnit") unless (not defined $val) or UNIVERSAL::isa($val,'Bio::MAGE::Measurement::DistanceUnit');
+  return $self->{__DISTANCEUNIT} = $val;
+}
+
+
+=item $val = $fiducial->getDistanceUnit()
+
+The restricted getter method for the C<distanceUnit> association.
+
+Input parameters: none
+
+Return value: the current value of the C<distanceUnit> association : an instance of type C<Bio::MAGE::Measurement::DistanceUnit>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getDistanceUnit {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getDistanceUnit: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__DISTANCEUNIT};
+}
+
+
+
+
+
+=back
+
+
+=item security
+
+Methods for the C<security> association.
+
+
+From the MAGE-OM documentation:
+
+Information on the security for the instance of the class.
+
+
+=over
+
+
+=item $val = $fiducial->setSecurity($val)
+
+The restricted setter method for the C<security> association.
+
+
+Input parameters: the value to which the C<security> association will be set : one of the accepted enumerated values.
+
+Return value: the current value of the C<security> association : one of the accepted enumerated values.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$val> is not an instance of class C<Bio::MAGE::AuditAndSecurity::Security>
+
+=cut
+
+
+sub setSecurity {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setSecurity: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setSecurity: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setSecurity: wrong type: " . ref($val) . " expected Bio::MAGE::AuditAndSecurity::Security") unless (not defined $val) or UNIVERSAL::isa($val,'Bio::MAGE::AuditAndSecurity::Security');
+  return $self->{__SECURITY} = $val;
+}
+
+
+=item $val = $fiducial->getSecurity()
+
+The restricted getter method for the C<security> association.
+
+Input parameters: none
+
+Return value: the current value of the C<security> association : an instance of type C<Bio::MAGE::AuditAndSecurity::Security>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getSecurity {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getSecurity: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__SECURITY};
+}
+
+
+
+
+
+=back
+
+
+=item fiducialType
+
+Methods for the C<fiducialType> association.
+
+
+From the MAGE-OM documentation:
+
+A descriptive string that indicates the type of a fiducial (e.g. the chrome border on an Affymetrix array, a laser ablation mark).
+
+
+=over
+
+
+=item $val = $fiducial->setFiducialType($val)
+
+The restricted setter method for the C<fiducialType> association.
+
+
+Input parameters: the value to which the C<fiducialType> association will be set : one of the accepted enumerated values.
+
+Return value: the current value of the C<fiducialType> association : one of the accepted enumerated values.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$val> is not an instance of class C<Bio::MAGE::Description::OntologyEntry>
+
+=cut
+
+
+sub setFiducialType {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setFiducialType: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setFiducialType: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  croak(__PACKAGE__ . "::setFiducialType: wrong type: " . ref($val) . " expected Bio::MAGE::Description::OntologyEntry") unless (not defined $val) or UNIVERSAL::isa($val,'Bio::MAGE::Description::OntologyEntry');
+  return $self->{__FIDUCIALTYPE} = $val;
+}
+
+
+=item $val = $fiducial->getFiducialType()
+
+The restricted getter method for the C<fiducialType> association.
+
+Input parameters: none
+
+Return value: the current value of the C<fiducialType> association : an instance of type C<Bio::MAGE::Description::OntologyEntry>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getFiducialType {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getFiducialType: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__FIDUCIALTYPE};
+}
+
+
+
+
+
+=back
+
+
+sub initialize {
+
+
+  my $self = shift;
+  return 1;
+
+
+}
+
+=back
+
+
+=cut
+
+
+=head1 SLOTS, ATTRIBUTES, AND ASSOCIATIONS
+
+In the Perl implementation of MAGE-OM classes, there are
+three types of class data members: C<slots>, C<attributes>, and
+C<associations>.
+
+=head2 SLOTS
+
+This API uses the term C<slot> to indicate a data member of the class
+that was not present in the UML model and is used for mainly internal
+purposes - use only if you understand the inner workings of the
+API. Most often slots are used by generic methods such as those in the
+XML writing and reading classes.
+
+Slots are implemented using unified getter/setter methods:
+
+=over
+
+=item $var = $obj->slot_name();
+
+Retrieves the current value of the slot.
+
+=item $new_var = $obj->slot_name($new_var);
+
+Store $new_var in the slot - the return value is also $new_var.
+
+=item @names = $obj->get_slot_names()
+
+Returns the list of all slots in the class.
+
+=back
+
+B<DATA CHECKING>: No data type checking is made for these methods.
+
+=head2 ATTRIBUTES AND ASSOCIATIONS
+
+The terms C<attribute> and C<association> indicate data members of the
+class that were specified directly from the UML model.
+
+In the Perl implementation of MAGE-OM classes,
+association and attribute accessors are implemented using three
+separate methods:
+
+=over
+
+=item get*
+
+Retrieves the current value.
+
+B<NOTE>: For associations, if the association has list cardinality, an
+array reference is returned.
+
+B<DATA CHECKING>: Ensure that no argument is provided.
+
+=item set*
+
+Sets the current value, B<replacing> any existing value.
+
+B<NOTE>: For associations, if the association has list cardinality,
+the argument must be an array reference. Because of this, you probably
+should be using the add* methods.
+
+B<DATA CHECKING>: For attributes, ensure that a single value is
+provided as the argument. For associations, if the association has
+list cardinality, ensure that the argument is a reference to an array
+of instances of the correct MAGE-OM class, otherwise
+ensure that there is a single argument of the correct MAGE-OM class.
+
+=item add*
+
+B<NOTE>: Only present in associations with list cardinality. 
+
+Appends a list of objects to any values that may already be stored
+in the association.
+
+B<DATA CHECKING>: Ensure that all arguments are of the correct MAGE-OM class.
+
+=back
+
+=head2 GENERIC METHODS
+
+The unified base class of all MAGE-OM classes, C<Bio::MAGE::Base>, provides a set of generic methods that
+will operate on slots, attributes, and associations:
+
+=over
+
+=item $val = $obj->get_slot($name)
+
+=item \@list_ref = $obj->get_slots(@name_list);
+
+=item $val = $obj->set_slot($name,$val)
+
+=item $obj->set_slots(%parameters)
+
+=item $obj->set_slots(\@name_list, \@value_list)
+
+See elsewhere in this page for a detailed description of these
+methods.
+
+=back
+
+=cut
+
+
 =head1 BUGS
 
-Please send bug reports to mged-mage@lists.sf.net
+Please send bug reports to the project mailing list: (mged-mage 'at' lists 'dot' sf 'dot' net)
 
 =head1 AUTHOR
 
-Jason E. Stewart (www.openinformatics.com)
+Jason E. Stewart (jasons 'at' cpan 'dot' org)
 
 =head1 SEE ALSO
 
@@ -971,8 +1284,6 @@ perl(1).
 
 =cut
 
-#
-# End the module by returning a true value
-#
+# all perl modules must be true...
 1;
 

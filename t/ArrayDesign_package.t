@@ -1,10 +1,15 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl ./t//ArrayDesign_package.t'
+##############################
+#
+# ArrayDesign_package.t
+#
 
+# Before `make install' is performed this script should be runnable with
+# `make test'. After `make install' it should work as `perl ArrayDesign_package.t`
+
+##############################
 # C O P Y R I G H T   N O T I C E
-#  Copyright (c) 2001-2002 by:
+#  Copyright (c) 2001-2006 by:
 #    * The MicroArray Gene Expression Database Society (MGED)
-#    * Rosetta Inpharmatics
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -26,27 +31,18 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-######################### We start with some black magic to print on failure.
 
-BEGIN { $| = 1; print "1..23\n"; }
-END {print "not ok 1\n" unless $loaded;}
+
 use Carp;
-use lib 't';
+# use blib;
+use Test::More tests => 32;
 use strict;
-use TestMAGE qw(result is_object);
-use vars qw($i $loaded);
-use Bio::MAGE;
-use Bio::MAGE::ArrayDesign;
 
-$loaded = 1;
-$i = 1;
-result($i);
-
-######################### End of black magic.
+BEGIN { use_ok('Bio::MAGE::ArrayDesign') };
 
 # we test the classes() method
 my @classes = Bio::MAGE::ArrayDesign->classes();
-result(scalar @classes eq 9);
+is((scalar @classes), 9, 'number of subclasses');
 
 my %classes;
 {
@@ -55,68 +51,73 @@ my %classes;
   foreach my $class_name (@classes) {
     my $class = "Bio::MAGE::ArrayDesign::$class_name";
     $classes{$class_name} = $class->new();
-    result(is_object($classes{$class_name}) and $classes{$class_name}->isa($class));
+    isa_ok($classes{$class_name}, $class);
   }
 }
+# test isa
 my $arraydesign = Bio::MAGE::ArrayDesign->new();
-result(is_object($arraydesign) 
-       and $arraydesign->isa("Bio::MAGE::ArrayDesign"));
+isa_ok($arraydesign, "Bio::MAGE::ArrayDesign");
 
 # test the tagname method
-result(defined $arraydesign->tagname);
+ok(defined $arraydesign->tagname, 'tagname');
 
-# test the mageml_lists method
-result(defined $arraydesign->mageml_lists);
+
+# test the xml_lists method
+ok(defined $arraydesign->xml_lists,
+  'xml_lists');
 
 
 # test the reportergroup_list method
 $arraydesign->reportergroup_list([]);
-result(UNIVERSAL::isa($arraydesign->reportergroup_list,'ARRAY') &&
-       not scalar @{$arraydesign->reportergroup_list}
-      );
+isa_ok($arraydesign->reportergroup_list,'ARRAY');
+is(scalar @{$arraydesign->reportergroup_list}, 0,
+   'reportergroup_list empty');
 
 # test the getReporterGroup_list method
-result(UNIVERSAL::isa($arraydesign->getReporterGroup_list,'ARRAY') &&
-       not scalar @{$arraydesign->getReporterGroup_list}
-      );
+isa_ok($arraydesign->getReporterGroup_list,'ARRAY');
+is(scalar @{$arraydesign->getReporterGroup_list}, 0,
+   'getReporterGroup_list empty');
 
 # test the addReporterGroup() method
 $arraydesign->addReporterGroup($classes{ReporterGroup});
-result(UNIVERSAL::isa($arraydesign->getReporterGroup_list,'ARRAY') &&
-       scalar @{$arraydesign->getReporterGroup_list}
-      );
+isa_ok($arraydesign->getReporterGroup_list,'ARRAY');
+ok(scalar @{$arraydesign->getReporterGroup_list},
+   'getReporterGroup_list not empty');
+
 
 # test the compositegroup_list method
 $arraydesign->compositegroup_list([]);
-result(UNIVERSAL::isa($arraydesign->compositegroup_list,'ARRAY') &&
-       not scalar @{$arraydesign->compositegroup_list}
-      );
+isa_ok($arraydesign->compositegroup_list,'ARRAY');
+is(scalar @{$arraydesign->compositegroup_list}, 0,
+   'compositegroup_list empty');
 
 # test the getCompositeGroup_list method
-result(UNIVERSAL::isa($arraydesign->getCompositeGroup_list,'ARRAY') &&
-       not scalar @{$arraydesign->getCompositeGroup_list}
-      );
+isa_ok($arraydesign->getCompositeGroup_list,'ARRAY');
+is(scalar @{$arraydesign->getCompositeGroup_list}, 0,
+   'getCompositeGroup_list empty');
 
 # test the addCompositeGroup() method
 $arraydesign->addCompositeGroup($classes{CompositeGroup});
-result(UNIVERSAL::isa($arraydesign->getCompositeGroup_list,'ARRAY') &&
-       scalar @{$arraydesign->getCompositeGroup_list}
-      );
+isa_ok($arraydesign->getCompositeGroup_list,'ARRAY');
+ok(scalar @{$arraydesign->getCompositeGroup_list},
+   'getCompositeGroup_list not empty');
+
 
 # test the arraydesign_list method
 $arraydesign->arraydesign_list([]);
-result(UNIVERSAL::isa($arraydesign->arraydesign_list,'ARRAY') &&
-       not scalar @{$arraydesign->arraydesign_list}
-      );
+isa_ok($arraydesign->arraydesign_list,'ARRAY');
+is(scalar @{$arraydesign->arraydesign_list}, 0,
+   'arraydesign_list empty');
 
 # test the getArrayDesign_list method
-result(UNIVERSAL::isa($arraydesign->getArrayDesign_list,'ARRAY') &&
-       not scalar @{$arraydesign->getArrayDesign_list}
-      );
+isa_ok($arraydesign->getArrayDesign_list,'ARRAY');
+is(scalar @{$arraydesign->getArrayDesign_list}, 0,
+   'getArrayDesign_list empty');
 
 # test the addArrayDesign() method
 $arraydesign->addArrayDesign($classes{ArrayDesign});
-result(UNIVERSAL::isa($arraydesign->getArrayDesign_list,'ARRAY') &&
-       scalar @{$arraydesign->getArrayDesign_list}
-      );
+isa_ok($arraydesign->getArrayDesign_list,'ARRAY');
+ok(scalar @{$arraydesign->getArrayDesign_list},
+   'getArrayDesign_list not empty');
+
 

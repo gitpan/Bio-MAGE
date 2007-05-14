@@ -1,10 +1,10 @@
 ##############################
 #
-# BioEvent_package.t
+# ArrayDesign.t
 #
 
 # Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl BioEvent_package.t`
+# `make test'. After `make install' it should work as `perl ArrayDesign.t`
 
 ##############################
 # C O P Y R I G H T   N O T I C E
@@ -35,35 +35,33 @@
 
 use Carp;
 # use blib;
-use Test::More tests => 7;
+use Test::More tests => 8;
+
 use strict;
 
-BEGIN { use_ok('Bio::MAGE::BioEvent') };
+use Bio::MAGE::Association ':CARD';
 
-# we test the classes() method
-my @classes = Bio::MAGE::BioEvent->classes();
-is((scalar @classes), 2, 'number of subclasses');
+is(Bio::MAGE::Association::CARD_1, '1', 
+	'CARD_1: testing full path');
 
-my %classes;
-{
-  # silence the abstract class warnings
-  local $SIG{__WARN__} = sub {'IGNORE'};
-  foreach my $class_name (@classes) {
-    my $class = "Bio::MAGE::BioEvent::$class_name";
-    $classes{$class_name} = $class->new();
-    isa_ok($classes{$class_name}, $class);
-  }
-}
-# test isa
-my $bioevent = Bio::MAGE::BioEvent->new();
-isa_ok($bioevent, "Bio::MAGE::BioEvent");
+is(CARD_1, '1', 
+	'CARD_1: testing import');
 
-# test the tagname method
-ok(defined $bioevent->tagname, 'tagname');
+is(Bio::MAGE::Association::CARD_0_OR_1, '0..1', 
+	'CARD_0_OR_1: testing full path');
 
+is(CARD_0_OR_1, '0..1', 
+	'CARD_0_OR_1: testing import');
 
-# test the xml_lists method
-ok(defined $bioevent->xml_lists,
-  'xml_lists');
+is(Bio::MAGE::Association::CARD_1_TO_N, '1..N', 
+	'CARD_1_TO_N: testing full path');
 
+is(CARD_1_TO_N, '1..N', 
+	'CARD_1_TO_N: testing import');
+
+is(Bio::MAGE::Association::CARD_0_TO_N, '0..N', 
+	'CARD_0_TO_N: testing full path');
+
+is(CARD_0_TO_N, '0..N', 
+	'CARD_0_TO_N: testing import');
 

@@ -1,10 +1,15 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl ./t//Array_package.t'
+##############################
+#
+# Array_package.t
+#
 
+# Before `make install' is performed this script should be runnable with
+# `make test'. After `make install' it should work as `perl Array_package.t`
+
+##############################
 # C O P Y R I G H T   N O T I C E
-#  Copyright (c) 2001-2002 by:
+#  Copyright (c) 2001-2006 by:
 #    * The MicroArray Gene Expression Database Society (MGED)
-#    * Rosetta Inpharmatics
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -26,27 +31,18 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-######################### We start with some black magic to print on failure.
 
-BEGIN { $| = 1; print "1..24\n"; }
-END {print "not ok 1\n" unless $loaded;}
+
 use Carp;
-use lib 't';
+# use blib;
+use Test::More tests => 33;
 use strict;
-use TestMAGE qw(result is_object);
-use vars qw($i $loaded);
-use Bio::MAGE;
-use Bio::MAGE::Array;
 
-$loaded = 1;
-$i = 1;
-result($i);
-
-######################### End of black magic.
+BEGIN { use_ok('Bio::MAGE::Array') };
 
 # we test the classes() method
 my @classes = Bio::MAGE::Array->classes();
-result(scalar @classes eq 10);
+is((scalar @classes), 10, 'number of subclasses');
 
 my %classes;
 {
@@ -55,68 +51,73 @@ my %classes;
   foreach my $class_name (@classes) {
     my $class = "Bio::MAGE::Array::$class_name";
     $classes{$class_name} = $class->new();
-    result(is_object($classes{$class_name}) and $classes{$class_name}->isa($class));
+    isa_ok($classes{$class_name}, $class);
   }
 }
+# test isa
 my $array = Bio::MAGE::Array->new();
-result(is_object($array) 
-       and $array->isa("Bio::MAGE::Array"));
+isa_ok($array, "Bio::MAGE::Array");
 
 # test the tagname method
-result(defined $array->tagname);
+ok(defined $array->tagname, 'tagname');
 
-# test the mageml_lists method
-result(defined $array->mageml_lists);
+
+# test the xml_lists method
+ok(defined $array->xml_lists,
+  'xml_lists');
 
 
 # test the arraygroup_list method
 $array->arraygroup_list([]);
-result(UNIVERSAL::isa($array->arraygroup_list,'ARRAY') &&
-       not scalar @{$array->arraygroup_list}
-      );
+isa_ok($array->arraygroup_list,'ARRAY');
+is(scalar @{$array->arraygroup_list}, 0,
+   'arraygroup_list empty');
 
 # test the getArrayGroup_list method
-result(UNIVERSAL::isa($array->getArrayGroup_list,'ARRAY') &&
-       not scalar @{$array->getArrayGroup_list}
-      );
+isa_ok($array->getArrayGroup_list,'ARRAY');
+is(scalar @{$array->getArrayGroup_list}, 0,
+   'getArrayGroup_list empty');
 
 # test the addArrayGroup() method
 $array->addArrayGroup($classes{ArrayGroup});
-result(UNIVERSAL::isa($array->getArrayGroup_list,'ARRAY') &&
-       scalar @{$array->getArrayGroup_list}
-      );
+isa_ok($array->getArrayGroup_list,'ARRAY');
+ok(scalar @{$array->getArrayGroup_list},
+   'getArrayGroup_list not empty');
+
 
 # test the array_list method
 $array->array_list([]);
-result(UNIVERSAL::isa($array->array_list,'ARRAY') &&
-       not scalar @{$array->array_list}
-      );
+isa_ok($array->array_list,'ARRAY');
+is(scalar @{$array->array_list}, 0,
+   'array_list empty');
 
 # test the getArray_list method
-result(UNIVERSAL::isa($array->getArray_list,'ARRAY') &&
-       not scalar @{$array->getArray_list}
-      );
+isa_ok($array->getArray_list,'ARRAY');
+is(scalar @{$array->getArray_list}, 0,
+   'getArray_list empty');
 
 # test the addArray() method
 $array->addArray($classes{Array});
-result(UNIVERSAL::isa($array->getArray_list,'ARRAY') &&
-       scalar @{$array->getArray_list}
-      );
+isa_ok($array->getArray_list,'ARRAY');
+ok(scalar @{$array->getArray_list},
+   'getArray_list not empty');
+
 
 # test the arraymanufacture_list method
 $array->arraymanufacture_list([]);
-result(UNIVERSAL::isa($array->arraymanufacture_list,'ARRAY') &&
-       not scalar @{$array->arraymanufacture_list}
-      );
+isa_ok($array->arraymanufacture_list,'ARRAY');
+is(scalar @{$array->arraymanufacture_list}, 0,
+   'arraymanufacture_list empty');
 
 # test the getArrayManufacture_list method
-result(UNIVERSAL::isa($array->getArrayManufacture_list,'ARRAY') &&
-       not scalar @{$array->getArrayManufacture_list}
-      );
+isa_ok($array->getArrayManufacture_list,'ARRAY');
+is(scalar @{$array->getArrayManufacture_list}, 0,
+   'getArrayManufacture_list empty');
 
 # test the addArrayManufacture() method
 $array->addArrayManufacture($classes{ArrayManufacture});
-result(UNIVERSAL::isa($array->getArrayManufacture_list,'ARRAY') &&
-       scalar @{$array->getArrayManufacture_list}
-      );
+isa_ok($array->getArrayManufacture_list,'ARRAY');
+ok(scalar @{$array->getArrayManufacture_list},
+   'getArrayManufacture_list not empty');
+
 

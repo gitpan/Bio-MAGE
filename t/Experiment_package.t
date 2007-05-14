@@ -1,10 +1,15 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl ./t//Experiment_package.t'
+##############################
+#
+# Experiment_package.t
+#
 
+# Before `make install' is performed this script should be runnable with
+# `make test'. After `make install' it should work as `perl Experiment_package.t`
+
+##############################
 # C O P Y R I G H T   N O T I C E
-#  Copyright (c) 2001-2002 by:
+#  Copyright (c) 2001-2006 by:
 #    * The MicroArray Gene Expression Database Society (MGED)
-#    * Rosetta Inpharmatics
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -26,27 +31,18 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-######################### We start with some black magic to print on failure.
 
-BEGIN { $| = 1; print "1..12\n"; }
-END {print "not ok 1\n" unless $loaded;}
+
 use Carp;
-use lib 't';
+# use blib;
+use Test::More tests => 15;
 use strict;
-use TestMAGE qw(result is_object);
-use vars qw($i $loaded);
-use Bio::MAGE;
-use Bio::MAGE::Experiment;
 
-$loaded = 1;
-$i = 1;
-result($i);
-
-######################### End of black magic.
+BEGIN { use_ok('Bio::MAGE::Experiment') };
 
 # we test the classes() method
 my @classes = Bio::MAGE::Experiment->classes();
-result(scalar @classes eq 4);
+is((scalar @classes), 4, 'number of subclasses');
 
 my %classes;
 {
@@ -55,34 +51,37 @@ my %classes;
   foreach my $class_name (@classes) {
     my $class = "Bio::MAGE::Experiment::$class_name";
     $classes{$class_name} = $class->new();
-    result(is_object($classes{$class_name}) and $classes{$class_name}->isa($class));
+    isa_ok($classes{$class_name}, $class);
   }
 }
+# test isa
 my $experiment = Bio::MAGE::Experiment->new();
-result(is_object($experiment) 
-       and $experiment->isa("Bio::MAGE::Experiment"));
+isa_ok($experiment, "Bio::MAGE::Experiment");
 
 # test the tagname method
-result(defined $experiment->tagname);
+ok(defined $experiment->tagname, 'tagname');
 
-# test the mageml_lists method
-result(defined $experiment->mageml_lists);
+
+# test the xml_lists method
+ok(defined $experiment->xml_lists,
+  'xml_lists');
 
 
 # test the experiment_list method
 $experiment->experiment_list([]);
-result(UNIVERSAL::isa($experiment->experiment_list,'ARRAY') &&
-       not scalar @{$experiment->experiment_list}
-      );
+isa_ok($experiment->experiment_list,'ARRAY');
+is(scalar @{$experiment->experiment_list}, 0,
+   'experiment_list empty');
 
 # test the getExperiment_list method
-result(UNIVERSAL::isa($experiment->getExperiment_list,'ARRAY') &&
-       not scalar @{$experiment->getExperiment_list}
-      );
+isa_ok($experiment->getExperiment_list,'ARRAY');
+is(scalar @{$experiment->getExperiment_list}, 0,
+   'getExperiment_list empty');
 
 # test the addExperiment() method
 $experiment->addExperiment($classes{Experiment});
-result(UNIVERSAL::isa($experiment->getExperiment_list,'ARRAY') &&
-       scalar @{$experiment->getExperiment_list}
-      );
+isa_ok($experiment->getExperiment_list,'ARRAY');
+ok(scalar @{$experiment->getExperiment_list},
+   'getExperiment_list not empty');
+
 

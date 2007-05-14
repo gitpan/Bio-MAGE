@@ -1,10 +1,15 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl ./t//AuditAndSecurity_package.t'
+##############################
+#
+# AuditAndSecurity_package.t
+#
 
+# Before `make install' is performed this script should be runnable with
+# `make test'. After `make install' it should work as `perl AuditAndSecurity_package.t`
+
+##############################
 # C O P Y R I G H T   N O T I C E
-#  Copyright (c) 2001-2002 by:
+#  Copyright (c) 2001-2006 by:
 #    * The MicroArray Gene Expression Database Society (MGED)
-#    * Rosetta Inpharmatics
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -26,27 +31,18 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-######################### We start with some black magic to print on failure.
 
-BEGIN { $| = 1; print "1..20\n"; }
-END {print "not ok 1\n" unless $loaded;}
+
 use Carp;
-use lib 't';
+# use blib;
+use Test::More tests => 29;
 use strict;
-use TestMAGE qw(result is_object);
-use vars qw($i $loaded);
-use Bio::MAGE;
-use Bio::MAGE::AuditAndSecurity;
 
-$loaded = 1;
-$i = 1;
-result($i);
-
-######################### End of black magic.
+BEGIN { use_ok('Bio::MAGE::AuditAndSecurity') };
 
 # we test the classes() method
 my @classes = Bio::MAGE::AuditAndSecurity->classes();
-result(scalar @classes eq 6);
+is((scalar @classes), 6, 'number of subclasses');
 
 my %classes;
 {
@@ -55,68 +51,73 @@ my %classes;
   foreach my $class_name (@classes) {
     my $class = "Bio::MAGE::AuditAndSecurity::$class_name";
     $classes{$class_name} = $class->new();
-    result(is_object($classes{$class_name}) and $classes{$class_name}->isa($class));
+    isa_ok($classes{$class_name}, $class);
   }
 }
+# test isa
 my $auditandsecurity = Bio::MAGE::AuditAndSecurity->new();
-result(is_object($auditandsecurity) 
-       and $auditandsecurity->isa("Bio::MAGE::AuditAndSecurity"));
+isa_ok($auditandsecurity, "Bio::MAGE::AuditAndSecurity");
 
 # test the tagname method
-result(defined $auditandsecurity->tagname);
+ok(defined $auditandsecurity->tagname, 'tagname');
 
-# test the mageml_lists method
-result(defined $auditandsecurity->mageml_lists);
+
+# test the xml_lists method
+ok(defined $auditandsecurity->xml_lists,
+  'xml_lists');
 
 
 # test the contact_list method
 $auditandsecurity->contact_list([]);
-result(UNIVERSAL::isa($auditandsecurity->contact_list,'ARRAY') &&
-       not scalar @{$auditandsecurity->contact_list}
-      );
+isa_ok($auditandsecurity->contact_list,'ARRAY');
+is(scalar @{$auditandsecurity->contact_list}, 0,
+   'contact_list empty');
 
 # test the getContact_list method
-result(UNIVERSAL::isa($auditandsecurity->getContact_list,'ARRAY') &&
-       not scalar @{$auditandsecurity->getContact_list}
-      );
+isa_ok($auditandsecurity->getContact_list,'ARRAY');
+is(scalar @{$auditandsecurity->getContact_list}, 0,
+   'getContact_list empty');
 
 # test the addContact() method
 $auditandsecurity->addContact($classes{Contact});
-result(UNIVERSAL::isa($auditandsecurity->getContact_list,'ARRAY') &&
-       scalar @{$auditandsecurity->getContact_list}
-      );
+isa_ok($auditandsecurity->getContact_list,'ARRAY');
+ok(scalar @{$auditandsecurity->getContact_list},
+   'getContact_list not empty');
+
 
 # test the securitygroup_list method
 $auditandsecurity->securitygroup_list([]);
-result(UNIVERSAL::isa($auditandsecurity->securitygroup_list,'ARRAY') &&
-       not scalar @{$auditandsecurity->securitygroup_list}
-      );
+isa_ok($auditandsecurity->securitygroup_list,'ARRAY');
+is(scalar @{$auditandsecurity->securitygroup_list}, 0,
+   'securitygroup_list empty');
 
 # test the getSecurityGroup_list method
-result(UNIVERSAL::isa($auditandsecurity->getSecurityGroup_list,'ARRAY') &&
-       not scalar @{$auditandsecurity->getSecurityGroup_list}
-      );
+isa_ok($auditandsecurity->getSecurityGroup_list,'ARRAY');
+is(scalar @{$auditandsecurity->getSecurityGroup_list}, 0,
+   'getSecurityGroup_list empty');
 
 # test the addSecurityGroup() method
 $auditandsecurity->addSecurityGroup($classes{SecurityGroup});
-result(UNIVERSAL::isa($auditandsecurity->getSecurityGroup_list,'ARRAY') &&
-       scalar @{$auditandsecurity->getSecurityGroup_list}
-      );
+isa_ok($auditandsecurity->getSecurityGroup_list,'ARRAY');
+ok(scalar @{$auditandsecurity->getSecurityGroup_list},
+   'getSecurityGroup_list not empty');
+
 
 # test the security_list method
 $auditandsecurity->security_list([]);
-result(UNIVERSAL::isa($auditandsecurity->security_list,'ARRAY') &&
-       not scalar @{$auditandsecurity->security_list}
-      );
+isa_ok($auditandsecurity->security_list,'ARRAY');
+is(scalar @{$auditandsecurity->security_list}, 0,
+   'security_list empty');
 
 # test the getSecurity_list method
-result(UNIVERSAL::isa($auditandsecurity->getSecurity_list,'ARRAY') &&
-       not scalar @{$auditandsecurity->getSecurity_list}
-      );
+isa_ok($auditandsecurity->getSecurity_list,'ARRAY');
+is(scalar @{$auditandsecurity->getSecurity_list}, 0,
+   'getSecurity_list empty');
 
 # test the addSecurity() method
 $auditandsecurity->addSecurity($classes{Security});
-result(UNIVERSAL::isa($auditandsecurity->getSecurity_list,'ARRAY') &&
-       scalar @{$auditandsecurity->getSecurity_list}
-      );
+isa_ok($auditandsecurity->getSecurity_list,'ARRAY');
+ok(scalar @{$auditandsecurity->getSecurity_list},
+   'getSecurity_list not empty');
+
 

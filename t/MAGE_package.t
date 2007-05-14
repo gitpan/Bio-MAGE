@@ -1,10 +1,15 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl ./t//MAGE_package.t'
+##############################
+#
+# MAGE_package.t
+#
 
+# Before `make install' is performed this script should be runnable with
+# `make test'. After `make install' it should work as `perl MAGE_package.t`
+
+##############################
 # C O P Y R I G H T   N O T I C E
-#  Copyright (c) 2001-2002 by:
+#  Copyright (c) 2001-2006 by:
 #    * The MicroArray Gene Expression Database Society (MGED)
-#    * Rosetta Inpharmatics
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -26,27 +31,18 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-######################### We start with some black magic to print on failure.
 
-BEGIN { $| = 1; print "1..29\n"; }
-END {print "not ok 1\n" unless $loaded;}
+
 use Carp;
-use lib 't';
+# use blib;
+use Test::More tests => 29;
 use strict;
-use TestMAGE qw(result is_object);
-use vars qw($i $loaded);
-use Bio::MAGE;
-use Bio::MAGE;
 
-$loaded = 1;
-$i = 1;
-result($i);
-
-######################### End of black magic.
+BEGIN { use_ok('Bio::MAGE') };
 
 # we test the classes() method
 my @classes = Bio::MAGE->classes();
-result(scalar @classes eq 4);
+is((scalar @classes), 4, 'number of subclasses');
 
 my %classes;
 {
@@ -55,78 +51,97 @@ my %classes;
   foreach my $class_name (@classes) {
     my $class = "Bio::MAGE::$class_name";
     $classes{$class_name} = $class->new();
-    result(is_object($classes{$class_name}) and $classes{$class_name}->isa($class));
+    isa_ok($classes{$class_name}, $class);
   }
 }
+# test isa
 my $mage = Bio::MAGE->new();
-result(is_object($mage) 
-       and $mage->isa("Bio::MAGE"));
+isa_ok($mage, "Bio::MAGE");
 
 # test the tagname method
-result(defined $mage->tagname);
+ok(defined $mage->tagname, 'tagname');
+
+
+# test the xml_packages() method
+is((scalar $mage->xml_packages), 16, 'package count');
 
 # test the packages() method
-result(defined $mage->packages);
-
-# test the mageml_packages() method
-result(scalar $mage->mageml_packages == 16);
+ok(defined $mage->packages);
 
 # test the identifiers() method
 $mage->identifiers(27);
-result($mage->identifiers == 27);
+is($mage->identifiers, 27, 'identifiers');
 
 # test the objects() method
 $mage->objects(42);
-result($mage->objects == 42);
+is($mage->objects, 42, 'objects');
+
 
 # test the getAuditAndSecurity_package singleton method
-result($mage->getAuditAndSecurity_package->isa('Bio::MAGE::AuditAndSecurity'));
+isa_ok($mage->getAuditAndSecurity_package, 'Bio::MAGE::AuditAndSecurity');
+
 
 # test the getDescription_package singleton method
-result($mage->getDescription_package->isa('Bio::MAGE::Description'));
+isa_ok($mage->getDescription_package, 'Bio::MAGE::Description');
+
 
 # test the getMeasurement_package singleton method
-result($mage->getMeasurement_package->isa('Bio::MAGE::Measurement'));
+isa_ok($mage->getMeasurement_package, 'Bio::MAGE::Measurement');
+
 
 # test the getBQS_package singleton method
-result($mage->getBQS_package->isa('Bio::MAGE::BQS'));
+isa_ok($mage->getBQS_package, 'Bio::MAGE::BQS');
+
 
 # test the getBioEvent_package singleton method
-result($mage->getBioEvent_package->isa('Bio::MAGE::BioEvent'));
+isa_ok($mage->getBioEvent_package, 'Bio::MAGE::BioEvent');
+
 
 # test the getProtocol_package singleton method
-result($mage->getProtocol_package->isa('Bio::MAGE::Protocol'));
+isa_ok($mage->getProtocol_package, 'Bio::MAGE::Protocol');
+
 
 # test the getBioMaterial_package singleton method
-result($mage->getBioMaterial_package->isa('Bio::MAGE::BioMaterial'));
+isa_ok($mage->getBioMaterial_package, 'Bio::MAGE::BioMaterial');
+
 
 # test the getBioSequence_package singleton method
-result($mage->getBioSequence_package->isa('Bio::MAGE::BioSequence'));
+isa_ok($mage->getBioSequence_package, 'Bio::MAGE::BioSequence');
+
 
 # test the getDesignElement_package singleton method
-result($mage->getDesignElement_package->isa('Bio::MAGE::DesignElement'));
+isa_ok($mage->getDesignElement_package, 'Bio::MAGE::DesignElement');
+
 
 # test the getArrayDesign_package singleton method
-result($mage->getArrayDesign_package->isa('Bio::MAGE::ArrayDesign'));
+isa_ok($mage->getArrayDesign_package, 'Bio::MAGE::ArrayDesign');
+
 
 # test the getArray_package singleton method
-result($mage->getArray_package->isa('Bio::MAGE::Array'));
+isa_ok($mage->getArray_package, 'Bio::MAGE::Array');
+
 
 # test the getBioAssay_package singleton method
-result($mage->getBioAssay_package->isa('Bio::MAGE::BioAssay'));
+isa_ok($mage->getBioAssay_package, 'Bio::MAGE::BioAssay');
+
 
 # test the getQuantitationType_package singleton method
-result($mage->getQuantitationType_package->isa('Bio::MAGE::QuantitationType'));
+isa_ok($mage->getQuantitationType_package, 'Bio::MAGE::QuantitationType');
+
 
 # test the getBioAssayData_package singleton method
-result($mage->getBioAssayData_package->isa('Bio::MAGE::BioAssayData'));
+isa_ok($mage->getBioAssayData_package, 'Bio::MAGE::BioAssayData');
+
 
 # test the getExperiment_package singleton method
-result($mage->getExperiment_package->isa('Bio::MAGE::Experiment'));
+isa_ok($mage->getExperiment_package, 'Bio::MAGE::Experiment');
+
 
 # test the getHigherLevelAnalysis_package singleton method
-result($mage->getHigherLevelAnalysis_package->isa('Bio::MAGE::HigherLevelAnalysis'));
+isa_ok($mage->getHigherLevelAnalysis_package, 'Bio::MAGE::HigherLevelAnalysis');
+
 
 # now that we've accessed each package, we check the count
-result(keys %{$mage->packages} == 16);
+is(keys %{$mage->packages}, 16, 'package list count');
+
 

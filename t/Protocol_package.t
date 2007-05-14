@@ -1,10 +1,15 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl ./t//Protocol_package.t'
+##############################
+#
+# Protocol_package.t
+#
 
+# Before `make install' is performed this script should be runnable with
+# `make test'. After `make install' it should work as `perl Protocol_package.t`
+
+##############################
 # C O P Y R I G H T   N O T I C E
-#  Copyright (c) 2001-2002 by:
+#  Copyright (c) 2001-2006 by:
 #    * The MicroArray Gene Expression Database Society (MGED)
-#    * Rosetta Inpharmatics
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -26,27 +31,18 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-######################### We start with some black magic to print on failure.
 
-BEGIN { $| = 1; print "1..24\n"; }
-END {print "not ok 1\n" unless $loaded;}
+
 use Carp;
-use lib 't';
+# use blib;
+use Test::More tests => 33;
 use strict;
-use TestMAGE qw(result is_object);
-use vars qw($i $loaded);
-use Bio::MAGE;
-use Bio::MAGE::Protocol;
 
-$loaded = 1;
-$i = 1;
-result($i);
-
-######################### End of black magic.
+BEGIN { use_ok('Bio::MAGE::Protocol') };
 
 # we test the classes() method
 my @classes = Bio::MAGE::Protocol->classes();
-result(scalar @classes eq 10);
+is((scalar @classes), 10, 'number of subclasses');
 
 my %classes;
 {
@@ -55,68 +51,73 @@ my %classes;
   foreach my $class_name (@classes) {
     my $class = "Bio::MAGE::Protocol::$class_name";
     $classes{$class_name} = $class->new();
-    result(is_object($classes{$class_name}) and $classes{$class_name}->isa($class));
+    isa_ok($classes{$class_name}, $class);
   }
 }
+# test isa
 my $protocol = Bio::MAGE::Protocol->new();
-result(is_object($protocol) 
-       and $protocol->isa("Bio::MAGE::Protocol"));
+isa_ok($protocol, "Bio::MAGE::Protocol");
 
 # test the tagname method
-result(defined $protocol->tagname);
+ok(defined $protocol->tagname, 'tagname');
 
-# test the mageml_lists method
-result(defined $protocol->mageml_lists);
+
+# test the xml_lists method
+ok(defined $protocol->xml_lists,
+  'xml_lists');
 
 
 # test the hardware_list method
 $protocol->hardware_list([]);
-result(UNIVERSAL::isa($protocol->hardware_list,'ARRAY') &&
-       not scalar @{$protocol->hardware_list}
-      );
+isa_ok($protocol->hardware_list,'ARRAY');
+is(scalar @{$protocol->hardware_list}, 0,
+   'hardware_list empty');
 
 # test the getHardware_list method
-result(UNIVERSAL::isa($protocol->getHardware_list,'ARRAY') &&
-       not scalar @{$protocol->getHardware_list}
-      );
+isa_ok($protocol->getHardware_list,'ARRAY');
+is(scalar @{$protocol->getHardware_list}, 0,
+   'getHardware_list empty');
 
 # test the addHardware() method
 $protocol->addHardware($classes{Hardware});
-result(UNIVERSAL::isa($protocol->getHardware_list,'ARRAY') &&
-       scalar @{$protocol->getHardware_list}
-      );
+isa_ok($protocol->getHardware_list,'ARRAY');
+ok(scalar @{$protocol->getHardware_list},
+   'getHardware_list not empty');
+
 
 # test the software_list method
 $protocol->software_list([]);
-result(UNIVERSAL::isa($protocol->software_list,'ARRAY') &&
-       not scalar @{$protocol->software_list}
-      );
+isa_ok($protocol->software_list,'ARRAY');
+is(scalar @{$protocol->software_list}, 0,
+   'software_list empty');
 
 # test the getSoftware_list method
-result(UNIVERSAL::isa($protocol->getSoftware_list,'ARRAY') &&
-       not scalar @{$protocol->getSoftware_list}
-      );
+isa_ok($protocol->getSoftware_list,'ARRAY');
+is(scalar @{$protocol->getSoftware_list}, 0,
+   'getSoftware_list empty');
 
 # test the addSoftware() method
 $protocol->addSoftware($classes{Software});
-result(UNIVERSAL::isa($protocol->getSoftware_list,'ARRAY') &&
-       scalar @{$protocol->getSoftware_list}
-      );
+isa_ok($protocol->getSoftware_list,'ARRAY');
+ok(scalar @{$protocol->getSoftware_list},
+   'getSoftware_list not empty');
+
 
 # test the protocol_list method
 $protocol->protocol_list([]);
-result(UNIVERSAL::isa($protocol->protocol_list,'ARRAY') &&
-       not scalar @{$protocol->protocol_list}
-      );
+isa_ok($protocol->protocol_list,'ARRAY');
+is(scalar @{$protocol->protocol_list}, 0,
+   'protocol_list empty');
 
 # test the getProtocol_list method
-result(UNIVERSAL::isa($protocol->getProtocol_list,'ARRAY') &&
-       not scalar @{$protocol->getProtocol_list}
-      );
+isa_ok($protocol->getProtocol_list,'ARRAY');
+is(scalar @{$protocol->getProtocol_list}, 0,
+   'getProtocol_list empty');
 
 # test the addProtocol() method
 $protocol->addProtocol($classes{Protocol});
-result(UNIVERSAL::isa($protocol->getProtocol_list,'ARRAY') &&
-       scalar @{$protocol->getProtocol_list}
-      );
+isa_ok($protocol->getProtocol_list,'ARRAY');
+ok(scalar @{$protocol->getProtocol_list},
+   'getProtocol_list not empty');
+
 

@@ -4,9 +4,8 @@
 #
 ##############################
 # C O P Y R I G H T   N O T I C E
-#  Copyright (c) 2001-2002 by:
+#  Copyright (c) 2001-2006 by:
 #    * The MicroArray Gene Expression Database Society (MGED)
-#    * Rosetta Inpharmatics
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -28,58 +27,66 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-package Bio::MAGE::NameValueType;
 
+
+package Bio::MAGE::NameValueType;
 use strict;
 use Carp;
-use Bio::MAGE::Base;
+
+use base qw(Bio::MAGE::Base);
+
 use Bio::MAGE::Association;
 
-
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
-
-require Exporter;
-
-@ISA = qw(Bio::MAGE::Base  Exporter);
-$VERSION = 20020902.6;
-
-# Items to export into callers namespace by default. Note: do not export
-# names by default without a very good reason. Use EXPORT_OK instead.
-# Do not simply export all your public functions/methods/constants.
-@EXPORT_OK = qw();
+use vars qw($__ASSOCIATIONS
+	    $__CLASS_NAME
+	    $__PACKAGE_NAME
+	    $__SUBCLASSES
+	    $__SUPERCLASSES
+	    $__ATTRIBUTE_NAMES
+	    $__ASSOCIATION_NAMES
+	   );
 
 
-=head1 Bio::MAGE::NameValueType
+=head1 NAME
 
-=head2 SYNOPSIS
+Bio::MAGE::NameValueType - Class for the MAGE-OM API
 
-  use Bio::MAGE::NameValueType;
+=head1 SYNOPSIS
 
-    # creating an empty instance
+  use Bio::MAGE::NameValueType
+
+  # creating an empty instance
   my $namevaluetype = Bio::MAGE::NameValueType->new();
 
-    # creating an already populated instance
-  my $namevaluetype = Bio::MAGE::NameValueType->new(name=>$name_value,
-			type=>$type_value,
-			value=>$value_value,
-			propertySets=>$propertySets_value);
-
-    # setting and retrieving object attributes
-  my $name_val = $namevaluetype->name();
-  $namevaluetype->name($value);
-
-  my $type_val = $namevaluetype->type();
-  $namevaluetype->type($value);
-
-  my $value_val = $namevaluetype->value();
-  $namevaluetype->value($value);
-
-    # setting and retrieving object associations
-  my $propertySets_val = $namevaluetype->propertySets();
-  $namevaluetype->propertySets($value);
+  # creating an instance with existing data
+  my $namevaluetype = Bio::MAGE::NameValueType->new(
+        value=>$value_val,
+        name=>$name_val,
+        type=>$type_val,
+        propertySets=>\@namevaluetype_list,
+  );
 
 
-=head2 DESCRIPTION
+  # 'value' attribute
+  my $value_val = $namevaluetype->value(); # getter
+  $namevaluetype->value($value); # setter
+
+  # 'name' attribute
+  my $name_val = $namevaluetype->name(); # getter
+  $namevaluetype->name($value); # setter
+
+  # 'type' attribute
+  my $type_val = $namevaluetype->type(); # getter
+  $namevaluetype->type($value); # setter
+
+
+  # 'propertySets' association
+  my $namevaluetype_array_ref = $namevaluetype->propertySets(); # getter
+  $namevaluetype->propertySets(\@namevaluetype_list); # setter
+
+
+
+=head1 DESCRIPTION
 
 From the MAGE-OM documentation for the C<NameValueType> class:
 
@@ -89,12 +96,51 @@ A tuple designed to store data, keyed by a name and type.
 
 =cut
 
+=head1 INHERITANCE
 
-=head2 CLASS METHODS
+
+
+=cut
+
+BEGIN {
+  $__CLASS_NAME        = q[Bio::MAGE::NameValueType];
+  $__PACKAGE_NAME      = q[MAGE];
+  $__SUBCLASSES        = [];
+  $__SUPERCLASSES      = [];
+  $__ATTRIBUTE_NAMES   = ['value', 'name', 'type'];
+  $__ASSOCIATION_NAMES = ['propertySets'];
+  $__ASSOCIATIONS      = [
+          'propertySets',
+          bless( {
+                   '__SELF' => bless( {
+                                        '__NAME' => undef,
+                                        '__IS_REF' => 0,
+                                        '__CARDINALITY' => '1',
+                                        '__DOCUMENTATION' => 'Allows nested specification of name/value pairs',
+                                        '__CLASS_NAME' => 'NameValueType',
+                                        '__RANK' => undef,
+                                        '__ORDERED' => undef
+                                      }, 'Bio::MAGE::Association::End' ),
+                   '__OTHER' => bless( {
+                                         '__NAME' => 'propertySets',
+                                         '__IS_REF' => 1,
+                                         '__CARDINALITY' => '0..N',
+                                         '__DOCUMENTATION' => 'Allows nested specification of name/value pairs',
+                                         '__CLASS_NAME' => 'NameValueType',
+                                         '__RANK' => '1',
+                                         '__ORDERED' => 0
+                                       }, 'Bio::MAGE::Association::End' )
+                 }, 'Bio::MAGE::Association' )
+        ]
+
+}
+
+=head1 CLASS METHODS
 
 The following methods can all be called without first having an
 instance of the class via the Bio::MAGE::NameValueType->methodname() syntax.
 
+=over
 
 =item new()
 
@@ -106,39 +152,157 @@ named-value style arguments:
 
 =over
 
+=item * value
+
+Sets the value of the C<value> attribute
 
 =item * name
 
-Sets the value of the name attribute (this attribute was inherited
-from class C<Bio::MAGE::NameValueType>).
-
-
+Sets the value of the C<name> attribute
 
 =item * type
 
-Sets the value of the type attribute (this attribute was inherited
-from class C<Bio::MAGE::NameValueType>).
-
-
-
-=item * value
-
-Sets the value of the value attribute (this attribute was inherited
-from class C<Bio::MAGE::NameValueType>).
-
+Sets the value of the C<type> attribute
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (this association was inherited
-from class C<Bio::MAGE::NameValueType>).
+Sets the value of the C<propertySets> association
 
-The value will be of type C<NameValueType>.
+The value must be of type: array of C<Bio::MAGE::NameValueType>.
 
 
 =back
 
+=item $obj = class->new(%parameters)
 
+The C<new()> method is the class constructor.
+
+B<Parameters>: if given a list of name/value parameters the
+corresponding slots, attributes, or associations will have their
+initial values set by the constructor.
+
+B<Return value>: It returns a reference to an object of the class.
+
+B<Side effects>: It invokes the C<initialize()> method if it is defined
+by the class.
+
+=cut
+
+#
+# code for new() inherited from Base.pm
+#
+
+=item @names = class->get_slot_names()
+
+The C<get_slot_names()> method is used to retrieve the name of all
+slots defined in a given class.
+
+B<NOTE>: the list of names does not include attribute or association
+names.
+
+B<Return value>: A list of the names of all slots defined for this class.
+
+B<Side effects>: none
+
+=cut
+
+#
+# code for get_slot_names() inherited from Base.pm
+#
+
+=item @name_list = get_attribute_names()
+
+returns the list of attribute data members for this class.
+
+=cut
+
+#
+# code for get_attribute_names() inherited from Base.pm
+#
+
+=item @name_list = get_association_names()
+
+returns the list of association data members for this class.
+
+=cut
+
+#
+# code for get_association_names() inherited from Base.pm
+#
+
+=item @class_list = get_superclasses()
+
+returns the list of superclasses for this class.
+
+=cut
+
+#
+# code for get_superclasses() inherited from Base.pm
+#
+
+=item @class_list = get_subclasses()
+
+returns the list of subclasses for this class.
+
+=cut
+
+#
+# code for get_subclasses() inherited from Base.pm
+#
+
+=item $name = class_name()
+
+Returns the full class name for this class.
+
+=cut
+
+#
+# code for class_name() inherited from Base.pm
+#
+
+=item $package_name = package_name()
+
+Returns the base package name (i.e. no 'namespace::') of the package
+that contains this class.
+
+=cut
+
+#
+# code for package_name() inherited from Base.pm
+#
+
+=item %assns = associations()
+
+returns the association meta-information in a hash where the keys are
+the association names and the values are C<Association> objects that
+provide the meta-information for the association.
+
+=cut
+
+#
+# code for associations() inherited from Base.pm
+#
+
+
+
+=back
+
+=head1 INSTANCE METHODS
+
+=item $obj_copy = $obj->new()
+
+When invoked with an existing object reference and not a class name,
+the C<new()> method acts as a copy constructor - with the new object's
+initial values set to be those of the existing object.
+
+B<Parameters>: No input parameters  are used in the copy  constructor,
+the initial values are taken directly from the object to be copied.
+
+B<Return value>: It returns a reference to an object of the class.
+
+B<Side effects>: It invokes the C<initialize()> method if it is defined
+by the class.
 
 =cut
 
@@ -165,7 +329,7 @@ does not define.
 # code for set_slots() inherited from Base.pm
 #
 
-=item $obj->get_slots(@name_list)
+=item @obj_list = $obj->get_slots(@name_list)
 
 The C<get_slots()> method is used to get the values of a number of
 slots at the same time.
@@ -210,127 +374,6 @@ B<Side effects>: none
 # code for get_slot() inherited from Base.pm
 #
 
-=item @names = $obj->get_slot_names()
-
-The C<get_slot_names()> method is used to retrieve the name of all
-slots defined for a given object.
-
-B<Return value>: a single slot value, or undef if the slot has not been
-initialized.
-
-B<Side effects>: none
-
-=cut
-
-#
-# code for get_slot_names() inherited from Base.pm
-#
-
-
-
-=item $name = class_name()
-
-Returns the full class name for this class, Bio::MAGE::NameValueType.
-
-=cut
-
-sub class_name {
-  return q[Bio::MAGE::NameValueType];
-}
-
-=item $package_name = package()
-
-Returns the unresolved package name (i.e. no 'Bio::MAGE::') of the
-package that contains class, Bio::MAGE::NameValueType.
-
-=cut
-
-sub package {
-  return q[MAGE];
-}
-
-=item @classes = subclasses()
-
-returns the list of subclasses for this class.
-
-=cut
-
-sub subclasses {
-  my @list = ();
-  return @list;
-}
-
-=item @classes = superclasses()
-
-returns the list of superclasses for this class.
-
-=cut
-
-sub superclasses {
-  my @list = ();
-  return @list;
-}
-
-=item @methods = attribute_methods()
-
-returns the list of attribute accessor methods for this class.
-
-=cut
-
-sub attribute_methods {
-  my $class = shift;
-  my @list = ('name',
-'type',
-'value');
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->attribute_methods());
-    }
-  }
-  return @list;
-}
-
-=item @methods = association_methods()
-
-returns the list of association accessor methods for this class.
-
-=cut
-
-sub association_methods {
-  my $class = shift;
-  my @list = ('propertySets');
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->association_methods());
-    }
-  }
-  return @list;
-}
-
-=item %assns = associations()
-
-returns the association meta-information in a hash where the keys are
-the association names and the values are C<Bio::MAGE::Association>
-objects that provide the meta-information for the association.
-
-=cut
-
-sub associations {
-  my $class = shift;
-  my @list = ();
-  # superclasses first
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->associations());
-    }
-  }
-  # then associations from this class
-  if (defined $__ASSOCIATIONS) {
-    push(@list,@{$__ASSOCIATIONS})
-  }
-  return @list;
-}
-
 
 =head2 ATTRIBUTES
 
@@ -339,149 +382,19 @@ class. In the Perl implementation of the MAGE-OM classes, the
 interface to attributes is implemented using separate setter and
 getter methods for each attribute.
 
-Bio::MAGE::NameValueType: has the following attribute accessor methods:
+C<Bio::MAGE::NameValueType> has the following attribute accessor methods:
 
 =over
-
-
-=item name
-
-From the MAGE-OM documentation for the C<name> attribute:
-
-The name of the key.
-
-
-
-=over
-
-
-=item $val = $namevaluetype->setName($val)
-
-The restricted setter method for the name attribute.
-
-Input parameters: the value to which the name attribute will be set 
-
-Return value: the current value of the name attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setName {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setName: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setName: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__NAME} = $val;
-}
-
-
-
-=item $val = $namevaluetype->getName()
-
-The restricted getter method for the name attribute.
-
-Input parameters: none
-
-Return value: the current value of the name attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getName {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getName: arguments passed to getter")
-    if @_;
-  return $self->{__NAME};
-}
-
-
-
-
-=back
-
-
-=item type
-
-From the MAGE-OM documentation for the C<type> attribute:
-
-The type of the key.
-
-
-
-=over
-
-
-=item $val = $namevaluetype->setType($val)
-
-The restricted setter method for the type attribute.
-
-Input parameters: the value to which the type attribute will be set 
-
-Return value: the current value of the type attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setType {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setType: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setType: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__TYPE} = $val;
-}
-
-
-
-=item $val = $namevaluetype->getType()
-
-The restricted getter method for the type attribute.
-
-Input parameters: none
-
-Return value: the current value of the type attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getType {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getType: arguments passed to getter")
-    if @_;
-  return $self->{__TYPE};
-}
-
-
-
-
-=back
 
 
 =item value
 
-From the MAGE-OM documentation for the C<value> attribute:
+Methods for the C<value> attribute.
+
+
+From the MAGE-OM documentation:
 
 The value of the name.
-
 
 
 =over
@@ -489,18 +402,20 @@ The value of the name.
 
 =item $val = $namevaluetype->setValue($val)
 
-The restricted setter method for the value attribute.
+The restricted setter method for the C<value> attribute.
 
-Input parameters: the value to which the value attribute will be set 
 
-Return value: the current value of the value attribute 
+Input parameters: the value to which the C<value> attribute will be set 
+
+Return value: the current value of the C<value> attribute 
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
+if too many input parameters are specified
 
 =cut
+
 
 sub setValue {
   my $self = shift;
@@ -514,14 +429,13 @@ sub setValue {
 }
 
 
-
 =item $val = $namevaluetype->getValue()
 
-The restricted getter method for the value attribute.
+The restricted getter method for the C<value> attribute.
 
 Input parameters: none
 
-Return value: the current value of the value attribute 
+Return value: the current value of the C<value> attribute 
 
 Side effects: none
 
@@ -529,95 +443,212 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
+
 sub getValue {
   my $self = shift;
   croak(__PACKAGE__ . "::getValue: arguments passed to getter")
     if @_;
+  my $val = shift;
   return $self->{__VALUE};
 }
 
 
 
 
-=back
-
-
 
 =back
 
+
+=item name
+
+Methods for the C<name> attribute.
+
+
+From the MAGE-OM documentation:
+
+The name of the key.
+
+
+=over
+
+
+=item $val = $namevaluetype->setName($val)
+
+The restricted setter method for the C<name> attribute.
+
+
+Input parameters: the value to which the C<name> attribute will be set 
+
+Return value: the current value of the C<name> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified
 
 =cut
 
 
-
-BEGIN {
-  $__ASSOCIATIONS = [
-          'propertySets',
-          bless( {
-                   '__OTHER' => bless( {
-                                         '__IS_REF' => 1,
-                                         '__RANK' => '1',
-                                         '__CARDINALITY' => '0..N',
-                                         '__DOCUMENTATION' => 'Allows nested specification of name/value pairs',
-                                         '__NAME' => 'propertySets',
-                                         '__ORDERED' => 0,
-                                         '__CLASS_NAME' => 'NameValueType'
-                                       }, 'Bio::MAGE::Association::End' ),
-                   '__SELF' => bless( {
-                                        '__IS_REF' => 0,
-                                        '__RANK' => undef,
-                                        '__CARDINALITY' => '1',
-                                        '__DOCUMENTATION' => 'Allows nested specification of name/value pairs',
-                                        '__NAME' => undef,
-                                        '__ORDERED' => undef,
-                                        '__CLASS_NAME' => 'NameValueType'
-                                      }, 'Bio::MAGE::Association::End' )
-                 }, 'Bio::MAGE::Association' )
-        ]
-
+sub setName {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setName: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setName: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__NAME} = $val;
 }
 
-=head2 ASSOCIATIONS
 
-Associations are references to other class objects which can be shared
-by multiple class instances at the same time. In the Perl
-implementation of MAGE-OM classes, associations are implemented using
-three separate methods:
+=item $val = $namevaluetype->getName()
 
-=over
+The restricted getter method for the C<name> attribute.
 
-=item get*
+Input parameters: none
 
-Retrieves the current value. If the association has list cardinality,
-an array reference is returned.
+Return value: the current value of the C<name> attribute 
 
-=item set*
+Side effects: none
 
-Sets the current value B<replacing> any existing value. If the
-association has list cardinality, the argument must be an array
-reference. Unless you know what you are doing, you probably should be
-using the add* methods.
+Exceptions: will call C<croak()> if any input parameters are specified
 
-=item add*
+=cut
 
-This method exists only for associations with list cardinality. It
-appends a list of objects to any values that may already be stored in
-the association.
+
+sub getName {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getName: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__NAME};
+}
+
+
+
+
 
 =back
 
-Bio::MAGE::NameValueType: has the following association accessor methods:
+
+=item type
+
+Methods for the C<type> attribute.
+
+
+From the MAGE-OM documentation:
+
+The type of the key.
+
+
+=over
+
+
+=item $val = $namevaluetype->setType($val)
+
+The restricted setter method for the C<type> attribute.
+
+
+Input parameters: the value to which the C<type> attribute will be set 
+
+Return value: the current value of the C<type> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified
+
+=cut
+
+
+sub setType {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setType: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setType: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+  
+  return $self->{__TYPE} = $val;
+}
+
+
+=item $val = $namevaluetype->getType()
+
+The restricted getter method for the C<type> attribute.
+
+Input parameters: none
+
+Return value: the current value of the C<type> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getType {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getType: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__TYPE};
+}
+
+
+
+
+
+=back
+
+
+=back
+
+
+=head2 ASSOCIATIONS
+
+Associations are references to other classes. Associations in MAGE-OM have a cardinality that determines the minimum and
+maximum number of instances of the 'other' class that maybe included
+in the association:
+
+=over
+
+=item 1
+
+There B<must> be exactly one item in the association, i.e. this is a
+mandatory data field.
+
+=item 0..1
+
+There B<may> be one item in the association, i.e. this is an optional
+data field.
+
+=item 1..N
+
+There B<must> be one or more items in the association, i.e. this is a
+mandatory data field, with list cardinality.
+
+=item 0..N
+
+There B<may> be one or more items in the association, i.e. this is an
+optional data field, with list cardinality.
+
+=back
+
+Bio::MAGE::NameValueType has the following association accessor methods:
 
 =over
 
 
 =item propertySets
 
+Methods for the C<propertySets> association.
 
-From the MAGE-OM documentation for the C<propertySets> association:
+
+From the MAGE-OM documentation:
 
 Allows nested specification of name/value pairs
-
 
 
 =over
@@ -625,18 +656,20 @@ Allows nested specification of name/value pairs
 
 =item $array_ref = $namevaluetype->setPropertySets($array_ref)
 
-The restricted setter method for the propertySets association.
+The restricted setter method for the C<propertySets> association.
 
-Input parameters: the value to which the propertySets association will be set : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
 
-Return value: the current value of the propertySets association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+Input parameters: the value to which the C<propertySets> association will be set : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Return value: the current value of the C<propertySets> association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified , or if $array_ref is not a reference to an array class C<Bio::MAGE::NameValueType> instances
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::NameValueType> instances
 
 =cut
+
 
 sub setPropertySets {
   my $self = shift;
@@ -646,24 +679,25 @@ sub setPropertySets {
     if @_ > 1;
   my $val = shift;
     croak(__PACKAGE__ . "::setPropertySets: expected array reference, got $self")
-    unless UNIVERSAL::isa($val,'ARRAY');
-  foreach my $val (@{$val}) {
-    croak(__PACKAGE__ . "::setPropertySets: wrong type: " . ref($val) . " expected Bio::MAGE::NameValueType")
-      unless UNIVERSAL::isa($val,'Bio::MAGE::NameValueType');
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setPropertySets: wrong type: " . ref($val_ent) . " expected Bio::MAGE::NameValueType")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::NameValueType');
+    }
   }
 
   return $self->{__PROPERTYSETS} = $val;
 }
 
 
-
 =item $array_ref = $namevaluetype->getPropertySets()
 
-The restricted getter method for the propertySets association.
+The restricted getter method for the C<propertySets> association.
 
 Input parameters: none
 
-Return value: the current value of the propertySets association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+Return value: the current value of the C<propertySets> association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
 
 Side effects: none
 
@@ -671,36 +705,37 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
+
 sub getPropertySets {
   my $self = shift;
   croak(__PACKAGE__ . "::getPropertySets: arguments passed to getter")
     if @_;
+  my $val = shift;
   return $self->{__PROPERTYSETS};
 }
 
 
 
-=item $namevaluetype->addPropertySets(@vals)
+
+=item $val = $namevaluetype->addPropertySets(@vals)
 
 Because the propertySets association has list cardinality, it may store more
-than one value. This method adds the current list of objects in the propertySets
-association.
+than one value. This method adds the current list of objects in the propertySets association.
 
-Input parameters: the list of values C<@vals> to add to the propertySets
-association. B<NOTE>: submitting a single value is permitted.
+Input parameters: the list of values C<@vals> to add to the propertySets association. B<NOTE>: submitting a single value is permitted.
 
-Return value: none
+Return value: the number of items stored in the slot B<after> adding C<@vals>
 
 Side effects: none
 
-Exceptions: will call C<croak()> if no input parameters are specified
-, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::NameValueType>
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::NameValueType>
 
 =cut
 
+
 sub addPropertySets {
   my $self = shift;
-  croak(__PACKAGE__ . "::addPropertySets: no arguments passed to setter")
+  croak(__PACKAGE__ . "::addPropertySets: no arguments passed to adder")
     unless @_;
   my @vals = @_;
     foreach my $val (@vals) {
@@ -708,14 +743,24 @@ sub addPropertySets {
       unless UNIVERSAL::isa($val,'Bio::MAGE::NameValueType');
   }
 
-  push(@{$self->{__PROPERTYSETS}},@vals);
+  return push(@{$self->{__PROPERTYSETS}},@vals);
 }
+
+
 
 
 
 =back
 
 
+sub initialize {
+
+
+  my $self = shift;
+  return 1;
+
+
+}
 
 =back
 
@@ -723,21 +768,117 @@ sub addPropertySets {
 =cut
 
 
+=head1 SLOTS, ATTRIBUTES, AND ASSOCIATIONS
 
-sub initialize {
-  my $self = shift;
-  return 1;
-}
+In the Perl implementation of MAGE-OM classes, there are
+three types of class data members: C<slots>, C<attributes>, and
+C<associations>.
 
+=head2 SLOTS
+
+This API uses the term C<slot> to indicate a data member of the class
+that was not present in the UML model and is used for mainly internal
+purposes - use only if you understand the inner workings of the
+API. Most often slots are used by generic methods such as those in the
+XML writing and reading classes.
+
+Slots are implemented using unified getter/setter methods:
+
+=over
+
+=item $var = $obj->slot_name();
+
+Retrieves the current value of the slot.
+
+=item $new_var = $obj->slot_name($new_var);
+
+Store $new_var in the slot - the return value is also $new_var.
+
+=item @names = $obj->get_slot_names()
+
+Returns the list of all slots in the class.
+
+=back
+
+B<DATA CHECKING>: No data type checking is made for these methods.
+
+=head2 ATTRIBUTES AND ASSOCIATIONS
+
+The terms C<attribute> and C<association> indicate data members of the
+class that were specified directly from the UML model.
+
+In the Perl implementation of MAGE-OM classes,
+association and attribute accessors are implemented using three
+separate methods:
+
+=over
+
+=item get*
+
+Retrieves the current value.
+
+B<NOTE>: For associations, if the association has list cardinality, an
+array reference is returned.
+
+B<DATA CHECKING>: Ensure that no argument is provided.
+
+=item set*
+
+Sets the current value, B<replacing> any existing value.
+
+B<NOTE>: For associations, if the association has list cardinality,
+the argument must be an array reference. Because of this, you probably
+should be using the add* methods.
+
+B<DATA CHECKING>: For attributes, ensure that a single value is
+provided as the argument. For associations, if the association has
+list cardinality, ensure that the argument is a reference to an array
+of instances of the correct MAGE-OM class, otherwise
+ensure that there is a single argument of the correct MAGE-OM class.
+
+=item add*
+
+B<NOTE>: Only present in associations with list cardinality. 
+
+Appends a list of objects to any values that may already be stored
+in the association.
+
+B<DATA CHECKING>: Ensure that all arguments are of the correct MAGE-OM class.
+
+=back
+
+=head2 GENERIC METHODS
+
+The unified base class of all MAGE-OM classes, C<Bio::MAGE::Base>, provides a set of generic methods that
+will operate on slots, attributes, and associations:
+
+=over
+
+=item $val = $obj->get_slot($name)
+
+=item \@list_ref = $obj->get_slots(@name_list);
+
+=item $val = $obj->set_slot($name,$val)
+
+=item $obj->set_slots(%parameters)
+
+=item $obj->set_slots(\@name_list, \@value_list)
+
+See elsewhere in this page for a detailed description of these
+methods.
+
+=back
+
+=cut
 
 
 =head1 BUGS
 
-Please send bug reports to mged-mage@lists.sf.net
+Please send bug reports to the project mailing list: (mged-mage 'at' lists 'dot' sf 'dot' net)
 
 =head1 AUTHOR
 
-Jason E. Stewart (www.openinformatics.com)
+Jason E. Stewart (jasons 'at' cpan 'dot' org)
 
 =head1 SEE ALSO
 
@@ -745,8 +886,6 @@ perl(1).
 
 =cut
 
-#
-# End the module by returning a true value
-#
+# all perl modules must be true...
 1;
 

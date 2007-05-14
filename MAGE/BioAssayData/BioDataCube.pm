@@ -4,9 +4,8 @@
 #
 ##############################
 # C O P Y R I G H T   N O T I C E
-#  Copyright (c) 2001-2002 by:
+#  Copyright (c) 2001-2006 by:
 #    * The MicroArray Gene Expression Database Society (MGED)
-#    * Rosetta Inpharmatics
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -28,50 +27,67 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-package Bio::MAGE::BioAssayData::BioDataCube;
 
+
+package Bio::MAGE::BioAssayData::BioDataCube;
 use strict;
 use Carp;
-use Bio::MAGE::Base;
+
+use base qw(Bio::MAGE::BioAssayData::BioDataValues);
+
 use Bio::MAGE::Association;
-use Bio::MAGE::BioAssayData::BioDataValues;
 
+use vars qw($__ASSOCIATIONS
+	    $__CLASS_NAME
+	    $__PACKAGE_NAME
+	    $__SUBCLASSES
+	    $__SUPERCLASSES
+	    $__ATTRIBUTE_NAMES
+	    $__ASSOCIATION_NAMES
+	   );
 
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $__ASSOCIATIONS);
+use constant ORDER_QDB => 'QDB';
+use constant ORDER_BDQ => 'BDQ';
+use constant ORDER_DBQ => 'DBQ';
+use constant ORDER_QBD => 'QBD';
+use constant ORDER_DQB => 'DQB';
+use constant ORDER_BQD => 'BQD';
 
-require Exporter;
+=head1 NAME
 
-@ISA = qw(Bio::MAGE::Base Bio::MAGE::BioAssayData::BioDataValues Exporter);
-$VERSION = 20020902.6;
+Bio::MAGE::BioAssayData::BioDataCube - Class for the MAGE-OM API
 
-# Items to export into callers namespace by default. Note: do not export
-# names by default without a very good reason. Use EXPORT_OK instead.
-# Do not simply export all your public functions/methods/constants.
-@EXPORT_OK = qw();
+=head1 SYNOPSIS
 
+  use Bio::MAGE::BioAssayData::BioDataCube
 
-=head1 Bio::MAGE::BioAssayData::BioDataCube
-
-=head2 SYNOPSIS
-
-  use Bio::MAGE::BioAssayData::BioDataCube;
-
-    # creating an empty instance
+  # creating an empty instance
   my $biodatacube = Bio::MAGE::BioAssayData::BioDataCube->new();
 
-    # creating an already populated instance
-  my $biodatacube = Bio::MAGE::BioAssayData::BioDataCube->new(order=>$order_value,
-			cube=>$cube_value);
-
-    # setting and retrieving object attributes
-  my $order_val = $biodatacube->order();
-  $biodatacube->order($value);
-
-  my $cube_val = $biodatacube->cube();
-  $biodatacube->cube($value);
+  # creating an instance with existing data
+  my $biodatacube = Bio::MAGE::BioAssayData::BioDataCube->new(
+        cube=>$cube_val,
+        order=>$order_val,
+        propertySets=>\@namevaluetype_list,
+  );
 
 
-=head2 DESCRIPTION
+  # 'cube' attribute
+  my $cube_val = $biodatacube->cube(); # getter
+  $biodatacube->cube($value); # setter
+
+  # 'order' attribute
+  my $order_val = $biodatacube->order(); # getter
+  $biodatacube->order($value); # setter
+
+
+  # 'propertySets' association
+  my $namevaluetype_array_ref = $biodatacube->propertySets(); # getter
+  $biodatacube->propertySets(\@namevaluetype_list); # setter
+
+
+
+=head1 DESCRIPTION
 
 From the MAGE-OM documentation for the C<BioDataCube> class:
 
@@ -81,13 +97,12 @@ A three-dimensional cube representation of the data.
 
 =cut
 
+=head1 INHERITANCE
 
-=head2 INHERITANCE
 
+Bio::MAGE::BioAssayData::BioDataCube has the following superclasses:
 
-Bio::MAGE::BioAssayData::BioDataCube has the following super classes
-
-=over 
+=over
 
 
 =item * Bio::MAGE::BioAssayData::BioDataValues
@@ -96,11 +111,26 @@ Bio::MAGE::BioAssayData::BioDataCube has the following super classes
 =back
 
 
-=head2 CLASS METHODS
+
+=cut
+
+BEGIN {
+  $__CLASS_NAME        = q[Bio::MAGE::BioAssayData::BioDataCube];
+  $__PACKAGE_NAME      = q[BioAssayData];
+  $__SUBCLASSES        = [];
+  $__SUPERCLASSES      = ['Bio::MAGE::BioAssayData::BioDataValues'];
+  $__ATTRIBUTE_NAMES   = ['cube', 'order'];
+  $__ASSOCIATION_NAMES = ['propertySets'];
+  $__ASSOCIATIONS      = []
+
+}
+
+=head1 CLASS METHODS
 
 The following methods can all be called without first having an
 instance of the class via the Bio::MAGE::BioAssayData::BioDataCube->methodname() syntax.
 
+=over
 
 =item new()
 
@@ -112,32 +142,154 @@ named-value style arguments:
 
 =over
 
+=item * cube
+
+Sets the value of the C<cube> attribute
 
 =item * order
 
-Sets the value of the order attribute (this attribute was inherited
-from class C<Bio::MAGE::BioAssayData::BioDataCube>).
-
-
-
-=item * cube
-
-Sets the value of the cube attribute (this attribute was inherited
-from class C<Bio::MAGE::BioAssayData::BioDataCube>).
-
+Sets the value of the C<order> attribute
 
 
 =item * propertySets
 
-Sets the value of the propertySets association (this association was inherited
-from class C<Bio::MAGE::Extendable>).
+Sets the value of the C<propertySets> association (this association was inherited from class C<Bio::MAGE::Extendable>).
 
-The value will be of type C<NameValueType>.
+
+The value must be of type: array of C<Bio::MAGE::NameValueType>.
 
 
 =back
 
+=item $obj = class->new(%parameters)
 
+The C<new()> method is the class constructor.
+
+B<Parameters>: if given a list of name/value parameters the
+corresponding slots, attributes, or associations will have their
+initial values set by the constructor.
+
+B<Return value>: It returns a reference to an object of the class.
+
+B<Side effects>: It invokes the C<initialize()> method if it is defined
+by the class.
+
+=cut
+
+#
+# code for new() inherited from Base.pm
+#
+
+=item @names = class->get_slot_names()
+
+The C<get_slot_names()> method is used to retrieve the name of all
+slots defined in a given class.
+
+B<NOTE>: the list of names does not include attribute or association
+names.
+
+B<Return value>: A list of the names of all slots defined for this class.
+
+B<Side effects>: none
+
+=cut
+
+#
+# code for get_slot_names() inherited from Base.pm
+#
+
+=item @name_list = get_attribute_names()
+
+returns the list of attribute data members for this class.
+
+=cut
+
+#
+# code for get_attribute_names() inherited from Base.pm
+#
+
+=item @name_list = get_association_names()
+
+returns the list of association data members for this class.
+
+=cut
+
+#
+# code for get_association_names() inherited from Base.pm
+#
+
+=item @class_list = get_superclasses()
+
+returns the list of superclasses for this class.
+
+=cut
+
+#
+# code for get_superclasses() inherited from Base.pm
+#
+
+=item @class_list = get_subclasses()
+
+returns the list of subclasses for this class.
+
+=cut
+
+#
+# code for get_subclasses() inherited from Base.pm
+#
+
+=item $name = class_name()
+
+Returns the full class name for this class.
+
+=cut
+
+#
+# code for class_name() inherited from Base.pm
+#
+
+=item $package_name = package_name()
+
+Returns the base package name (i.e. no 'namespace::') of the package
+that contains this class.
+
+=cut
+
+#
+# code for package_name() inherited from Base.pm
+#
+
+=item %assns = associations()
+
+returns the association meta-information in a hash where the keys are
+the association names and the values are C<Association> objects that
+provide the meta-information for the association.
+
+=cut
+
+#
+# code for associations() inherited from Base.pm
+#
+
+
+
+=back
+
+=head1 INSTANCE METHODS
+
+=item $obj_copy = $obj->new()
+
+When invoked with an existing object reference and not a class name,
+the C<new()> method acts as a copy constructor - with the new object's
+initial values set to be those of the existing object.
+
+B<Parameters>: No input parameters  are used in the copy  constructor,
+the initial values are taken directly from the object to be copied.
+
+B<Return value>: It returns a reference to an object of the class.
+
+B<Side effects>: It invokes the C<initialize()> method if it is defined
+by the class.
 
 =cut
 
@@ -164,7 +316,7 @@ does not define.
 # code for set_slots() inherited from Base.pm
 #
 
-=item $obj->get_slots(@name_list)
+=item @obj_list = $obj->get_slots(@name_list)
 
 The C<get_slots()> method is used to get the values of a number of
 slots at the same time.
@@ -209,126 +361,6 @@ B<Side effects>: none
 # code for get_slot() inherited from Base.pm
 #
 
-=item @names = $obj->get_slot_names()
-
-The C<get_slot_names()> method is used to retrieve the name of all
-slots defined for a given object.
-
-B<Return value>: a single slot value, or undef if the slot has not been
-initialized.
-
-B<Side effects>: none
-
-=cut
-
-#
-# code for get_slot_names() inherited from Base.pm
-#
-
-
-
-=item $name = class_name()
-
-Returns the full class name for this class, Bio::MAGE::BioAssayData::BioDataCube.
-
-=cut
-
-sub class_name {
-  return q[Bio::MAGE::BioAssayData::BioDataCube];
-}
-
-=item $package_name = package()
-
-Returns the unresolved package name (i.e. no 'Bio::MAGE::') of the
-package that contains class, Bio::MAGE::BioAssayData::BioDataCube.
-
-=cut
-
-sub package {
-  return q[BioAssayData];
-}
-
-=item @classes = subclasses()
-
-returns the list of subclasses for this class.
-
-=cut
-
-sub subclasses {
-  my @list = ();
-  return @list;
-}
-
-=item @classes = superclasses()
-
-returns the list of superclasses for this class.
-
-=cut
-
-sub superclasses {
-  my @list = ('Bio::MAGE::BioAssayData::BioDataValues');
-  return @list;
-}
-
-=item @methods = attribute_methods()
-
-returns the list of attribute accessor methods for this class.
-
-=cut
-
-sub attribute_methods {
-  my $class = shift;
-  my @list = ('order',
-'cube');
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->attribute_methods());
-    }
-  }
-  return @list;
-}
-
-=item @methods = association_methods()
-
-returns the list of association accessor methods for this class.
-
-=cut
-
-sub association_methods {
-  my $class = shift;
-  my @list = ();
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->association_methods());
-    }
-  }
-  return @list;
-}
-
-=item %assns = associations()
-
-returns the association meta-information in a hash where the keys are
-the association names and the values are C<Bio::MAGE::Association>
-objects that provide the meta-information for the association.
-
-=cut
-
-sub associations {
-  my $class = shift;
-  my @list = ();
-  # superclasses first
-  if ($class->superclasses()) {
-    foreach ($class->superclasses()) {
-      push(@list,$_->associations());
-    }
-  }
-  # then associations from this class
-  if (defined $__ASSOCIATIONS) {
-    push(@list,@{$__ASSOCIATIONS})
-  }
-  return @list;
-}
-
 
 =head2 ATTRIBUTES
 
@@ -337,83 +369,19 @@ class. In the Perl implementation of the MAGE-OM classes, the
 interface to attributes is implemented using separate setter and
 getter methods for each attribute.
 
-Bio::MAGE::BioAssayData::BioDataCube: has the following attribute accessor methods:
+C<Bio::MAGE::BioAssayData::BioDataCube> has the following attribute accessor methods:
 
 =over
-
-
-=item order
-
-From the MAGE-OM documentation for the C<order> attribute:
-
-The order to expect the dimension.  The enumeration uses the first letter of the three dimensions to represent the six possible orderings.
-
-
-
-=over
-
-
-=item $val = $biodatacube->setOrder($val)
-
-The restricted setter method for the order attribute.
-
-Input parameters: the value to which the order attribute will be set 
-
-Return value: the current value of the order attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
-
-=cut
-
-sub setOrder {
-  my $self = shift;
-  croak(__PACKAGE__ . "::setOrder: no arguments passed to setter")
-    unless @_;
-  croak(__PACKAGE__ . "::setOrder: too many arguments passed to setter")
-    if @_ > 1;
-  my $val = shift;
-  
-  return $self->{__ORDER} = $val;
-}
-
-
-
-=item $val = $biodatacube->getOrder()
-
-The restricted getter method for the order attribute.
-
-Input parameters: none
-
-Return value: the current value of the order attribute 
-
-Side effects: none
-
-Exceptions: will call C<croak()> if any input parameters are specified
-
-=cut
-
-sub getOrder {
-  my $self = shift;
-  croak(__PACKAGE__ . "::getOrder: arguments passed to getter")
-    if @_;
-  return $self->{__ORDER};
-}
-
-
-
-
-=back
 
 
 =item cube
 
-From the MAGE-OM documentation for the C<cube> attribute:
+Methods for the C<cube> attribute.
+
+
+From the MAGE-OM documentation:
 
 Three dimension array, indexed by the three dimensions to provide the data for the BioAssayData.
-
 
 
 =over
@@ -421,18 +389,20 @@ Three dimension array, indexed by the three dimensions to provide the data for t
 
 =item $val = $biodatacube->setCube($val)
 
-The restricted setter method for the cube attribute.
+The restricted setter method for the C<cube> attribute.
 
-Input parameters: the value to which the cube attribute will be set 
 
-Return value: the current value of the cube attribute 
+Input parameters: the value to which the C<cube> attribute will be set 
+
+Return value: the current value of the C<cube> attribute 
 
 Side effects: none
 
 Exceptions: will call C<croak()> if no input parameters are specified, or
-if too many input parameters are specified 
+if too many input parameters are specified
 
 =cut
+
 
 sub setCube {
   my $self = shift;
@@ -446,14 +416,13 @@ sub setCube {
 }
 
 
-
 =item $val = $biodatacube->getCube()
 
-The restricted getter method for the cube attribute.
+The restricted getter method for the C<cube> attribute.
 
 Input parameters: none
 
-Return value: the current value of the cube attribute 
+Return value: the current value of the C<cube> attribute 
 
 Side effects: none
 
@@ -461,12 +430,15 @@ Exceptions: will call C<croak()> if any input parameters are specified
 
 =cut
 
+
 sub getCube {
   my $self = shift;
   croak(__PACKAGE__ . "::getCube: arguments passed to getter")
     if @_;
+  my $val = shift;
   return $self->{__CUBE};
 }
+
 
 
 
@@ -474,6 +446,240 @@ sub getCube {
 =back
 
 
+=item order
+
+Methods for the C<order> attribute.
+
+
+From the MAGE-OM documentation:
+
+The order to expect the dimension.  The enumeration uses the first letter of the three dimensions to represent the six possible orderings.
+
+
+=over
+
+
+=item $val = $biodatacube->setOrder($val)
+
+The restricted setter method for the C<order> attribute.
+
+C<order> is an B<enumerated> attribute - it can only be set to C<undef> or one of the following values: BDQ BQD DBQ DQB QBD QDB
+
+
+Input parameters: the value to which the C<order> attribute will be set 
+
+Return value: the current value of the C<order> attribute 
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$val> is not one of the accepted enumeration values: BDQ BQD DBQ DQB QBD QDB
+
+=cut
+
+
+sub setOrder {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setOrder: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setOrder: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setOrder: expected one of enum values : BDQ BQD DBQ DQB QBD QDB, got $val")
+    unless (not defined $val) or (grep {$val eq $_} qw(BDQ BQD DBQ DQB QBD QDB));
+
+  return $self->{__ORDER} = $val;
+}
+
+
+=item $val = $biodatacube->getOrder()
+
+The restricted getter method for the C<order> attribute.
+
+Input parameters: none
+
+Return value: the current value of the C<order> attribute : an instance of type C<BDQ BQD DBQ DQB QBD QDB>.
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getOrder {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getOrder: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__ORDER};
+}
+
+
+
+
+
+=back
+
+
+=back
+
+
+=head2 ASSOCIATIONS
+
+Associations are references to other classes. Associations in MAGE-OM have a cardinality that determines the minimum and
+maximum number of instances of the 'other' class that maybe included
+in the association:
+
+=over
+
+=item 1
+
+There B<must> be exactly one item in the association, i.e. this is a
+mandatory data field.
+
+=item 0..1
+
+There B<may> be one item in the association, i.e. this is an optional
+data field.
+
+=item 1..N
+
+There B<must> be one or more items in the association, i.e. this is a
+mandatory data field, with list cardinality.
+
+=item 0..N
+
+There B<may> be one or more items in the association, i.e. this is an
+optional data field, with list cardinality.
+
+=back
+
+Bio::MAGE::BioAssayData::BioDataCube has the following association accessor methods:
+
+=over
+
+
+=item propertySets
+
+Methods for the C<propertySets> association.
+
+
+From the MAGE-OM documentation:
+
+Allows specification of name/value pairs.  Meant to primarily help in-house, pipeline processing of instances by providing a place for values that aren't part of the specification proper.
+
+
+=over
+
+
+=item $array_ref = $biodatacube->setPropertySets($array_ref)
+
+The restricted setter method for the C<propertySets> association.
+
+
+Input parameters: the value to which the C<propertySets> association will be set : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Return value: the current value of the C<propertySets> association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or
+if too many input parameters are specified, or if C<$array_ref> is not a reference to an array class C<Bio::MAGE::NameValueType> instances
+
+=cut
+
+
+sub setPropertySets {
+  my $self = shift;
+  croak(__PACKAGE__ . "::setPropertySets: no arguments passed to setter")
+    unless @_;
+  croak(__PACKAGE__ . "::setPropertySets: too many arguments passed to setter")
+    if @_ > 1;
+  my $val = shift;
+    croak(__PACKAGE__ . "::setPropertySets: expected array reference, got $self")
+    unless (not defined $val) or UNIVERSAL::isa($val,'ARRAY');
+  if (defined $val) {
+    foreach my $val_ent (@{$val}) {
+      croak(__PACKAGE__ . "::setPropertySets: wrong type: " . ref($val_ent) . " expected Bio::MAGE::NameValueType")
+        unless UNIVERSAL::isa($val_ent,'Bio::MAGE::NameValueType');
+    }
+  }
+
+  return $self->{__PROPERTYSETS} = $val;
+}
+
+
+=item $array_ref = $biodatacube->getPropertySets()
+
+The restricted getter method for the C<propertySets> association.
+
+Input parameters: none
+
+Return value: the current value of the C<propertySets> association : a reference to an array of objects of type C<Bio::MAGE::NameValueType>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if any input parameters are specified
+
+=cut
+
+
+sub getPropertySets {
+  my $self = shift;
+  croak(__PACKAGE__ . "::getPropertySets: arguments passed to getter")
+    if @_;
+  my $val = shift;
+  return $self->{__PROPERTYSETS};
+}
+
+
+
+
+=item $val = $biodatacube->addPropertySets(@vals)
+
+Because the propertySets association has list cardinality, it may store more
+than one value. This method adds the current list of objects in the propertySets association.
+
+Input parameters: the list of values C<@vals> to add to the propertySets association. B<NOTE>: submitting a single value is permitted.
+
+Return value: the number of items stored in the slot B<after> adding C<@vals>
+
+Side effects: none
+
+Exceptions: will call C<croak()> if no input parameters are specified, or if any of the objects in @vals is not an instance of class C<Bio::MAGE::NameValueType>
+
+=cut
+
+
+sub addPropertySets {
+  my $self = shift;
+  croak(__PACKAGE__ . "::addPropertySets: no arguments passed to adder")
+    unless @_;
+  my @vals = @_;
+    foreach my $val (@vals) {
+    croak(__PACKAGE__ . "::addPropertySets: wrong type: " . ref($val) . " expected Bio::MAGE::NameValueType")
+      unless UNIVERSAL::isa($val,'Bio::MAGE::NameValueType');
+  }
+
+  return push(@{$self->{__PROPERTYSETS}},@vals);
+}
+
+
+
+
+
+=back
+
+
+sub initialize {
+
+
+  my $self = shift;
+  return 1;
+
+
+}
 
 =back
 
@@ -481,21 +687,117 @@ sub getCube {
 =cut
 
 
+=head1 SLOTS, ATTRIBUTES, AND ASSOCIATIONS
 
-sub initialize {
-  my $self = shift;
-  return 1;
-}
+In the Perl implementation of MAGE-OM classes, there are
+three types of class data members: C<slots>, C<attributes>, and
+C<associations>.
 
+=head2 SLOTS
+
+This API uses the term C<slot> to indicate a data member of the class
+that was not present in the UML model and is used for mainly internal
+purposes - use only if you understand the inner workings of the
+API. Most often slots are used by generic methods such as those in the
+XML writing and reading classes.
+
+Slots are implemented using unified getter/setter methods:
+
+=over
+
+=item $var = $obj->slot_name();
+
+Retrieves the current value of the slot.
+
+=item $new_var = $obj->slot_name($new_var);
+
+Store $new_var in the slot - the return value is also $new_var.
+
+=item @names = $obj->get_slot_names()
+
+Returns the list of all slots in the class.
+
+=back
+
+B<DATA CHECKING>: No data type checking is made for these methods.
+
+=head2 ATTRIBUTES AND ASSOCIATIONS
+
+The terms C<attribute> and C<association> indicate data members of the
+class that were specified directly from the UML model.
+
+In the Perl implementation of MAGE-OM classes,
+association and attribute accessors are implemented using three
+separate methods:
+
+=over
+
+=item get*
+
+Retrieves the current value.
+
+B<NOTE>: For associations, if the association has list cardinality, an
+array reference is returned.
+
+B<DATA CHECKING>: Ensure that no argument is provided.
+
+=item set*
+
+Sets the current value, B<replacing> any existing value.
+
+B<NOTE>: For associations, if the association has list cardinality,
+the argument must be an array reference. Because of this, you probably
+should be using the add* methods.
+
+B<DATA CHECKING>: For attributes, ensure that a single value is
+provided as the argument. For associations, if the association has
+list cardinality, ensure that the argument is a reference to an array
+of instances of the correct MAGE-OM class, otherwise
+ensure that there is a single argument of the correct MAGE-OM class.
+
+=item add*
+
+B<NOTE>: Only present in associations with list cardinality. 
+
+Appends a list of objects to any values that may already be stored
+in the association.
+
+B<DATA CHECKING>: Ensure that all arguments are of the correct MAGE-OM class.
+
+=back
+
+=head2 GENERIC METHODS
+
+The unified base class of all MAGE-OM classes, C<Bio::MAGE::Base>, provides a set of generic methods that
+will operate on slots, attributes, and associations:
+
+=over
+
+=item $val = $obj->get_slot($name)
+
+=item \@list_ref = $obj->get_slots(@name_list);
+
+=item $val = $obj->set_slot($name,$val)
+
+=item $obj->set_slots(%parameters)
+
+=item $obj->set_slots(\@name_list, \@value_list)
+
+See elsewhere in this page for a detailed description of these
+methods.
+
+=back
+
+=cut
 
 
 =head1 BUGS
 
-Please send bug reports to mged-mage@lists.sf.net
+Please send bug reports to the project mailing list: (mged-mage 'at' lists 'dot' sf 'dot' net)
 
 =head1 AUTHOR
 
-Jason E. Stewart (www.openinformatics.com)
+Jason E. Stewart (jasons 'at' cpan 'dot' org)
 
 =head1 SEE ALSO
 
@@ -503,8 +805,6 @@ perl(1).
 
 =cut
 
-#
-# End the module by returning a true value
-#
+# all perl modules must be true...
 1;
 

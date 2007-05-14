@@ -1,10 +1,15 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl ./t//QuantitationType_package.t'
+##############################
+#
+# QuantitationType_package.t
+#
 
+# Before `make install' is performed this script should be runnable with
+# `make test'. After `make install' it should work as `perl QuantitationType_package.t`
+
+##############################
 # C O P Y R I G H T   N O T I C E
-#  Copyright (c) 2001-2002 by:
+#  Copyright (c) 2001-2006 by:
 #    * The MicroArray Gene Expression Database Society (MGED)
-#    * Rosetta Inpharmatics
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -26,27 +31,18 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-######################### We start with some black magic to print on failure.
 
-BEGIN { $| = 1; print "1..20\n"; }
-END {print "not ok 1\n" unless $loaded;}
+
 use Carp;
-use lib 't';
+# use blib;
+use Test::More tests => 23;
 use strict;
-use TestMAGE qw(result is_object);
-use vars qw($i $loaded);
-use Bio::MAGE;
-use Bio::MAGE::QuantitationType;
 
-$loaded = 1;
-$i = 1;
-result($i);
-
-######################### End of black magic.
+BEGIN { use_ok('Bio::MAGE::QuantitationType') };
 
 # we test the classes() method
 my @classes = Bio::MAGE::QuantitationType->classes();
-result(scalar @classes eq 12);
+is((scalar @classes), 12, 'number of subclasses');
 
 my %classes;
 {
@@ -55,34 +51,37 @@ my %classes;
   foreach my $class_name (@classes) {
     my $class = "Bio::MAGE::QuantitationType::$class_name";
     $classes{$class_name} = $class->new();
-    result(is_object($classes{$class_name}) and $classes{$class_name}->isa($class));
+    isa_ok($classes{$class_name}, $class);
   }
 }
+# test isa
 my $quantitationtype = Bio::MAGE::QuantitationType->new();
-result(is_object($quantitationtype) 
-       and $quantitationtype->isa("Bio::MAGE::QuantitationType"));
+isa_ok($quantitationtype, "Bio::MAGE::QuantitationType");
 
 # test the tagname method
-result(defined $quantitationtype->tagname);
+ok(defined $quantitationtype->tagname, 'tagname');
 
-# test the mageml_lists method
-result(defined $quantitationtype->mageml_lists);
+
+# test the xml_lists method
+ok(defined $quantitationtype->xml_lists,
+  'xml_lists');
 
 
 # test the quantitationtype_list method
 $quantitationtype->quantitationtype_list([]);
-result(UNIVERSAL::isa($quantitationtype->quantitationtype_list,'ARRAY') &&
-       not scalar @{$quantitationtype->quantitationtype_list}
-      );
+isa_ok($quantitationtype->quantitationtype_list,'ARRAY');
+is(scalar @{$quantitationtype->quantitationtype_list}, 0,
+   'quantitationtype_list empty');
 
 # test the getQuantitationType_list method
-result(UNIVERSAL::isa($quantitationtype->getQuantitationType_list,'ARRAY') &&
-       not scalar @{$quantitationtype->getQuantitationType_list}
-      );
+isa_ok($quantitationtype->getQuantitationType_list,'ARRAY');
+is(scalar @{$quantitationtype->getQuantitationType_list}, 0,
+   'getQuantitationType_list empty');
 
 # test the addQuantitationType() method
 $quantitationtype->addQuantitationType($classes{QuantitationType});
-result(UNIVERSAL::isa($quantitationtype->getQuantitationType_list,'ARRAY') &&
-       scalar @{$quantitationtype->getQuantitationType_list}
-      );
+isa_ok($quantitationtype->getQuantitationType_list,'ARRAY');
+ok(scalar @{$quantitationtype->getQuantitationType_list},
+   'getQuantitationType_list not empty');
+
 
